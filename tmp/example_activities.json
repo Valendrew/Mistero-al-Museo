@@ -1,0 +1,31 @@
+[{
+    "storyline": [
+        ["text", "someText"],
+        ["image", "somePath"],
+        ["image", "somePath"],
+        ["text", "someText"]
+    ],
+    "question": {
+        "type": "someType",
+        "answers": [{
+                "value": "someText",
+                "score": 0,
+                "correct": false,
+                "transition": "someText"
+            },
+            {
+                "value": "someText",
+                "score": 1,
+                "correct": true,
+                "transition": true
+            },
+            {
+                "value": "someText",
+                "score": 12,
+                "correct": false,
+                "transition": true
+            }
+        ],
+        "tip": ["someText", "someText"]
+    }
+}]
