@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const colStyle = {
-	height: "200px"
+	height: "200px",
 };
 
 function ListItem(props) {
@@ -15,9 +15,9 @@ function ListItem(props) {
 function ActivityList(props) {
 	return (
 		<ul className="list-group list-group-flush">
-			{props.storyline.map(value =>
-				<ListItem item={value} />
-			)}
+			{props.storyline.map((value, key) => (
+				<ListItem key={key} item={value} />
+			))}
 		</ul>
 	);
 }
@@ -26,9 +26,7 @@ function ActivityCard(props) {
 	return (
 		<div className="col">
 			<div className="card mb-4" style={colStyle}>
-				<div className="card-header">
-					Attività {(props.id + 1).toString()}
-				</div>
+				<div className="card-header">Attività {(props.id + 1).toString()}</div>
 				<div className="card-body overflow-auto">
 					<h5 className="card-title">Elementi narrazione</h5>
 					<ActivityList storyline={props.storyline} />
