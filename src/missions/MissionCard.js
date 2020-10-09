@@ -23,7 +23,7 @@ function AnswerSelectForm({ parentConst, numberActivity, answerText, answerNumbe
 	);
 }
 
-function AnswerListItem({ parentConst, numberActivity, answers }) {
+function AnswerFormItem({ parentConst, numberActivity, answers }) {
 	const [selectAnswers, setSelectAnswers] = useState(answers.map((val) => "new_mission"));
 
 	const handleOnChange = (e, number) => {
@@ -70,7 +70,7 @@ function AnswerListItem({ parentConst, numberActivity, answers }) {
 function ActivitiesItem({ parentConst, childrenActivities }) {
 	return (
 		<ul className="list-group list-group-flush">
-			{childrenActivities.map((value, key) => {
+			{childrenActivities.filter((v, i) => childrenActivities.indexOf(v) === i).map((value, key) => {
 				if (value !== "new_mission") {
 					return (
 						<ListItem
@@ -86,6 +86,21 @@ function ActivitiesItem({ parentConst, childrenActivities }) {
 	);
 }
 
+function AnswerListItem({ childrenActivities }) {
+	console.log(childrenActivities);
+	return (
+		<ul className="list-group list-group-horizontal">
+			{childrenActivities.map((value, key) => {
+				return (
+					<li key={key} className="list-group-item">
+						{value}
+					</li>
+				);
+			})}
+		</ul>
+	);
+}
+
 function ListItem({ parentConst, numberActivity, childrenActivities }) {
 	const answers = parentConst["activities"][numberActivity]["questions"][0]["answers"];
 	return (
@@ -94,9 +109,12 @@ function ListItem({ parentConst, numberActivity, childrenActivities }) {
 				<div className="card-header">Attività {numberActivity}</div>
 				<div className="card-body">
 					{childrenActivities.length ? (
+						<div>
+						<AnswerListItem childrenActivities={childrenActivities} />
 						<ActivitiesItem parentConst={parentConst} childrenActivities={childrenActivities} />
+						</div>
 					) : (
-						<AnswerListItem parentConst={parentConst} numberActivity={numberActivity} answers={answers} />
+						<AnswerFormItem parentConst={parentConst} numberActivity={numberActivity} answers={answers} />
 					)}
 				</div>
 			</div>
@@ -109,7 +127,7 @@ function MissionCard({ parentConst }) {
 	let element;
 	if (startActivity === null) {
 		const answerObj = [0];
-		element = <AnswerListItem parentConst={parentConst} numberActivity={"start"} answers={answerObj} />;
+		element = <AnswerFormItem parentConst={parentConst} numberActivity={"start"} answers={answerObj} />;
 	} else {
 		element = (
 			<ListItem

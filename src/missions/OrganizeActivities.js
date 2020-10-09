@@ -16,9 +16,7 @@ function OrganizeActivities() {
 			if (numberAct === "start") {
 				if (value !== "new_mission") new_missions[numberMission]["start"] = value;
 			} else {
-				if (!new_missions[numberMission][numberAct].includes(value)) {
-					new_missions[numberMission][numberAct].push(value);
-				}
+				new_missions[numberMission][numberAct].push(value);
 			}
 			if (value !== "new_mission") {
 				new_missions[numberMission][value] = [];
