@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
 import json_activities from "../json/example_activities.json";
 import ActivityCard from "./ActivityCard";
 import MissionCard from "./MissionCard";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
-
-import { useHistory } from "react-router-dom";
 
 function OrganizeActivities() {
 	let history = useHistory();
 	const [missions, setMissions] = useState([{ start: null }]);
-	const [availActivities, setAvailActivities] = useState(json_activities.map((value, key) => key));
+	const [availActivities, setAvailActivities] = useState(Array.from(json_activities.keys()));
 
 	const handleSubmit = (e, values, numberAct, numberMission) => {
-		e.preventDefault();
 		let new_missions = missions;
-
 		values.forEach((value) => {
 			if (numberAct === "start") {
 				if (value !== "new_mission") new_missions[numberMission]["start"] = value;
@@ -29,15 +26,16 @@ function OrganizeActivities() {
 		});
 		setMissions(new_missions);
 		setAvailActivities(availActivities.filter((act) => !values.includes(act.toString())));
+		e.preventDefault();
 	};
 
 	const submitMissions = (e) => {
-		fetch("/add_story", {
+		fetch("/add_missions", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(missions),
 		}).then(function (response) {
-			history.push("/");
+			history.push("/missions/transition");
 		});
 	};
 
@@ -59,13 +57,19 @@ function OrganizeActivities() {
 				return <MissionCard key={key} parentConst={parentConst} />;
 			})}
 			<div className="row justify-content-end">
-				<button type="button" className="btn btn-primary" onClick={() => setMissions(missions.concat({ start: null }))}>
-					Aggiungi missione
-				</button>
-
-				<button type="button" className="btn btn-success" onClick={(e) => submitMissions(e)}>
-					Crea storia
-				</button>
+				{availActivities.length ? (
+					<button
+						type="button"
+						className="btn btn-primary"
+						onClick={() => setMissions(missions.concat({ start: null }))}
+					>
+						Aggiungi missione
+					</button>
+				) : (
+					<button type="button" className="btn btn-success" onClick={(e) => submitMissions(e)}>
+						Crea storia
+					</button>
+				)}
 			</div>
 		</div>
 	);
