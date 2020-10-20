@@ -8,9 +8,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
-import MissionsOverview from "./missions/MissionsOverview";
-import MissionsTransitions from "./missions/MissionsTransitions";
-import StoryOverview from "./stories/StoryOverview";
+import MissionsOverview from "./components/missions/MissionsOverview";
+import MissionsTransitions from "./components/missions/MissionsTransitions";
+import StoryOverview from "./components/missions/stories/StoryOverview";
 
 function RouterSwitch() {
 	return (
