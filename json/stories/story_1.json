@@ -1,0 +1,148 @@
+{
+  "activities": [
+    {
+      "storyline": [
+        [
+          "text",
+          "Questo è un testo lunghissimo"
+        ],
+        [
+          "text",
+          "someText"
+        ]
+      ],
+      "questions": [
+        {
+          "type": "someType",
+          "answers": [
+            {
+              "value": "someText False False",
+              "score": 0,
+              "correct": false,
+              "transition": false
+            }
+          ],
+          "tip": [
+            "someText",
+            "someText"
+          ]
+        }
+      ]
+    },
+    {
+      "storyline": [
+        [
+          "image",
+          "somePath"
+        ],
+        [
+          "text",
+          "Un altro testo lunghissimo"
+        ]
+      ],
+      "questions": [
+        {
+          "type": "someType",
+          "answers": [
+            {
+              "value": "someText",
+              "score": 0,
+              "correct": false,
+              "transition": "someText"
+            }
+          ],
+          "tip": [
+            "someText",
+            "someText"
+          ]
+        }
+      ]
+    },
+    {
+      "storyline": [
+        [
+          "text",
+          "someText"
+        ],
+        [
+          "image",
+          "somePath"
+        ],
+        [
+          "image",
+          "somePath"
+        ],
+        [
+          "text",
+          "someText"
+        ]
+      ],
+      "questions": [
+        {
+          "type": "someType",
+          "answers": [
+            {
+              "value": "someText",
+              "score": 0,
+              "correct": false,
+              "transition": "someText"
+            }
+          ],
+          "tip": [
+            "someText",
+            "someText"
+          ]
+        }
+      ]
+    },
+    {
+      "storyline": [
+        [
+          "image",
+          "somePath"
+        ],
+        [
+          "text",
+          "someText"
+        ]
+      ],
+      "questions": [
+        {
+          "type": "someType",
+          "answers": [
+            {
+              "value": "someText",
+              "score": 0,
+              "correct": false,
+              "transition": "someText"
+            }
+          ],
+          "tip": [
+            "someText",
+            "someText"
+          ]
+        }
+      ]
+    }
+  ],
+  "missions": {
+    "0": {
+      "0": [
+        1
+      ],
+      "1": [
+        2
+      ],
+      "2": [
+        3
+      ],
+      "3": [
+        "new_mission"
+      ],
+      "start": 0
+    }
+  },
+  "transitions": [
+    "0"
+  ]
+}
