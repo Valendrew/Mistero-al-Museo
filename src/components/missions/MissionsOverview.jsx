@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
@@ -10,6 +10,7 @@ import Missions from "./Missions";
 function Activities() {
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: [] });
 	const history = useHistory();
+	const match = useRouteMatch("/autore/missions");
 	const idStory = 1;
 
 	useEffect(() => {
@@ -40,7 +41,7 @@ function Activities() {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(missions),
 		}).then((response) => {
-			history.push("/missions/transitions");
+			history.push(`${match.url}/transitions`);
 		});
 	};
 
@@ -48,7 +49,7 @@ function Activities() {
 		<Container fluid>
 			{story.isLoaded ? (
 				<>
-					<Row className="row-cols-6">
+					<Row className="row row-cols-4 row-cols-lg-6">
 						{story.items.map((value, i) => {
 							return <ActivityCard key={i} id={i} storyline={value["storyline"]} />;
 						})}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -34,11 +34,13 @@ function SelectMission(props) {
 }
 
 function MissionsTransitions() {
+	let history = useHistory();
+	let match = useRouteMatch("/autore");
+
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: [] });
 	const [missions, setMissions] = useState([]);
 	const [transitions, setTransitions] = useState([]);
 	const [input, setInput] = useState();
-	let history = useHistory();
 	const idStory = 1;
 
 	useEffect(() => {
@@ -81,7 +83,7 @@ function MissionsTransitions() {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(transitions),
 		}).then((response) => {
-			history.push("/story/overview");
+			history.push(`${match.url}/story`);
 		});
 	};
 

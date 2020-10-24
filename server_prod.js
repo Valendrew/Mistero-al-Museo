@@ -1,8 +1,9 @@
 const express = require("express");
-const stories = require("./stories");
+const path = require("path");
+const stories = require(path.join(__dirname, "server/stories"));
 
 const app = express();
-const port= 4000;
+const port = 4000;
 
 app.use("/story", stories);
 

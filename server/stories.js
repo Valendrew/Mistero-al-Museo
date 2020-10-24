@@ -1,9 +1,11 @@
 const express = require("express");
 const fs = require("fs");
+const path = require("path");
+
 const router = express.Router();
 const jsonParser = express.json();
 
-const dataPath = "./data/user_1/";
+const dataPath = path.join(__dirname, "data/user_1/");
 
 const readFile = (callback, param, filePath = dataPath, encoding = "utf8") => {
 	const paraPath = `${filePath}/story_${param}.json`;

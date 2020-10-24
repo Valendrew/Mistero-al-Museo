@@ -128,21 +128,25 @@
   "missions": {
     "0": {
       "0": [
-        1
-      ],
-      "1": [
         2
       ],
       "2": [
+        "new_mission"
+      ],
+      "start": 0
+    },
+    "1": {
+      "1": [
         3
       ],
       "3": [
         "new_mission"
       ],
-      "start": 0
+      "start": 1
     }
   },
   "transitions": [
+    "1",
     "0"
   ]
 }

@@ -69,7 +69,6 @@ const StoryOverview = () => {
 
 	useEffect(() => {
 		if (story.isLoaded) {
-			console.log(story);
 			const nodes = new DataSet(createNodes(story.items.activities, story.items.missions));
 			const edges = new DataSet(createEdges(story.items.missions, story.items.transitions));
 			const layout = {
