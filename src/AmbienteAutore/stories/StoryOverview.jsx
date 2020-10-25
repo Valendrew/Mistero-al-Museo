@@ -49,7 +49,10 @@ const StoryOverview = () => {
 	const idStory = 1;
 
 	useEffect(() => {
-		fetch(`/story/${idStory}`)
+		fetch(`/story/${idStory}`, {
+			method: "GET",
+			headers: { Authorization: `Basic ${btoa("user_1:abcd")}` },
+		})
 			.then((res) => res.json())
 			.then(
 				(result) => {
@@ -74,7 +77,7 @@ const StoryOverview = () => {
 			const layout = {
 				hierarchical: {
 					enabled: true,
-					direction: "UD",
+					direction: "LR",
 					sortMethod: "directed",
 					levelSeparation: 100,
 					nodeSpacing: 200,
@@ -101,7 +104,7 @@ const StoryOverview = () => {
 		}
 	}, [story]);
 
-	return <Container>{story.isLoaded ? <div ref={domNode} /> : <h6>Loading...</h6>}</Container>;
+	return <Container>{story.isLoaded ? <div ref={domNode} /> : <h5>Loading...</h5>}</Container>;
 };
 
 export default StoryOverview;

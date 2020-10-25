@@ -10,7 +10,9 @@ import Row from "react-bootstrap/Row";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
-import Autore from "./components/Autore";
+import Autore from "./AmbienteAutore/Autore";
+import Player from "./AmbientePlayer/Player";
+import Valutatore from "./AmbienteValutatore/Valutatore";
 
 function RouterSwitch() {
 	return (
@@ -20,6 +22,12 @@ function RouterSwitch() {
 			</Route>
 			<Route path="/autore">
 				<Autore />
+			</Route>
+			<Route path="/player">
+				<Player />
+			</Route>
+			<Route path="/valutatore">
+				<Valutatore />
 			</Route>
 			<Route render={() => <h1>404: Pagina non esistente</h1>} />
 		</Switch>
@@ -36,6 +44,12 @@ function Home() {
 					</Nav.Link>
 					<Nav.Link as={Link} to="/autore">
 						Ambiente autore
+					</Nav.Link>
+					<Nav.Link as={Link} to="/player">
+						Player
+					</Nav.Link>
+					<Nav.Link as={Link} to="/valutatore">
+						Valutatore
 					</Nav.Link>
 				</Nav>
 			</Navbar>

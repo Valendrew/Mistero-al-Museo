@@ -44,7 +44,10 @@ function MissionsTransitions() {
 	const idStory = 1;
 
 	useEffect(() => {
-		fetch(`/story/missions/${idStory}`)
+		fetch(`/story/${idStory}/missions`, {
+			method: "GET",
+			headers: { Authorization: `Basic ${btoa("user_1:abcd")}` },
+		})
 			.then((res) => res.json())
 			.then(
 				(result) => {
@@ -78,9 +81,9 @@ function MissionsTransitions() {
 	};
 
 	const createStory = () => {
-		fetch(`/story/transitions/${idStory}`, {
+		fetch(`/story/${idStory}/transitions`, {
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
+			headers: { Authorization: `Basic ${btoa("user_1:abcd")}`, "Content-Type": "application/json" },
 			body: JSON.stringify(transitions),
 		}).then((response) => {
 			history.push(`${match.url}/story`);
@@ -112,7 +115,7 @@ function MissionsTransitions() {
 						</ListGroup.Item>
 					</ListGroup>
 				) : (
-					<h3>Loading</h3>
+					<h5>Loading</h5>
 				)}
 			</Row>
 		</Container>

@@ -14,9 +14,9 @@ function Activities() {
 	const idStory = 1;
 
 	useEffect(() => {
-		fetch(`/story/activities/${idStory}`, {
+		fetch(`/story/${idStory}/activities`, {
 			method: "GET",
-			headers: { "Content-Type": "application/json" },
+			headers: { Authorization: `Basic ${btoa("user_1:abcd")}`, "Content-Type": "application/json" },
 		})
 			.then((res) => res.json())
 			.then(
@@ -36,9 +36,9 @@ function Activities() {
 	}, []);
 
 	const fetchMissions = (missions) => {
-		fetch(`/story/missions/${idStory}`, {
+		fetch(`/story/${idStory}/missions`, {
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
+			headers: { Authorization: `Basic ${btoa("user_1:abcd")}`, "Content-Type": "application/json" },
 			body: JSON.stringify(missions),
 		}).then((response) => {
 			history.push(`${match.url}/transitions`);
@@ -59,7 +59,7 @@ function Activities() {
 					</Row>
 				</>
 			) : (
-				<h1>Loading...</h1>
+				<h5>Loading...</h5>
 			)}
 		</Container>
 	);
