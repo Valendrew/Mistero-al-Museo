@@ -103,6 +103,7 @@ function StoryQRCode(props) {
 				<>
 					<Card.Body>
 						<QRCode value={props.value} />
+						<a href={props.value}>Vai alla storia</a>
 					</Card.Body>
 					<Card.Footer>
 						<Button variant="primary" onClick={props.removeQRCode}>
@@ -125,8 +126,8 @@ function StoryPropertyCard(props) {
 	return (
 		<Card>
 			<Card.Header>{props.title}</Card.Header>
-			<Card.Body>
-				<Form onSubmit={(e) => props.onSubmit(e, props.inputName)}>
+			<Form onSubmit={(e) => props.onSubmit(e, props.inputName)}>
+				<Card.Body>
 					<Form.Control
 						value={props.input || ""}
 						as={props.as}
@@ -134,11 +135,13 @@ function StoryPropertyCard(props) {
 						rows="5"
 						onChange={(e) => props.onChange(e.target.value, props.inputName)}
 					></Form.Control>
+				</Card.Body>
+				<Card.Footer>
 					<Button variant="primary" type="submit">
 						Modifica
 					</Button>
-				</Form>
-			</Card.Body>
+				</Card.Footer>
+			</Form>
 		</Card>
 	);
 }
@@ -181,9 +184,7 @@ function StoryOverview() {
 			headers: { Authorization: `Basic ${btoa("user_1:abcd")}`, "Content-Type": "text/plain" },
 			body: inputs[type],
 		})
-			.then((res) => {
-				setStory({ error: null, isLoaded: false, items: [] });
-			})
+			.then((res) => setStory({ error: null, isLoaded: false, items: [] }))
 			.catch(console.log);
 	};
 
@@ -192,9 +193,7 @@ function StoryOverview() {
 			method: "POST",
 			headers: { Authorization: `Basic ${btoa("user_1:abcd")}` },
 		})
-			.then((res) => {
-				setStory({ error: null, isLoaded: false, items: [] });
-			})
+			.then((res) => setStory({ error: null, isLoaded: false, items: [] }))
 			.catch(console.log);
 	};
 
@@ -203,11 +202,10 @@ function StoryOverview() {
 			method: "DELETE",
 			headers: { Authorization: `Basic ${btoa("user_1:abcd")}` },
 		})
-			.then((res) => {
-				setStory({ error: null, isLoaded: false, items: [] });
-			})
+			.then((res) => setStory({ error: null, isLoaded: false, items: [] }))
 			.catch(console.log);
 	};
+
 	return (
 		<Container>
 			<Navbar>
@@ -219,7 +217,7 @@ function StoryOverview() {
 			</Navbar>
 			{story.isLoaded ? (
 				story.error ? (
-					<h5>Errore nella richiesta, ricaricare</h5>
+					<h5>Errore nel caricamento, ricaricare</h5>
 				) : (
 					<>
 						<StoryPropertyCard

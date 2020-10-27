@@ -44,26 +44,19 @@ function MissionsTransitions() {
 	const idStory = 1;
 
 	useEffect(() => {
-		fetch(`/story/${idStory}/missions`, {
-			method: "GET",
-			headers: { Authorization: `Basic ${btoa("user_1:abcd")}` },
-		})
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					setStory({
-						isLoaded: true,
-						items: result,
-					});
-					setMissions(Object.keys(result));
-				},
-				(error) => {
-					setStory({
-						isLoaded: true,
-						error,
-					});
-				}
-			);
+		const fetchData = async () => {
+			const result = await fetch(`/story/${idStory}/missions`, {
+				method: "GET",
+				headers: { Authorization: `Basic ${btoa("user_1:abcd")}` },
+			});
+			if (!result.ok) setStory({ isLoaded: true, error: result.statusText });
+			else {
+				const data = await result.json();
+				setStory({ isLoaded: true, items: data });
+				setMissions(Object.keys(data));
+			}
+		};
+		fetchData();
 	}, []);
 
 	useEffect(() => {
@@ -85,35 +78,41 @@ function MissionsTransitions() {
 			method: "POST",
 			headers: { Authorization: `Basic ${btoa("user_1:abcd")}`, "Content-Type": "application/json" },
 			body: JSON.stringify(transitions),
-		}).then((response) => {
-			history.push(`${match.url}/story`, {idStory: idStory});
-		});
+		})
+			.then((response) => {
+				history.push(`${match.url}/story`, { idStory: idStory });
+			})
+			.catch(console.log);
 	};
 
 	return (
 		<Container fluid>
 			<Row>
 				{story.isLoaded ? (
-					<ListGroup variant="flush">
-						{transitions.map((value) => {
-							return <ListGroup.Item key={value}>Missione {value}</ListGroup.Item>;
-						})}
-						<ListGroup.Item>
-							{missions.length ? (
-								<SelectMission
-									key={missions.length}
-									input={input}
-									missions={missions}
-									handleSelect={handleSelect}
-									handleSubmit={handleSubmit}
-								/>
-							) : (
-								<Button variant="primary" onClick={createStory}>
-									Crea storia
-								</Button>
-							)}
-						</ListGroup.Item>
-					</ListGroup>
+					story.error ? (
+						<h5>Errore nel caricamento, riprovare</h5>
+					) : (
+						<ListGroup variant="flush">
+							{transitions.map((value) => {
+								return <ListGroup.Item key={value}>Missione {value}</ListGroup.Item>;
+							})}
+							<ListGroup.Item>
+								{missions.length ? (
+									<SelectMission
+										key={missions.length}
+										input={input}
+										missions={missions}
+										handleSelect={handleSelect}
+										handleSubmit={handleSubmit}
+									/>
+								) : (
+									<Button variant="primary" onClick={createStory}>
+										Crea storia
+									</Button>
+								)}
+							</ListGroup.Item>
+						</ListGroup>
+					)
 				) : (
 					<h5>Loading</h5>
 				)}

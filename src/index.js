@@ -23,7 +23,7 @@ function RouterSwitch() {
 			<Route path="/autore">
 				<Autore />
 			</Route>
-			<Route path="/player">
+			<Route path="/player/:id">
 				<Player />
 			</Route>
 			<Route path="/valutatore">
@@ -44,9 +44,6 @@ function Home() {
 					</Nav.Link>
 					<Nav.Link as={Link} to="/autore">
 						Ambiente autore
-					</Nav.Link>
-					<Nav.Link as={Link} to="/player">
-						Player
 					</Nav.Link>
 					<Nav.Link as={Link} to="/valutatore">
 						Valutatore

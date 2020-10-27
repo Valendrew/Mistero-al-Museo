@@ -28,7 +28,7 @@ function StoryCard(props) {
 	);
 }
 function AutoreHome(props) {
-	const match = useRouteMatch();
+	const match = useRouteMatch("/autore");
 	const [stories, setStories] = useState({ error: null, isLoaded: false, items: [] });
 
 	useEffect(() => {
@@ -60,7 +60,7 @@ function AutoreHome(props) {
 					<Nav.Link as={Link} to="/">
 						Home
 					</Nav.Link>
-					<Nav.Link as={Link} to={`${match.url}/missions/create`}>
+					<Nav.Link as={Link} to={`${match.url}/story/missions`}>
 						Crea nuova storia
 					</Nav.Link>
 				</Nav>
@@ -82,7 +82,7 @@ function AutoreHome(props) {
 	);
 }
 function Autore() {
-	const match = useRouteMatch();
+	const match = useRouteMatch("/autore");
 	let history = useHistory();
 
 	const onEditStory = (id) => {
@@ -94,13 +94,13 @@ function Autore() {
 			<Route exact path="/autore">
 				<AutoreHome onEditStory={onEditStory} />
 			</Route>
-			<Route path={`${match.path}/story`}>
+			<Route exact path={`${match.path}/story`}>
 				<StoryOverview />
 			</Route>
-			<Route path={`${match.path}/missions/create`}>
+			<Route path={`${match.path}/story/missions`}>
 				<MissionsOverview />
 			</Route>
-			<Route path={`${match.path}/missions/transitions`}>
+			<Route path={`${match.path}/story/transitions`}>
 				<MissionsTransitions />
 			</Route>
 		</Switch>

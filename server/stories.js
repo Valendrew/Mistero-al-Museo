@@ -5,7 +5,7 @@ const uuidv4 = require("uuid").v4;
 
 const app = express();
 app.set("json spaces", 4);
-app.set("path", path.join(__dirname, "data"));
+app.set("path", path.join(__dirname, "data", "stories"));
 
 const router = express.Router();
 router.use(express.json());
@@ -42,7 +42,7 @@ async function readFilesInFolder(dirPath = app.get("path"), encoding = "utf-8") 
 }
 
 router.use((req, res, next) => {
-	console.log(`Request ${req.method} at ${req.path} on Time: ${new Date(Date.now()).toUTCString()}`);
+	console.log(`Request ${req.method} at /story${req.path} on Time: ${new Date(Date.now()).toUTCString()}`);
 	next();
 });
 
