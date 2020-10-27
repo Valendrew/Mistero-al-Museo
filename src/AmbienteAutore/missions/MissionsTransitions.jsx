@@ -86,7 +86,7 @@ function MissionsTransitions() {
 			headers: { Authorization: `Basic ${btoa("user_1:abcd")}`, "Content-Type": "application/json" },
 			body: JSON.stringify(transitions),
 		}).then((response) => {
-			history.push(`${match.url}/story`);
+			history.push(`${match.url}/story`, {idStory: idStory});
 		});
 	};
 

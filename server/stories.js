@@ -1,48 +1,48 @@
 const express = require("express");
-const fs = require("fs");
+const fsp = require("fs").promises;
 const path = require("path");
+const uuidv4 = require("uuid").v4;
+
+const app = express();
+app.set("json spaces", 4);
+app.set("path", path.join(__dirname, "data"));
 
 const router = express.Router();
-const jsonParser = express.json();
-const dataPath = path.join(__dirname, "data");
+router.use(express.json());
+router.use(express.text());
 
-const readFile = (callback, user, id, filePath = dataPath, encoding = "utf8") => {
-	const paraPath = `${path.join(filePath, user)}/story_${id}.json`;
-	fs.readFile(paraPath, encoding, (err, data) => {
-		if (err) {
-			throw err;
-		}
-		callback(JSON.parse(data));
-	});
-};
-
-const writeFile = (fileData, callback, user, id, filePath = dataPath, encoding = "utf8") => {
-	const paraPath = `${path.join(filePath, user)}/story_${id}.json`;
-	fs.writeFile(paraPath, fileData, encoding, (err) => {
-		if (err) {
-			throw err;
-		}
-		callback();
-	});
-};
-
-async function readFilesInFolder(user, filePath = dataPath, encoding = "utf-8") {
-	const dirPath = `${path.join(filePath, user)}`;
-	const files = await fs.promises.readdir(dirPath, encoding);
-	let data = [];
-	files.forEach((file) => {
-		const filePath = path.join(dirPath, file);
-		data.push(readFilePromise(filePath));
-	});
-	return data;
+async function readFile(filePath, dirPath = app.get("path"), encoding = "utf-8") {
+	const dataPath = path.join(dirPath, filePath);
+	return fsp
+		.readFile(dataPath, encoding)
+		.then((data) => JSON.parse(data))
+		.catch((e) => {
+			throw new Error(e);
+		});
 }
 
-const readFilePromise = (path, encoding = "utf-8") => {
-	return fs.promises.readFile(path, encoding).then((data) => JSON.parse(data));
-};
+async function writeFile(filePath, data, dirPath = app.get("path"), encoding = "utf-8") {
+	const dataPath = path.join(dirPath, filePath);
+	try {
+		await fsp.access(dirPath);
+	} catch (e) {
+		await fsp.mkdir(dirPath);
+	}
+	return fsp.writeFile(dataPath, JSON.stringify(data, null, app.get("json spaces")), encoding);
+}
+
+async function readFilesInFolder(dirPath = app.get("path"), encoding = "utf-8") {
+	let files;
+	try {
+		files = await fsp.readdir(dirPath, encoding);
+	} catch (e) {
+		throw new Error(e);
+	}
+	return files.map((file) => readFile(file, dirPath));
+}
 
 router.use((req, res, next) => {
-	console.log(`Request ${req.path} on Time: ${new Date(Date.now()).toUTCString()}`);
+	console.log(`Request ${req.method} at ${req.path} on Time: ${new Date(Date.now()).toUTCString()}`);
 	next();
 });
 
@@ -55,89 +55,173 @@ router.use((req, res, next) => {
 	next();
 });
 
-router.get("/", async (req, res) => {
-	Promise.all(await readFilesInFolder(res.locals.user)).then((values) => {
-		res.send(values);
-	});
+router.get("/", async (req, res, next) => {
+	const userDir = path.join(app.get("path"), res.locals.user);
+	let promises;
+	try {
+		promises = await readFilesInFolder(userDir);
+	} catch (e) {
+		next(e);
+	}
+	Promise.all(promises)
+		.then((values) => {
+			res.send(values);
+		})
+		.catch(next);
 });
 
-router.get("/:id", (req, res) => {
-	readFile(
-		(data) => {
-			res.send(data);
-		},
-		res.locals.user,
-		req.params["id"]
-	);
+router.get("/:id", async (req, res, next) => {
+	const userDir = path.join(app.get("path"), res.locals.user);
+	const storyFile = `story_${req.params.id}.json`;
+	readFile(storyFile, userDir)
+		.then((data) => res.send(data))
+		.catch(next);
 });
 
-router.get("/:id/activities", (req, res) => {
-	const parameters = { user: res.locals.user, id: req.params["id"] };
-	readFile(
-		(data) => {
-			res.send(data["activities"]);
-		},
-		res.locals.user,
-		req.params["id"]
-	);
+router.get("/:id/activities", async (req, res, next) => {
+	const userDir = path.join(app.get("path"), res.locals.user);
+	const storyFile = `story_${req.params.id}.json`;
+	readFile(storyFile, userDir)
+		.then((data) => res.send(data.activities))
+		.catch(next);
 });
 
-router.get("/:id/missions", (req, res) => {
-	readFile(
-		(data) => {
-			res.send(data["missions"]);
-		},
-		res.locals.user,
-		req.params["id"]
-	);
+router.get("/:id/missions", async (req, res, next) => {
+	const userDir = path.join(app.get("path"), res.locals.user);
+	const storyFile = `story_${req.params.id}.json`;
+	readFile(storyFile, userDir)
+		.then((data) => res.send(data.missions))
+		.catch(next);
 });
 
-router.get("/:id/transitions", (req, res) => {
-	readFile(
-		(data) => {
-			res.send(data["transitions"]);
-		},
-		res.locals.user,
-		req.params["id"]
-	);
+router.get("/:id/transitions", async (req, res, next) => {
+	const userDir = path.join(app.get("path"), res.locals.user);
+	const storyFile = `story_${req.params.id}.json`;
+	readFile(storyFile, userDir)
+		.then((data) => res.send(data.transitions))
+		.catch(next);
 });
 
-router.post("/:id/missions", jsonParser, (req, res) => {
-	readFile(
-		(data) => {
-			data["missions"] = req.body;
-
-			writeFile(
-				JSON.stringify(data, null, 4),
-				() => {
-					res.status(201).send("new missions added");
-				},
-				res.locals.user,
-				req.params["id"]
-			);
-		},
-		res.locals.user,
-		req.params["id"]
-	);
+router.post("/:id/missions", async (req, res, next) => {
+	const userDir = path.join(app.get("path"), res.locals.user);
+	const storyFile = `story_${req.params.id}.json`;
+	let data;
+	try {
+		data = await readFile(storyFile, userDir);
+	} catch (e) {
+		data = {};
+		console.log("Read file error: " + e.message);
+	}
+	data.missions = req.body;
+	writeFile(storyFile, data, userDir)
+		.then(() => res.status(201).send("new missions added"))
+		.catch(next);
 });
 
-router.post("/:id/transitions", jsonParser, (req, res) => {
-	readFile(
-		(data) => {
-			data["transitions"] = req.body;
+router.post("/:id/transitions", async (req, res, next) => {
+	const userDir = path.join(app.get("path"), res.locals.user);
+	const storyFile = `story_${req.params.id}.json`;
+	let data;
+	try {
+		data = await readFile(storyFile, userDir);
+	} catch (e) {
+		data = {};
+		console.log("Read file error: " + e.message);
+	}
+	data.transitions = req.body;
+	writeFile(storyFile, data, userDir)
+		.then(() => res.status(201).send("new transitions added"))
+		.catch(next);
+});
 
-			writeFile(
-				JSON.stringify(data, null, 4),
-				() => {
-					res.status(201).send("new transitions added");
-				},
-				res.locals.user,
-				req.params["id"]
-			);
-		},
-		res.locals.user,
-		req.params["id"]
-	);
+router.put("/:id/name", async (req, res, next) => {
+	const userDir = path.join(app.get("path"), res.locals.user);
+	const storyFile = `story_${req.params.id}.json`;
+	let statusCode = 200;
+	let data;
+	try {
+		data = await readFile(storyFile, userDir);
+	} catch (e) {
+		data = {};
+		statusCode = 201;
+		console.log("Read file error: " + e.message);
+	}
+	data.info.name = req.body;
+	writeFile(storyFile, data, userDir)
+		.then(() => res.status(statusCode).send("name edited"))
+		.catch(next);
+});
+
+router.put("/:id/description", async (req, res, next) => {
+	const userDir = path.join(app.get("path"), res.locals.user);
+	const storyFile = `story_${req.params.id}.json`;
+	let statusCode = 200;
+	let data;
+	try {
+		data = await readFile(storyFile, userDir);
+	} catch (e) {
+		data = {};
+		statusCode = 201;
+		console.log("Read file error: " + e.message);
+	}
+	data.info.description = req.body;
+	writeFile(storyFile, data, userDir)
+		.then(() => res.status(statusCode).send("description edited"))
+		.catch(next);
+});
+
+router.post("/:id/qrcode", async (req, res, next) => {
+	const storyCode = uuidv4();
+	const userDir = path.join(app.get("path"), res.locals.user);
+	const storyFile = `story_${req.params.id}.json`;
+	let data;
+	try {
+		data = await readFile("stories.json");
+	} catch (e) {
+		data = {};
+		console.log("Read file error: " + e.message);
+	}
+	data[storyCode] = { user: res.locals.user, story: req.params.id };
+	writeFile("stories.json", data)
+		.then(() => console.log("added story to stories.json"))
+		.catch(next);
+
+	try {
+		data = await readFile(storyFile, userDir);
+	} catch (e) {
+		data = {};
+		console.log(e.message);
+	}
+	data.info.qr = `http://localhost:3000/player/${storyCode}`;
+	writeFile(storyFile, data, userDir)
+		.then(() => res.status(201).send("new qrcode added"))
+		.catch(next);
+});
+
+router.delete("/:id/qrcode", async (req, res, next) => {
+	const userDir = path.join(app.get("path"), res.locals.user);
+	const storyFile = `story_${req.params.id}.json`;
+	let data;
+	try {
+		data = await readFile(storyFile, userDir);
+	} catch (e) {
+		next(e);
+	}
+	const storyCode = data.info.qr.split("/").reverse()[0];
+	delete data.info.qr;
+	writeFile(storyFile, data, userDir)
+		.then(() => res.send("new name added"))
+		.catch(next);
+
+	try {
+		data = await readFile("stories.json");
+	} catch (e) {
+		next(e);
+	}
+	delete data[storyCode];
+	writeFile("stories.json", data)
+		.then(() => console.log("removed story from stories.json"))
+		.catch(next);
 });
 
 module.exports = router;

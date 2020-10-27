@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
+import { Switch, Route, Link, useRouteMatch, useHistory } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Card from "react-bootstrap/Card";
-import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 import MissionsOverview from "./missions/MissionsOverview";
 import MissionsTransitions from "./missions/MissionsTransitions";
@@ -17,14 +18,18 @@ function StoryCard(props) {
 	return (
 		<Card>
 			<Card.Header>{props.title}</Card.Header>
-			<Card.Body>{props.description}</Card.Body>
+			<Card.Body>
+				<Card.Text>{props.description}</Card.Text>
+				<Button variant="primary" onClick={() => props.onEditStory(props.id)}>
+					Modifica storia
+				</Button>
+			</Card.Body>
 		</Card>
 	);
 }
-function AutoreHome() {
+function AutoreHome(props) {
 	const match = useRouteMatch();
 	const [stories, setStories] = useState({ error: null, isLoaded: false, items: [] });
-	const idStory = 1;
 
 	useEffect(() => {
 		fetch(`/story`, {
@@ -64,8 +69,8 @@ function AutoreHome() {
 				{stories.isLoaded ? (
 					stories.items.map((value) => {
 						return (
-							<Col lg="4" key={value["name"]}>
-								<StoryCard title={value["name"]} description={value["description"]} />
+							<Col lg="4" key={value.info.name}>
+								<StoryCard id={value.info.id} title={value.info.name} description={value.info.description} {...props} />
 							</Col>
 						);
 					})
@@ -78,10 +83,16 @@ function AutoreHome() {
 }
 function Autore() {
 	const match = useRouteMatch();
+	let history = useHistory();
+
+	const onEditStory = (id) => {
+		history.push(`${match.path}/story`, { idStory: id });
+	};
+
 	return (
 		<Switch>
 			<Route exact path="/autore">
-				<AutoreHome match={match} />
+				<AutoreHome onEditStory={onEditStory} />
 			</Route>
 			<Route path={`${match.path}/story`}>
 				<StoryOverview />
