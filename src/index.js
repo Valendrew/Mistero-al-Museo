@@ -10,6 +10,8 @@ import Row from "react-bootstrap/Row";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
+import authDisplay from "./authDisplay";
+import Login from "./Login";
 import Autore from "./AmbienteAutore/Autore";
 import Player from "./AmbientePlayer/Player";
 import Valutatore from "./AmbienteValutatore/Valutatore";
@@ -20,15 +22,14 @@ function RouterSwitch() {
 			<Route exact path="/">
 				<Home />
 			</Route>
-			<Route path="/autore">
-				<Autore />
+			<Route exact path="/login">
+				<Login />
 			</Route>
+			<Route path="/autore" component={authDisplay(Autore)} />
 			<Route path="/player/:id">
 				<Player />
 			</Route>
-			<Route path="/valutatore">
-				<Valutatore />
-			</Route>
+			<Route path="/valutatore" component={authDisplay(Valutatore)} />
 			<Route render={() => <h1>404: Pagina non esistente</h1>} />
 		</Switch>
 	);
@@ -36,6 +37,21 @@ function RouterSwitch() {
 
 function Home() {
 	return (
+		<Container>
+
+			<Row>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. In faucibus commodo nisl maximus pretium. Donec sed
+				urna convallis, auctor enim sed, euismod enim. Vivamus egestas auctor quam, ac lobortis arcu dapibus eu. Morbi
+				mauris leo, luctus et mauris quis, bibendum cursus nisl. In hac habitasse platea dictumst. Nunc non elit erat.
+				Sed venenatis purus ac vehicula tincidunt. Cras eu justo at purus auctor semper. Nam sem tellus, elementum et
+				massa non, feugiat imperdie
+			</Row>
+		</Container>
+	);
+}
+
+ReactDOM.render(
+	<BrowserRouter>
 		<Container>
 			<Navbar>
 				<Nav>
@@ -48,31 +64,12 @@ function Home() {
 					<Nav.Link as={Link} to="/valutatore">
 						Valutatore
 					</Nav.Link>
+					<Nav.Link as={Link} to="/login">
+						Login
+					</Nav.Link>
 				</Nav>
 			</Navbar>
-			<Row>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. In faucibus commodo nisl maximus pretium. Donec sed
-				urna convallis, auctor enim sed, euismod enim. Vivamus egestas auctor quam, ac lobortis arcu dapibus eu. Morbi
-				mauris leo, luctus et mauris quis, bibendum cursus nisl. In hac habitasse platea dictumst. Nunc non elit erat.
-				Sed venenatis purus ac vehicula tincidunt. Cras eu justo at purus auctor semper. Nam sem tellus, elementum et
-				massa non, feugiat imperdiet eros. Nulla nec mollis neque. Donec vel auctor quam. Maecenas volutpat lobortis
-				ipsum vel pretium. Donec hendrerit convallis ex sit amet tincidunt. Donec ut condimentum risus. Praesent vel ex
-				orci. Nulla non auctor dui, id eleifend neque. Morbi vitae tortor diam. Phasellus sed purus tincidunt, aliquam
-				velit eu, finibus mi. In at urna ipsum. Nunc vestibulum luctus lectus eu hendrerit. Phasellus nibh leo,
-				consequat at tincidunt hendrerit, volutpat non erat. Maecenas eu nulla vel libero convallis pulvinar. Aliquam
-				gravida ultrices euismod. Fusce congue a mauris ac interdum. Vivamus interdum vehicula euismod. Integer lobortis
-				massa quis neque aliquet tristique. Phasellus laoreet est vel convallis eleifend. Orci varius natoque penatibus
-				et magnis dis parturient montes, nascetur ridiculus mus. Aenean sit amet enim quis nulla viverra iaculis vitae
-				ac erat. Pellentesque ut eleifend nulla. Integer mollis massa in urna tristique consequat. Fusce non purus a
-				justo tincidunt lacinia. Donec in mi augue. Suspendisse posuere sodales eros, sed placerat magna. Sed blandit
-				tempor orci, nec dictum mi euismod id.
-			</Row>
 		</Container>
-	);
-}
-
-ReactDOM.render(
-	<BrowserRouter>
 		<RouterSwitch />
 	</BrowserRouter>,
 	document.getElementById("root")

@@ -2,6 +2,7 @@ const express = require("express");
 const fsp = require("fs").promises;
 const path = require("path");
 const uuidv4 = require("uuid").v4;
+const withAuth = require('./middleware');
 
 const app = express();
 app.set("json spaces", 4);
@@ -51,12 +52,12 @@ router.use((req, res, next) => {
 		return res.status(403).json({ error: "No credentials sent!" });
 	}
 	const b64auth = req.headers.authorization.split(" ")[1];
-	res.locals.user = Buffer.from(b64auth, "base64").toString().split(":")[0];
+	req.username = Buffer.from(b64auth, "base64").toString().split(":")[0];
 	next();
 });
 
-router.get("/", async (req, res, next) => {
-	const userDir = path.join(app.get("path"), res.locals.user);
+router.get("/",withAuth, async (req, res, next) => {
+	const userDir = path.join(app.get("path"), req.username);
 	let promises;
 	try {
 		promises = await readFilesInFolder(userDir);
@@ -70,40 +71,40 @@ router.get("/", async (req, res, next) => {
 		.catch(next);
 });
 
-router.get("/:id", async (req, res, next) => {
-	const userDir = path.join(app.get("path"), res.locals.user);
+router.get("/:id", withAuth, async (req, res, next) => {
+	const userDir = path.join(app.get("path"), req.username);
 	const storyFile = `story_${req.params.id}.json`;
 	readFile(storyFile, userDir)
 		.then((data) => res.send(data))
 		.catch(next);
 });
 
-router.get("/:id/activities", async (req, res, next) => {
-	const userDir = path.join(app.get("path"), res.locals.user);
+router.get("/:id/activities", withAuth, async (req, res, next) => {
+	const userDir = path.join(app.get("path"), req.username);
 	const storyFile = `story_${req.params.id}.json`;
 	readFile(storyFile, userDir)
 		.then((data) => res.send(data.activities))
 		.catch(next);
 });
 
-router.get("/:id/missions", async (req, res, next) => {
-	const userDir = path.join(app.get("path"), res.locals.user);
+router.get("/:id/missions", withAuth, async (req, res, next) => {
+	const userDir = path.join(app.get("path"), req.username);
 	const storyFile = `story_${req.params.id}.json`;
 	readFile(storyFile, userDir)
 		.then((data) => res.send(data.missions))
 		.catch(next);
 });
 
-router.get("/:id/transitions", async (req, res, next) => {
-	const userDir = path.join(app.get("path"), res.locals.user);
+router.get("/:id/transitions", withAuth, async (req, res, next) => {
+	const userDir = path.join(app.get("path"), req.username);
 	const storyFile = `story_${req.params.id}.json`;
 	readFile(storyFile, userDir)
 		.then((data) => res.send(data.transitions))
 		.catch(next);
 });
 
-router.post("/:id/missions", async (req, res, next) => {
-	const userDir = path.join(app.get("path"), res.locals.user);
+router.post("/:id/missions", withAuth, async (req, res, next) => {
+	const userDir = path.join(app.get("path"), req.username);
 	const storyFile = `story_${req.params.id}.json`;
 	let data;
 	try {
@@ -118,8 +119,8 @@ router.post("/:id/missions", async (req, res, next) => {
 		.catch(next);
 });
 
-router.post("/:id/transitions", async (req, res, next) => {
-	const userDir = path.join(app.get("path"), res.locals.user);
+router.post("/:id/transitions", withAuth, async (req, res, next) => {
+	const userDir = path.join(app.get("path"), req.username);
 	const storyFile = `story_${req.params.id}.json`;
 	let data;
 	try {
@@ -134,8 +135,8 @@ router.post("/:id/transitions", async (req, res, next) => {
 		.catch(next);
 });
 
-router.put("/:id/name", async (req, res, next) => {
-	const userDir = path.join(app.get("path"), res.locals.user);
+router.put("/:id/name", withAuth, async (req, res, next) => {
+	const userDir = path.join(app.get("path"), req.username);
 	const storyFile = `story_${req.params.id}.json`;
 	let statusCode = 200;
 	let data;
@@ -152,8 +153,8 @@ router.put("/:id/name", async (req, res, next) => {
 		.catch(next);
 });
 
-router.put("/:id/description", async (req, res, next) => {
-	const userDir = path.join(app.get("path"), res.locals.user);
+router.put("/:id/description", withAuth, async (req, res, next) => {
+	const userDir = path.join(app.get("path"), req.username);
 	const storyFile = `story_${req.params.id}.json`;
 	let statusCode = 200;
 	let data;
@@ -170,9 +171,9 @@ router.put("/:id/description", async (req, res, next) => {
 		.catch(next);
 });
 
-router.post("/:id/qrcode", async (req, res, next) => {
+router.post("/:id/qrcode", withAuth, async (req, res, next) => {
 	const storyCode = uuidv4();
-	const userDir = path.join(app.get("path"), res.locals.user);
+	const userDir = path.join(app.get("path"), req.username);
 	const storyFile = `story_${req.params.id}.json`;
 	let data;
 	try {
@@ -181,7 +182,7 @@ router.post("/:id/qrcode", async (req, res, next) => {
 		data = {};
 		console.log("Read file error: " + e.message);
 	}
-	data[storyCode] = { user: res.locals.user, story: req.params.id };
+	data[storyCode] = { user: req.username, story: req.params.id };
 	writeFile("stories.json", data)
 		.then(() => console.log("added story to stories.json"))
 		.catch(next);
@@ -198,8 +199,8 @@ router.post("/:id/qrcode", async (req, res, next) => {
 		.catch(next);
 });
 
-router.delete("/:id/qrcode", async (req, res, next) => {
-	const userDir = path.join(app.get("path"), res.locals.user);
+router.delete("/:id/qrcode", withAuth, async (req, res, next) => {
+	const userDir = path.join(app.get("path"), req.username);
 	const storyFile = `story_${req.params.id}.json`;
 	let data;
 	try {
