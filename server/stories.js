@@ -47,14 +47,14 @@ router.use((req, res, next) => {
 	next();
 });
 
-router.use((req, res, next) => {
+/*router.use((req, res, next) => {
 	if (!req.headers.authorization) {
 		return res.status(403).json({ error: "No credentials sent!" });
 	}
 	const b64auth = req.headers.authorization.split(" ")[1];
 	req.username = Buffer.from(b64auth, "base64").toString().split(":")[0];
 	next();
-});
+});*/
 
 router.get("/",withAuth, async (req, res, next) => {
 	const userDir = path.join(app.get("path"), req.username);
@@ -223,6 +223,46 @@ router.delete("/:id/qrcode", withAuth, async (req, res, next) => {
 	writeFile("stories.json", data)
 		.then(() => console.log("removed story from stories.json"))
 		.catch(next);
+});
+
+
+router.post("/file",(req,res) => {
+	const fileName = req.files.myFile.name;
+	const path = __dirname + "/data/user_1/media/" + fileName;
+	const file = req.files.myFile;
+	file.mv(path, (error)=>{
+		if(error){
+			console.log(error);
+			res.writeHead(500, {
+				'Content-Type': 'application/json'
+			  });
+			  res.end(JSON.stringify({ status: 'error', message: error }, null, app.get("json spaces")));
+			  return;
+		}
+	});
+});
+
+
+router.get("/file/:file_name",(req,res)=>{
+	const image_name = req.params["file_name"];
+	res.sendFile(__dirname + "/data/user1/media/"+image_name);
+});
+
+router.post("/activity/:story_name/:activity_number", async (req, res, next) => {
+	const userDir = path.join(app.get("path"), "user_1");
+	const storyFile = `story_${req.params["story_name"]}.json`;
+	let data;
+	try {
+		data = await readFile(storyFile, userDir);
+	} catch (e) {
+		data = {};
+		console.log("Read file error: " + e.message);
+	}
+	data["activities"] = {...data["activities"], [req.params["activity_number"]]: req.body};
+	writeFile(storyFile, data, userDir)
+		.then(() => res.status(201).send("new activity added"))
+		.catch(next);
+
 });
 
 module.exports = router;

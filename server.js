@@ -10,6 +10,7 @@ console.log(__dirname);
 
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(cookieParser());
+
 app.use("/story", stories);
 app.use("/auth",auth);
 app.get('/*', function (req, res) {
