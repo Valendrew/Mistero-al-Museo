@@ -3,6 +3,8 @@ import RemoveElement from "./removeElem";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
+import Form from "react-bootstrap/Form";
+import Domanda from "./domanda";
 
 function RispostaAperta(props) {
     let array=props.inputsVal_;
@@ -10,7 +12,7 @@ function RispostaAperta(props) {
     
     function setVal(e){
         if(array["questions"].length === 0){
-            array["questions"].push({"type": "open", "answers":[], "tips":[]});
+            array["questions"].push({"type": "open", "value":"", "answers":[], "tips":[]});
             array["questions"][0]["answers"].push({score:[-1,-1]});
         }
         else if( array["questions"][0]["tips"].length > 0 &&  array["questions"][0]["answers"].length === 0){
@@ -26,30 +28,32 @@ function RispostaAperta(props) {
 
 
     return (
-       <Row id={props.id_div_}>
-           <Col className="col-8 my-2">
-           <Table >
-               <tr>
-                    <td><label>Inserisci punteggio minimo: </label></td> 
-                    <td><input type="number" name="primo_input" onChange={setVal}></input></td>
-                    
-                </tr>
-            </Table>
+       <div id={props.id_div_}>
+           <Domanda />
+            <Row>
+                <Col className="col-6 my-2">
+                    <Table >
+                        <tr>
+                            <td><Form.Label>Inserisci punteggio minimo: </Form.Label></td> 
+                            <td><Form.Control type="number" name="primo_input" className="mb-2" onChange={setVal}></Form.Control></td>
+                        </tr>
+                    </Table>
                 </Col>
-            <Col className="col-4 my-2">
-                <RemoveElement toRemove={props.id_div_} DeleteInput_={props.DeleteInput_}/>
-            </Col>
-            <Col className="col-8 my-2">
-            <Table >
-                <tr>
-                   
-                    <td><label>Inserisci punteggio massimo: </label></td>
-                    <td><input type="number" name="secondo_input" onChange={setVal}></input></td>
-                    
-                </tr>
-           </Table>
-           </Col>
-       </Row>
+                <Col className="col-6 my-2">
+                    <RemoveElement toRemove={props.id_div_} DeleteInput_={props.DeleteInput_}/>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="col-6 my-2">
+                    <Table >
+                        <tr>
+                            <td><Form.Label>Inserisci punteggio massimo: </Form.Label></td>
+                            <td><Form.Control type="number" name="secondo_input" onChange={setVal}></Form.Control></td>    
+                        </tr>
+                    </Table>
+                </Col>
+           </Row>
+       </div>
     );
   }
 

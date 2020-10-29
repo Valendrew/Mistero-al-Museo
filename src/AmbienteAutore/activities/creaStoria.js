@@ -30,7 +30,7 @@ function CreaStoria(props) {
                 const newTip = value;
                 setTips([...tips,newTip]);
                 if(array["questions"].length === 0){
-                    array["questions"].push({"type": "", "answers":[], "tips":[]});
+                    array["questions"].push({"type": "", "value":"", "answers":[], "tips":[]});
                 }
                 array["questions"][0]["tips"].push("");
             }
@@ -74,18 +74,20 @@ function CreaStoria(props) {
             const remainingRisposta = risposta.filter(risp => risposta_id !== risp.id_div);
             setRisposta(remainingRisposta);
             let remainingStoryVal = inputsVal["questions"];
-            if(remainingStoryVal[0]["tips"].length === 0){
-                remainingStoryVal.splice(0,1);
+            if(remainingStoryVal.length > 0){
+                if(remainingStoryVal[0]["tips"].length === 0){
+                    remainingStoryVal.splice(0,1);
+                }
+                else{
+                    remainingStoryVal[0]["type"] = "";
+                    remainingStoryVal[0]["answers"] = [];
+                }
+                let remainingVal={
+                    "storyline":inputsVal["storyline"],
+                    "questions":remainingStoryVal
+                };
+                setInputsVal(remainingVal);
             }
-            else{
-                remainingStoryVal[0]["type"] = "";
-                remainingStoryVal[0]["answers"] = [];
-            }
-            let remainingVal={
-                "storyline":inputsVal["storyline"],
-                "questions":remainingStoryVal
-            };
-            setInputsVal(remainingVal);
         }
 
         //risposte è un array di oggetti per prevedere la possibilità di avere più input di risposta
@@ -140,6 +142,7 @@ function CreaStoria(props) {
                 setRisposta([]);
                 setTips([]);
                 setNumVal(0);
+                setDomandaVal("");
             });
         };
 
@@ -165,6 +168,7 @@ function CreaStoria(props) {
             <Text index={index} inputsVal={inputsVal} />
         );
         const [num_val, setNumVal] = useState(0);
+        const [domanda_val, setDomandaVal] = useState("");
         return ( 
             <form onSubmit={gestisciDati}>
                 <Container id="main_container" key ="main_container" className="container my-4 border rounded shadow-sm p-4 mb-4">

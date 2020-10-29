@@ -8,9 +8,9 @@ const auth = require("./server/auth");
 const cookieParser = require('cookie-parser');
 const fileupload = require('express-fileupload');
 
+app.use(cookieParser());
 app.use("/story", fileupload(), stories);
 app.use("/games", games);
-app.use(cookieParser());
 app.use("/auth",auth);
 app.listen(port, () => {
 	console.log(`Server running in Port ${port}`);

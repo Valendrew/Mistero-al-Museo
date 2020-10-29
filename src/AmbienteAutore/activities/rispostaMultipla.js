@@ -3,6 +3,7 @@ import RemoveElement from "./removeElem";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
+import Domanda from "./domanda";
 
 function RispostaMultipla(props) {
     
@@ -11,7 +12,7 @@ function RispostaMultipla(props) {
     function addOpzioni(event){
         
         if(array["questions"].length === 0){
-            array["questions"].push({"type": props.type, "answers":[], "tips":[]});
+            array["questions"].push({"type": props.type, "value":"", "answers":[], "tips":[]});
         }
         let inputCount=0;
         setButtons([]);
@@ -70,26 +71,32 @@ function RispostaMultipla(props) {
             </tr>
         );
     return (
-        <Row id={props.id_div_}>
-            <Col className="col-8 my-2" id="div_main_narrazione">
-                <input type="number" min="2" max="5" onInput={addOpzioni}></input>   
-            </Col>
-            <Col className="col-4 my-2">
-                <RemoveElement toRemove={props.id_div_} DeleteInput_={props.DeleteInput_}/>
-            </Col>
-            <Col className="col-8 my-2" id="div_main_narrazione">
-                <Table>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Inserisci risposta</th>
-                        <th scope="col">Selezione le questions corrette</th>
-                        <th scope="col">Genera percorso alternativo</th>
-                        <th scope="col">Inserisci punteggio</th>
-                    </tr>
-                 {buttonList}
-                </Table>
-            </Col>
-        </Row>
+        <div id={props.id_div_}>
+            <Domanda />
+            <Row>
+                <Col className="col-8 my-2" id="div_main_narrazione">
+                    <input type="number" min="2" max="5" onInput={addOpzioni}></input>   
+                </Col>
+            
+                <Col className="col-4 my-2">
+                    <RemoveElement toRemove={props.id_div_} DeleteInput_={props.DeleteInput_}/>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="col-8 my-2" id="div_main_narrazione">
+                    <Table>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Inserisci risposta</th>
+                            <th scope="col">Selezione le questions corrette</th>
+                            <th scope="col">Genera percorso alternativo</th>
+                            <th scope="col">Inserisci punteggio</th>
+                        </tr>
+                    {buttonList}
+                    </Table>
+                </Col>
+            </Row>
+        </div>
     );
   }
 
