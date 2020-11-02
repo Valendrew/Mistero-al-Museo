@@ -1,6 +1,5 @@
 import React from "react";
-import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
+import {Form, Container, Row} from "react-bootstrap";
 function Text(props){
     let array=props.inputsVal;
 
@@ -11,8 +10,8 @@ function Text(props){
     return(
         <Container className="my-4">
         <Row>
-            <label>Inserisci l'aiuto numero {props.index}: </label>
-            <input type="text" onChange={(e)=>saveTip(e, props.index)}></input>
+            <Form.Label>Inserisci l'aiuto numero {props.index}: </Form.Label>
+            <Form.Control type="text" onChange={(e)=>saveTip(e, props.index)}></Form.Control>
         </Row>
         </Container>
     );

@@ -1,9 +1,7 @@
 
 import React, { useState } from "react";
 import RemoveElement from "./removeElem";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Form, Row, Col, Image, Container } from "react-bootstrap";
 /*fetch(`/story/file/${files[0].name}`, {
                 method: 'GET',
                 headers:{"Content-Type": "image/*"},
@@ -79,13 +77,13 @@ export default function Media(props) {
             <Container>
             <Row className="my-4">
                 <Col>
-                    <img src={data[0]}alt="" width="80" height="80"></img>
+                    <Image src={data[0]} thumbnail fluid/>
                 </Col>
                 <Col>
-                    <input type="text" onChange={(e)=>setAltVal(e,data[1])}></input>
+                    <Form.Control type="text" onChange={(e)=>setAltVal(e,data[1])}></Form.Control>
                 </Col>
                 <Col>
-                    <textarea onChange={(e)=>setDescription(e,data[1])}></textarea>
+                    <Form.Control as="textarea" onChange={(e)=>setDescription(e,data[1])}></Form.Control>
                 </Col>
             </Row>
             </Container>
@@ -102,10 +100,10 @@ export default function Media(props) {
             </Row>
             <Row>
                 <Col>
-                    <input type="text" onChange={(e)=>setAltVal(e,data[1])}></input>
+                    <Form.Control type="text" onChange={(e)=>setAltVal(e,data[1])}></Form.Control>
                 </Col>
                 <Col>
-                    <textarea onChange={(e)=>setDescription(e,data[1])}></textarea>
+                    <Form.Control as="textarea" onChange={(e)=>setDescription(e,data[1])}></Form.Control>
                 </Col>
             </Row>
             </Container>
@@ -115,7 +113,7 @@ export default function Media(props) {
     return (
         <Row id={props.id_div_}>
             <Col className="col-8 my-2" id="div_main_narrazione">
-            <input type="file" accept={props.type} id={props.id_input_} onChange={setVal} multiple={props.type === "image/*"}></input>
+            <Form.File accept={props.type} id={props.id_input_} onChange={setVal} multiple={props.type === "image/*"}></Form.File>
                 
                     {selMedia}
             </Col>

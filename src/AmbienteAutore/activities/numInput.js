@@ -1,6 +1,5 @@
 import React from "react";
-import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container"; 
+import { Form, Row, Container} from "react-bootstrap";
 
 function NumInput(props) {
     function addTips(e){
@@ -13,8 +12,8 @@ function NumInput(props) {
     return(
         <Container>
     <Row id="div-tips">
-        <label for="tips-input"><b>Inserisci dei suggerimenti per il giocatore: </b></label>
-        <input id="tips-input" type="number" min="0" max="10" onInput={addTips} onKeyDown={prevent} value={props.value}></input>   
+        <Form.Label for="tips-input"><b>Inserisci dei suggerimenti per il giocatore: </b></Form.Label>
+        <Form.Control id="tips-input" type="number" min="0" max="10" onInput={addTips} onKeyDown={prevent} value={props.value}></Form.Control>   
     </Row>
     </Container>
     ); 

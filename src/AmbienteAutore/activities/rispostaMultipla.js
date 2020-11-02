@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import RemoveElement from "./removeElem";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Table from "react-bootstrap/Table";
 import Domanda from "./domanda";
+import { Form, Table, Col, Row, } from "react-bootstrap";
 
 function RispostaMultipla(props) {
     
@@ -63,19 +61,19 @@ function RispostaMultipla(props) {
     const [buttons, setButtons] = useState(props.tipologia);
     const buttonList = buttons.map(btn =>
             <tr onChange={setValue} id={btn.id}>
-                <td><input type={btn.radio_check} disabled/></td>
-                <td><input name="text" type="text"/></td>
-                <td><input name={btn.radio_check} type={btn.radio_check}/></td>
-                <td><input name="checbok_percorso" type="checkbox" /></td>
-                <td><input name="score" type="number"/></td>
+                <td><Form.Check type={btn.radio_check} disabled/></td>
+                <td><Form.Control name="text" type="text"/></td>
+                <td><Form.Check name={btn.radio_check} type={btn.radio_check}/></td>
+                <td><Form.Check name="checbok_percorso" type="checkbox" /></td>
+                <td><Form.Control name="score" type="number"/></td>
             </tr>
         );
     return (
         <div id={props.id_div_}>
-            <Domanda />
+            <Domanda inputsVal={props.inputsVal_}/>
             <Row>
                 <Col className="col-8 my-2" id="div_main_narrazione">
-                    <input type="number" min="2" max="5" onInput={addOpzioni}></input>   
+                    <Form.Control type="number" min="2" max="5" onInput={addOpzioni}></Form.Control>   
                 </Col>
             
                 <Col className="col-4 my-2">

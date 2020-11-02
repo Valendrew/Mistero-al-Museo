@@ -1,6 +1,5 @@
 import React from "react";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
+import { Container,Dropdown, DropdownButton} from "react-bootstrap";
 export default function addElem(props) {
   
   function addButtons(values){
@@ -29,10 +28,10 @@ export default function addElem(props) {
   }
 
     return (
-        <div className="container">
+        <Container>
           <DropdownButton title="Aggiungi Input" drop="right">
             {addButtons(props.values_)}
           </DropdownButton>
-      </div>
+      </Container>
     );
   }

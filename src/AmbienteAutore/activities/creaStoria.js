@@ -3,13 +3,9 @@ import React, { useState } from "react";
 import AddElem from "./addElem";
 import Input from "./Input";
 import { nanoid } from "nanoid";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 import NumInput from "./numInput";
 import Text from "./Text";
+import { Form, Container, Row, Col, Button, ButtonGroup } from "react-bootstrap";
 const values = [
     ["testo", "video", "immagini"],
     ["aperta","multipla_check","multipla_radio","widget"]
@@ -142,7 +138,6 @@ function CreaStoria(props) {
                 setRisposta([]);
                 setTips([]);
                 setNumVal(0);
-                setDomandaVal("");
             });
         };
 
@@ -155,7 +150,7 @@ function CreaStoria(props) {
               return(
                     <div>
                         <h1>Inserisci il titolo della storia</h1>
-                        <input type="text" size={40} onChange={setTitleVal} value={title} autoFocus></input>
+                        <Form.Control type="text" size={40} onChange={setTitleVal} value={title} autoFocus></Form.Control>
                     </div>
                 );
             }
@@ -168,9 +163,8 @@ function CreaStoria(props) {
             <Text index={index} inputsVal={inputsVal} />
         );
         const [num_val, setNumVal] = useState(0);
-        const [domanda_val, setDomandaVal] = useState("");
         return ( 
-            <form onSubmit={gestisciDati}>
+            <Form onSubmit={gestisciDati}>
                 <Container id="main_container" key ="main_container" className="container my-4 border rounded shadow-sm p-4 mb-4">
                     <TextName />
                     <h3>Narrazione</h3>
@@ -200,7 +194,7 @@ function CreaStoria(props) {
             
 
                 </Container>
-            </form>
+            </Form>
         );
     }
 

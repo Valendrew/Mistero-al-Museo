@@ -1,7 +1,6 @@
 import React from "react";
 import RemoveElement from "./removeElem";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Form,Col, Row } from "react-bootstrap";
 let posizione_array=-1;
 
 export default function textArea(props) {
@@ -28,7 +27,7 @@ export default function textArea(props) {
     return (
         <Row id={props.id_div_}>
             <Col className="col-8 my-2" id="div_main_narrazione">
-                <textarea className="form-control" cols="80" rows="4" style={style} id={props.id_input_} onChange={setVal}></textarea>    
+                <Form.Control as="textarea" cols={80} rows={4} style={style} id={props.id_input_} onChange={setVal}></Form.Control>    
             </Col>
             <Col className="col-4 my-2">
                 <RemoveElement toRemove={props.id_div_} DeleteInput_={props.DeleteInput_} index={getIndex(props.id_input_)}/>

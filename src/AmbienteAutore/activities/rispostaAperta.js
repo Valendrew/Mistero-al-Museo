@@ -1,9 +1,6 @@
 import React from "react";
 import RemoveElement from "./removeElem";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Table from "react-bootstrap/Table";
-import Form from "react-bootstrap/Form";
+import {Form, Table, Col, Row} from "react-bootstrap";
 import Domanda from "./domanda";
 
 function RispostaAperta(props) {
@@ -15,7 +12,7 @@ function RispostaAperta(props) {
             array["questions"].push({"type": "open", "value":"", "answers":[], "tips":[]});
             array["questions"][0]["answers"].push({score:[-1,-1]});
         }
-        else if( array["questions"][0]["tips"].length > 0 &&  array["questions"][0]["answers"].length === 0){
+        else if((array["questions"][0]["tips"].length > 0 &&  array["questions"][0]["answers"].length === 0) || (array["questions"][0]["value"]!=="" && array["questions"][0]["answers"].length === 0)){
             array["questions"][0]["answers"].push({score:[-1,-1]});
         }
         
@@ -29,7 +26,7 @@ function RispostaAperta(props) {
 
     return (
        <div id={props.id_div_}>
-           <Domanda />
+           <Domanda inputsVal={props.inputsVal_}/>
             <Row>
                 <Col className="col-6 my-2">
                     <Table >
