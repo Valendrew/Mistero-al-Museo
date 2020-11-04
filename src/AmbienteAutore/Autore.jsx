@@ -13,6 +13,7 @@ import Button from "react-bootstrap/Button";
 import MissionsOverview from "./missions/MissionsOverview";
 import MissionsTransitions from "./missions/MissionsTransitions";
 import StoryOverview from "./stories/StoryOverview";
+import CreaStoria from "./activities/creaStoria";
 
 function StoryCard(props) {
 	return (
@@ -60,7 +61,7 @@ function AutoreHome(props) {
 					<Nav.Link as={Link} to="/">
 						Home
 					</Nav.Link>
-					<Nav.Link as={Link} to={`${match.url}/story/missions`}>
+					<Nav.Link as={Link} to={`${match.url}/story/activity`}>
 						Crea nuova storia
 					</Nav.Link>
 				</Nav>
@@ -102,6 +103,9 @@ function Autore() {
 			</Route>
 			<Route path={`${match.path}/story/transitions`}>
 				<MissionsTransitions />
+			</Route>
+			<Route path={`${match.path}/story/activity`}>
+				<CreaStoria />
 			</Route>
 		</Switch>
 	);
