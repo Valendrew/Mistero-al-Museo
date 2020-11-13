@@ -13,7 +13,7 @@ import Button from "react-bootstrap/Button";
 import MissionsOverview from "./missions/MissionsOverview";
 import MissionsTransitions from "./missions/MissionsTransitions";
 import StoryOverview from "./stories/StoryOverview";
-import CreaStoria from "./activities/creaStoria";
+import CreateActivity from "./activities/CreateActivity";
 
 function StoryCard(props) {
 	return (
@@ -105,7 +105,7 @@ function Autore() {
 				<MissionsTransitions />
 			</Route>
 			<Route path={`${match.path}/story/activity`}>
-				<CreaStoria />
+				<CreateActivity />
 			</Route>
 		</Switch>
 	);

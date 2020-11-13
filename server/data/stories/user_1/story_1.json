@@ -13,8 +13,9 @@
                     "Questo è un testo lunghissimo"
                 ],
                 [
-                    "text",
-                    "someText"
+                    "img",
+                    "someText",
+                    "alt_text"
                 ]
             ],
             "questions": [
