@@ -1,16 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
+import Image from "react-bootstrap/Image";
 
+function ActivityListItem({ idStory, value }) {
+	const [mediaURL, setMediaURL] = useState(undefined);
+	const [isLoaded, setIsLoaded] = useState(false);
+
+	useEffect(() => {
+		if (!mediaURL) {
+			if (value[0] === "img" || value[0] === "video") {
+				fetch(`/files/${idStory}/${value[1]}.${value[2]}`)
+					.then((result) => result.blob())
+					.then((data) => {
+						var objectURL = URL.createObjectURL(data);
+						setMediaURL(objectURL);
+						setIsLoaded(true);
+					})
+					.catch((e) => console.log(e));
+			} else setIsLoaded(true);
+		}
+	}, [mediaURL, idStory, value]);
+	return (
+		<ListGroup.Item>
+			{isLoaded ? (
+				<>
+					{value[0]} :
+					{value[0] === "img" ? (
+						<Image src={mediaURL} thumbnail fluid />
+					) : value[0] === "video" ? (
+						<video alt="" width="320" height="240" controls>
+							<source src={mediaURL}></source>
+						</video>
+					) : (
+						value[1]
+					)}
+				</>
+			) : (
+				"Loading..."
+			)}
+		</ListGroup.Item>
+	);
+}
 function ActivityList(props) {
 	return (
 		<ListGroup variant="flush">
 			{props.storyline.map((value, key) => (
-				<ListGroup.Item key={key}>
-					{value[0]}: {value[1]}
-				</ListGroup.Item>
+				<ActivityListItem key={key} idStory={props.idStory} value={value} />
 			))}
 		</ListGroup>
 	);
@@ -20,7 +58,7 @@ function ActivityCard(props) {
 	return (
 		<Col>
 			<Card>
-				<Card.Header>Attività {(props.id + 1).toString()}</Card.Header>
+				<Card.Header>Attività {props.id.toString()}</Card.Header>
 				<Card.Body>
 					<Card.Title>Elementi narrazione</Card.Title>
 					<ActivityList {...props} />

@@ -37,21 +37,6 @@ function RouterSwitch() {
 function Home() {
 	return (
 		<Container>
-
-			<Row>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. In faucibus commodo nisl maximus pretium. Donec sed
-				urna convallis, auctor enim sed, euismod enim. Vivamus egestas auctor quam, ac lobortis arcu dapibus eu. Morbi
-				mauris leo, luctus et mauris quis, bibendum cursus nisl. In hac habitasse platea dictumst. Nunc non elit erat.
-				Sed venenatis purus ac vehicula tincidunt. Cras eu justo at purus auctor semper. Nam sem tellus, elementum et
-				massa non, feugiat imperdie
-			</Row>
-		</Container>
-	);
-}
-
-ReactDOM.render(
-	<BrowserRouter>
-		<Container>
 			<Navbar>
 				<Nav>
 					<Nav.Link as={Link} to="/">
@@ -68,8 +53,22 @@ ReactDOM.render(
 					</Nav.Link>
 				</Nav>
 			</Navbar>
+			<Row>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. In faucibus commodo nisl maximus pretium. Donec sed
+				urna convallis, auctor enim sed, euismod enim. Vivamus egestas auctor quam, ac lobortis arcu dapibus eu. Morbi
+				mauris leo, luctus et mauris quis, bibendum cursus nisl. In hac habitasse platea dictumst. Nunc non elit erat.
+				Sed venenatis purus ac vehicula tincidunt. Cras eu justo at purus auctor semper. Nam sem tellus, elementum et
+				massa non, feugiat imperdie
+			</Row>
 		</Container>
-		<RouterSwitch />
+	);
+}
+
+ReactDOM.render(
+	<BrowserRouter>
+		<Container>
+			<RouterSwitch />
+		</Container>
 	</BrowserRouter>,
 	document.getElementById("root")
 );

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 import Narrazione from "./Narrazione";
 import Risposta from "./Risposta";
 
-import { Form, Container, Row, Button, ButtonGroup } from "react-bootstrap";
+import { Form, Container, Button, ButtonGroup } from "react-bootstrap";
+import { useEffect } from "react";
 
 const storylineInputs = [
 	{ id: "text", value: "Inserisci un testo" },
@@ -18,95 +20,99 @@ const questionsInputs = [
 	{ id: "widget", value: "Risposta con widget" },
 ];
 
-function processStoryline(storyline, inputs) {
-	var formData = new FormData();
-	let storylineArray = Object.entries(storyline);
-	storylineArray.sort((a, b) => a.order - b.order);
+async function processStoryline(storyline, inputs, idStory) {
+	let formData = new FormData();
+	const storylineSorted = Object.entries(storyline).sort((a, b) => a.order - b.order);
 	let returnObj = [];
-	returnObj = storylineArray.map(([key, val]) => {
-		if (inputs[key].type === "img") {
-			
-			formData.append(key, inputs[key].value);
-			return [inputs[key].type, "", inputs[val.alt].value];
-		} else if (inputs[key].type === "text" || inputs[key].type === "video") {
-			return [inputs[key].type, inputs[key].value];
-		}
-	});
-	
-		fetch(`/story/file/`, {
-			method: "POST",
-			body: formData,
-		}).then((filesId) => {
-			alert(filesId);
-			let i = 0;
-			returnObj.map((input) => {
-				if (input[0] === "img" || input[0] === "video") {
-					input[1] = filesId[++i];
-				}
-			});
-		});
 
-	return returnObj;
+	returnObj = storylineSorted.map(([key, val]) => {
+		let input = [inputs[key].type, inputs[key].value];
+		if (inputs[key].type === "img" || inputs[key].type === "video") {
+			formData.append(key, inputs[key].value);
+			input[2] = inputs[key].value.split(".").reverse()[0];
+		}
+		if (inputs[key].type === "img") input[3] = inputs[val.alt].value;
+		return [key, input];
+	});
+
+	if (formData.keys().next().value) {
+		let result;
+		try {
+			result = await fetch(`/files/${idStory}`, {
+				method: "POST",
+				body: formData,
+			});
+		} catch (e) {
+			result = {};
+		}
+		const data = await result.json();
+		return returnObj.map(([key, value]) => {
+			if (value[0] === "img" || value[0] === "video") {
+				value[1] = data[key];
+			}
+			return value;
+		});
+	} else {
+		const last = returnObj.map(([key, value]) => value);
+		return last;
+	}
 }
 
 function processQuestions(questions, inputs) {
-	let QuestionsArray = Object.entries(questions);
-	QuestionsArray.sort((a, b) => a.order - b.order);
-	let returnObj = [];
+	const questionSorted = Object.entries(questions).sort((a, b) => a.order - b.order);
 
-	returnObj = QuestionsArray.map(([key, val]) => {
+	return questionSorted.map(([key, val]) => {
+		let question = {
+			type: inputs[key].type,
+			value: inputs[key].value,
+			tips: Object.entries(val.tips).map(([key, val]) => inputs[val].value),
+		};
 		if (inputs[key].type === "open") {
-			return {
-				type: inputs[key].type,
-				value: inputs[key].value,
-				minScore: inputs[val.minScore].value,
-				maxScore: inputs[val.maxScore].value,
-
-				tips: Object.entries(val.tips).map(
-					([tipNum, tipKey]) => inputs[tipKey].value
-				),
-			};
+			question = { ...question, minScore: inputs[val.minScore].value, maxScore: inputs[val.maxScore].value };
 		} else if (inputs[key].type === "widget") {
-		} else if (
-			inputs[key].type === "checkbox" ||
-			inputs[key].type === "radio"
-		) {
-			return {
-				type: inputs[key].type,
-				value: inputs[key].value,
-
-				answers: Object.entries(val.answers).map(([answerNum, answerKeys]) =>
-					answerKeys.map((answerKey) => inputs[answerKey].value)
-				),
-
-				tips: Object.entries(val.tips).map(
-					([tipNum, tipKey]) => inputs[tipKey].value
-				),
+			return null;
+		} else {
+			question = {
+				...question,
+				answers: Object.entries(val.answers).map(([key, val]) => {
+					return {
+						value: inputs[val[0]].value,
+						correct: inputs[val[1]].value,
+						transition: inputs[val[2]].value,
+						score: inputs[val[3]].value,
+					};
+				}),
 			};
 		}
+		return question;
 	});
-
-	return returnObj;
 }
 
 export default function CreateActivity(props) {
-	//const idStory = 1;
-	const [inputs, setInputs] = useState({});
-	const [activity, setActivity] = useState({ storyline: {}, questions: {} });
+	const history = useHistory();
+	const { id, number } = history.location.state;
+
+	const [invalidInputs, setInvalidInputs] = useState();
+	const [inputs, setInputs] = useState();
+	const [activity, setActivity] = useState();
+	const [isLoaded, setIsLoaded] = useState(false);
 
 	function handleInput(value, id, questionId = null, type = null) {
-		const valuePred = inputs[id].value;
-		let newInputs = { [id]: { ...inputs[id], value: value } };
+		const valuePred = inputs[id].value; // valore precedente dell'input
+		let newInputs = { [id]: { ...inputs[id], value: value } }; // aggiornato inputs con nuovo valore
 
+		/* Se viene selezionato questionId vuol dire che è stata apportata 
+		una modifica all'input number di tips oppure answers */
 		if (questionId) {
+			// Nel caso il value sia stato lasciato vuoto (ossia non un numero)
 			if (value === "") {
 				value = 0;
 				newInputs = { [id]: { ...inputs[id], value: value } };
 			}
-
-			const numberAnswers = value - valuePred;
+			// Numero di risposte da aggiungere/rimuovere
+			const numberAnswers = parseInt(value) - parseInt(valuePred);
+			// Ottengo il value della key di valore type (tips/answers)
 			let { [type]: child, ...other } = activity.questions[questionId];
-
 			if (numberAnswers > 0) {
 				for (let i = valuePred; i < value; i++) {
 					if (type === "answers") {
@@ -114,6 +120,7 @@ export default function CreateActivity(props) {
 						const idCorrect = nanoid();
 						const idTransition = nanoid();
 						const idScore = nanoid();
+
 						newInputs = {
 							...newInputs,
 							[idAnswer]: { type: "text", value: "" },
@@ -148,7 +155,6 @@ export default function CreateActivity(props) {
 		setInputs({ ...inputs, ...newInputs });
 	}
 
-	//Callback props
 	function handleAddInput(type, category) {
 		// Aggiunta nuovo input del tipo specificato
 		const elementId = nanoid();
@@ -230,23 +236,49 @@ export default function CreateActivity(props) {
 		setActivity({ ...activity, [category]: other });
 	}
 
-	const gestisciDati = (e) => {
+	const gestisciDati = async (e, buttonPressed) => {
 		e.preventDefault();
-		let toSend = {
-			storyline: processStoryline(activity["storyline"], inputs),
-			questions: processQuestions(activity["questions"], inputs),
-		};
-		console.log(toSend);
-		fetch(`/story/activity/3/0`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(toSend),
-		});
+		if (Object.keys(activity.storyline).length) {
+			const data = {
+				name: inputs.activityName,
+				storyline: await processStoryline(activity["storyline"], inputs, id),
+				questions: processQuestions(activity["questions"], inputs),
+			};
+			fetch(`/stories/${id}/activities/${number}`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(data),
+			}).then((res) => {
+				setIsLoaded(false);
+				if (buttonPressed === "nextActivity") history.push("activity", { id: id, number: number + 1 });
+				else history.push("missions", { id: id });
+			});
+		} else {
+			setInvalidInputs("Gli input non sono completati");
+		}
 	};
 
-	return (
+	useEffect(() => {
+		if (!isLoaded) {
+			setActivity({ storyline: {}, questions: {} });
+			setInputs({ activityName: "" });
+			setInvalidInputs(null);
+			setIsLoaded(true);
+		}
+	}, [isLoaded]);
+
+	return isLoaded ? (
 		<Container>
-			<Form onSubmit={gestisciDati}>
+			<h5>Stai creando l'attività {number + 1}</h5>
+			{invalidInputs}
+			<Form>
+				<Form.Label>Aggiungi nome attività</Form.Label>
+				<Form.Control
+					type="text"
+					name="activityName"
+					value={inputs.activityName}
+					onChange={(e) => setInputs({ ...inputs, activityName: e.target.value })}
+				/>
 				<Narrazione
 					storyline={activity.storyline}
 					inputs={inputs}
@@ -264,17 +296,19 @@ export default function CreateActivity(props) {
 					handleRemoveInput={handleRemoveInput}
 				/>
 
-				<Row className="my-4">
-					<ButtonGroup>
-						<Button type="submit" variant="success">
-							Prossima attività
+				<ButtonGroup>
+					<Button type="submit" name="nextActivity" variant="success" onClick={(e) => gestisciDati(e, e.target.name)}>
+						Prossima attività
+					</Button>
+					{number >= 9 ? (
+						<Button type="submit" name="newMissions" variant="success" onClick={(e) => gestisciDati(e, e.target.name)}>
+							Procedi a creare le missione
 						</Button>
-						<Button type="button" variant="success">
-							Concludi Storia
-						</Button>
-					</ButtonGroup>
-				</Row>
+					) : null}
+				</ButtonGroup>
 			</Form>
 		</Container>
+	) : (
+		<h6>Loading</h6>
 	);
 }

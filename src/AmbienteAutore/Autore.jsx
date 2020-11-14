@@ -13,7 +13,9 @@ import Button from "react-bootstrap/Button";
 import MissionsOverview from "./missions/MissionsOverview";
 import MissionsTransitions from "./missions/MissionsTransitions";
 import StoryOverview from "./stories/StoryOverview";
-import CreateActivity from "./activities/CreateActivity";
+import Activity from "./activities/Activity";
+import StoryIndex from "./stories/StoryIndex";
+import NavbarAutore from "./NavbarAutore";
 
 function StoryCard(props) {
 	return (
@@ -28,14 +30,15 @@ function StoryCard(props) {
 		</Card>
 	);
 }
+
 function AutoreHome(props) {
 	const match = useRouteMatch("/autore");
 	const [stories, setStories] = useState({ error: null, isLoaded: false, items: [] });
 
 	useEffect(() => {
-		fetch(`/story`, {
+		fetch(`/stories`, {
 			method: "GET",
-			headers: { Authorization: `Basic ${btoa("user_1:abcd")}`, "Content-Type": "application/json" },
+			headers: { "Content-Type": "application/json" },
 		})
 			.then((res) => res.json())
 			.then(
@@ -61,20 +64,29 @@ function AutoreHome(props) {
 					<Nav.Link as={Link} to="/">
 						Home
 					</Nav.Link>
-					<Nav.Link as={Link} to={`${match.url}/story/activity`}>
+					<Nav.Link as={Link} to={`${match.url}/story`}>
 						Crea nuova storia
 					</Nav.Link>
 				</Nav>
 			</Navbar>
 			<Row>
 				{stories.isLoaded ? (
-					stories.items.map((value) => {
-						return (
-							<Col lg="4" key={value.info.name}>
-								<StoryCard id={value.info.id} title={value.info.name} description={value.info.description} {...props} />
-							</Col>
-						);
-					})
+					stories.error ? (
+						<h5>Nessuna storia presente</h5>
+					) : (
+						stories.items.map((value) => {
+							return (
+								<Col lg="4" key={value.info.name}>
+									<StoryCard
+										id={value.info.id}
+										title={value.info.name}
+										description={value.info.description}
+										{...props}
+									/>
+								</Col>
+							);
+						})
+					)
 				) : (
 					<h5>Loading</h5>
 				)}
@@ -87,7 +99,7 @@ function Autore() {
 	let history = useHistory();
 
 	const onEditStory = (id) => {
-		history.push(`${match.path}/story`, { idStory: id });
+		history.push(`${match.path}/story/overview`, { id: id });
 	};
 
 	return (
@@ -96,16 +108,34 @@ function Autore() {
 				<AutoreHome onEditStory={onEditStory} />
 			</Route>
 			<Route exact path={`${match.path}/story`}>
-				<StoryOverview />
+				<>
+					<NavbarAutore />
+					<StoryIndex />
+				</>
+			</Route>
+			<Route exact path={`${match.path}/story/overview`}>
+				<>
+					<NavbarAutore />
+					<StoryOverview />
+				</>
 			</Route>
 			<Route path={`${match.path}/story/missions`}>
-				<MissionsOverview />
+				<>
+					<NavbarAutore />
+					<MissionsOverview />
+				</>
 			</Route>
 			<Route path={`${match.path}/story/transitions`}>
-				<MissionsTransitions />
+				<>
+					<NavbarAutore />
+					<MissionsTransitions />
+				</>
 			</Route>
 			<Route path={`${match.path}/story/activity`}>
-				<CreateActivity />
+				<>
+					<NavbarAutore />
+					<Activity />
+				</>
 			</Route>
 		</Switch>
 	);

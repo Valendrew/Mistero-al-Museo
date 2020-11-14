@@ -92,37 +92,18 @@ function Login() {
 	return (
 		<Container>
 			{accesso ? (
-				<Alert variant="success">
-					Accesso eseguito! Adesso puoi utilizzare l'ambiente autore e
-					valutatore, oppure accedi nuovamente per cambiare account
-				</Alert>
+				<Alert variant="success">Accesso eseguito! Adesso puoi utilizzare l'ambiente autore e valutatore, oppure accedi nuovamente per cambiare account</Alert>
 			) : (
-				<Alert variant="warning">
-					Devi accedere per usufruire dell'ambiente autore e valutatore.
-				</Alert>
+				<Alert variant="warning">Devi accedere per usufruire dell'ambiente autore e valutatore.</Alert>
 			)}
 			<Form onSubmit={(e) => handleSubmit(e)}>
 				<Form.Group>
 					<Form.Label>Inserisci nome utente:</Form.Label>
-					<Form.Control
-						required
-						minLength="4"
-						type="text"
-						id="usr"
-						value={username}
-						onChange={(event) =>
-							setUsername(event.target.value)
-						}></Form.Control>
+					<Form.Control required minLength="4" type="text" id="usr" value={username} onChange={(event) => setUsername(event.target.value)}></Form.Control>
 				</Form.Group>
 				<Form.Group>
 					<Form.Label>Inserisci la password:</Form.Label>
-					<Form.Control
-						required
-						minLength="4"
-						type="password"
-						id="pwd"
-						value={pass}
-						onChange={(event) => setPass(event.target.value)}></Form.Control>
+					<Form.Control required minLength="4" type="password" id="pwd" value={pass} onChange={(event) => setPass(event.target.value)}></Form.Control>
 					<br />
 				</Form.Group>
 				<Bottone />

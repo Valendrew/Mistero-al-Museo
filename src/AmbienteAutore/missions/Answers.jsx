@@ -8,7 +8,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 function SelectAnswer(props) {
 	return (
 		<Form onSubmit={(e) => props.handleAddActivity(props.componentName, e)}>
-			<h6>Risposta {props.answerValue}</h6>
+			<h6>{props.answerValue}</h6>
 			<Form.Control
 				as="select"
 				name={props.componentName}
@@ -34,7 +34,7 @@ function SelectAnswer(props) {
 function ViewAnswer(props) {
 	return (
 		<ListGroup>
-			<ListGroup.Item>Risposta {props.answerValue}</ListGroup.Item>
+			<ListGroup.Item>Risposta: {props.answerValue}</ListGroup.Item>
 			<ListGroup.Item>{props.answer}</ListGroup.Item>
 		</ListGroup>
 	);
@@ -49,7 +49,12 @@ function AnswerOverview(props) {
 }
 
 function Answers(props) {
-	const answers = props.infoActivities[props.activityNmb]["questions"][0]["answers"];
+	let answers;
+	const questions = props.infoActivities[props.activityNmb].questions;
+	if (questions.length)
+		if (questions[0].answers) answers = questions[0].answers;
+		else answers = [{ value: `${questions[0].value} (${questions[0].type} question)` }];
+	else answers = [{ value: "Attività narrazione" }];
 	return (
 		<Row>
 			{answers.map((value, key) => {
@@ -57,7 +62,7 @@ function Answers(props) {
 					<AnswerOverview
 						{...props}
 						key={`${props.selPrefix}_ans${key}`}
-						answerValue={value["value"]}
+						answerValue={value.answers ? `Risposta: ${value.value}` : value.value}
 						answerNmb={key}
 						answer={props.missions[props.activityNmb][key]}
 					/>

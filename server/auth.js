@@ -19,7 +19,7 @@ router.post("/login", jsonParser, (req, res) => {
 			if (pass === user_.pass) {
 				console.log("login success");
 				const token = jwt.sign({ username }, secret, {
-					expiresIn: '1h'
+					expiresIn: '6h'
 				});
 				res.cookie('token', token, { httpOnly: true })
 					.sendStatus(200);

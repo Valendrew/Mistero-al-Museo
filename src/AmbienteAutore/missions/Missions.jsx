@@ -24,7 +24,7 @@ function Missions(props) {
 	const [showModal, setShowModal] = useState(false);
 	const [inputs, setInputs] = useState({});
 	const [missions, setMissions] = useState({}); // missioni
-	const [activities, setActivities] = useState(Array.from(props.activities.keys())); // indici attività disponibili
+	const [activities, setActivities] = useState(Array.from(Object.keys(props.activities))); // indici attività disponibili
 
 	const handleAddActivity = (field, event) => {
 		event.preventDefault();
@@ -39,8 +39,15 @@ function Missions(props) {
 			possibili nel caso di nuova attività (!= new_mission) */
 			if (inputs[field] === "new_mission") actChild = inputs[field];
 			else {
-				actChild = parseInt(inputs[field]);
-				answersNmb = props.activities[actChild]["questions"][0]["answers"].length; // risposte attività
+				actChild = inputs[field];
+				const questions = props.activities[actChild].questions;
+				console.log(actChild);
+				if (questions.length) {
+					if (questions[0].answers) answersNmb = questions[0].answers.length;
+					else answersNmb = 1;
+				}
+				// risposte attività
+				else answersNmb = 1;
 			}
 
 			/* Nel caso di missionModal verrà creato un oggetto per la nuova missione, negli

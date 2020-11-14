@@ -1,0 +1,229 @@
+{
+    "info": {
+        "name": "Gigino e la nuova auto ferrai",
+        "description": "Giginooo aveva la nuova ferrari",
+        "id": 1,
+        "qr": "http://localhost:3000/player/c08c210c-d2ec-4044-a040-407be97d1d3f"
+    },
+    "activities": {
+        "0": {
+            "name": "appero",
+            "storyline": [
+                [
+                    "text",
+                    "aahahah"
+                ]
+            ],
+            "questions": []
+        },
+        "1": {
+            "name": "ahah",
+            "storyline": [
+                [
+                    "text",
+                    "ahahahah"
+                ]
+            ],
+            "questions": []
+        },
+        "2": {
+            "name": "aaaaaaaaa",
+            "storyline": [
+                [
+                    "text",
+                    "aaaaaa"
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "checkbox",
+                    "value": "ffffff",
+                    "tips": [
+                        "uuuuu"
+                    ],
+                    "answers": [
+                        {
+                            "value": "1 2 3 ",
+                            "correct": true,
+                            "transition": false,
+                            "score": "6"
+                        }
+                    ]
+                }
+            ]
+        },
+        "3": {
+            "name": "cacca",
+            "storyline": [
+                [
+                    "img",
+                    "c84ba2be-8a40-4ff1-88e4-7bc1c5cf3091",
+                    "jpeg",
+                    "puzzetta"
+                ]
+            ],
+            "questions": []
+        },
+        "4": {
+            "name": "dadada",
+            "storyline": [
+                [
+                    "text",
+                    "sfty"
+                ],
+                [
+                    "img",
+                    "8ffc3a73-1c77-41d0-8ddf-9bc45b50f2f0",
+                    "png",
+                    ""
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "piuskiu",
+                    "tips": [],
+                    "minScore": "-50",
+                    "maxScore": "50"
+                }
+            ]
+        },
+        "5": {
+            "name": "caccacarar",
+            "storyline": [
+                [
+                    "img",
+                    "0f03b995-6d4d-4bcc-9f76-893682abf11d",
+                    "jpeg",
+                    "stuf"
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "la caccarosa",
+                    "tips": [],
+                    "answers": [
+                        {
+                            "value": "22",
+                            "correct": false,
+                            "transition": false,
+                            "score": "0"
+                        },
+                        {
+                            "value": "3dada",
+                            "correct": false,
+                            "transition": false,
+                            "score": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        "6": {
+            "name": "ddd",
+            "storyline": [
+                [
+                    "text",
+                    "ddd"
+                ]
+            ],
+            "questions": []
+        },
+        "7": {
+            "name": "aaaaaa",
+            "storyline": [
+                [
+                    "text",
+                    "aaaaaaaaa"
+                ]
+            ],
+            "questions": []
+        },
+        "8": {
+            "name": "ddddddddddddd",
+            "storyline": [
+                [
+                    "text",
+                    "ddddddddddddddddd"
+                ]
+            ],
+            "questions": []
+        },
+        "9": {
+            "name": "sftuu",
+            "storyline": [
+                [
+                    "text",
+                    "etciuu"
+                ]
+            ],
+            "questions": []
+        }
+    },
+    "missions": {
+        "0": {
+            "0": [
+                "1"
+            ],
+            "1": [
+                "2"
+            ],
+            "2": [
+                "3"
+            ],
+            "3": [
+                "4"
+            ],
+            "4": [
+                "new_mission"
+            ],
+            "start": 0
+        },
+        "1": {
+            "5": [
+                "6",
+                "new_mission"
+            ],
+            "6": [
+                "7"
+            ],
+            "7": [
+                "new_mission"
+            ],
+            "start": 5
+        },
+        "2": {
+            "8": [
+                "new_mission"
+            ],
+            "start": 8
+        },
+        "3": {
+            "9": [
+                "new_mission"
+            ],
+            "start": 9
+        }
+    },
+    "transitions": [
+        [
+            "0",
+            "1",
+            "2",
+            "3"
+        ],
+        [
+            "0",
+            "1",
+            "2",
+            "3"
+        ],
+        [
+            "0",
+            "1",
+            "2",
+            "3"
+        ]
+    ]
+}

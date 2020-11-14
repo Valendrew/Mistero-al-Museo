@@ -1,20 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Switch, Route, useParams, useRouteMatch, useHistory } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
 import MainPage from "./MainPage";
+import Game from "./Game/Game";
 
 function Player() {
+	const match = useRouteMatch("/player");
+	return (
+		<Switch>
+			<Route path={`${match.path}/game`}>
+				<Game />
+			</Route>
+			<Route path="/player/:id">
+				<PlayerHome />
+			</Route>
+		</Switch>
+	);
+}
+
+function PlayerHome() {
 	const { id } = useParams();
+	const history = useHistory();
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: [] });
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await fetch(`/games/${id}`, {
 				method: "GET",
-				headers: { Authorization: `Basic ${btoa("user_1:abcd")}` },
 			});
 			// Se la richiesta non è andata a buon fine
 			if (!result.ok) setStory({ isLoaded: true, error: result.statusText });
@@ -30,8 +45,13 @@ function Player() {
 	}, [id, story]);
 
 	const startGame = async () => {
-		console.log("go");
+		history.push("/player/game", {
+			player: story.items.player,
+			story: story.items.story,
+			activity: story.items.story.missions[0]["start"],
+		});
 	};
+
 	return (
 		<Container>
 			{story.isLoaded ? (

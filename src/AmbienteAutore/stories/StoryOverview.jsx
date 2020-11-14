@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { DataSet, Network } from "vis-network/standalone/esm/vis-network";
 import QRCode from "qrcode.react";
 
@@ -7,12 +7,11 @@ import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+
 
 const createNodes = (activities, missions) => {
-	const nodes = activities
-		.map((_, key) => {
+	const nodes = Object.entries(activities)
+		.map(([key, _]) => {
 			return { id: `a_${key}`, label: `Attività ${key}` };
 		})
 		.concat(
@@ -50,13 +49,13 @@ const createEdges = (missions, transitions) => {
 	return edges;
 };
 
-function StoryGraph({ story }) {
+function StoryGraph({ story, transitions, index }) {
 	const domNode = useRef(null);
 	const network = useRef(null);
 
 	useEffect(() => {
 		const nodes = new DataSet(createNodes(story.activities, story.missions));
-		const edges = new DataSet(createEdges(story.missions, story.transitions));
+		const edges = new DataSet(createEdges(story.missions, transitions));
 		const layout = {
 			hierarchical: {
 				enabled: true,
@@ -83,11 +82,11 @@ function StoryGraph({ story }) {
 			edges,
 		};
 		network.current = new Network(domNode.current, data, options);
-	}, [story]);
+	}, [story, transitions]);
 
 	return (
 		<Card>
-			<Card.Header>Grafo delle storie</Card.Header>
+			<Card.Header>Grafo delle storie (Transizione {index})</Card.Header>
 			<Card.Body>
 				<div ref={domNode} />
 			</Card.Body>
@@ -148,7 +147,9 @@ function StoryPropertyCard(props) {
 
 function StoryOverview() {
 	let history = useHistory();
-	const [story, setStory] = useState({ error: null, isLoaded: false, items: [] });
+	const idStory = history.location.state.id;
+
+	const [story, setStory] = useState({ error: null, isLoaded: false, items: {} });
 	const [inputs, setInputs] = useState({
 		name: undefined,
 		description: undefined,
@@ -156,9 +157,8 @@ function StoryOverview() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await fetch(`/story/${history.location.state.idStory}`, {
+			const result = await fetch(`/stories/${idStory}`, {
 				method: "GET",
-				headers: { Authorization: `Basic ${btoa("user_1:abcd")}` },
 			});
 			// Se la richiesta non è andata a buon fine
 			if (!result.ok) setStory({ isLoaded: true, error: result.statusText });
@@ -175,13 +175,13 @@ function StoryOverview() {
 			}
 		};
 		if (!story.isLoaded) fetchData();
-	}, [history, story]);
+	}, [idStory, story]);
 
 	const onSubmit = (e, type) => {
 		e.preventDefault();
-		fetch(`/story/${story.items.info.id}/${type}`, {
+		fetch(`/stories/${story.items.info.id}/${type}`, {
 			method: "PUT",
-			headers: { Authorization: `Basic ${btoa("user_1:abcd")}`, "Content-Type": "text/plain" },
+			headers: { "Content-Type": "text/plain" },
 			body: inputs[type],
 		})
 			.then((res) => setStory({ error: null, isLoaded: false, items: [] }))
@@ -189,18 +189,16 @@ function StoryOverview() {
 	};
 
 	const generateQRCode = () => {
-		fetch(`/story/${story.items.info.id}/qrcode`, {
+		fetch(`/stories/${idStory}/qrcode`, {
 			method: "POST",
-			headers: { Authorization: `Basic ${btoa("user_1:abcd")}` },
 		})
 			.then((res) => setStory({ error: null, isLoaded: false, items: [] }))
 			.catch(console.log);
 	};
 
 	const removeQRCode = () => {
-		fetch(`/story/${story.items.info.id}/qrcode`, {
+		fetch(`/stories/${story.items.info.id}/qrcode`, {
 			method: "DELETE",
-			headers: { Authorization: `Basic ${btoa("user_1:abcd")}` },
 		})
 			.then((res) => setStory({ error: null, isLoaded: false, items: [] }))
 			.catch(console.log);
@@ -208,13 +206,6 @@ function StoryOverview() {
 
 	return (
 		<Container>
-			<Navbar>
-				<Nav>
-					<Nav.Link as={Link} to="/autore">
-						Ambiente valutatore
-					</Nav.Link>
-				</Nav>
-			</Navbar>
 			{story.isLoaded ? (
 				story.error ? (
 					<h5>Errore nel caricamento, ricaricare</h5>
@@ -237,7 +228,11 @@ function StoryOverview() {
 							onChange={(value, name) => setInputs({ ...inputs, [name]: value })}
 						/>
 						<StoryQRCode value={story.items.info.qr} removeQRCode={removeQRCode} generateQRCode={generateQRCode} />
-						<StoryGraph story={story.items} />
+						{story.items.missions && story.items.activities
+							? story.items.transitions.map((value, key) => (
+									<StoryGraph key={key} index={key} story={story.items} transitions={value} />
+							  ))
+							: null}
 					</>
 				)
 			) : (

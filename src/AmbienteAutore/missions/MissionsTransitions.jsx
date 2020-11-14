@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -10,7 +10,7 @@ import Form from "react-bootstrap/Form";
 
 function SelectMission(props) {
 	return (
-		<Form onSubmit={(e) => props.handleSubmit(e)}>
+		<Form onSubmit={(e) => props.handleSubmit(e, props.index)}>
 			<Form.Group>
 				<Col>
 					<Form.Group as="select" name="mission" value={props.input} onChange={(e) => props.handleSelect(e)}>
@@ -33,21 +33,40 @@ function SelectMission(props) {
 	);
 }
 
+function TransitionsListGroup(props) {
+	return (
+		<Col>
+			<ListGroup variant="flush">
+				<h6>Transizione {props.index}</h6>
+				{props.transition.map((val) => {
+					return <ListGroup.Item key={val}>Missione {val}</ListGroup.Item>;
+				})}
+				{props.index === props.maxTransitions && props.missions.length ? (
+					<SelectMission
+						index={props.index}
+						input={props.input}
+						missions={props.missions}
+						handleSelect={props.handleSelect}
+						handleSubmit={props.handleSubmit}
+					/>
+				) : null}
+			</ListGroup>
+		</Col>
+	);
+}
 function MissionsTransitions() {
 	let history = useHistory();
-	let match = useRouteMatch("/autore");
+	const idStory = history.location.state.id;
 
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: [] });
 	const [missions, setMissions] = useState([]);
-	const [transitions, setTransitions] = useState([]);
+	const [transitions, setTransitions] = useState([[]]);
 	const [input, setInput] = useState();
-	const idStory = 1;
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await fetch(`/story/${idStory}/missions`, {
+			const result = await fetch(`/stories/${idStory}/missions`, {
 				method: "GET",
-				headers: { Authorization: `Basic ${btoa("user_1:abcd")}` },
 			});
 			if (!result.ok) setStory({ isLoaded: true, error: result.statusText });
 			else {
@@ -57,15 +76,18 @@ function MissionsTransitions() {
 			}
 		};
 		fetchData();
-	}, []);
+	}, [idStory]);
 
 	useEffect(() => {
 		setInput(missions.length ? missions[0] : "");
 	}, [missions]);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e, index) => {
 		e.preventDefault();
-		setTransitions(transitions.concat([input]));
+		let newTransitions = [...transitions];
+		let newTransition = [...newTransitions[index], input];
+		newTransitions[index] = newTransition;
+		setTransitions(newTransitions);
 		setMissions(missions.filter((val) => input !== val));
 	};
 
@@ -73,50 +95,67 @@ function MissionsTransitions() {
 		setInput(e.target.value);
 	};
 
+	const resetMissions = (e) => {
+		e.preventDefault();
+		setMissions(Object.keys(story.items));
+		setTransitions(transitions.concat([[]]));
+	};
+
 	const createStory = () => {
-		fetch(`/story/${idStory}/transitions`, {
+		fetch(`/stories/${idStory}/transitions`, {
 			method: "POST",
 			headers: { Authorization: `Basic ${btoa("user_1:abcd")}`, "Content-Type": "application/json" },
 			body: JSON.stringify(transitions),
 		})
 			.then((response) => {
-				history.push(`${match.url}/story`, { idStory: idStory });
+				history.push(`overview`, { id: idStory });
 			})
 			.catch(console.log);
 	};
 
 	return (
 		<Container fluid>
-			<Row>
-				{story.isLoaded ? (
-					story.error ? (
-						<h5>Errore nel caricamento, riprovare</h5>
-					) : (
-						<ListGroup variant="flush">
-							{transitions.map((value) => {
-								return <ListGroup.Item key={value}>Missione {value}</ListGroup.Item>;
-							})}
-							<ListGroup.Item>
-								{missions.length ? (
-									<SelectMission
-										key={missions.length}
+			{story.isLoaded ? (
+				story.error ? (
+					<h5>Errore nel caricamento, riprovare</h5>
+				) : (
+					<>
+						<Row>
+							{transitions.map((value, key) => {
+								return (
+									<TransitionsListGroup
+										transition={value}
+										key={key}
+										index={key}
 										input={input}
 										missions={missions}
 										handleSelect={handleSelect}
 										handleSubmit={handleSubmit}
+										maxTransitions={transitions.length - 1}
 									/>
-								) : (
-									<Button variant="primary" onClick={createStory}>
-										Crea storia
-									</Button>
+								);
+							})}
+						</Row>
+
+						<Row>
+							<Col>
+								{missions.length ? null : (
+									<>
+										<Button variant="primary" onClick={createStory}>
+											Crea storia
+										</Button>
+										<Button variant="primary" onClick={resetMissions}>
+											Aggiungi altra transizione parallela
+										</Button>
+									</>
 								)}
-							</ListGroup.Item>
-						</ListGroup>
-					)
-				) : (
-					<h5>Loading</h5>
-				)}
-			</Row>
+							</Col>
+						</Row>
+					</>
+				)
+			) : (
+				<h5>Loading</h5>
+			)}
 		</Container>
 	);
 }
