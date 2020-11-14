@@ -1,10 +1,9 @@
 const express = require("express");
+const { nanoid } = require("nanoid");
 const fsp = require("fs").promises;
 const path = require("path");
 const uuidv4 = require("uuid").v4;
-const withAuth = require('./middleware');
-const jwt = require('jsonwebtoken');
-const secret = 'parolasegreta';
+const withAuth = require("./middleware");
 
 const app = express();
 app.set("json spaces", 4);
@@ -14,7 +13,11 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.text());
 
-async function readFile(filePath, dirPath = app.get("path"), encoding = "utf-8") {
+async function readFile(
+	filePath,
+	dirPath = app.get("path"),
+	encoding = "utf-8"
+) {
 	const dataPath = path.join(dirPath, filePath);
 	return fsp
 		.readFile(dataPath, encoding)
@@ -24,17 +27,29 @@ async function readFile(filePath, dirPath = app.get("path"), encoding = "utf-8")
 		});
 }
 
-async function writeFile(filePath, data, dirPath = app.get("path"), encoding = "utf-8") {
+async function writeFile(
+	filePath,
+	data,
+	dirPath = app.get("path"),
+	encoding = "utf-8"
+) {
 	const dataPath = path.join(dirPath, filePath);
 	try {
 		await fsp.access(dirPath);
 	} catch (e) {
 		await fsp.mkdir(dirPath);
 	}
-	return fsp.writeFile(dataPath, JSON.stringify(data, null, app.get("json spaces")), encoding);
+	return fsp.writeFile(
+		dataPath,
+		JSON.stringify(data, null, app.get("json spaces")),
+		encoding
+	);
 }
 
-async function readFilesInFolder(dirPath = app.get("path"), encoding = "utf-8") {
+async function readFilesInFolder(
+	dirPath = app.get("path"),
+	encoding = "utf-8"
+) {
 	let files;
 	try {
 		files = await fsp.readdir(dirPath, encoding);
@@ -45,7 +60,11 @@ async function readFilesInFolder(dirPath = app.get("path"), encoding = "utf-8") 
 }
 
 router.use((req, res, next) => {
-	console.log(`Request ${req.method} at /story${req.path} on Time: ${new Date(Date.now()).toUTCString()}`);
+	console.log(
+		`Request ${req.method} at /story${req.path} on Time: ${new Date(
+			Date.now()
+		).toUTCString()}`
+	);
 	next();
 });
 router.use(withAuth)
@@ -228,44 +247,47 @@ router.delete("/:id/qrcode",  async (req, res, next) => {
 		.catch(next);
 });
 
-
-router.post("/file",(req,res) => {
-	const fileName = req.files.myFile.name;
-	const path = __dirname + "/data/user_1/media/" + fileName;
-	const file = req.files.myFile;
-	file.mv(path, (error)=>{
-		if(error){
-			console.log(error);
-			res.writeHead(500, {
-				'Content-Type': 'application/json'
-			  });
-			  res.end(JSON.stringify({ status: 'error', message: error }, null, app.get("json spaces")));
-			  return;
+router.post("/file", (req, res) => {
+	let filesId = [];
+	const filePath = path.join(app.get("path"), /*req.username*/"user_1", "media");
+	Object.entries(req.files).forEach(async (myFile) => {
+		const fileId = nanoid();
+		try {
+			await myFile.mv(filePath.join(filePath, fileId));
+		} catch (e) {
+			
 		}
+		filesId.push(fileId);
 	});
+	res.send(JSON.stringify(filesId));
 });
 
-
-router.get("/file/:file_name",(req,res)=>{
+router.get("/file/:file_name", (req, res) => {
 	const image_name = req.params["file_name"];
-	res.sendFile(__dirname + "/data/user1/media/"+image_name);
+	res.sendFile(__dirname + "/data/user1/media/" + image_name);
 });
 
-router.post("/activity/:story_name/:activity_number", async (req, res, next) => {
-	const userDir = path.join(app.get("path"), "user_1");
-	const storyFile = `story_${req.params["story_name"]}.json`;
-	let data;
-	try {
-		data = await readFile(storyFile, userDir);
-	} catch (e) {
-		data = {};
-		console.log("Read file error: " + e.message);
+router.post(
+	"/activity/:story_name/:activity_number",
+	async (req, res, next) => {
+		const userDir = path.join(app.get("path"), "user_1");
+		const storyFile = `story_${req.params["story_name"]}.json`;
+		console.log(storyFile);
+		let data;
+		try {
+			data = await readFile(storyFile, userDir);
+		} catch (e) {
+			data = {};
+			console.log("Read file error: " + e.message);
+		}
+		data["activities"] = {
+			...data["activities"],
+			[req.params["activity_number"]]: req.body,
+		};
+		writeFile(storyFile, data, userDir)
+			.then(() => res.status(201).send("new activity added"))
+			.catch(next);
 	}
-	data["activities"] = {...data["activities"], [req.params["activity_number"]]: req.body};
-	writeFile(storyFile, data, userDir)
-		.then(() => res.status(201).send("new activity added"))
-		.catch(next);
-
-});
+);
 
 module.exports = router;
