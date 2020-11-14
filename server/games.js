@@ -73,6 +73,7 @@ router.get("/:id", async (req, res, next) => {
 	const storyPath = path.join(app.get("stories path"), user);
 	Promise.all([writeFile("player.json", data), readFile(`story_${story}.json`, storyPath)])
 		.then((values) => {
+			res.cookie("playerId", playerId, { maxAge: 2 * 60 * 60 * 1000 });
 			res.send({ story: values[1], player: playerId });
 		})
 		.catch(next);
