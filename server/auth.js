@@ -21,7 +21,7 @@ router.post("/login", jsonParser, (req, res) => {
 				const token = jwt.sign({ username }, secret, {
 					expiresIn: '6h'
 				});
-				res.cookie('token', token, { httpOnly: true })
+				res.cookie('tokenAutore', token, { httpOnly: true })
 					.sendStatus(200);
 			}
 			else {
@@ -53,6 +53,11 @@ router.post("/signup", jsonParser, (req, res) => {
 	});
 
 });
+
+router.post("/setPlayerID",jsonParser,(req,res)=>{
+	res.cookie("playerID","id",{httpOnly:true}).sendStatus(200);
+});
+
 router.get('/checkToken', withAuth, function(req, res) {
 	res.sendStatus(200);
   });

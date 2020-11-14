@@ -48,6 +48,7 @@ router.use((req, res, next) => {
 	console.log(`Request ${req.method} at /stories${req.path} on Time: ${new Date(Date.now()).toUTCString()}`);
 	next();
 });
+router.use(withAuth)
 
 router.get("/", withAuth, async (req, res, next) => {
 	const userDir = path.join(app.get("stories"), req.username);

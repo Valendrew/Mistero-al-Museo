@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const secret = 'parolasegreta';
 const withAuth = function(req, res, next) {
-  const token = req.cookies.token;
+  const token = req.cookies.tokenAutore;
   if (!token) {
     res.status(401).send('Accesso scaduto');
   } else {
