@@ -29,7 +29,7 @@ async function processStoryline(storyline, inputs, idStory) {
 		let input = [inputs[key].type, inputs[key].value];
 		if (inputs[key].type === "img" || inputs[key].type === "video") {
 			formData.append(key, inputs[key].value);
-			input[2] = inputs[key].value.split(".").reverse()[0];
+			input[2] = input[1].type.split("/").[1];
 		}
 		if (inputs[key].type === "img") input[3] = inputs[val.alt].value;
 		return [key, input];
