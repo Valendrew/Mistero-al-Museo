@@ -24,7 +24,9 @@ function Player() {
 function PlayerHome() {
 	const { id } = useParams();
 	const history = useHistory();
-	const [story, setStory] = useState({ error: null, isLoaded: false, items: [] });
+	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
+	const [story, setStory] = useState();
+	const [status, setStatus] = useState();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -32,41 +34,36 @@ function PlayerHome() {
 				method: "GET",
 			});
 			// Se la richiesta non è andata a buon fine
-			if (!result.ok) setStory({ isLoaded: true, error: result.statusText });
+			if (!result.ok) setIsLoaded({ loaded: true, error: result.statusText });
 			else {
 				const data = await result.json();
-				setStory({
-					isLoaded: true,
-					items: data,
-				});
+				setStory({ ...data.story });
+				setStatus({ ...data.status });
+				setIsLoaded({ loaded: true });
 			}
 		};
-		if (!story.isLoaded) fetchData();
-	}, [id, story]);
+		if (!isLoaded.loaded) fetchData();
+	}, [id, isLoaded]);
 
-	const startGame = async () => {
+	const startGame = () => {
 		history.push("/player/game", {
-			player: story.items.player,
-			story: story.items.story,
-			activity: story.items.story.missions[0]["start"],
+			status: { ...status, status: story.missions[story.transitions[status.transition][0]].start },
+			story: story,
+			game: id,
 		});
 	};
 
 	return (
 		<Container>
-			{story.isLoaded ? (
-				story.error ? (
+			{isLoaded.loaded ? (
+				isLoaded.error ? (
 					<h5>Errore nel caricamento, riprovare</h5>
 				) : (
 					<>
 						<Row>
-							<h5>Benvenuto giocatore {story.items.player}</h5>
+							<h5>Benvenuto giocatore {status.name}</h5>
 						</Row>
-						<MainPage
-							name={story.items.story.info.name}
-							description={story.items.story.info.description}
-							startGame={startGame}
-						/>
+						<MainPage name={story.info.name} description={story.info.description} startGame={startGame} />
 					</>
 				)
 			) : null}

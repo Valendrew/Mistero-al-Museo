@@ -1,14 +1,12 @@
 const express = require("express");
-const app = express();
 const router = express.Router();
-
 const path = require("path");
 const uuidv4 = require("uuid").v4;
-const withAuth = require("./middleware");
+const withAuth = require("./withAuth");
 const fileOperations = require("./methods");
 
-app.set("stories", path.join(__dirname, "data", "stories"));
-
+const app = express();
+app.set("stories", path.join(__dirname, "..", "data", "stories"));
 router.use(express.json());
 router.use(express.text());
 
@@ -48,9 +46,10 @@ router.use((req, res, next) => {
 	console.log(`Request ${req.method} at /stories${req.path} on Time: ${new Date(Date.now()).toUTCString()}`);
 	next();
 });
-router.use(withAuth)
 
-router.get("/", withAuth, async (req, res, next) => {
+router.use(withAuth);
+
+router.get("/", async (req, res, next) => {
 	const userDir = path.join(app.get("stories"), req.username);
 	let promises;
 	try {
@@ -67,7 +66,6 @@ router.get("/", withAuth, async (req, res, next) => {
 
 router.get(
 	"/:id",
-	withAuth,
 	(req, res, next) => {
 		res.locals = { dirPath: app.get("stories"), id: req.params.id };
 		next();
@@ -77,7 +75,6 @@ router.get(
 
 router.get(
 	"/:id/activities",
-	withAuth,
 	(req, res, next) => {
 		res.locals = { dirPath: app.get("stories"), id: req.params.id, type: "activities" };
 		next();
@@ -87,7 +84,6 @@ router.get(
 
 router.get(
 	"/:id/missions",
-	withAuth,
 	(req, res, next) => {
 		res.locals = { dirPath: app.get("stories"), id: req.params.id, type: "missions" };
 		next();
@@ -97,7 +93,6 @@ router.get(
 
 router.get(
 	"/:id/transitions",
-	withAuth,
 	(req, res, next) => {
 		res.locals = { dirPath: app.get("stories"), id: req.params.id, type: "transitions" };
 		next();
@@ -107,7 +102,6 @@ router.get(
 
 router.post(
 	"/",
-	withAuth,
 	async (req, res, next) => {
 		const userDir = path.join(app.get("stories"), req.username);
 		let fileInDir;
@@ -127,7 +121,6 @@ router.post(
 
 router.post(
 	"/:id/activities/:name",
-	withAuth,
 	(req, res, next) => {
 		res.locals = { dirPath: app.get("stories"), id: req.params.id, type: "activities", value: req.params.name };
 		next();
@@ -137,7 +130,6 @@ router.post(
 
 router.post(
 	"/:id/missions",
-	withAuth,
 	(req, res, next) => {
 		res.locals = { dirPath: app.get("stories"), id: req.params.id, type: "missions" };
 		next();
@@ -147,7 +139,6 @@ router.post(
 
 router.post(
 	"/:id/transitions",
-	withAuth,
 	(req, res, next) => {
 		res.locals = { dirPath: app.get("stories"), id: req.params.id, type: "transitions" };
 		next();
@@ -157,7 +148,6 @@ router.post(
 
 router.post(
 	"/:id/qrcode",
-	withAuth,
 	async (req, res, next) => {
 		const storyCode = uuidv4();
 		let data;
@@ -182,7 +172,6 @@ router.post(
 
 router.put(
 	"/:id/name",
-	withAuth,
 	(req, res, next) => {
 		res.locals = { dirPath: app.get("stories"), id: req.params.id, type: "info", value: "name" };
 		next();
@@ -192,7 +181,6 @@ router.put(
 
 router.put(
 	"/:id/description",
-	withAuth,
 	(req, res, next) => {
 		res.locals = { dirPath: app.get("stories"), id: req.params.id, type: "info", value: "description" };
 		next();
@@ -200,7 +188,7 @@ router.put(
 	postHandler
 );
 
-router.delete("/:id/qrcode", withAuth, async (req, res, next) => {
+router.delete("/:id/qrcode", async (req, res, next) => {
 	const userDir = path.join(app.get("stories"), req.username);
 	const storyFile = `story_${req.params.id}.json`;
 	let data;
@@ -222,7 +210,7 @@ router.delete("/:id/qrcode", withAuth, async (req, res, next) => {
 		next(e);
 	}
 	delete data[storyCode];
-	
+
 	fileOperations
 		.write(data, "stories.json", app.get("stories"))
 		.then(() => res.send("new name added"))

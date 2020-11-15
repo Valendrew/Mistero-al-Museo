@@ -1,16 +1,139 @@
 {
-    "c08c210c-d2ec-4044-a040-407be97d1d3f": {
-        "b557e4a8-4eb5-4e16-bb00-5ae9fe8c11e1": {
-            "status": "start"
+    "d6400d99-38a6-40c0-b29e-35a1ff09e44a": {
+        "211f8af3-78a7-4fb1-b70c-3ad523720509": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
         },
-        "42f4c1d4-f2f2-44ad-8494-5381fe408466": {
-            "status": "start"
+        "d037f9e5-c5fd-4c83-967f-f23aa3c9d409": {
+            "status": "start",
+            "name": "player",
+            "transition": 0
         },
-        "98fb1a6f-4e26-448f-b1df-a20a0e4cef04": {
-            "status": "start"
+        "0bfe551f-813e-47c3-aff8-4293b868949f": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
         },
-        "bc9d17ca-5d42-4e42-959b-5d03b95f90d4": {
-            "status": "start"
+        "a7ee6c62-e423-458f-bf68-e27cfbd3d34e": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "0802047e-da4e-4c20-adc9-bbbc55a1c429": {
+            "status": "start",
+            "name": "player",
+            "transition": 0
+        },
+        "e4d6b101-7165-411b-ba78-c8ecb93e9ec4": {
+            "status": "start",
+            "name": "player",
+            "transition": 0
+        },
+        "ef376a5e-7209-4e0c-aa6e-7dc47b4feffb": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "c0b0a619-0e39-4c7e-a245-e2b687ca7a08": {
+            "status": "start",
+            "name": "player",
+            "transition": 0
+        },
+        "9ae670b9-4e04-4a2b-a3cf-8226b58f8f42": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "422dcd8b-9aba-4b0b-afae-fe49ea90d92c": {
+            "status": "start",
+            "name": "player",
+            "transition": 0
+        },
+        "3b64c7fb-67b8-4ae5-81a5-d8795ae740ad": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "5b46adc2-b527-4a8e-9307-615116052176": {
+            "status": "start",
+            "name": "player",
+            "transition": 0
+        },
+        "8928c399-25be-4020-a4f1-65503d21c3d1": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "22169f4f-3710-4d94-9854-5b5d1916b986": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "cff10860-d079-4ffa-a6a5-2749d5734096": {
+            "status": "start",
+            "name": "player",
+            "transition": 0
+        },
+        "d4732319-b0a8-4742-9ecc-2612e602f89e": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "80781a78-3b75-4261-a03d-94c1e180b951": {
+            "status": "start",
+            "name": "player",
+            "transition": 0
+        },
+        "1d416b09-32e2-4fd4-9762-1dfce7156aeb": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "46bb6e69-1a93-45be-b328-d64dc5722799": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "307e008e-0524-4c8e-bda3-6bdc37510f4b": {
+            "status": "start",
+            "name": "player",
+            "transition": 0
+        },
+        "72aec782-b5f6-4cf8-9d64-32180f371aaf": {
+            "status": "start",
+            "name": "player",
+            "transition": 0
+        },
+        "dbf24d85-30b0-4193-91d4-209b77d5a48c": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "e24787f3-85ec-4f52-8595-2903581c5445": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "45d6684e-31f5-4ab1-b66f-f18f3427a99c": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "f3902c7c-05f1-4308-9951-e944f97f1c35": {
+            "status": "start",
+            "name": "player",
+            "transition": 0
+        },
+        "e59a220b-7143-4d26-84be-5276a1ca6a54": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
+        },
+        "7656e9bf-b39b-476b-abb8-b87ccde4fdc7": {
+            "status": "start",
+            "name": "player",
+            "transition": 0
         }
     }
 }

@@ -46,7 +46,7 @@ function Activities() {
 					<>
 						<Row className="row row-cols-4 row-cols-lg-6">
 							{Object.entries(story.items).map(([key, value]) => {
-								return <ActivityCard key={key} idStory={idStory} id={parseInt(key)} storyline={value.storyline} />;
+								return <ActivityCard key={key} id={parseInt(key)} storyline={value.storyline} />;
 							})}
 						</Row>
 						<Row>

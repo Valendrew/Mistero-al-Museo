@@ -2,7 +2,8 @@
     "info": {
         "name": "Una giornata di un bad boy",
         "description": "Giancarlocchio è un ragazzo vivace, fa arrabbiare sempre i suoi genitori, ma a volte ha un lato tenero",
-        "id": 2
+        "id": 2,
+        "qr": "http://localhost:3000/player/d6400d99-38a6-40c0-b29e-35a1ff09e44a"
     },
     "activities": {
         "0": {
@@ -113,6 +114,16 @@
                 [
                     "text",
                     "SPLASH, sangue ovunque. Ma nooo cosa faii hai ucciso un passante, coglione"
+                ],
+                [
+                    "img",
+                    "69034c50-be95-478e-920d-1afd65144179",
+                    "jpeg",
+                    "Carroarmato"
+                ],
+                [
+                    "text",
+                    "orcatroia ma zio sei matto"
                 ]
             ],
             "questions": []
@@ -247,5 +258,67 @@
                 }
             ]
         }
-    }
+    },
+    "missions": {
+        "0": {
+            "0": [
+                "1",
+                "2",
+                "3"
+            ],
+            "1": [
+                "new_mission"
+            ],
+            "2": [
+                "new_mission",
+                "new_mission",
+                "new_mission"
+            ],
+            "3": [
+                "new_mission"
+            ],
+            "4": [
+                "0"
+            ],
+            "start": 4
+        },
+        "1": {
+            "5": [
+                "6",
+                "new_mission",
+                "8"
+            ],
+            "6": [
+                "new_mission",
+                "new_mission",
+                "new_mission"
+            ],
+            "8": [
+                "new_mission"
+            ],
+            "start": 5
+        },
+        "2": {
+            "7": [
+                "9"
+            ],
+            "9": [
+                "new_mission",
+                "new_mission"
+            ],
+            "start": 7
+        }
+    },
+    "transitions": [
+        [
+            "0",
+            "2",
+            "1"
+        ],
+        [
+            "0",
+            "1",
+            "2"
+        ]
+    ]
 }

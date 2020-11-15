@@ -9,7 +9,7 @@ function MainPage(props) {
 			<Card.Header>{props.name}</Card.Header>
 			<Card.Body>{props.description}</Card.Body>
 			<Card.Footer>
-				<Button onClick={props.startGame}>Chatta con valutatore</Button>
+				<Button onClick={props.startGame}>Inizia la partita</Button>
 			</Card.Footer>
 		</Card>
 	);

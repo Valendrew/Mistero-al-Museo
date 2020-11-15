@@ -5,14 +5,14 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Image from "react-bootstrap/Image";
 
-function ActivityListItem({ idStory, value }) {
+function ActivityListItem({ value }) {
 	const [mediaURL, setMediaURL] = useState(undefined);
 	const [isLoaded, setIsLoaded] = useState(false);
 
 	useEffect(() => {
 		if (!mediaURL) {
 			if (value[0] === "img" || value[0] === "video") {
-				fetch(`/files/${idStory}/${value[1]}.${value[2]}`)
+				fetch(`/files/${value[1]}.${value[2]}`)
 					.then((result) => result.blob())
 					.then((data) => {
 						var objectURL = URL.createObjectURL(data);
@@ -22,7 +22,7 @@ function ActivityListItem({ idStory, value }) {
 					.catch((e) => console.log(e));
 			} else setIsLoaded(true);
 		}
-	}, [mediaURL, idStory, value]);
+	}, [mediaURL, value]);
 	return (
 		<ListGroup.Item>
 			{isLoaded ? (
@@ -48,7 +48,7 @@ function ActivityList(props) {
 	return (
 		<ListGroup variant="flush">
 			{props.storyline.map((value, key) => (
-				<ActivityListItem key={key} idStory={props.idStory} value={value} />
+				<ActivityListItem key={key} value={value} />
 			))}
 		</ListGroup>
 	);

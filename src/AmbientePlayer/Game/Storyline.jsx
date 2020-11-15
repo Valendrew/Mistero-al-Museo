@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
@@ -8,47 +8,43 @@ function TextParagraph({ text }) {
 }
 
 function Media({ value }) {
-	/* const [mediaURL, setMediaURL] = useState(undefined);
-	const [isLoaded, setIsLoaded] = useState(false);
+	const [mediaURL, setMediaURL] = useState();
+	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 
 	useEffect(() => {
-		if (!mediaURL) {
-			if (value[0] === "img" || value[0] === "video") {
-				fetch(`/files/${idStory}/${value[1]}.${value[2]}`)
-					.then((result) => result.blob())
-					.then((data) => {
-						var objectURL = URL.createObjectURL(data);
-						setMediaURL(objectURL);
-						setIsLoaded(true);
-					})
-					.catch((e) => console.log(e));
-			} else setIsLoaded(true);
-		}
-	}, [mediaURL, idStory, value]);
+		const fetchMedia = () => {
+			fetch(`/files/${value[1]}.${value[2]}`)
+				.then((result) => result.blob())
+				.then((data) => {
+					const objectURL = URL.createObjectURL(data);
+					setMediaURL(objectURL);
+					setIsLoaded({ loaded: true });
+				})
+				.catch((e) => console.log(e));
+		};
+		if (!isLoaded.loaded) fetchMedia();
+	}, [isLoaded, value]);
 
-	return isLoaded ? (
-		<>
-			{img[0]} :
-			{img[0] === "img" ? (
-				<Image src={mediaURL} thumbnail fluid />
-			) : img[0] === "video" ? (
-				<video alt="" width="320" height="240" controls>
-					<source src={mediaURL}></source>
-				</video>
-			) : (
-				img[1]
-			)}
-		</>
+	return isLoaded.loaded ? (
+		isLoaded.error ? (
+			<p>Immagine: {value[2]}</p>
+		) : value[0] === "img" ? (
+			<Image width="25%" height="25%" src={mediaURL} thumbnail fluid />
+		) : (
+			<video alt="" width="320" height="240" controls>
+				<source src={mediaURL}></source>
+			</video>
+		)
 	) : (
 		"Loading..."
-    ); */
+	);
 	return <h5>Image</h5>;
 }
 
-function Storyline(props) {
+function Storyline({storyline}) {
 	return (
 		<Container>
-			{props.storyline.map((value, key) => {
+			{storyline.map((value, key) => {
 				return (
 					<Row key={key}>
 						{value[0] === "text" ? <TextParagraph text={value} /> : <Media value={value} />}
