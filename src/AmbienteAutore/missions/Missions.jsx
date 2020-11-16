@@ -21,8 +21,8 @@ function convertFieldToNumbers(field) {
 function Missions(props) {
 	const [showModal, setShowModal] = useState(false);
 	const [inputs, setInputs] = useState({});
-	const [missions, setMissions] = useState({}); // missioni
-	const [activities, setActivities] = useState(Array.from(Object.keys(props.activities))); // indici attività disponibili
+	const [missions, setMissions] = useState(props.missions ? props.missions : {}); // missioni
+	const [activities, setActivities] = useState(props.missions ? [] : Array.from(Object.keys(props.activities))); // indici attività disponibili
 
 	const handleAddActivity = (field, event) => {
 		event.preventDefault();

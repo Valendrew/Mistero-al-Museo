@@ -9,17 +9,28 @@ import Missions from "./Missions";
 
 function Activities() {
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: {} });
+	const [missions, setMissions] = useState();
 	const history = useHistory();
 	const idStory = history.location.state.id;
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await fetch(`/stories/${idStory}/activities`, {
-				method: "GET",
-			});
+			let result = await fetch(`/stories/${idStory}/activities`);
 			if (!result.ok) setStory({ isLoaded: true, error: result.statusText });
 			else {
-				result.json().then((data) => setStory({ isLoaded: true, items: data }));
+				const data = await result.json();
+				const resultMissions = await fetch(`/stories/${idStory}/missions`);
+				if (resultMissions.ok) {
+					let dataMissions;
+					try {
+						dataMissions = await resultMissions.json();
+					} catch (e) {
+						dataMissions = null;
+						console.log("nessuna missione trovata");
+					}
+					setMissions(dataMissions);
+				}
+				setStory({ isLoaded: true, items: data });
 			}
 		};
 		fetchData();
@@ -50,7 +61,7 @@ function Activities() {
 							})}
 						</Row>
 						<Row>
-							<Missions activities={story.items} fetchMissions={fetchMissions} />
+							<Missions activities={story.items} fetchMissions={fetchMissions} missions={missions} />
 						</Row>
 					</>
 				)

@@ -8,7 +8,6 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-
 const createNodes = (activities, missions) => {
 	const nodes = Object.entries(activities)
 		.map(([key, _]) => {
@@ -179,7 +178,7 @@ function StoryOverview() {
 
 	const onSubmit = (e, type) => {
 		e.preventDefault();
-		fetch(`/stories/${story.items.info.id}/${type}`, {
+		fetch(`/stories/${idStory}/${type}`, {
 			method: "PUT",
 			headers: { "Content-Type": "text/plain" },
 			body: inputs[type],
@@ -197,13 +196,16 @@ function StoryOverview() {
 	};
 
 	const removeQRCode = () => {
-		fetch(`/stories/${story.items.info.id}/qrcode`, {
+		fetch(`/stories/${idStory}/qrcode`, {
 			method: "DELETE",
 		})
 			.then((res) => setStory({ error: null, isLoaded: false, items: [] }))
 			.catch(console.log);
 	};
 
+	const handleEditMissions = () => {
+		history.push("missions", { id: idStory });
+	};
 	return (
 		<Container>
 			{story.isLoaded ? (
@@ -229,10 +231,10 @@ function StoryOverview() {
 						/>
 						<StoryQRCode value={story.items.info.qr} removeQRCode={removeQRCode} generateQRCode={generateQRCode} />
 						{story.items.missions && story.items.activities
-							? story.items.transitions.map((value, key) => (
-									<StoryGraph key={key} index={key} story={story.items} transitions={value} />
-							  ))
+							? story.items.transitions.map((value, key) => <StoryGraph key={key} index={key} story={story.items} transitions={value} />)
 							: null}
+						<Button>Modifica attività</Button>
+						<Button onClick={handleEditMissions}>Modifica missioni</Button>
 					</>
 				)
 			) : (

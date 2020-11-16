@@ -35,7 +35,7 @@ function ViewAnswer(props) {
 			<ListGroup.Item>
 				Risposta: {props.answer.value} {props.answer ? (props.answer.correct ? " | Corretta" : " | Sbagliata") : null}
 			</ListGroup.Item>
-			<ListGroup.Item>{props.answerActivity}</ListGroup.Item>
+			<ListGroup.Item>{props.answerActivity === "new_mission" ? "Nuova missione" : props.answerActivity}</ListGroup.Item>
 		</ListGroup>
 	);
 }
