@@ -306,7 +306,7 @@ export default function CreateActivity(props) {
 					<Button type="submit" name="nextActivity" variant="success" onClick={(e) => gestisciDati(e, e.target.name)}>
 						Prossima attività
 					</Button>
-					{number >= 9 ? (
+					{number >= 4 ? (
 						<Button type="submit" name="newMissions" variant="success" onClick={(e) => gestisciDati(e, e.target.name)}>
 							Procedi a creare le missione
 						</Button>
