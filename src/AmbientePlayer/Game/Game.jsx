@@ -60,7 +60,7 @@ function Game() {
 					}
 				});
 			} else if (story.activities[activity].questions[0].type === "open") {
-				if (answersSelected[0].replaceAll(" ", "")) answerTransition = 0;
+				if (answersSelected[0].value.replace(" ", "")) answerTransition = 0;
 			}
 		} else {
 			// caso solo narrazione

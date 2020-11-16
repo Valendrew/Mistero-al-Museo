@@ -1,0 +1,19 @@
+{
+    "info": {
+        "name": "Storiiaaaa",
+        "description": "dddddd",
+        "id": 4
+    },
+    "activities": {
+        "0": {
+            "name": "ssss",
+            "storyline": [
+                [
+                    "text",
+                    "sssss"
+                ]
+            ],
+            "questions": []
+        }
+    }
+}
