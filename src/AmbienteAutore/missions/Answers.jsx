@@ -7,14 +7,12 @@ import ListGroup from "react-bootstrap/ListGroup";
 
 function SelectAnswer(props) {
 	return (
-		<Form onSubmit={(e) => props.handleAddActivity(props.componentName, e)}>
-			<h6>{props.answerValue}</h6>
-			<Form.Control
-				as="select"
-				name={props.componentName}
-				value={props.inputs[props.componentName] || ""}
-				onChange={(e) => props.handleSelect(e)}
-			>
+		<Form className="m-4" onSubmit={(e) => props.handleAddActivity(props.componentName, e)}>
+			<h6>
+				Risposta: {props.answer.value}
+				{props.answer ? (props.answer.correct ? " | Corretta" : " | Sbagliata") : null}
+			</h6>
+			<Form.Control as="select" name={props.componentName} value={props.inputs[props.componentName] || ""} onChange={(e) => props.handleSelect(e)}>
 				{props.activities.map((value, key) => {
 					return (
 						<option key={`attività_${key}`} value={value}>
@@ -34,14 +32,16 @@ function SelectAnswer(props) {
 function ViewAnswer(props) {
 	return (
 		<ListGroup>
-			<ListGroup.Item>Risposta: {props.answerValue}</ListGroup.Item>
-			<ListGroup.Item>{props.answer}</ListGroup.Item>
+			<ListGroup.Item>
+				Risposta: {props.answer.value} {props.answer ? (props.answer.correct ? " | Corretta" : " | Sbagliata") : null}
+			</ListGroup.Item>
+			<ListGroup.Item>{props.answerActivity}</ListGroup.Item>
 		</ListGroup>
 	);
 }
 
 function AnswerOverview(props) {
-	return props.answer === "" ? (
+	return props.answerActivity === "" ? (
 		<SelectAnswer {...props} componentName={`${props.selPrefix}_ans${props.answerNmb}`} />
 	) : (
 		<ViewAnswer {...props} />
@@ -62,9 +62,9 @@ function Answers(props) {
 					<AnswerOverview
 						{...props}
 						key={`${props.selPrefix}_ans${key}`}
-						answerValue={value.answers ? `Risposta: ${value.value}` : value.value}
+						answer={value}
 						answerNmb={key}
-						answer={props.missions[props.activityNmb][key]}
+						answerActivity={props.missions[props.activityNmb][key]}
 					/>
 				);
 			})}

@@ -3,8 +3,13 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 
-function OpenQuestion() {
-	return null;
+function OpenQuestion(props) {
+	return (
+		<>
+			<p>{props.answer.value}</p>
+			<Form.Control value={props.answersSelected.value} onChange={(e) => props.onChangeAnswer(0, e.target.value)} />
+		</>
+	);
 }
 
 function MultipleQuestion(props) {
@@ -32,7 +37,11 @@ function Questions(props) {
 	return (
 		<Container>
 			{props.questions.map((val, key) => {
-				return val.type === "checkbox" || val.type === "radio"? <MultipleQuestion {...props} key={key} index={key} answer={val} /> : null;
+				return val.type === "open" ? (
+					<OpenQuestion {...props} key={key} index={key} answer={val} />
+				) : val.type === "widget" ? null : (
+					<MultipleQuestion {...props} key={key} index={key} answer={val} />
+				);
 			})}
 		</Container>
 	);

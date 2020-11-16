@@ -10,7 +10,7 @@ import Missions from "./Missions";
 function Activities() {
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: {} });
 	const history = useHistory();
-	const idStory = history.location.state.id;
+	const idStory = history.location.state ? history.location.state.id : 2;
 
 	useEffect(() => {
 		const fetchData = async () => {

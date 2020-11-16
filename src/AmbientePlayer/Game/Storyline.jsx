@@ -38,10 +38,9 @@ function Media({ value }) {
 	) : (
 		"Loading..."
 	);
-	return <h5>Image</h5>;
 }
 
-function Storyline({storyline}) {
+function Storyline({ storyline }) {
 	return (
 		<Container>
 			{storyline.map((value, key) => {

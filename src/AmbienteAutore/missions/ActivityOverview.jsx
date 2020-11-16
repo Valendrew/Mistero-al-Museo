@@ -11,12 +11,17 @@ function ActivityOverview(props) {
 	return (
 		<ListGroup.Item>
 			<Card>
-				<Card.Header>Attività {props.activityNmb}
-				<Button variant="danger" onClick={() => props.handleRemoveActivity(props.selPrefix)}>X</Button>
+				<Card.Header>
+					Attività {props.activityNmb}
+					{props.missions[props.activityNmb].filter((value) => Number.isInteger(parseInt(value))).length === 0 ? (
+						<Button variant="danger" onClick={() => props.handleRemoveActivity(props.selPrefix)}>
+							X
+						</Button>
+					) : null}
 				</Card.Header>
 				<Card.Body>
 					<Answers {...props} />
-					<ChildrenCard {...props}/>
+					<ChildrenCard {...props} />
 				</Card.Body>
 			</Card>
 		</ListGroup.Item>

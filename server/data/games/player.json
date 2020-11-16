@@ -134,6 +134,11 @@
             "status": "start",
             "name": "player",
             "transition": 0
+        },
+        "b6b09eed-7e61-420f-b7ab-7c4d9e02d801": {
+            "status": "start",
+            "name": "player",
+            "transition": 1
         }
     }
 }

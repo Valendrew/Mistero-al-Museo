@@ -39,7 +39,7 @@ function Game() {
 						});
 						setAnswersSelected(answersObject);
 					} else {
-						setAnswersSelected({ value: false });
+						setAnswersSelected([{ value: false }]);
 					}
 				} else setAnswersSelected();
 				setIsLoaded({ loaded: true });

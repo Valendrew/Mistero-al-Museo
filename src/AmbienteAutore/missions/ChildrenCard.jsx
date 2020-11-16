@@ -6,14 +6,11 @@ function ChildrenCard(props) {
 	return (
 		<ListGroup>
 			{props.missions[props.activityNmb]
-				.filter((val, key) => val !== "" && val !== "new_mission" && props.missions[props.activityNmb].indexOf(val) === key)
+				.filter(
+					(val, key) => val !== "" && val !== "new_mission" && val !== props.activityNmb && props.missions[props.activityNmb].indexOf(val) === key
+				)
 				.map((val) => (
-					<ActivityOverview
-						key={`${props.selPrefix}_a${val}`}
-						{...props}
-						selPrefix={`${props.selPrefix}_a${val}`}
-						activityNmb={val}
-					/>
+					<ActivityOverview key={`${props.selPrefix}_a${val}`} {...props} selPrefix={`${props.selPrefix}_a${val}`} activityNmb={val} />
 				))}
 		</ListGroup>
 	);

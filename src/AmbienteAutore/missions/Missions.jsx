@@ -15,9 +15,7 @@ function convertFieldToNumbers(field) {
 	n - 1 == mission number
 	*/
 	const fieldInfo = field.split("_").reverse();
-	return fieldInfo
-		.filter((_, key) => [0, 1, fieldInfo.length - 1].includes(key))
-		.map((val) => parseInt(val.replace(/[^0-9]/g, "")));
+	return fieldInfo.filter((_, key) => [0, 1, fieldInfo.length - 1].includes(key)).map((val) => parseInt(val.replace(/[^0-9]/g, "")));
 }
 
 function Missions(props) {
@@ -29,10 +27,10 @@ function Missions(props) {
 	const handleAddActivity = (field, event) => {
 		event.preventDefault();
 		if (inputs[field]) {
-			let actChild; // conterrà valore campo option (new_mission, 0, 1)
-			var missionNmb; // numero della missione
-			let newMission; // oggetto per la nuova missione
-			let strPrefix; // identificativo per le select della nuova attività
+			let actChild; // valore campo option ("new_mission" oppure indice attività)
+			let missionNmb; // numero della missione alla quale stiamo aggiungendo
+			let newMission; // oggetto per la nuova (o modificata) missione
+			let selectPrefix; // identificativo per le select della nuova attività
 			let answersNmb; // risposte possibili per l'attività
 
 			/* Valore della option selezionata e ottenute le risposte 
@@ -41,12 +39,12 @@ function Missions(props) {
 			else {
 				actChild = inputs[field];
 				const questions = props.activities[actChild].questions;
-				console.log(actChild);
 				if (questions.length) {
 					if (questions[0].answers) answersNmb = questions[0].answers.length;
-					else answersNmb = 1;
+					// risposte multiple question
+					else answersNmb = 1; // risposte open question
 				}
-				// risposte attività
+				// risposte solo narrazione
 				else answersNmb = 1;
 			}
 
@@ -56,14 +54,14 @@ function Missions(props) {
 				missionNmb = Object.keys(missions).length;
 				/* newMission è un oggetto e conterrà la nuova missione */
 				newMission = {
-					start: parseInt(inputs[field]),
+					start: inputs[field],
 				};
-				strPrefix = `m${missionNmb}_a${actChild}_`; // prefisso identificato per le select
+				selectPrefix = `m${missionNmb}_a${actChild}_`; // prefisso identificato per le select
 				setShowModal(false); // chiusura del modal
 			} else {
 				/* Valori identificati ottenuti dal campo della select (numero risposta, 
 					numero attività padre, numero missione) */
-				var ansNmb, actNmb;
+				let ansNmb, actNmb;
 				[ansNmb, actNmb, missionNmb] = convertFieldToNumbers(field);
 				const mission = { ...missions[missionNmb] }; // l'oggetto della i-esima missione (già esistente)
 				/* Modifica all'array dell'attività (padre) al figlio i-esimo con il valore della option*/
@@ -71,18 +69,27 @@ function Missions(props) {
 				newMission = { ...mission, [actNmb]: newActChildren }; // impostato nuovo vettore dei figli
 
 				// Nel caso di nuova attività (!= new_mission) viene impostato il prefisso per le select
-				if (actChild !== "new_mission") strPrefix = `${field.replace(`_ans${ansNmb}`, "")}_a${actChild}_`;
+				if (actChild !== "new_mission") selectPrefix = `${field.replace(`_ans${ansNmb}`, "")}_a${actChild}_`;
 			}
 			/* Nel caso di nuova attività (!= new_mission) viene creato l'array dei figli
 			per essa e vengono aggiunti i nuovi identificativi per le select */
 			if (actChild !== "new_mission") {
+				//debugger;
 				/* Creato array di dimensione pari alle risposte possibili per l'attività creata*/
 				newMission = { ...newMission, [actChild]: new Array(answersNmb).fill("") };
-				const newInputs = Object.fromEntries(
-					Array.from({ length: answersNmb }, (_, i) => [strPrefix.concat(`ans${i}`), ""])
-				);
-				setInputs({ ...inputs, ...newInputs });
-				setActivities(activities.filter((value) => value !== actChild));
+				let newInputs = Array.from({ length: answersNmb }, (_, i) => [selectPrefix.concat(`ans${i}`), ""]);
+				if (props.activities[actChild].questions.length) {
+					const answers = props.activities[actChild].questions[0].answers;
+					if (answers) {
+						newMission = {
+							...newMission,
+							[actChild]: newMission[actChild].map((value, key) => (!answers[key].correct && !answers[key].transition ? actChild : value)),
+						};
+						newInputs = newInputs.filter((value, key) => answers[key].correct || answers[key].transition);
+					}
+				}
+				setInputs({ ...inputs, ...Object.fromEntries(newInputs) });
+				setActivities(activities.filter((value) => parseInt(value) !== parseInt(actChild)));
 			}
 			setMissions({ ...missions, [missionNmb]: newMission });
 		}
@@ -95,19 +102,19 @@ function Missions(props) {
 		/* Se mis è undefined allora è la prima attività della missione, quindi 
 		basterà rimuovere l'intero oggetto della missione */
 		if (mis === undefined) {
-			const { [parentAct]: missionValue, ...otherMission } = missions;
+			const { [parentAct]: missionValue, ...otherMission } = { ...missions };
 			setMissions(otherMission);
 		} else {
 			/* Cambiare l'array dell'attività (padre) modificando il figlio i-esimo con il valore vuoto ("")*/
-			const newActChildren = missions[mis][parentAct].map((value) => (value === parseInt(act) ? "" : value));
+			const newActChildren = missions[mis][parentAct].map((value) => (parseInt(value) === act ? "" : value));
 			const { [act]: children, ...otherMission } = { ...missions[mis] };
 			const newMission = { ...missions, [mis]: { ...otherMission, [parentAct]: newActChildren } };
 			setMissions(newMission);
 		}
 		/* Cercata la prima attività maggiore rispetto a quella da riaggiungere dalla
 		lista delle attività ancora disponibili */
-		for (var i = 0; i < activities.length && start === -1; i++) {
-			if (parseInt(act) < activities[i]) start = i;
+		for (let i = 0; i < activities.length && start === -1; i++) {
+			if (parseInt(act) < parseInt(activities[i])) start = i;
 		}
 		// Nel caso non sia stata trovata nessuna attività maggiore (sarà l'ultima)
 		if (start === -1) {
@@ -116,7 +123,7 @@ function Missions(props) {
 		/* Aggiunta la nuova attività (appena eliminata dalla missione) alla lista delle
 		attività disponibili in base all'indice di start (per essere in ordine) */
 		let newActs = [...activities];
-		newActs.splice(start, 0, parseInt(act));
+		newActs.splice(start, 0, act.toString());
 		setActivities(newActs);
 	};
 
@@ -148,12 +155,7 @@ function Missions(props) {
 
 	useEffect(() => {
 		setInputs((prevState) => {
-			return Object.fromEntries(
-				Object.entries(prevState).map(([key, value]) => [
-					key,
-					activities.length ? activities[0].toString() : "new_mission",
-				])
-			);
+			return Object.fromEntries(Object.entries(prevState).map(([key, value]) => [key, activities.length ? activities[0].toString() : "new_mission"]));
 		});
 	}, [activities]);
 
@@ -161,7 +163,7 @@ function Missions(props) {
 		<Container>
 			<MissionModal
 				showModal={showModal}
-				value={inputs["missionModal"]}
+				value={inputs.missionModal}
 				activities={activities}
 				handleSelect={handleSelect}
 				handleHide={handleHide}

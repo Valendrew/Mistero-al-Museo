@@ -13,9 +13,15 @@ const storylineInputs = [
 	{ id: "img", value: "Inserisci un'immagine" },
 	{ id: "video", value: "Inserisci un video" },
 ];
-const questionsInputs = [
+/* const questionsInputs = [
 	{ id: "open", value: "Risposta aperta" },
 	{ id: "checkbox", value: "Risposta con checkbox" },
+	{ id: "radio", value: "Risposta con radio" },
+	{ id: "widget", value: "Risposta con widget" },
+];
+ */
+const questionsInputs = [
+	{ id: "open", value: "Risposta aperta" },
 	{ id: "radio", value: "Risposta con radio" },
 	{ id: "widget", value: "Risposta con widget" },
 ];
@@ -29,7 +35,7 @@ async function processStoryline(storyline, inputs, idStory) {
 		let input = [inputs[key].type, inputs[key].value];
 		if (inputs[key].type === "img" || inputs[key].type === "video") {
 			formData.append(key, inputs[key].value);
-			input[2] = input[1].type.split("/").[1];
+			input[2] = input[1].type.split("/")[1];
 		}
 		if (inputs[key].type === "img") input[3] = inputs[val.alt].value;
 		return [key, input];
