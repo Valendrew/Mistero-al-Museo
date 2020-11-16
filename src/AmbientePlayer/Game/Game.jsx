@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 function getCurrentMission(activity, missions, transitions) {
 	return transitions.find((element) => missions[element].hasOwnProperty(activity));
 }
+
 function Game() {
 	const history = useHistory();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
@@ -18,6 +19,7 @@ function Game() {
 	const [transition, setTransition] = useState();
 	const [game, setGame] = useState();
 	const [answersSelected, setAnswersSelected] = useState();
+	const [errorAnswer, setErrorAnswer] = useState();
 
 	useEffect(() => {
 		if (!isLoaded.loaded) {
@@ -28,19 +30,17 @@ function Game() {
 				setActivity(currentActivity);
 				setTransition(history.location.state.status.transition);
 				setGame(history.location.state.game);
+				setErrorAnswer();
 
-				if (currentStory.activities[currentActivity].questions.length) {
-					const answers = currentStory.activities[currentActivity].questions[0].answers;
-					if (answers) {
-						const answersObject = answers.map((value) => {
-							return {
+				const questions = currentStory.activities[currentActivity].questions;
+				if (questions.length) {
+					if (questions[0].type === "radio") {
+						setAnswersSelected(
+							questions[0].answers.map((value) => ({
 								value: false,
-							};
-						});
-						setAnswersSelected(answersObject);
-					} else {
-						setAnswersSelected([{ value: false }]);
-					}
+							}))
+						);
+					} else if (questions[0].type === "open") setAnswersSelected([{ value: "" }]);
 				} else setAnswersSelected();
 				setIsLoaded({ loaded: true });
 			} else {
@@ -50,36 +50,44 @@ function Game() {
 	}, [history, isLoaded]);
 
 	const handleNextActivity = () => {
-		let answerTransition;
+		let answerTransition = -1;
 		const currentMission = getCurrentMission(activity, story.missions, story.transitions[parseInt(transition)]);
 		if (story.activities[activity].questions.length) {
-			if (story.activities[activity].questions[0].answers) {
+			if (story.activities[activity].questions[0].type === "radio") {
 				answersSelected.forEach((element, index) => {
 					if (element.value === true) {
 						answerTransition = index;
 					}
 				});
-			} else answerTransition = 0; // da cambiare
+			} else if (story.activities[activity].questions[0].type === "open") {
+				if (answersSelected[0].replaceAll(" ", "")) answerTransition = 0;
+			}
 		} else {
 			// caso solo narrazione
 			answerTransition = 0;
 		}
+		if (answerTransition === -1) {
+			setErrorAnswer(<p className="text-danger">Inserisci una risposta</p>);
+		} else {
+			let nextActivity = story.missions[currentMission][activity][answerTransition];
+			if (nextActivity === activity) {
+				setErrorAnswer(<p>Risposta errata</p>);
+			} else {
+				if (nextActivity === "new_mission") {
+					const currentTransitions = story.transitions[transition];
+					const nextMission = currentTransitions.indexOf(currentMission) + 1;
+					if (nextMission === currentTransitions.length) nextActivity = "end_game";
+					else nextActivity = story.missions[currentTransitions[nextMission]].start;
+				}
 
-		let nextActivity = story.missions[currentMission][activity][answerTransition];
-
-		if (nextActivity === "new_mission") {
-			const currentTransitions = story.transitions[transition];
-			const nextMission = currentTransitions.indexOf(currentMission) + 1;
-			if (nextMission === currentTransitions.length) nextActivity = "end_game";
-			else nextActivity = story.missions[currentTransitions[nextMission]].start;
+				history.replace("/player/game", {
+					status: { ...history.location.state.status, status: nextActivity },
+					story: story,
+					game: game,
+				});
+				setIsLoaded({ loaded: false, error: null });
+			}
 		}
-
-		history.replace("/player/game", {
-			status: { ...history.location.state.status, status: nextActivity },
-			story: story,
-			game: game,
-		});
-		setIsLoaded({ loaded: false, error: null });
 	};
 
 	const onChangeAnswer = (key, value) => {
@@ -104,6 +112,7 @@ function Game() {
 						{story.activities[activity].questions.length ? (
 							<Questions questions={story.activities[activity].questions} answersSelected={answersSelected} onChangeAnswer={onChangeAnswer} />
 						) : null}
+						{errorAnswer}
 						<Button name="nextActivity" variant="primary" onClick={handleNextActivity}>
 							Prosegui attività
 						</Button>
