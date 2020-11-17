@@ -65,6 +65,18 @@ router.get("/:id", async (req, res, next) => {
 	}
 });
 
+router.get("/:id/players", async (req, res, next) => {
+	const uuidParam = req.params.id;
+	console.log(uuidParam);
+	try {
+		fileOperations.read("player.json", app.get("games"))
+			.then((data) => res.send(data[uuidParam]))
+			.catch(next)
+	} catch (e) {
+		next(e);
+	}
+});
+
 router.get("/:id/help", async (req, res, next) => {
 	emitter.once("help", (msg) => {
 		res.send(msg);

@@ -66,9 +66,7 @@ function Home() {
 
 ReactDOM.render(
 	<BrowserRouter>
-		<Container>
-			<RouterSwitch />
-		</Container>
+		<RouterSwitch />
 	</BrowserRouter>,
 	document.getElementById("root")
 );

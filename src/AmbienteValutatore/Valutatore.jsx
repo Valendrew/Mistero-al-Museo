@@ -1,40 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { Switch, Route, Link, useRouteMatch, useHistory } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-function UserCard() {
-	return (
-		<Card>
-			<Card.Header>Giocatori in partita</Card.Header>
-			<Card.Body></Card.Body>
-		</Card>
-	);
-}
+import SideBar from './SideBar'
+import PlayerInfo from './PlayerInfo'
+
+
+
 function Valutatore() {
-	const [heading, setHeading] = useState("");
-	const fetching = async () => {
-		const res = await fetch("/games/1/help", {
-			headers: { Authorization: `Basic ${btoa("user_1:abcd")}` },
-		});
-		if (!res.ok) {
-			console.log("errore " + res.statusText);
-			fetching();
-		} else {
-			res.text().then((data) => {
-				setHeading(data);
-				fetching();
-			});
-		}
-	};
-	fetching();
-	return (
-		<Container>
-			<h1>Ambiente valutatore</h1>
-			<UserCard />
-			<h6>{heading}</h6>
-		</Container>
-	);
-}
+	const [stories, setStories] = useState({ error: null, isLoaded: false, items: [] });
+	const [player, setPlayer] = useState({ id: "", value: {} });
 
+	useEffect(() => {
+		fetch(`/stories`, {
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then(
+				(result) => {
+					setStories({
+						isLoaded: true,
+						items: result,
+					});
+				},
+				(error) => {
+					setStories({
+						isLoaded: true,
+						error,
+					});
+				}
+			);
+	}, []);
+	const passPlayer=(id_, value_)=>{
+		setPlayer({
+			value:value_,
+			id:id_
+		})
+
+	}
+	return (
+		<>
+			<h1>Ambiente Valutatore</h1>
+			<Row>
+				<Col lg={3}>
+					<SideBar setPlayer={passPlayer}/>
+				</Col>
+				<Col lg={9}>
+					<PlayerInfo player={player}/>
+				</Col>
+			</Row>
+
+		</>
+	);
+
+}
 export default Valutatore;
