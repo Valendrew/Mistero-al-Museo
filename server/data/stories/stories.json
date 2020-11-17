@@ -1,10 +1,5 @@
 {
-    "c08c210c-d2ec-4044-a040-407be97d1d3f": {
-        "user": "user_2",
-        "story": "1"
-    },
-    "d6400d99-38a6-40c0-b29e-35a1ff09e44a": {
-        "user": "user_2",
-        "story": "2"
-    }
+	"c08c210c-d2ec-4044-a040-407be97d1d3f": {
+		"user": "user_2"
+	}
 }

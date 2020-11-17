@@ -13,7 +13,8 @@ function ActivityOverview(props) {
 			<Card>
 				<Card.Header>
 					Attività {props.activityNmb}
-					{props.missions[props.activityNmb].filter((value) => Number.isInteger(parseInt(value))).length === 0 ? (
+					{props.missions[props.activityNmb].filter((value) => Number.isInteger(parseInt(value)) && parseInt(value) !== parseInt(props.activityNmb))
+						.length === 0 ? (
 						<Button variant="danger" onClick={() => props.handleRemoveActivity(props.selPrefix)}>
 							X
 						</Button>

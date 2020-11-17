@@ -96,7 +96,7 @@ function processQuestions(questions, inputs) {
 
 export default function CreateActivity(props) {
 	const history = useHistory();
-	const { id, number } = history.location.state;
+	const { id, number, action } = history.location.state;
 
 	const [invalidInputs, setInvalidInputs] = useState();
 	const [inputs, setInputs] = useState();
@@ -264,14 +264,24 @@ export default function CreateActivity(props) {
 		}
 	};
 
+	const fetchActivityToEdit = () => {
+		
+	};
 	useEffect(() => {
 		if (!isLoaded) {
-			setActivity({ storyline: {}, questions: {} });
-			setInputs({ activityName: "" });
-			setInvalidInputs(null);
+			if (action) {
+				fetchActivityToEdit();
+				setActivity({ storyline: {}, questions: {} });
+				setInputs({ activityName: "" });
+				setInvalidInputs(null);
+			} else {
+				setActivity({ storyline: {}, questions: {} });
+				setInputs({ activityName: "" });
+				setInvalidInputs(null);
+			}
 			setIsLoaded(true);
 		}
-	}, [isLoaded]);
+	}, [isLoaded, action]);
 
 	return isLoaded ? (
 		<Container>
@@ -301,17 +311,20 @@ export default function CreateActivity(props) {
 					handleAddInput={handleAddInput}
 					handleRemoveInput={handleRemoveInput}
 				/>
-
-				<ButtonGroup>
-					<Button type="submit" name="nextActivity" variant="success" onClick={(e) => gestisciDati(e, e.target.name)}>
-						Prossima attività
-					</Button>
-					{number >= 4 ? (
-						<Button type="submit" name="newMissions" variant="success" onClick={(e) => gestisciDati(e, e.target.name)}>
-							Procedi a creare le missione
+				{action ? (
+					<Button onClick={(e) => history.push("overview", { id: id })}>Completa modifica</Button>
+				) : (
+					<ButtonGroup>
+						<Button type="submit" name="nextActivity" variant="success" onClick={(e) => gestisciDati(e, e.target.name)}>
+							Prossima attività
 						</Button>
-					) : null}
-				</ButtonGroup>
+						{number >= 4 ? (
+							<Button type="submit" name="newMissions" variant="success" onClick={(e) => gestisciDati(e, e.target.name)}>
+								Procedi a creare le missione
+							</Button>
+						) : null}
+					</ButtonGroup>
+				)}
 			</Form>
 		</Container>
 	) : (

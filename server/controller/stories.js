@@ -104,14 +104,7 @@ router.post(
 	"/",
 	async (req, res, next) => {
 		const userDir = path.join(app.get("stories"), req.username);
-		let fileInDir;
-		try {
-			fileInDir = await fileOperations.readAll(userDir);
-		} catch (e) {
-			fileInDir = [];
-			console.log(e.message);
-		}
-		const id = fileInDir.length + 1;
+		const id = uuidv4();
 		req.body = { ...req.body, id: id };
 		res.locals = { dirPath: app.get("stories"), id: id, type: "info" };
 		next();
@@ -149,7 +142,7 @@ router.post(
 router.post(
 	"/:id/qrcode",
 	async (req, res, next) => {
-		const storyCode = uuidv4();
+		const storyCode = req.params.id;
 		let data;
 		try {
 			data = await fileOperations.read("stories.json", app.get("stories"));
@@ -157,14 +150,14 @@ router.post(
 			data = {};
 			console.log(e.message);
 		}
-		data[storyCode] = { user: req.username, story: req.params.id };
+		data[storyCode] = { user: req.username };
 		try {
 			await fileOperations.write(data, "stories.json", app.get("stories"));
 		} catch (e) {
 			next(e);
 		}
 		req.body = `http://localhost:3000/player/${storyCode}`;
-		res.locals = { dirPath: app.get("stories"), id: req.params.id, type: "info", value: "qr" };
+		res.locals = { dirPath: app.get("stories"), id: storyCode, type: "info", value: "qr" };
 		next();
 	},
 	postHandler
@@ -190,14 +183,14 @@ router.put(
 
 router.delete("/:id/qrcode", async (req, res, next) => {
 	const userDir = path.join(app.get("stories"), req.username);
-	const storyFile = `story_${req.params.id}.json`;
+	const storyCode = req.params.id;
+	const storyFile = `story_${storyCode}.json`;
 	let data;
 	try {
 		data = await fileOperations.read(storyFile, userDir);
 	} catch (e) {
 		next(e);
 	}
-	const storyCode = data.info.qr.split("/").reverse()[0];
 	delete data.info.qr;
 	try {
 		await fileOperations.write(data, storyFile, userDir);
@@ -213,7 +206,7 @@ router.delete("/:id/qrcode", async (req, res, next) => {
 
 	fileOperations
 		.write(data, "stories.json", app.get("stories"))
-		.then(() => res.send("new name added"))
+		.then(() => res.send("qrcode removed"))
 		.catch(next);
 });
 

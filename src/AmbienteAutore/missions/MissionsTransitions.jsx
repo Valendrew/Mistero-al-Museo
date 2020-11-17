@@ -121,6 +121,7 @@ function MissionsTransitions() {
 				) : (
 					<>
 						<Row>
+							<h5>Crea transizioni per le missioni</h5>
 							{transitions.map((value, key) => {
 								return (
 									<TransitionsListGroup

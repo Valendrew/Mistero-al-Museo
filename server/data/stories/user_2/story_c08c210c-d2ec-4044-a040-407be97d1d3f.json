@@ -2,7 +2,7 @@
     "info": {
         "name": "Gigino e la nuova auto ferrai",
         "description": "Giginooo aveva la nuova ferrari",
-        "id": 1,
+        "id": "c08c210c-d2ec-4044-a040-407be97d1d3f",
         "qr": "http://localhost:3000/player/c08c210c-d2ec-4044-a040-407be97d1d3f"
     },
     "activities": {
@@ -195,35 +195,24 @@
         },
         "2": {
             "8": [
-                "new_mission"
+                "9"
             ],
-            "start": 8
-        },
-        "3": {
             "9": [
                 "new_mission"
             ],
-            "start": 9
+            "start": "8"
         }
     },
     "transitions": [
         [
-            "0",
             "1",
-            "2",
-            "3"
+            "0",
+            "2"
         ],
         [
             "0",
             "1",
-            "2",
-            "3"
-        ],
-        [
-            "0",
-            "1",
-            "2",
-            "3"
+            "2"
         ]
     ]
 }

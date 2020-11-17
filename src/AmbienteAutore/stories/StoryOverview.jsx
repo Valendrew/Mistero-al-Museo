@@ -203,8 +203,9 @@ function StoryOverview() {
 			.catch(console.log);
 	};
 
-	const handleEditMissions = () => {
-		history.push("missions", { id: idStory });
+	const handleEditStory = (e) => {
+		if (e.target.name === "missions") history.push("missions", { id: idStory });
+		else history.push("activities", { id: idStory });
 	};
 	return (
 		<Container>
@@ -233,8 +234,12 @@ function StoryOverview() {
 						{story.items.missions && story.items.activities
 							? story.items.transitions.map((value, key) => <StoryGraph key={key} index={key} story={story.items} transitions={value} />)
 							: null}
-						<Button>Modifica attività</Button>
-						<Button onClick={handleEditMissions}>Modifica missioni</Button>
+						<Button name="activities" onClick={handleEditStory}>
+							Modifica attività
+						</Button>
+						<Button name="missions" onClick={handleEditStory}>
+							Modifica missioni
+						</Button>
 					</>
 				)
 			) : (

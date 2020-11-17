@@ -16,6 +16,7 @@ import StoryOverview from "./stories/StoryOverview";
 import Activity from "./activities/Activity";
 import StoryIndex from "./stories/StoryIndex";
 import NavbarAutore from "./NavbarAutore";
+import ActivityOverview from "./activities/ActivityOverview";
 
 function StoryCard(props) {
 	return (
@@ -77,12 +78,7 @@ function AutoreHome(props) {
 						stories.items.map((value) => {
 							return (
 								<Col lg="4" key={value.info.name}>
-									<StoryCard
-										id={value.info.id}
-										title={value.info.name}
-										description={value.info.description}
-										{...props}
-									/>
+									<StoryCard id={value.info.id} title={value.info.name} description={value.info.description} {...props} />
 								</Col>
 							);
 						})
@@ -117,6 +113,12 @@ function Autore() {
 				<>
 					<NavbarAutore />
 					<StoryOverview />
+				</>
+			</Route>
+			<Route path={`${match.path}/story/activities`}>
+				<>
+					<NavbarAutore />
+					<ActivityOverview />
 				</>
 			</Route>
 			<Route path={`${match.path}/story/missions`}>

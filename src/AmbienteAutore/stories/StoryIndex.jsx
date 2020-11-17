@@ -23,7 +23,7 @@ function StoryPropertyCard(props) {
 	);
 }
 
-function StoryOverview() {
+function StoryIndex() {
 	let history = useHistory();
 	const [inputs, setInputs] = useState({
 		name: undefined,
@@ -74,4 +74,4 @@ function StoryOverview() {
 	);
 }
 
-export default StoryOverview;
+export default StoryIndex;
