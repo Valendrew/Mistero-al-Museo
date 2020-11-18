@@ -26,27 +26,30 @@ function StoryPropertyCard(props) {
 function StoryIndex() {
 	let history = useHistory();
 	const [inputs, setInputs] = useState({
-		name: undefined,
-		description: undefined,
+		name: "",
+		description: "",
 	});
-
+	const [errorInputs, setErrorInputs] = useState();
 	const onSubmit = (e) => {
 		e.preventDefault();
 		const stories = {
 			name: inputs.name,
 			description: inputs.description,
 		};
-
-		fetch(`/stories`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(stories),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				history.push("/autore/story/activity", { id: data.id, number: 0 });
+		if (inputs.name.replace(" ", "") === "" || inputs.description.replace(" ", "") === "") {
+			setErrorInputs(<p className="text-danger">Compila tutti gli input</p>);
+		} else {
+			fetch(`/stories`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(stories),
 			})
-			.catch(console.log);
+				.then((response) => response.json())
+				.then((data) => {
+					history.push("/autore/story/activity", { id: data.id, number: 0 });
+				})
+				.catch(console.log);
+		}
 	};
 
 	return (
@@ -66,6 +69,7 @@ function StoryIndex() {
 					as={"textarea"}
 					onChange={(value, name) => setInputs({ ...inputs, [name]: value })}
 				/>
+				{errorInputs}
 				<Button type="submit" variant="success">
 					Prosegui
 				</Button>

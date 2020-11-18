@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import Narrazione from "./Narrazione";
 import Risposta from "./Risposta";
 
-import { Form, Container, Button, ButtonGroup } from "react-bootstrap";
+import { Form, Container, Button, ButtonGroup, Card, Row, Col } from "react-bootstrap";
 import { useEffect } from "react";
 
 const storylineInputs = [
@@ -94,7 +94,7 @@ function processQuestions(questions, inputs) {
 	});
 }
 
-export default function CreateActivity(props) {
+export default function Activity(props) {
 	const history = useHistory();
 	const { id, number, action } = history.location.state;
 
@@ -103,7 +103,7 @@ export default function CreateActivity(props) {
 	const [activity, setActivity] = useState();
 	const [isLoaded, setIsLoaded] = useState(false);
 
-	function handleInput(value, id, questionId = null, type = null) {
+	const handleInput = (value, id, questionId = null, type = null) => {
 		const valuePred = inputs[id].value; // valore precedente dell'input
 		let newInputs = { [id]: { ...inputs[id], value: value } }; // aggiornato inputs con nuovo valore
 
@@ -159,9 +159,9 @@ export default function CreateActivity(props) {
 			});
 		}
 		setInputs({ ...inputs, ...newInputs });
-	}
+	};
 
-	function handleAddInput(type, category) {
+	const handleAddInput = (type, category) => {
 		// Aggiunta nuovo input del tipo specificato
 		const elementId = nanoid();
 		let newInputs = { [elementId]: { type: type, value: "" } };
@@ -235,19 +235,20 @@ export default function CreateActivity(props) {
 		}
 		setInputs({ ...inputs, ...newInputs });
 		setActivity({ ...other, [category]: child });
-	}
+	};
 
-	function handleRemoveInput(id, category) {
+	const handleRemoveInput = (id, category) => {
 		const { [id]: child, ...other } = activity[category];
 		setActivity({ ...activity, [category]: other });
-	}
+	};
 
 	const gestisciDati = async (e, buttonPressed) => {
 		e.preventDefault();
-		if (Object.keys(activity.storyline).length) {
+		if (Object.keys(activity.storyline).length && inputs.activityName.replace(" ", "") !== "") {
+			const storyline = await processStoryline(activity["storyline"], inputs, id);
 			const data = {
 				name: inputs.activityName,
-				storyline: await processStoryline(activity["storyline"], inputs, id),
+				storyline: storyline,
 				questions: processQuestions(activity["questions"], inputs),
 			};
 			fetch(`/stories/${id}/activities/${number}`, {
@@ -260,13 +261,12 @@ export default function CreateActivity(props) {
 				else history.push("missions", { id: id });
 			});
 		} else {
-			setInvalidInputs("Gli input non sono completati");
+			setInvalidInputs(<p className="text-danger">Gli input non sono completati</p>);
 		}
 	};
 
-	const fetchActivityToEdit = () => {
-		
-	};
+	const fetchActivityToEdit = () => {};
+
 	useEffect(() => {
 		if (!isLoaded) {
 			if (action) {
@@ -283,51 +283,72 @@ export default function CreateActivity(props) {
 		}
 	}, [isLoaded, action]);
 
-	return isLoaded ? (
-		<Container>
-			<h5>Stai creando l'attività {number + 1}</h5>
-			{invalidInputs}
-			<Form>
-				<Form.Label>Aggiungi nome attività</Form.Label>
-				<Form.Control
-					type="text"
-					name="activityName"
-					value={inputs.activityName}
-					onChange={(e) => setInputs({ ...inputs, activityName: e.target.value })}
-				/>
-				<Narrazione
-					storyline={activity.storyline}
-					inputs={inputs}
-					storylineInputs={storylineInputs}
-					handleInput={handleInput}
-					handleAddInput={handleAddInput}
-					handleRemoveInput={handleRemoveInput}
-				/>
-				<Risposta
-					questions={activity.questions}
-					inputs={inputs}
-					questionsInputs={questionsInputs}
-					handleInput={handleInput}
-					handleAddInput={handleAddInput}
-					handleRemoveInput={handleRemoveInput}
-				/>
-				{action ? (
-					<Button onClick={(e) => history.push("overview", { id: id })}>Completa modifica</Button>
-				) : (
-					<ButtonGroup>
-						<Button type="submit" name="nextActivity" variant="success" onClick={(e) => gestisciDati(e, e.target.name)}>
-							Prossima attività
-						</Button>
-						{number >= 4 ? (
-							<Button type="submit" name="newMissions" variant="success" onClick={(e) => gestisciDati(e, e.target.name)}>
-								Procedi a creare le missione
-							</Button>
-						) : null}
-					</ButtonGroup>
-				)}
-			</Form>
-		</Container>
-	) : (
-		<h6>Loading</h6>
+	return (
+		<Card border={"light"}>
+			{isLoaded ? (
+				<>
+					<Card.Header>Stai creando l'attività {number}</Card.Header>
+					<Form>
+						<Card.Body>
+							<Row className="mb-4">
+								<Col sm={12}>
+									<Form.Label>Aggiungi nome attività</Form.Label>
+									<Form.Control
+										type="text"
+										name="activityName"
+										value={inputs.activityName}
+										onChange={(e) => setInputs({ ...inputs, activityName: e.target.value })}
+									/>
+								</Col>
+							</Row>
+
+							<Row className="mb-4">
+								<Col sm={12}>
+									<Narrazione
+										storyline={activity.storyline}
+										inputs={inputs}
+										storylineInputs={storylineInputs}
+										handleInput={handleInput}
+										handleAddInput={handleAddInput}
+										handleRemoveInput={handleRemoveInput}
+									/>
+								</Col>
+							</Row>
+							<Row className="mb-4">
+								<Col sm={12}>
+									<Risposta
+										questions={activity.questions}
+										inputs={inputs}
+										questionsInputs={questionsInputs}
+										handleInput={handleInput}
+										handleAddInput={handleAddInput}
+										handleRemoveInput={handleRemoveInput}
+									/>
+								</Col>
+							</Row>
+						</Card.Body>
+						<Card.Footer>
+							{action ? (
+								<Button onClick={(e) => history.push("missions", { id: id })}>Completa modifica</Button>
+							) : (
+								<>
+									<Button type="submit" name="nextActivity" variant="success" onClick={(e) => gestisciDati(e, e.target.name)}>
+										Prossima attività
+									</Button>
+									{number >= 0 ? (
+										<Button type="submit" name="newMissions" variant="success" onClick={(e) => gestisciDati(e, e.target.name)}>
+											Procedi a creare le missione
+										</Button>
+									) : null}
+								</>
+							)}
+							{invalidInputs}
+						</Card.Footer>
+					</Form>
+				</>
+			) : (
+				<h6>Loading</h6>
+			)}
+		</Card>
 	);
 }

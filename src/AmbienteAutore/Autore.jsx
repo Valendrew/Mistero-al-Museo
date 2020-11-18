@@ -104,40 +104,40 @@ function Autore() {
 				<AutoreHome onEditStory={onEditStory} />
 			</Route>
 			<Route exact path={`${match.path}/story`}>
-				<>
-					<NavbarAutore />
+				<Container>
+					<NavbarAutore name="Creazione storia"/>
 					<StoryIndex />
-				</>
+				</Container>
 			</Route>
 			<Route exact path={`${match.path}/story/overview`}>
-				<>
-					<NavbarAutore />
+				<Container>
+					<NavbarAutore name="Riassunto storia" />
 					<StoryOverview />
-				</>
+				</Container>
 			</Route>
 			<Route path={`${match.path}/story/activities`}>
-				<>
-					<NavbarAutore />
+				<Container>
+					<NavbarAutore name="Riassuno attività"/>
 					<ActivityOverview />
-				</>
+				</Container>
 			</Route>
 			<Route path={`${match.path}/story/missions`}>
-				<>
-					<NavbarAutore />
+				<Container>
+					<NavbarAutore name="Crea missione"/>
 					<MissionsOverview />
-				</>
+				</Container>
 			</Route>
 			<Route path={`${match.path}/story/transitions`}>
-				<>
-					<NavbarAutore />
+				<Container>
+					<NavbarAutore name="Crea transizione"/>
 					<MissionsTransitions />
-				</>
+				</Container>
 			</Route>
 			<Route path={`${match.path}/story/activity`}>
-				<>
-					<NavbarAutore />
+				<Container>
+					<NavbarAutore name="Crea attività"/>
 					<Activity />
-				</>
+				</Container>
 			</Route>
 		</Switch>
 	);

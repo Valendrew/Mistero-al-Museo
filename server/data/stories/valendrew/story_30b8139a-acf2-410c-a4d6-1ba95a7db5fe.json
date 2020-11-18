@@ -1,0 +1,67 @@
+{
+    "info": {
+        "name": "Ciao",
+        "description": "ciaoo\n",
+        "id": "30b8139a-acf2-410c-a4d6-1ba95a7db5fe"
+    },
+    "activities": {
+        "0": {
+            "name": "La gianna",
+            "storyline": [
+                [
+                    "text",
+                    "Giannina"
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Anni",
+                    "tips": [],
+                    "answers": [
+                        {
+                            "value": "1",
+                            "correct": true,
+                            "transition": false,
+                            "score": "0"
+                        },
+                        {
+                            "value": "2",
+                            "correct": false,
+                            "transition": false,
+                            "score": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        "1": {
+            "name": "Oo",
+            "storyline": [
+                [
+                    "text",
+                    "Oppla"
+                ]
+            ],
+            "questions": []
+        },
+        "2": {
+            "name": "nono",
+            "storyline": [
+                [
+                    "text",
+                    "si"
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "ciao",
+                    "tips": [],
+                    "minScore": "-50",
+                    "maxScore": "50"
+                }
+            ]
+        }
+    }
+}

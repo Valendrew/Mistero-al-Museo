@@ -7,7 +7,7 @@ export default function RemoveButton(props) {
 			type="button"
 			variant="danger"
 			onClick={() => props.handleRemoveInput(props.id, props.category)}>
-			X
+			&times;
 		</Button>
 	);
 }

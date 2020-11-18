@@ -67,14 +67,13 @@ router.get("/:id", async (req, res, next) => {
 
 router.get("/:id/players", async (req, res, next) => {
 	const uuidParam = req.params.id;
-	console.log(uuidParam);
+	let result;
 	try {
-		fileOperations.read("player.json", app.get("games"))
-			.then((data) => res.send(data[uuidParam]))
-			.catch(next)
+		result = await fileOperations.read("player.json", app.get("games"));
 	} catch (e) {
-		next(e);
+		result = {};
 	}
+	res.send(result[uuidParam]);
 });
 
 router.get("/:id/help", async (req, res, next) => {

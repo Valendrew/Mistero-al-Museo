@@ -1,11 +1,11 @@
-import React from "react"
-function PlayerInfo(props){
-    return(
-        <>
-        <h2>{props.player.value.name}</h2>
-        {props.player.id}
+import React from "react";
 
-        </>
-    );
+import Row from "react-bootstrap/Row";
+function PlayerInfo(props) {
+	return (
+		<Row>
+			<h2>{props.player.value.name}</h2>
+		</Row>
+	);
 }
-export default PlayerInfo
+export default PlayerInfo;
