@@ -31,7 +31,7 @@ router.get("/:id", async (req, res, next) => {
 			next(e);
 		}
 	}
-	const { user, story } = stories[uuidParam];
+	const { user } = stories[uuidParam];
 	if (user) {
 		const storyPath = path.join(app.get("stories"), user);
 		const playerId = uuidv4();
@@ -39,7 +39,7 @@ router.get("/:id", async (req, res, next) => {
 		const statusValue = "start";
 		let storyObject, startTransition;
 		try {
-			storyObject = await fileOperations.read(`story_${story}.json`, storyPath);
+			storyObject = await fileOperations.read(`story_${uuidParam}.json`, storyPath);
 			startTransition = Math.floor(Math.random() * Object.keys(storyObject.transitions).length);
 		} catch (e) {
 			next(e);
