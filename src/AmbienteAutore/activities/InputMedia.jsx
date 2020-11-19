@@ -19,7 +19,7 @@ export default function InputMedia(props) {
 			}
 		};
 		if (!mediaUrl) fetchData();
-	}, [mediaUrl]);
+	}, [mediaUrl, props]);
 
 	function handleUpload(e) {
 		const fileUploaded = e.target.files[0];

@@ -37,7 +37,7 @@ function Activities() {
 			}
 		};
 		fetchData();
-	}, [idStory]);
+	}, [idStory, action]);
 
 	const fetchMissions = missions => {
 		fetch(`/stories/${idStory}/missions`, {

@@ -7,7 +7,7 @@ import RemoveButton from './RemoveButton';
 import DropdownInputs from './DropdownInputs';
 import Tips from './Tips';
 
-import { Container, Row, Col, Card, Tabs, Tab } from 'react-bootstrap';
+import { Row, Col, Card, Tabs, Tab } from 'react-bootstrap';
 
 export default function Risposta(props) {
 	const questionsArray = Object.entries(props.questions);
