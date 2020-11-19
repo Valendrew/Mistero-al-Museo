@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import Narrazione from './Narrazione';
 import Risposta from './Risposta';
 
-import { Form, Container, Button, ButtonGroup, Card, Row, Col } from 'react-bootstrap';
+import { Form, Button, ButtonGroup, Card, Row, Col } from 'react-bootstrap';
 import { useEffect } from 'react';
 
 const storylineInputs = [
@@ -15,7 +15,7 @@ const storylineInputs = [
 ];
 const questionsInputs = [
 	{ id: 'open', value: 'Risposta aperta' },
-	{ id: 'radio', value: 'Risposta con radio' },
+	{ id: 'radio', value: 'Risposta multipla' },
 	{ id: 'widget', value: 'Risposta con widget' }
 ];
 
@@ -27,8 +27,14 @@ async function processStoryline(storyline, inputs) {
 	returnObj = storylineSorted.map(([key, val]) => {
 		let input = [inputs[key].type, inputs[key].value];
 		if (inputs[key].type === 'img' || inputs[key].type === 'video') {
-			formData.append(key, inputs[key].value);
-			input[2] = input[1].type.split('/')[1];
+			if (typeof inputs[key].value === 'string') {
+				const [id, ext] = input[1].split('.');
+				input[1] = id;
+				input[2] = ext;
+			} else {
+				formData.append(key, inputs[key].value);
+				input[2] = input[1].type.split('/')[1];
+			}
 		}
 		if (inputs[key].type === 'img') input[3] = inputs[val.alt].value;
 		return [key, input];
@@ -46,7 +52,7 @@ async function processStoryline(storyline, inputs) {
 		}
 		const data = await result.json();
 		return returnObj.map(([key, value]) => {
-			if (value[0] === 'img' || value[0] === 'video') {
+			if (typeof value[1] !== 'string' && (value[0] === 'img' || value[0] === 'video')) {
 				value[1] = data[key];
 			}
 			return value;
@@ -88,7 +94,10 @@ function processQuestions(questions, inputs) {
 }
 
 function fetchValidInputs(inputs, activity) {
-	if (!inputs.activityName.value.trim() || Object.keys(activity.storyline).length === 0) {
+	if (
+		!inputs.activityName.value.trim() ||
+		(!Object.keys(activity.storyline).length && !Object.keys(activity.questions).length)
+	) {
 		return false;
 	}
 	for (let [key, val] of Object.entries(activity.storyline)) {
@@ -322,7 +331,7 @@ function Activity() {
 			const storyline = await processStoryline(activity.storyline, inputs);
 			const questions = processQuestions(activity.questions, inputs);
 			const data = {
-				name: inputs.activityName,
+				name: inputs.activityName.value,
 				storyline: storyline,
 				questions: questions
 			};
@@ -331,10 +340,14 @@ function Activity() {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data)
 			}).then(res => {
+				if (buttonPressed === 'nextActivity') {
+					const nextActivity = parseInt(historyState.idActivity) + 1;
+					history.push('activity', {
+						idStory: historyState.idStory,
+						idActivity: nextActivity
+					});
+				} else history.replace('missions', { idStory: historyState.idStory });
 				setIsLoaded({ loaded: false, error: null });
-				if (buttonPressed === 'nextActivity')
-					history.replace('activity', { idStory: historyState.idStory, idActivity: historyState.idActivity + 1 });
-				else history.replace('missions', { idStory: historyState.idStory });
 			});
 		} else {
 			setInvalidInputs(<p className='text-danger'>I campi non sono stati completati, ricontrolla!</p>);
@@ -352,8 +365,10 @@ function Activity() {
 			if (val[0] === 'img') {
 				const altID = activity[mainElementID].alt;
 				inputs = { ...inputs, [altID]: { ...inputs[altID], value: val[3] } };
-				inputs = { ...inputs, [mainElementID]: { ...inputs[mainElementID], value: '' } };
-			} else {
+			}
+			if (val[0] === 'img' || val[0] === 'video') {
+				inputs = { ...inputs, [mainElementID]: { ...inputs[mainElementID], value: `${val[1]}.${val[2]}` } };
+			} else if (val[0] === 'text') {
 				inputs = { ...inputs, [mainElementID]: { ...inputs[mainElementID], value: val[1] } };
 			}
 
@@ -438,7 +453,7 @@ function Activity() {
 				setActivity({ questions: {}, storyline: {} });
 				setIsLoaded({ loaded: true });
 			}
-			setHistoryState({ idStory, idActivity, action } );
+			setHistoryState(history.location.state);
 			setInvalidInputs(null);
 		};
 		if (!isLoaded.loaded) fetchData();

@@ -1,0 +1,213 @@
+{
+    "info": {
+        "name": "Gigino e la nuova macchina",
+        "description": "Gigino va a comprare una macchina",
+        "id": "15c63997-f03a-4a71-82e4-fd5488e5ec5b",
+        "qr": "http://localhost:3000/player/15c63997-f03a-4a71-82e4-fd5488e5ec5b"
+    },
+    "activities": {
+        "0": {
+            "name": "La sveglia",
+            "storyline": [
+                [
+                    "text",
+                    "DRIN DRIN DRIN"
+                ],
+                [
+                    "text",
+                    "Oddio ma è tardissimo"
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Che ore sono?",
+                    "tips": [
+                        "Non è tardissimo"
+                    ],
+                    "answers": [
+                        {
+                            "value": "6",
+                            "correct": false,
+                            "transition": false,
+                            "score": "-15"
+                        },
+                        {
+                            "value": "8",
+                            "correct": true,
+                            "transition": false,
+                            "score": "15"
+                        },
+                        {
+                            "value": "12",
+                            "correct": false,
+                            "transition": false,
+                            "score": "-30"
+                        }
+                    ]
+                }
+            ]
+        },
+        "1": {
+            "name": "Il prelievo",
+            "storyline": [
+                [
+                    "text",
+                    "Oggi è un grande giorno, comprerò un camion bellissimo"
+                ],
+                [
+                    "img",
+                    "a07b03e9-5c4b-4a61-8276-496b433c138d",
+                    "png",
+                    "macchina"
+                ],
+                [
+                    "text",
+                    "è un camion potentissimo"
+                ]
+            ],
+            "questions": []
+        },
+        "2": {
+            "name": "I soldi",
+            "storyline": [
+                [
+                    "text",
+                    "Ho bisogno di soldi ma sono povero"
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Come potrò ottenerli?",
+                    "tips": [
+                        "Sei una persona cattiva"
+                    ],
+                    "answers": [
+                        {
+                            "value": "Uccido una vecchietta",
+                            "correct": true,
+                            "transition": false,
+                            "score": "0"
+                        },
+                        {
+                            "value": "Vado a lavorare",
+                            "correct": false,
+                            "transition": false,
+                            "score": "0"
+                        },
+                        {
+                            "value": "Mi ubriaco",
+                            "correct": false,
+                            "transition": true,
+                            "score": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        "3": {
+            "name": "In prigione",
+            "storyline": [
+                [
+                    "text",
+                    "Ti trovano ubriaco in mezzo al mare, ma sei scemo?"
+                ],
+                [
+                    "text",
+                    "Dai torniamo a dormire che è meglio"
+                ]
+            ],
+            "questions": []
+        },
+        "4": {
+            "name": "I soldi",
+            "storyline": [
+                [
+                    "text",
+                    "Hai trovato dei soldi dalla vecchietta, andiamo a comprarla!"
+                ],
+                [
+                    "img",
+                    "6e7140f3-efc1-4e5d-9e5b-da6ece8f267a",
+                    "jpeg",
+                    "Macchina"
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Vuoi comprarla?",
+                    "tips": [
+                        "Anche per forza"
+                    ],
+                    "answers": [
+                        {
+                            "value": "Sì",
+                            "correct": true,
+                            "transition": false,
+                            "score": "0"
+                        },
+                        {
+                            "value": "No",
+                            "correct": false,
+                            "transition": false,
+                            "score": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        "5": {
+            "name": "Trovi dei soldi per terra",
+            "storyline": [
+                [
+                    "text",
+                    "Hai trovato i soldi, andiamo a comprarla"
+                ]
+            ],
+            "questions": []
+        }
+    },
+    "missions": {
+        "0": {
+            "0": [
+                "0",
+                "1",
+                "0"
+            ],
+            "1": [
+                "2"
+            ],
+            "2": [
+                "new_mission",
+                "2",
+                "3"
+            ],
+            "3": [
+                "5"
+            ],
+            "5": [
+                "new_mission"
+            ],
+            "start": "0"
+        },
+        "1": {
+            "4": [
+                "new_mission",
+                "4"
+            ],
+            "start": "4"
+        }
+    },
+    "transitions": [
+        [
+            "0",
+            "1"
+        ],
+        [
+            "1",
+            "0"
+        ]
+    ]
+}

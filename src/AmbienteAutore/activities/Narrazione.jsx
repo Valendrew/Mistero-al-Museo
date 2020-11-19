@@ -62,6 +62,7 @@ export default function Narrazione(props) {
 										) : props.inputs[key].type === 'img' ? (
 											<InputMedia
 												id={key}
+												value={props.inputs[key].value}
 												type={props.inputs[key].type}
 												altId={val.alt}
 												altValue={props.inputs[val.alt].value}

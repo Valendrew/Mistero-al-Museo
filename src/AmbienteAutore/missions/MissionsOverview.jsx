@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 
-import ActivityCard from "./ActivityCard";
-import Missions from "./Missions";
+import ActivityCard from './ActivityCard';
+import Missions from './Missions';
 
 function Activities() {
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: {} });
 	const [missions, setMissions] = useState();
 	const history = useHistory();
 	const idStory = history.location.state.idStory;
+	const action = history.location.state.action;
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -19,16 +20,18 @@ function Activities() {
 			if (!result.ok) setStory({ isLoaded: true, error: result.statusText });
 			else {
 				const data = await result.json();
-				const resultMissions = await fetch(`/stories/${idStory}/missions`);
-				if (resultMissions.ok) {
-					let dataMissions;
-					try {
-						dataMissions = await resultMissions.json();
-					} catch (e) {
-						dataMissions = null;
-						console.log("nessuna missione trovata");
+				if (action) {
+					const resultMissions = await fetch(`/stories/${idStory}/missions`);
+					if (resultMissions.ok) {
+						let dataMissions;
+						try {
+							dataMissions = await resultMissions.json();
+						} catch (e) {
+							dataMissions = null;
+							console.log('nessuna missione trovata');
+						}
+						setMissions(dataMissions);
 					}
-					setMissions(dataMissions);
 				}
 				setStory({ isLoaded: true, items: data });
 			}
@@ -36,14 +39,14 @@ function Activities() {
 		fetchData();
 	}, [idStory]);
 
-	const fetchMissions = (missions) => {
+	const fetchMissions = missions => {
 		fetch(`/stories/${idStory}/missions`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(missions),
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(missions)
 		})
-			.then((response) => {
-				history.push("transitions", { idStory: idStory });
+			.then(response => {
+				history.push('transitions', { idStory: idStory });
 			})
 			.catch(console.log);
 	};
@@ -55,7 +58,7 @@ function Activities() {
 					<h5>Errore nel caricamento, riprovare</h5>
 				) : (
 					<>
-						<Row className="row row-cols-4 row-cols-lg-6">
+						<Row className='row row-cols-4 row-cols-lg-6'>
 							{Object.entries(story.items).map(([key, value]) => {
 								return <ActivityCard key={key} id={parseInt(key)} storyline={value.storyline} />;
 							})}

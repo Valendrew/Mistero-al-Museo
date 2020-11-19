@@ -24,6 +24,7 @@ function ActivityListItem({ value }) {
 			} else setIsLoaded(true);
 		}
 	}, [mediaURL, value]);
+	
 	return (
 		<ListGroup.Item>
 			{isLoaded ? (
