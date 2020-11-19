@@ -1,9 +1,18 @@
 {
     "15c63997-f03a-4a71-82e4-fd5488e5ec5b": {
-        "1c3c9235-5396-4add-931d-8d9ec3ffe9ee": {
-            "status": "start",
+        "6bc4c6df-d945-4fe9-a508-2fbbafa7ce4a": {
+            "state": "0",
+            "name": "piuskiu",
+            "transition": 1,
+            "dateStart": "2020-11-19T20:58:17.304Z",
+            "dateActivity": "2020-11-19T23:03:09.346Z"
+        },
+        "99abd40b-9d32-4ea9-af2b-abdd8afb069b": {
+            "state": "start",
             "name": "player",
-            "transition": 1
+            "transition": 0,
+            "dateStart": "2020-11-19T23:14:58.513Z",
+            "dateActivity": "2020-11-19T23:14:58.513Z"
         }
     }
 }

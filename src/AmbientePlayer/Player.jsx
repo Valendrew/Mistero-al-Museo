@@ -45,9 +45,17 @@ function PlayerHome() {
 		if (!isLoaded.loaded) fetchData();
 	}, [id, isLoaded]);
 
-	const startGame = () => {
+	const startGame = async () => {
+		const newStateActivity = { state: story.missions[story.transitions[status.transition][0]].start };
+
+		await fetch(`/games/${id}/players`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(newStateActivity)
+		});
+
 		history.replace('/player/game', {
-			status: { ...status, status: story.missions[story.transitions[status.transition][0]].start },
+			status: { ...status, ...newStateActivity },
 			story: story,
 			game: id
 		});

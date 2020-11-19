@@ -1,15 +1,18 @@
 import React from 'react';
 
+import { Col } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Status from './Status';
 function PlayerInfo(props) {
 	return (
-		<>
+		<Container fluid>
 			<Row>
-				<h2>{props.player.value.name}</h2>
+				<Col xs={6}>
+					<Status {...props} />
+				</Col>
 			</Row>
-			<Status />
-		</>
+		</Container>
 	);
 }
 export default PlayerInfo;

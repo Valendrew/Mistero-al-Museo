@@ -23,9 +23,9 @@ function Game() {
 
 	useEffect(() => {
 		if (!isLoaded.loaded) {
-			if (history.location.state.status.status !== 'end_game') {
+			if (history.location.state.status.state !== 'end_game') {
 				const currentStory = history.location.state.story;
-				const currentActivity = history.location.state.status.status;
+				const currentActivity = history.location.state.status.state;
 				setStory(currentStory);
 				setActivity(currentActivity);
 				setTransition(history.location.state.status.transition);
