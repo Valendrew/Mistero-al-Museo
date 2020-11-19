@@ -16,17 +16,14 @@ function Valutatore() {
 		});
 	};
 	return (
-		<>
-			<h1>Ambiente Valutatore</h1>
-			<Row>
-				<Col lg={3}>
-					<SideBar setPlayer={passPlayer} />
-				</Col>
-				<Col lg={9}>
-					<PlayerInfo player={player} />
-				</Col>
-			</Row>
-		</>
+		<Row>
+			<Col xs={4} lg={3}>
+				<SideBar setPlayer={passPlayer} />
+			</Col>
+			<Col xs={8} lg={9}>
+				<PlayerInfo player={player} />
+			</Col>
+		</Row>
 	);
 }
 export default Valutatore;

@@ -11,10 +11,10 @@ router.use(express.json());
 router.use(express.text());
 
 async function getHandler(req, res, next) {
-	const { dirPath, id, type } = res.locals;
+	const { dirPath, id, type, value } = res.locals;
 	fileOperations
 		.read(`story_${id}.json`, path.join(dirPath, req.username))
-		.then((data) => res.send(type ? data[type] : data))
+		.then((data) => res.send(type ? (value ? data[type][value] : data[type]) : data))
 		.catch(next);
 }
 
@@ -77,6 +77,15 @@ router.get(
 	"/:id/activities",
 	(req, res, next) => {
 		res.locals = { dirPath: app.get("stories"), id: req.params.id, type: "activities" };
+		next();
+	},
+	getHandler
+);
+
+router.get(
+	"/:id/activities/:name",
+	(req, res, next) => {
+		res.locals = { dirPath: app.get("stories"), id: req.params.id, type: "activities", value: req.params.name };
 		next();
 	},
 	getHandler

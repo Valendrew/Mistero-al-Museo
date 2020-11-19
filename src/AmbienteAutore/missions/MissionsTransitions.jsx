@@ -56,7 +56,7 @@ function TransitionsListGroup(props) {
 }
 function MissionsTransitions() {
 	let history = useHistory();
-	const idStory = history.location.state.id;
+	const idStory = history.location.state.idStory;
 
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: [] });
 	const [missions, setMissions] = useState([]);
@@ -108,7 +108,7 @@ function MissionsTransitions() {
 			body: JSON.stringify(transitions),
 		})
 			.then((response) => {
-				history.push(`overview`, { id: idStory });
+				history.push(`overview`, { idStory: idStory });
 			})
 			.catch(console.log);
 	};

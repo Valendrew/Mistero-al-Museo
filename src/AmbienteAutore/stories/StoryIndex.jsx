@@ -46,7 +46,7 @@ function StoryIndex() {
 			})
 				.then((response) => response.json())
 				.then((data) => {
-					history.push("/autore/story/activity", { id: data.id, number: 0 });
+					history.push("/autore/story/activity", { idStory: data.id, idActivity: 0 });
 				})
 				.catch(console.log);
 		}

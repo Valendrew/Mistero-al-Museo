@@ -17,11 +17,10 @@ router.use((req, res, next) => {
 router.post("/", async (req, res, next) => {
 	let filesId = {};
 	try {
-		await fsp.mkdir(dirPath, { recursive: true });
+		await fsp.mkdir(app.get("files"), { recursive: true });
 	} catch (e) {
 		next(e);
 	}
-
 	const filesToUpload = Object.entries(req.files).map(([key, value]) => {
 		const fileId = uuidv4();
 		filesId = { ...filesId, [key]: fileId };

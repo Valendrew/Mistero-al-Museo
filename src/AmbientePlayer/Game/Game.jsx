@@ -80,7 +80,7 @@ function Game() {
 					else nextActivity = story.missions[currentTransitions[nextMission]].start;
 				}
 
-				history.replace("/player/game", {
+				history.push("/player/game", {
 					status: { ...history.location.state.status, status: nextActivity },
 					story: story,
 					game: game,

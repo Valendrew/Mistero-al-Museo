@@ -1,18 +1,16 @@
 import React from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import { Breadcrumb } from "react-bootstrap";
 
 export default function NavbarAutore(props) {
 	return (
 		<Breadcrumb>
-			<Breadcrumb.Item>
-				<Link to="/">Home</Link>
-			</Breadcrumb.Item>
-			<Breadcrumb.Item>
-				<Link to="/">Autore</Link>
-			</Breadcrumb.Item>
+			<LinkContainer to="/">
+				<Breadcrumb.Item>Home</Breadcrumb.Item>
+			</LinkContainer>
+			<LinkContainer to="/autore">
+				<Breadcrumb.Item>Autore</Breadcrumb.Item>
+			</LinkContainer>
 			<Breadcrumb.Item active>{props.name}</Breadcrumb.Item>
 		</Breadcrumb>
 	);

@@ -20,8 +20,8 @@ export default function InputMedia(props) {
 						props.type === "img" ? (
 							<Image src={mediaUrl} thumbnail fluid />
 						) : (
-							<video alt="" controls>
-								<source src={mediaUrl}></source>
+							<video alt="video_uploaded" controls width="250px">
+								<source src={mediaUrl} type="video/mp4" />
 							</video>
 						)
 					) : null}
@@ -34,7 +34,13 @@ export default function InputMedia(props) {
 						<Form.Label>Inserisci descrizione del testo</Form.Label>
 					</Col>
 					<Col>
-						<Form.Control as="textarea" name={props.altId} value={props.altValue} onChange={(e) => props.handleInput(e.target.value, props.altId)} />
+						<Form.Control
+							required
+							as="textarea"
+							name={props.altId}
+							value={props.altValue}
+							onChange={(e) => props.handleInput(e.target.value, props.altId)}
+						/>
 					</Col>
 				</Row>
 			) : null}

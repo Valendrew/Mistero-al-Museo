@@ -9,6 +9,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { LinkContainer } from "react-router-bootstrap";
 
 import MissionsOverview from "./missions/MissionsOverview";
 import MissionsTransitions from "./missions/MissionsTransitions";
@@ -17,6 +18,7 @@ import Activity from "./activities/Activity";
 import StoryIndex from "./stories/StoryIndex";
 import NavbarAutore from "./NavbarAutore";
 import ActivityOverview from "./activities/ActivityOverview";
+import { Breadcrumb } from "react-bootstrap";
 
 function StoryCard(props) {
 	return (
@@ -60,16 +62,18 @@ function AutoreHome(props) {
 
 	return (
 		<Container>
-			<Navbar>
-				<Nav>
-					<Nav.Link as={Link} to="/">
-						Home
-					</Nav.Link>
-					<Nav.Link as={Link} to={`${match.url}/story`}>
-						Crea nuova storia
-					</Nav.Link>
-				</Nav>
-			</Navbar>
+			<Breadcrumb>
+				<LinkContainer to="/">
+					<Breadcrumb.Item>Home</Breadcrumb.Item>
+				</LinkContainer>
+
+				<LinkContainer active to="/autore">
+					<Breadcrumb.Item>Autore</Breadcrumb.Item>
+				</LinkContainer>
+				<LinkContainer to={`${match.url}/story`}>
+					<Breadcrumb.Item>Crea nuova storia</Breadcrumb.Item>
+				</LinkContainer>
+			</Breadcrumb>
 			<Row>
 				{stories.isLoaded ? (
 					stories.error ? (
@@ -94,8 +98,8 @@ function Autore() {
 	const match = useRouteMatch("/autore");
 	let history = useHistory();
 
-	const onEditStory = (id) => {
-		history.push(`${match.path}/story/overview`, { id: id });
+	const onEditStory = (idStory) => {
+		history.push(`${match.path}/story/overview`, { idStory: idStory });
 	};
 
 	return (
@@ -105,7 +109,7 @@ function Autore() {
 			</Route>
 			<Route exact path={`${match.path}/story`}>
 				<Container>
-					<NavbarAutore name="Creazione storia"/>
+					<NavbarAutore name="Creazione storia" />
 					<StoryIndex />
 				</Container>
 			</Route>
@@ -117,25 +121,25 @@ function Autore() {
 			</Route>
 			<Route path={`${match.path}/story/activities`}>
 				<Container>
-					<NavbarAutore name="Riassuno attività"/>
+					<NavbarAutore name="Riassunto attività" />
 					<ActivityOverview />
 				</Container>
 			</Route>
 			<Route path={`${match.path}/story/missions`}>
 				<Container>
-					<NavbarAutore name="Crea missione"/>
+					<NavbarAutore name="Crea missione" />
 					<MissionsOverview />
 				</Container>
 			</Route>
 			<Route path={`${match.path}/story/transitions`}>
 				<Container>
-					<NavbarAutore name="Crea transizione"/>
+					<NavbarAutore name="Crea transizione" />
 					<MissionsTransitions />
 				</Container>
 			</Route>
 			<Route path={`${match.path}/story/activity`}>
 				<Container>
-					<NavbarAutore name="Crea attività"/>
+					<NavbarAutore name="Crea attività" />
 					<Activity />
 				</Container>
 			</Route>

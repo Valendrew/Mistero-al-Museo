@@ -3,16 +3,14 @@ import { Card, Col, Form, ListGroup, Row, Tab } from "react-bootstrap";
 
 function TipListItem(props) {
 	return (
-		<ListGroup.Item>
-			<Row>
-				<Col>
-					<Form.Label>Inserisci l'aiuto numero {props.index}: </Form.Label>
-				</Col>
-				<Col>
-					<Form.Control type="text" name={props.id} value={props.value} onChange={(e) => props.handleInput(e.target.value, props.id)} />
-				</Col>
-			</Row>
-		</ListGroup.Item>
+		<Row className="my-4">
+			<Col>
+				<Form.Label>Inserisci l'aiuto numero {props.index}: </Form.Label>
+			</Col>
+			<Col>
+				<Form.Control type="text" name={props.id} value={props.value} onChange={(e) => props.handleInput(e.target.value, props.id)} />
+			</Col>
+		</Row>
 	);
 }
 export default function Tips(props) {
@@ -33,11 +31,9 @@ export default function Tips(props) {
 					></Form.Control>
 				</Col>
 			</Row>
-			<ListGroup className="mt-4" variant="flush">
-				{Object.entries(props.tips).map(([key, val]) => {
-					return <TipListItem key={key} handleInput={props.handleInput} index={key} id={val} value={props.inputs[val].value} />;
-				})}
-			</ListGroup>
+			{Object.entries(props.tips).map(([key, val]) => {
+				return <TipListItem key={key} handleInput={props.handleInput} index={key} id={val} value={props.inputs[val].value} />;
+			})}
 		</>
 	);
 }

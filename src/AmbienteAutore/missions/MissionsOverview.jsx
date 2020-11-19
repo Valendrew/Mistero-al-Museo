@@ -11,7 +11,7 @@ function Activities() {
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: {} });
 	const [missions, setMissions] = useState();
 	const history = useHistory();
-	const idStory = history.location.state.id;
+	const idStory = history.location.state.idStory;
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -43,7 +43,7 @@ function Activities() {
 			body: JSON.stringify(missions),
 		})
 			.then((response) => {
-				history.push("transitions", { id: idStory });
+				history.push("transitions", { idStory: idStory });
 			})
 			.catch(console.log);
 	};

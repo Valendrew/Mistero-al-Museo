@@ -146,7 +146,7 @@ function StoryPropertyCard(props) {
 
 function StoryOverview() {
 	let history = useHistory();
-	const idStory = history.location.state.id;
+	const idStory = history.location.state.idStory;
 
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: {} });
 	const [inputs, setInputs] = useState({
@@ -204,8 +204,8 @@ function StoryOverview() {
 	};
 
 	const handleEditStory = (e) => {
-		if (e.target.name === "missions") history.push("missions", { id: idStory });
-		else history.push("activities", { id: idStory });
+		if (e.target.name === "missions") history.push("missions", { idStory: idStory });
+		else history.push("activities", { idStory: idStory });
 	};
 	return (
 		<Container>
