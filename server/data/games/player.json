@@ -13,6 +13,13 @@
             "transition": 0,
             "dateStart": "2020-11-19T23:14:58.513Z",
             "dateActivity": "2020-11-19T23:14:58.513Z"
+        },
+        "b0e0f908-e1d5-405e-b1d8-6ff0efc803ba": {
+            "state": "0",
+            "name": "player",
+            "transition": 1,
+            "dateStart": "2020-11-20T10:30:01.797Z",
+            "dateActivity": "2020-11-20T10:30:02.797Z"
         }
     }
 }

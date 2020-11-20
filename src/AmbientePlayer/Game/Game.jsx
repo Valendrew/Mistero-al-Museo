@@ -81,7 +81,7 @@ function Game() {
 				}
 
 				history.push('/player/game', {
-					status: { ...history.location.state.status, status: nextActivity },
+					status: { ...history.location.state.status, state: nextActivity },
 					story: story,
 					game: game
 				});
