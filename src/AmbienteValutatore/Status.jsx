@@ -1,21 +1,19 @@
 import React from 'react';
-import { useState } from 'react';
 import { Button, Card, Col, Form, InputGroup, Row } from 'react-bootstrap';
 
 function Status(props) {
-	const [inputs, setInputs] = useState({ name: { value: props.status.name, error: false } });
 	const optionsDate = { dateStyle: 'short' };
 	const optionsTime = { timeStyle: 'medium' };
 
 	const fetchUpdateStatus = async e => {
 		const inputID = e.target.name.split('_')[1];
-		const statusToUpdate = { [inputID]: inputs[inputID].value };
+		const statusToUpdate = { [inputID]: props.inputs[inputID].value };
 		const result = await fetch(`/games/${props.idStory}/players/${props.id}`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(statusToUpdate)
 		});
-		if (!result.ok) setInputs({ ...inputs, [inputID]: { ...inputs[inputID], error: true } });
+		if (!result.ok) props.setInputs({ ...props.inputs, [inputID]: { ...props.inputs[inputID], error: true } });
 		else {
 			props.updateStatus(props.idStory, statusToUpdate);
 			//setInputs({ ...inputs, [inputID]: { ...inputs[inputID], error: false } });
@@ -23,7 +21,7 @@ function Status(props) {
 	};
 
 	const handleChangeInput = e => {
-		setInputs({ ...inputs, [e.target.name]: { error: null, value: e.target.value } });
+		props.setInputs({ ...props.inputs, [e.target.name]: { error: null, value: e.target.value } });
 	};
 
 	return (
@@ -44,7 +42,7 @@ function Status(props) {
 					<Col>Nome del giocatore</Col>
 					<Col xs={6}>
 						<InputGroup>
-							<Form.Control name='name' value={inputs.name.value} onChange={handleChangeInput} />
+							<Form.Control name='name' value={props.inputs.name.value} onChange={handleChangeInput} />
 							<InputGroup.Append>
 								<Button name='button_name' onClick={e => fetchUpdateStatus(e)}>
 									Modifica
@@ -53,7 +51,7 @@ function Status(props) {
 						</InputGroup>
 					</Col>
 				</Row>
-				{inputs.name.error ? (
+				{props.inputs.name.error ? (
 					<Row>
 						<Col className='text-danger' xs={{ offset: 6 }}>
 							Errore nella richiesta, riprova tra poco

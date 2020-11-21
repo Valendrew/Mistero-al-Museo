@@ -24,12 +24,18 @@ function Game() {
 	useEffect(() => {
 		if (!isLoaded.loaded) {
 			if (history.location.state.status.state !== 'end_game') {
-				const currentStory = history.location.state.story;
+				let currentStory = history.location.state.story;
+				const gameID = history.location.state.game;
+
+				if (currentStory) setStory(currentStory);
+				else currentStory = story;
+
+				if (gameID) setGame(gameID);
+
 				const currentActivity = history.location.state.status.state;
-				setStory(currentStory);
 				setActivity(currentActivity);
+
 				setTransition(history.location.state.status.transition);
-				setGame(history.location.state.game);
 				setErrorAnswer();
 
 				const questions = currentStory.activities[currentActivity].questions;
@@ -42,17 +48,22 @@ function Game() {
 						);
 					} else if (questions[0].type === 'open') setAnswersSelected([{ value: '' }]);
 				} else setAnswersSelected();
+
 				setIsLoaded({ loaded: true });
 			} else {
 				setIsLoaded({ loaded: true, error: 'end_game' });
 			}
 		}
-	}, [history, isLoaded]);
+	}, [history, isLoaded, story]);
 
-	const handleNextActivity = () => {
-		let answerTransition = -1;
+	const handleNextActivity = async () => {
+		// Ottenuta la missione corrente
 		const currentMission = getCurrentMission(activity, story.missions, story.transitions[parseInt(transition)]);
+
+		let answerTransition = -1;
+
 		if (story.activities[activity].questions.length) {
+			// Se è una domanda multipla (radio)
 			if (story.activities[activity].questions[0].type === 'radio') {
 				answersSelected.forEach((element, index) => {
 					if (element.value === true) {
@@ -60,31 +71,40 @@ function Game() {
 					}
 				});
 			} else if (story.activities[activity].questions[0].type === 'open') {
-				if (answersSelected[0].value.replace(' ', '')) answerTransition = 0;
+				if (answersSelected[0].value.trim()) answerTransition = 0;
 			}
 		} else {
 			// caso solo narrazione
 			answerTransition = 0;
 		}
+
 		if (answerTransition === -1) {
 			setErrorAnswer(<p className='text-danger'>Inserisci una risposta</p>);
 		} else {
 			let nextActivity = story.missions[currentMission][activity][answerTransition];
+
 			if (nextActivity === activity) {
-				setErrorAnswer(<p>Risposta errata</p>);
+				setErrorAnswer(<p className='text-danger'>Risposta errata</p>);
 			} else {
 				if (nextActivity === 'new_mission') {
 					const currentTransitions = story.transitions[transition];
 					const nextMission = currentTransitions.indexOf(currentMission) + 1;
+
 					if (nextMission === currentTransitions.length) nextActivity = 'end_game';
 					else nextActivity = story.missions[currentTransitions[nextMission]].start;
 				}
 
-				history.push('/player/game', {
-					status: { ...history.location.state.status, state: nextActivity },
-					story: story,
-					game: game
+				const stateToSend = { state: nextActivity };
+				await fetch(`/games/${game}/players`, {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(stateToSend)
 				});
+
+				history.push('/player/game', {
+					status: { ...history.location.state.status, state: nextActivity }
+				});
+
 				setIsLoaded({ loaded: false, error: null });
 			}
 		}
@@ -96,6 +116,7 @@ function Game() {
 		//answersTmp[key] = { ...answersTmp[key], value: value };
 		setAnswersSelected(answersTmp.map((val, index) => (index === key ? { value: value } : { value: false })));
 	};
+
 	return (
 		<Container>
 			{isLoaded.loaded ? (

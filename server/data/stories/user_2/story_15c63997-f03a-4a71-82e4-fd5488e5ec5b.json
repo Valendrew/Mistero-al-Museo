@@ -118,7 +118,15 @@
                     "Dai torniamo a dormire che è meglio"
                 ]
             ],
-            "questions": []
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "Sei scemo?",
+                    "tips": [],
+                    "minScore": "-50",
+                    "maxScore": "50"
+                }
+            ]
         },
         "4": {
             "name": "I soldi",
@@ -185,26 +193,22 @@
                 "3"
             ],
             "3": [
-                "5"
+                "4"
             ],
-            "5": [
-                "new_mission"
-            ],
-            "start": "0"
-        },
-        "1": {
             "4": [
                 "new_mission",
                 "4"
             ],
-            "start": "4"
+            "start": "0"
+        },
+        "1": {
+            "5": [
+                "new_mission"
+            ],
+            "start": "5"
         }
     },
     "transitions": [
-        [
-            "0",
-            "1"
-        ],
         [
             "0",
             "1"

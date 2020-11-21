@@ -10,16 +10,15 @@ import Button from 'react-bootstrap/Button';
 
 //TODO modificare grafo che non funziona
 const createNodes = (activities, missions) => {
-	const nodes = Object.entries(activities)
-		.map(([key, _]) => {
-			return { id: `a_${key}`, label: `Attività ${key}` };
+	return Object.keys(activities)
+		.map(value => {
+			return { id: `a_${value}`, label: `Attività ${value}` };
 		})
 		.concat(
-			Object.keys(missions).map(val => {
-				return { id: `m_${val}`, label: `Missione ${val}` };
+			Object.keys(missions).map(value => {
+				return { id: `m_${value}`, label: `Missione ${value}` };
 			})
 		);
-	return nodes;
 };
 
 const createEdges = (missions, transitions) => {
@@ -34,9 +33,12 @@ const createEdges = (missions, transitions) => {
 						if (misTr + 1 < transitions.length) newEdge = { from: `a_${k}`, to: `m_${transitions[misTr + 1]}` };
 					} else newEdge = { from: `a_${k}`, to: `a_${act}` };
 
+					console.log(`from: ${k}, to: ${act}`);
 					if (newEdge !== null && !edges.some(value => value.from === newEdge.from && value.to === newEdge.to)) {
+						console.log('inserted');
 						edges.push(newEdge);
 					}
+					newEdge = null;
 				});
 			} else {
 				newEdge = { from: `m_${key}`, to: `a_${v}` };
@@ -59,21 +61,22 @@ function StoryGraph({ story, transitions, index }) {
 		const layout = {
 			hierarchical: {
 				enabled: true,
-				direction: 'LR',
-				sortMethod: 'directed',
-				levelSeparation: 100
+				direction: 'RL',
+				levelSeparation: 110,
+				nodeSpacing: 300
 			}
 		};
 		const options = {
 			autoResize: true,
 			height: '100%',
 			width: '100%',
+			locale: 'it',
 			edges: {
 				arrows: 'to'
 			},
 			layout: layout,
 			interaction: {
-				dragNodes: false
+				dragNodes: true
 			}
 		};
 
@@ -88,7 +91,7 @@ function StoryGraph({ story, transitions, index }) {
 		<Card>
 			<Card.Header>Grafo delle storie (Transizione {index})</Card.Header>
 			<Card.Body>
-				<div ref={domNode} />
+				<div style={{ height: '400px' }} ref={domNode} />
 			</Card.Body>
 		</Card>
 	);
@@ -207,6 +210,7 @@ function StoryOverview() {
 		if (e.target.name === 'missions') history.push('missions', { idStory: idStory, action: 'edit' });
 		else history.push('activities', { idStory: idStory });
 	};
+
 	return (
 		<Container>
 			{story.isLoaded ? (

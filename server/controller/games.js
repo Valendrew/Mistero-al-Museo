@@ -19,22 +19,34 @@ const updateStatusPlayer = async (req, res, next) => {
 	const playerID = res.locals.playerID;
 	const storyID = req.params.id;
 
+	const newDateActivity = req.params.name ? {} : { dateActivity: new Date() };
+
 	let data;
 	try {
 		data = await fileOperations.read('player.json', app.get('games'));
-		data[storyID][playerID] = { ...data[storyID][playerID], ...req.body, dateActivity: new Date() };
+		data[storyID][playerID] = { ...data[storyID][playerID], ...req.body, ...newDateActivity };
 	} catch (e) {
 		next(e);
 	}
+
 	fileOperations
 		.write(data, 'player.json', app.get('games'))
-		.then(() => res.send('status updated'))
+		.then(() => {
+			emitter.emit('status', { player: playerID, story: storyID });
+			res.send('status updated');
+		})
 		.catch(next);
 };
 
 router.use((req, res, next) => {
 	console.log(`Request ${req.method} at /games${req.path} on Time: ${new Date(Date.now()).toUTCString()}`);
 	next();
+});
+
+router.get('/status', (req, res, next) => {
+	emitter.once('status', data => {
+		res.send(data);
+	});
 });
 
 router.get('/:id', async (req, res, next) => {
@@ -87,16 +99,30 @@ router.get('/:id', async (req, res, next) => {
 });
 
 router.get('/:id/players', async (req, res, next) => {
-	const uuidParam = req.params.id;
+	const storyID = req.params.id;
 	let result;
 	try {
 		result = await fileOperations.read('player.json', app.get('games'));
 	} catch (e) {
 		result = {};
 	}
-	res.send(result[uuidParam]);
+	res.send(result[storyID]);
 });
 
+router.get('/:id/players/:name', async (req, res, next) => {
+	const storyID = req.params.id;
+	const playerID = req.params.name;
+
+	let result;
+	try {
+		result = await fileOperations.read('player.json', app.get('games'));
+		res.send(result[storyID][playerID]);
+	} catch (e) {
+		next();
+	}
+});
+
+/* Usata dal player */
 router.put(
 	'/:id/players',
 	(req, res, next) => {
@@ -106,6 +132,7 @@ router.put(
 	updateStatusPlayer
 );
 
+/* Usata dal valutatore */
 router.put(
 	'/:id/players/:name',
 	(req, res, next) => {
@@ -125,5 +152,18 @@ router.post('/:id/help', async (req, res, next) => {
 	emitter.emit('help', req.body);
 	res.send('message sent');
 }); */
+
+/* DUE RICHIESTE PER INVIARE LA RISPOSTA 
+ post = fatta dal player,
+ get = fatta dal valutatore */
+
+/* DUE RICHIESTE PER INVIARE LA CORREZIONE
+  post = fatta dal valutatore
+  get = fatta dal player */
+
+/* PLAYER: post -> /games/question ---> get -> /games/correzione */
+/* VALUTATORE: get -> /games/question ---> get -> /games/question
+	
+    onSubmit -> post /games/correzione  ---> get -> /games/question */
 
 module.exports = router;
