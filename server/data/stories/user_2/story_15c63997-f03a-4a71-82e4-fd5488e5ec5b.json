@@ -20,31 +20,11 @@
             ],
             "questions": [
                 {
-                    "type": "radio",
-                    "value": "Che ore sono?",
-                    "tips": [
-                        "Non è tardissimo"
-                    ],
-                    "answers": [
-                        {
-                            "value": "6",
-                            "correct": false,
-                            "transition": false,
-                            "score": "-15"
-                        },
-                        {
-                            "value": "8",
-                            "correct": true,
-                            "transition": false,
-                            "score": "15"
-                        },
-                        {
-                            "value": "12",
-                            "correct": false,
-                            "transition": false,
-                            "score": "-30"
-                        }
-                    ]
+                    "type": "open",
+                    "value": "quanto fa 2+2?",
+                    "tips": [],
+                    "minScore": "-50",
+                    "maxScore": "50"
                 }
             ]
         },

@@ -1,18 +1,20 @@
 {
     "15c63997-f03a-4a71-82e4-fd5488e5ec5b": {
-        "781126ec-9ccb-4305-a5e1-596376e949c0": {
-            "state": "end_game",
-            "name": "player",
+        "1133c173-a917-454c-9790-0a7e7e4678b9": {
+            "state": "0",
+            "name": "playerzzz",
             "transition": 0,
-            "dateStart": "2020-11-21T16:10:17.938Z",
-            "dateActivity": "2020-11-21T16:11:45.958Z"
+            "dateStart": "2020-11-22T12:07:18.006Z",
+            "dateActivity": "2020-11-22T12:07:18.799Z",
+            "answer": "lol2"
         },
-        "1185a3d3-1e69-4c2d-bbf6-c191ca5f776e": {
-            "state": "3",
+        "c78020dc-1b8b-4986-86ed-d55d20ae6523": {
+            "state": "0",
             "name": "player",
             "transition": 0,
-            "dateStart": "2020-11-21T16:11:50.465Z",
-            "dateActivity": "2020-11-21T16:15:12.389Z"
+            "dateStart": "2020-11-22T12:07:51.674Z",
+            "dateActivity": "2020-11-22T12:07:52.994Z",
+            "answer": "ciaooo"
         }
     }
 }

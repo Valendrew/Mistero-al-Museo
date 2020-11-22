@@ -49,6 +49,33 @@ router.get('/status', (req, res, next) => {
 	});
 });
 
+/*usato da valutatore*/
+router.get('/answer/', async (req, res, next) => {
+	emitter.once('ans', async (body, playerID) => {
+		console.log("val: " + playerID);
+		let data;
+		try {
+			data = await fileOperations.read('player.json', app.get('games'));
+			//console.log("story: "+body.storyId + " playerd: "+playerID);
+			data[body.storyId][playerID] = { ...data[body.storyId][playerID], answer: body.val};
+		} catch (e) {
+			next(e);
+		}
+		fileOperations
+		.write(data, 'player.json', app.get('games'))
+		.then(() => {
+			res.send({data: data[body.storyId][playerID], playerID: playerID});
+		})
+		.catch(next);
+		
+	});
+});
+/*usato da player*/
+router.post('/answer/', (req, res, next) => {
+	console.log("\nplayer: " + req.cookies.playerId);
+	emitter.emit('ans', req.body, req.cookies.playerId);
+});
+
 router.get('/:id', async (req, res, next) => {
 	const uuidParam = req.params.id;
 	let data, stories;

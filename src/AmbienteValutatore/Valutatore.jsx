@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 
 import SideBar from './SideBar';
 import PlayerInfo from './PlayerInfo';
+import PlayerAnswer from './PlayerAnswer';
 
 function Valutatore() {
 	const [playerSelected, setPlayerSelected] = useState(null);
@@ -12,6 +13,7 @@ function Valutatore() {
 	const [players, setPlayers] = useState();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 	const [inputs, setInputs] = useState();
+	const [answer, setAnswer] = useState();
 
 	const setPlayerDashboard = (idPlayer, status, idStory) => {
 		setPlayerSelected({
@@ -20,6 +22,7 @@ function Valutatore() {
 			id: idPlayer
 		});
 		setInputs({ name: { value: status.name, error: false } });
+		
 	};
 
 	const updateStatus = (idStory, statusUpdated) => {
@@ -31,6 +34,7 @@ function Valutatore() {
 		};
 		setPlayers(newPlayers);
 		setPlayerSelected({ ...playerSelected, status: { ...playerSelected.status, ...statusUpdated } });
+		
 	};
 
 	const fetchStatusAtInterval = async () => {
@@ -42,7 +46,7 @@ function Valutatore() {
 			fetch(`/games/${data.story}/players/${data.player}`)
 				.then(status => status.json())
 				.then(statusData => {
-					console.log(statusData);
+					//console.log(statusData);
 
 					fetchStatusAtInterval();
 				})
@@ -50,6 +54,15 @@ function Valutatore() {
 		}
 	};
 
+	const fetchAnswerAtInterval = async () => {
+		const result = await fetch('/games/answer');
+		if (!result.ok) setTimeout(fetchAnswerAtInterval(), 500);
+		else {
+			const data = await result.json();
+			
+			fetchAnswerAtInterval();
+		}
+	};
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await fetch(`/stories`);
@@ -68,7 +81,7 @@ function Valutatore() {
 						setStories(storiesFetched);
 						setPlayers(data);
 						setIsLoaded({ loaded: true });
-
+						fetchAnswerAtInterval();
 						fetchStatusAtInterval();
 					})
 					.catch(e =>
@@ -91,16 +104,24 @@ function Valutatore() {
 					<SideBar stories={stories} players={players} setPlayer={setPlayerDashboard} />
 				</Col>
 				{playerSelected ? (
-					<Col xs={8} lg={9}>
-						<PlayerInfo
-							idStory={playerSelected.story}
-							id={playerSelected.id}
-							status={playerSelected.status}
-							updateStatus={updateStatus}
-							inputs={inputs}
-							setInputs={setInputs}
-						/>
-					</Col>
+					<Row>
+						<Col xs={8} lg={9}>
+							<PlayerInfo
+								idStory={playerSelected.story}
+								id={playerSelected.id}
+								status={playerSelected.status}
+								updateStatus={updateStatus}
+								inputs={inputs}
+								setInputs={setInputs}
+							/>
+						</Col>
+						<Col xs={8} lg={10}>
+							<PlayerAnswer
+								answer = {answer}
+								playerId = {playerSelected.id}
+							/>
+						</Col>
+					</Row>
 				) : null}
 			</Row>
 		)

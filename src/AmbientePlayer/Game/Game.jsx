@@ -37,7 +37,6 @@ function Game() {
 
 				setTransition(history.location.state.status.transition);
 				setErrorAnswer();
-
 				const questions = currentStory.activities[currentActivity].questions;
 				if (questions.length) {
 					if (questions[0].type === 'radio') {
@@ -71,7 +70,14 @@ function Game() {
 					}
 				});
 			} else if (story.activities[activity].questions[0].type === 'open') {
-				if (answersSelected[0].value.trim()) answerTransition = 0;
+				if (answersSelected[0].value.trim()){
+					const result = await fetch('/games/answer',{
+						method: 'POST',
+								headers: { 'Content-Type': 'application/json' },
+								body: JSON.stringify({val: answersSelected[0].value, storyId:story.info.id})
+					});
+					//answerTransition = 0;
+				} 
 			}
 		} else {
 			// caso solo narrazione
