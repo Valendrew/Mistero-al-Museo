@@ -8,14 +8,16 @@ function Status(props) {
 	const fetchUpdateStatus = async e => {
 		const inputID = e.target.name.split('_')[1];
 		const statusToUpdate = { [inputID]: props.inputs[inputID].value };
+
 		const result = await fetch(`/games/${props.idStory}/players/${props.id}`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(statusToUpdate)
 		});
+
 		if (!result.ok) props.setInputs({ ...props.inputs, [inputID]: { ...props.inputs[inputID], error: true } });
 		else {
-			props.updateStatus(props.idStory, statusToUpdate);
+			props.updateStatus(props.idStory, props.id, inputID, props.inputs[inputID].value);
 			//setInputs({ ...inputs, [inputID]: { ...inputs[inputID], error: false } });
 		}
 	};

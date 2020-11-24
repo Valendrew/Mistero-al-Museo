@@ -17,6 +17,7 @@ const emitter = new EventEmitter();
 
 const updateStatusPlayer = async (req, res, next) => {
 	const playerID = res.locals.playerID;
+	const toEmit = res.locals.emitName;
 	const storyID = req.params.id;
 
 	const newDateActivity = req.params.name ? {} : { dateActivity: new Date() };
@@ -32,7 +33,7 @@ const updateStatusPlayer = async (req, res, next) => {
 	fileOperations
 		.write(data, 'player.json', app.get('games'))
 		.then(() => {
-			emitter.emit('status', { player: playerID, story: storyID });
+			toEmit ? emitter.emit(toEmit, { player: playerID, story: storyID }) : null;
 			res.send('status updated');
 		})
 		.catch(next);
@@ -50,30 +51,10 @@ router.get('/status', (req, res, next) => {
 });
 
 /*usato da valutatore*/
-router.get('/answer/', async (req, res, next) => {
-	emitter.once('ans', async (body, playerID) => {
-		console.log("val: " + playerID);
-		let data;
-		try {
-			data = await fileOperations.read('player.json', app.get('games'));
-			//console.log("story: "+body.storyId + " playerd: "+playerID);
-			data[body.storyId][playerID] = { ...data[body.storyId][playerID], answer: body.val};
-		} catch (e) {
-			next(e);
-		}
-		fileOperations
-		.write(data, 'player.json', app.get('games'))
-		.then(() => {
-			res.send({data: data[body.storyId][playerID], playerID: playerID});
-		})
-		.catch(next);
-		
+router.get('/answer', async (req, res, next) => {
+	emitter.once('answer', data => {
+		res.send(data);
 	});
-});
-/*usato da player*/
-router.post('/answer/', (req, res, next) => {
-	console.log("\nplayer: " + req.cookies.playerId);
-	emitter.emit('ans', req.body, req.cookies.playerId);
 });
 
 router.get('/:id', async (req, res, next) => {
@@ -154,6 +135,7 @@ router.put(
 	'/:id/players',
 	(req, res, next) => {
 		res.locals.playerID = req.cookies.playerId;
+		res.locals.emitName = "status";
 		next();
 	},
 	updateStatusPlayer
@@ -164,21 +146,19 @@ router.put(
 	'/:id/players/:name',
 	(req, res, next) => {
 		res.locals.playerID = req.params.name;
+		res.locals.emitName = null;
 		next();
 	},
 	updateStatusPlayer
 );
 
-/* router.get('/:id/help', async (req, res, next) => {
-	emitter.once('help', msg => {
-		res.send(msg);
-	});
-});
+/*usato da player*/
+router.put('/:id/answer', (req, res, next) => {
+	res.locals.playerID = req.cookies.playerId;
+	res.locals.emitName = "answer";
+	next();
+}, updateStatusPlayer);
 
-router.post('/:id/help', async (req, res, next) => {
-	emitter.emit('help', req.body);
-	res.send('message sent');
-}); */
 
 /* DUE RICHIESTE PER INVIARE LA RISPOSTA 
  post = fatta dal player,

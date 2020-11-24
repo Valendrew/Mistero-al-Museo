@@ -71,10 +71,10 @@ function Game() {
 				});
 			} else if (story.activities[activity].questions[0].type === 'open') {
 				if (answersSelected[0].value.trim()){
-					const result = await fetch('/games/answer',{
-						method: 'POST',
+					await fetch(`/games/${game}/answer`,{
+						method: 'PUT',
 								headers: { 'Content-Type': 'application/json' },
-								body: JSON.stringify({val: answersSelected[0].value, storyId:story.info.id})
+								body: JSON.stringify({answer: answersSelected[0].value})
 					});
 					//answerTransition = 0;
 				} 
@@ -105,7 +105,7 @@ function Game() {
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(stateToSend)
-				});
+				}).catch(e => console.log(e));
 
 				history.push('/player/game', {
 					status: { ...history.location.state.status, state: nextActivity }
