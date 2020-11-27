@@ -1,17 +1,18 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import SideBar from './SideBar';
 import PlayerInfo from './PlayerInfo';
+import useInterval from './useInterval';
 
 function Valutatore() {
 	const [stories, setStories] = useState();
 	const [players, setPlayers] = useState();
-	const [playerSelected, setPlayerSelected] = useState(null);
-	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
+	const [playerSelected, setPlayerSelected] = useState();
 	const [inputs, setInputs] = useState();
+	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 
 	const setPlayerDashboard = (idPlayer, status, idStory) => {
 		setPlayerSelected({
@@ -19,94 +20,77 @@ function Valutatore() {
 			status: status,
 			id: idPlayer
 		});
-		setInputs({ name: { value: status.name, error: false }, answer: {value: status.answer, error: false} });
+		setInputs({ name: { value: status.name, error: false }, answer: { value: status.answer, error: false } });
 	};
 
-	const updateStatus = (idStory, idPlayer, statusName, statusValue) => {
+	const updateStatus = (idStory, idPlayer, status) => {
+		/* Ricerco l'indice della storia richiesta */
 		const index = stories.findIndex(element => element.info.id === idStory);
+
 		let newPlayers = [...players];
 		newPlayers[index] = {
 			...newPlayers[index],
-			[idPlayer]: { ...newPlayers[index][idPlayer], [statusName]: statusValue }
+			[idPlayer]: { ...newPlayers[index][idPlayer], ...status }
 		};
-		if (playerSelected.id === idPlayer) {
-			setInputs({...inputs, [statusName]: {value: statusValue, error: false}});
-			setPlayerSelected({ ...playerSelected, status: { ...playerSelected.status, [statusName]: statusValue } });
+
+		if (playerSelected && playerSelected.id === idPlayer) {
+			//setInputs({ ...inputs, [statusName]: { value: statusValue, error: false } });
+			setPlayerSelected({ ...playerSelected, status: { ...playerSelected.status, ...status } });
 		}
 		setPlayers(newPlayers);
 	};
 
-	/* const fetchStatusAtInterval = useMemo(async () => {
-		if (isLoaded.loaded) {
+	/* useInterval(
+		async () => {
 			const result = await fetch('/games/status');
-			if (!result.ok) setTimeout(fetchStatusAtInterval(), 500);
-			else {
-				const data = await result.json();
+			if (result.ok) {
+				result.json().then(data => {
+					console.log(data);
+					Object.entries(data).forEach(([player, info]) => {
+						Object.entries(info.status).forEach(([key, value]) => {
+							updateStatus(info.story, player, key, value);
+						});
+					});
+				});
+			}
+		},
+		isLoaded.loaded ? 10000 : 10000
+	);
 
-				fetch(`/games/${data.story}/players/${data.player}`)
-					.then(status => status.json())
-					.then(statusData => {
-						fetchStatusAtInterval();
-					})
-					.catch(e => console.log(e));
+	useInterval(
+		async () => {
+			const result = await fetch('/games/answers');
+			if (result.ok) {
+				result.json().then(data => {
+					console.log(data);
+					Object.entries(data).forEach(([key, value]) => {
+						updateStatus(value.story, key, 'answer', value.answer);
+					});
+				});
 			}
-		}
-	}, [isLoaded]); */
-
-	const fetchAnswerAtInterval = useMemo(async () => {
-		if (isLoaded.loaded) {
-			const result = await fetch('/games/answer');
-			if (!result.ok) fetchAnswerAtInterval();
-			else {
-				const data = await result.json();
-				fetch(`/games/${data.story}/players/${data.player}`)
-					.then(status => status.json())
-					.then(statusData => {
-						updateStatus(data.story, data.player, "answer", statusData.answer);
-						fetchAnswerAtInterval();
-					})
-					.catch(e => console.log(e));
-			}
-		}
-	}, [isLoaded]);
-	/*useEffect(() => {
-		const interval = setInterval(async () => {
-			
-			if (isLoaded.loaded) {
-				console.log("edo");
-				const result = await fetch('/games/answer');
-				if (result.ok) {
-					const data = await result.json();
-					fetch(`/games/${data.story}/players/${data.player}`)
-						.then(status => status.json())
-						.then(statusData => {
-							updateStatus(data.story, data.player, 'answer', statusData.answer);
-						})
-						.catch(e => console.log(e));
-				}
-			}
-		}, 1000);
-		return () => clearInterval(interval);
-	}, [isLoaded]);
-	*/
+		},
+		isLoaded.loaded ? 10000 : 10000
+	); */
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await fetch(`/stories`);
+			const storiesRequest = await fetch(`/stories`);
 
-			if (!result.ok)
+			if (!storiesRequest.ok)
 				setStories({
 					isLoaded: true,
-					error: result.statusText
+					error: storiesRequest.statusText
 				});
 			else {
-				const storiesFetched = await result.json(); // stories
-				const playersFetched = await Promise.all(storiesFetched.map(value => fetch(`/games/${value.info.id}/players`)));
+				const storiesFetched = await storiesRequest.json(); // stories
+				const playersRequested = await Promise.all(
+					storiesFetched.map(value => fetch(`/games/${value.info.id}/players`))
+				);
 
-				Promise.all(playersFetched.map(res => res.json()))
-					.then(data => {
+				Promise.all(playersRequested.map(res => res.json()))
+					.then(playersFetched => {
 						setStories(storiesFetched);
-						setPlayers(data);
+						setPlayers(playersFetched);
 						setIsLoaded({ loaded: true });
 					})
 					.catch(e =>
@@ -128,17 +112,17 @@ function Valutatore() {
 				<Col xs={4} lg={3}>
 					<SideBar stories={stories} players={players} setPlayer={setPlayerDashboard} />
 				</Col>
-				{playerSelected ? (	
-						<Col xs={8} lg={9}>
-							<PlayerInfo
-								idStory={playerSelected.story}
-								id={playerSelected.id}
-								status={playerSelected.status}
-								updateStatus={updateStatus}
-								inputs={inputs}
-								setInputs={setInputs}
-							/>
-						</Col>
+				{playerSelected ? (
+					<Col xs={8} lg={9}>
+						<PlayerInfo
+							idStory={playerSelected.story}
+							id={playerSelected.id}
+							status={playerSelected.status}
+							updateStatus={updateStatus}
+							inputs={inputs}
+							setInputs={setInputs}
+						/>
+					</Col>
 				) : null}
 			</Row>
 		)

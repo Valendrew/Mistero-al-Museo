@@ -24,21 +24,23 @@ function Player() {
 function PlayerHome() {
 	const { id } = useParams();
 	const history = useHistory();
-	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
+
 	const [story, setStory] = useState();
-	const [status, setStatus] = useState();
+	const [player, setPlayer] = useState();
+
+	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const result = await fetch(`/games/${id}`, {
-				method: 'GET'
+				method: 'POST'
 			});
 			// Se la richiesta non è andata a buon fine
 			if (!result.ok) setIsLoaded({ loaded: true, error: result.statusText });
 			else {
 				const data = await result.json();
 				setStory({ ...data.story });
-				setStatus({ ...data.status });
+				setPlayer({ ...data.player });
 				setIsLoaded({ loaded: true });
 			}
 		};
@@ -46,16 +48,23 @@ function PlayerHome() {
 	}, [id, isLoaded]);
 
 	const startGame = async () => {
-		const newStateActivity = { state: story.missions[story.transitions[status.transition][0]].start };
+		/* Aggiorno lo stato sia nel server e sia localmente per
+		indicare l'attività successiva in cui si troverà il player  */
+		const newStatus = {
+			status: {
+				activity: story.missions[story.transitions[player.info.transition][0]].start,
+				dateActivity: new Date()
+			}
+		};
 
 		await fetch(`/games/${id}/players`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(newStateActivity)
+			body: JSON.stringify(newStatus)
 		});
 
 		history.replace('/player/game', {
-			status: { ...status, ...newStateActivity },
+			player: { ...player, ...newStatus },
 			story: story,
 			game: id
 		});
@@ -69,7 +78,7 @@ function PlayerHome() {
 				) : (
 					<>
 						<Row>
-							<h5>Benvenuto giocatore {status.name}</h5>
+							<h5>Benvenuto giocatore {player.name}</h5>
 						</Row>
 						<MainPage name={story.info.name} description={story.info.description} startGame={startGame} />
 					</>
