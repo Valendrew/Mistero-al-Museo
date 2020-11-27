@@ -6,7 +6,7 @@ import Storyline from './Storyline';
 import Questions from './Questions';
 import { useState } from 'react';
 
-function Story({ player, story, handleNextActivity }) {
+function Story({ player, story, errorAnswer, handleNextActivity }) {
 	const [currentStory, setCurrentStory] = useState();
 	const [inputsQuestion, setInputsQuestion] = useState();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false });
@@ -62,7 +62,6 @@ function Story({ player, story, handleNextActivity }) {
 		} else {
 			answerValue = { type: 'storyline' };
 		}
-
 		handleNextActivity(answerValue);
 	};
 
@@ -78,7 +77,7 @@ function Story({ player, story, handleNextActivity }) {
 					onChangeAnswer={onChangeAnswer}
 				/>
 			) : null}
-			{/* {errorAnswer} */}
+			{errorAnswer || null}
 			<Button name='nextActivity' variant='primary' onClick={e => fetchAnswers(e)}>
 				Prosegui attività
 			</Button>

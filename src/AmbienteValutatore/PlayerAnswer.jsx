@@ -1,31 +1,97 @@
 import React, { useState, useEffect } from 'react';
 
-import { Col } from 'react-bootstrap';
+import { Button, Col, InputGroup } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 
-function AnswerBody(props) {
+function FormAnswerPlayer({ answer }) {
+	return <Form.Control as='textarea' cols={8} rows={2} placeholder={answer} style={{ resize: 'none' }} readOnly />;
+}
+
+function OpenQuestion(props) {
 	return (
-		<Form.Control
-			as='textarea'
-			cols={10}
-			rows={4}
-			placeholder={props.inputs.answer.value}
-			style={{ resize: 'none' }}
-			readOnly />
+		<>
+			<p>{props.question.value}</p>
+
+			<Form
+				onSubmit={e =>
+					props.fetchAnswerCorrection(e, props.player.story, props.player.id, true, props.inputs.score.value)
+				}>
+				<h5>In caso di risposta corretta: </h5>
+				<InputGroup>
+					<InputGroup.Prepend>
+						<Form.Label>
+							Assegna un valore da {props.question.minScore} a {props.question.maxScore}
+						</Form.Label>
+					</InputGroup.Prepend>
+					<Form.Control
+						type='number'
+						name='score'
+						value={props.inputs.score ? props.inputs.score.value : props.question.minScore}
+						min={props.question.minScore}
+						max={props.question.maxScore}
+						onChange={e =>
+							props.setInputs({ ...props.inputs, [e.target.name]: { value: e.target.value, error: false } })
+						}
+					/>
+					<InputGroup.Append>
+						<Button type='submit'>Invia</Button>
+					</InputGroup.Append>
+				</InputGroup>
+			</Form>
+
+			<Form
+				onSubmit={e =>
+					props.fetchAnswerCorrection(e, props.player.story, props.player.id, false, props.inputs.tipsAnswer.value)
+				}>
+				<h5>In caso di risposta non corretta: </h5>
+				<InputGroup>
+					<InputGroup.Prepend>
+						<Form.Label>Inserisci messaggio per il player</Form.Label>
+					</InputGroup.Prepend>
+					<Form.Control
+						name='tipsAnswer'
+						value={props.inputs.tipsAnswer ? props.inputs.tipsAnswer.value : ''}
+						onChange={e =>
+							props.setInputs({ ...props.inputs, [e.target.name]: { value: e.target.value, error: false } })
+						}
+					/>
+					<InputGroup.Append>
+						<Button type='submit'>Invia</Button>
+					</InputGroup.Append>
+				</InputGroup>
+			</Form>
+		</>
 	);
+}
+
+function FormAnswerCorrect(props) {
+	const activity = props.player.informations.status.activity;
+	let question = props.stories.activities[activity].questions;
+	if (question.length) {
+		question = question[0];
+	}
+
+	return question.type === 'open' ? <OpenQuestion {...props} question={question} /> : null;
 }
 
 function PlayerAnswer(props) {
 	return (
-		<Container fluid>
-			<Card>
-				<Card.Header>Risposta del Giocatore</Card.Header>
-				<Card.Body>{props.answer ? <AnswerBody {...props} /> : null}</Card.Body>
-			</Card>
-		</Container>
+		<Card>
+			<Card.Header>Risposta del Giocatore</Card.Header>
+			<Card.Body>
+				{props.player.informations.answer ? (
+					<>
+						<FormAnswerPlayer answer={props.inputs.answer.value} />
+						<FormAnswerCorrect {...props} />
+					</>
+				) : (
+					'Nessuna risposta data'
+				)}
+			</Card.Body>
+		</Card>
 	);
 }
 export default PlayerAnswer;

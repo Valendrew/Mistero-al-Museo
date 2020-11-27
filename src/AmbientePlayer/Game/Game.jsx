@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 
 import Story from './Story';
+import useInterval from './useInterval';
+import { Spinner } from 'react-bootstrap';
 
 function getCurrentMission(activity, missions, transitions) {
 	return transitions.find(element => missions[element].hasOwnProperty(activity));
@@ -12,12 +14,13 @@ function Game() {
 	const history = useHistory();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 	const [informations, setInformations] = useState();
-	//const [errorAnswer, setErrorAnswer] = useState();
+	const [errorAnswer, setErrorAnswer] = useState();
+	const [waitingOpen, setWaitingOpen] = useState(false);
 
 	useEffect(() => {
 		if (!isLoaded.loaded) {
 			setInformations({ ...informations, ...history.location.state });
-			//setErrorAnswer();
+			setErrorAnswer();
 			setIsLoaded({ loaded: true });
 		}
 	}, [history, isLoaded]);
@@ -27,21 +30,25 @@ function Game() {
 		const activity = player.status.activity;
 		const transition = parseInt(player.info.transition);
 
-		// Ottenuta la missione corrente
+		/* Ottengo la missione corrente e successivamente
+		l'attività dopo in base alla risposta che è stata data  */
 		const currentMission = getCurrentMission(activity, story.missions, story.transitions[transition]);
-
 		let nextActivity = story.missions[currentMission][activity][answer.index];
 
-		if (nextActivity === activity || answer.type === 'open') {
+		if (answer.type === 'open') {
 			/* Nel caso la risposta data sia sbagliata oppure debba
 			essere valutata dal valutatore */
 			await fetch(`/games/${game}/players/answer`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ answer: answer })
+				body: JSON.stringify({ answer: answer, question: {} })
 			});
+			setErrorAnswer(<Spinner animation='border' />);
+			setWaitingOpen(true);
+		} else if (nextActivity === activity) {
+			//
 		} else {
-			if (nextActivity === 'new_mission') {
+			/* if (nextActivity === 'new_mission') {
 				const currentTransitions = story.transitions[transition];
 				const nextMission = currentTransitions.indexOf(currentMission) + 1;
 
@@ -60,17 +67,39 @@ function Game() {
 				player: { ...informations.player, status: updatedStatus }
 			});
 
-			setIsLoaded({ loaded: false, error: null });
+			setIsLoaded({ loaded: false, error: null }); */
 		}
 	};
 
+	useInterval(
+		async () => {
+			const result = await fetch(`/games/${informations.game}/players/question`);
+			if (result.ok) {
+				result.json().then(data => {
+					console.log(data);
+					if (Object.keys(data).length) {
+						if (!data.correct) {
+							setErrorAnswer(<p>Non corretta (da server)</p>);
+						}
+						setWaitingOpen(false);
+					}
+				});
+			}
+		},
+		waitingOpen ? 2000 : null
+	);
 	return (
 		<Container>
 			{isLoaded.loaded ? (
 				isLoaded.error ? (
 					<h6>Errore nel caricamento</h6>
 				) : (
-					<Story player={informations.player} story={informations.story} handleNextActivity={handleNextActivity} />
+					<Story
+						player={informations.player}
+						story={informations.story}
+						errorAnswer={errorAnswer}
+						handleNextActivity={handleNextActivity}
+					/>
 				)
 			) : (
 				<h6>Caricamento in corso...</h6>

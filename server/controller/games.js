@@ -54,12 +54,15 @@ const updateStatusPlayer = async (req, res, next) => {
 		.catch(next);
 };
 
+/* Richiesta per creare l'identità del player */
 router.post(
 	'/:id',
 	async (req, res, next) => {
+		/* Controllo se l'ID passato come parametro alla richiesta
+		rispetta il formato uuid */
 		const uuidParam = req.params.id;
-
 		if (uuidValidate(uuidParam)) {
+			/* Leggo il file contenente le informazioni di tutte le storie (id e user) */
 			let storiesFile;
 			try {
 				storiesFile = await fileOperations.read('stories.json', app.get('stories'));
@@ -67,20 +70,26 @@ router.post(
 				next(e);
 			}
 
+			/* Seleziono l'utente della storia selezionata, se esiste allora
+			leggo il file contenente l'intera storia nella subdirectory dell'utente */
 			const { user } = storiesFile[uuidParam];
 			if (user) {
-				/* Leggo il file relativo alla storia passata come ID,
-			selezionando la transizione iniziale per il player */
-				const storyPath = path.join(app.get('stories'), user);
+				/* Leggo il file relativo alla storia passata come ID, 
+				selezionando la transizione iniziale per il player. La transizione
+				viene selezionata casualmente partendo dal numero delle
+				transizioni presenti nella storia */
 				let storyFile, startTransition;
 				try {
-					storyFile = await fileOperations.read(`story_${uuidParam}.json`, storyPath);
+					storyFile = await fileOperations.read(`story_${uuidParam}.json`, path.join(app.get('stories'), user));
 					startTransition = Math.floor(Math.random() * Object.keys(storyFile.transitions).length);
 				} catch (e) {
 					next(e);
 				}
 
-				/* Stato iniziale del player */
+				/* Lo stato iniziale del player sarà strutturato come un 
+				oggetto in cui la prima chiave identifica lo stato
+				dell'attività corrente, la seconda le informazioni relative
+				alla storia, come la transizione selezionata e la data di inizio */
 				const date = new Date();
 				const playerStatus = {
 					status: {
@@ -95,7 +104,7 @@ router.post(
 				};
 
 				/* Generato ID del player che verrà inserito all'interno
-			del file contenente tutti i player e le storie di cui fanno parte */
+				del file contenente tutti i player e le storie di cui fanno parte */
 				const playerID = uuidv4();
 
 				res.locals.playerID = playerID;
@@ -127,7 +136,7 @@ router.put(
 	'/:id/players/status',
 	(req, res, next) => {
 		res.locals.playerID = req.cookies.playerID;
-		statusPending[playerID] = { story: req.params.id, value: req.body };
+		statusPending[req.cookies.playerID] = { story: req.params.id, ...req.body };
 		next();
 	},
 	updateStatusPlayer
@@ -135,7 +144,7 @@ router.put(
 
 let answersPending = {};
 
-router.get('/answers', (req, res, next) => {
+router.get('/answers', (req, res) => {
 	res.send(answersPending);
 	answersPending = {};
 });
@@ -144,13 +153,31 @@ router.put(
 	'/:id/players/answer',
 	(req, res, next) => {
 		res.locals.playerID = req.cookies.playerID;
-		answersPending = { story: req.params.id, value: req.body };
+		answersPending[req.cookies.playerID] = { story: req.params.id, answer: req.body.answer };
 		next();
 	},
 	updateStatusPlayer
 );
 
-/* router.put(
+let questionsPending = {};
+
+router.get('/:id/players/question', (req, res) => {
+	res.send(questionsPending[req.cookies.playerID] || {});
+	delete questionsPending[req.cookies.playerID];
+});
+
+router.put(
+	'/:id/players/:name/question',
+	(req, res, next) => {
+		res.locals.playerID = req.params.name;
+		questionsPending[req.params.name] = req.body.question;
+		next();
+	},
+	updateStatusPlayer
+);
+
+/* Richiesta per modificare il nome */
+router.put(
 	'/:id/players/:name/name',
 	(req, res, next) => {
 		res.locals.playerID = req.params.name;
@@ -159,38 +186,37 @@ router.put(
 	updateStatusPlayer
 );
 
-/*usato da player*/
-router.put('/:id/answer', (req, res, next) => {
-	res.locals.playerID = req.cookies.playerId;
-	res.locals.emitName = "answer";
-	next();
-}, updateStatusPlayer);
+/*
+router.put(
+	'/:id/answer',
+	(req, res, next) => {
+		res.locals.playerID = req.cookies.playerId;
+		res.locals.emitName = 'answer';
+		next();
+	},
+	updateStatusPlayer
+);
 
-router.put('/:id/message/:name', (req, res, next)=>{
-	console.log(req.body);
-	res.locals.playerID=req.params.name;
-	res.locals.emitName = "chat";
-	next();
-}, updateStatusPlayer);
+router.put(
+	'/:id/message/:name',
+	(req, res, next) => {
+		console.log(req.body);
+		res.locals.playerID = req.params.name;
+		res.locals.emitName = 'chat';
+		next();
+	},
+	updateStatusPlayer
+);
 
-router.put('/:id/message', (req, res, next)=>{
-	console.log(req.body);
-	res.locals.playerID=req.cookies.playerId;
-	res.locals.emitName = "chat";
-	next();
-}, updateStatusPlayer);
-
-/* DUE RICHIESTE PER INVIARE LA RISPOSTA 
- post = fatta dal player,
- get = fatta dal valutatore */
-
-/* DUE RICHIESTE PER INVIARE LA CORREZIONE
-  post = fatta dal valutatore
-  get = fatta dal player */
-
-/* PLAYER: post -> /games/question ---> get -> /games/correzione */
-/* VALUTATORE: get -> /games/question ---> get -> /games/question
-	
-	onSubmit -> post /games/correzione  ---> get -> /games/question */
+router.put(
+	'/:id/message',
+	(req, res, next) => {
+		console.log(req.body);
+		res.locals.playerID = req.cookies.playerId;
+		res.locals.emitName = 'chat';
+		next();
+	},
+	updateStatusPlayer
+); */
 
 module.exports = router;

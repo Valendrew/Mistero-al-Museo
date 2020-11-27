@@ -44,9 +44,9 @@ function SideBar({ stories, players, setPlayer }) {
 						<ListStories
 							key={key}
 							players={players[key]}
+							setPlayer={setPlayer}
 							id={value.info.id}
 							name={value.info.name}
-							setPlayer={setPlayer}
 						/>
 					);
 				})}

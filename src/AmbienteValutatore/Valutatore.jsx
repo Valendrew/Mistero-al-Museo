@@ -14,30 +14,49 @@ function Valutatore() {
 	const [inputs, setInputs] = useState();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 
-	const setPlayerDashboard = (idPlayer, status, idStory) => {
+	const setPlayerDashboard = (idPlayer, informations, idStory) => {
 		setPlayerSelected({
 			story: idStory,
-			status: status,
+			informations: informations,
 			id: idPlayer
 		});
-		setInputs({ name: { value: status.name, error: false }, answer: { value: status.answer, error: false } });
+		setInputs({
+			name: { value: informations.name, error: false },
+			answer: { value: informations.answer.value, error: false }
+		});
 	};
 
-	const updateStatus = (idStory, idPlayer, status) => {
+	const updateStatus = (idStory, idPlayer, statusName, statusValue) => {
 		/* Ricerco l'indice della storia richiesta */
 		const index = stories.findIndex(element => element.info.id === idStory);
 
 		let newPlayers = [...players];
 		newPlayers[index] = {
 			...newPlayers[index],
-			[idPlayer]: { ...newPlayers[index][idPlayer], ...status }
+			[idPlayer]: { ...newPlayers[index][idPlayer], [statusName]: statusValue }
 		};
 
 		if (playerSelected && playerSelected.id === idPlayer) {
-			//setInputs({ ...inputs, [statusName]: { value: statusValue, error: false } });
-			setPlayerSelected({ ...playerSelected, status: { ...playerSelected.status, ...status } });
+			if (statusName === 'answer') {
+				setInputs({ ...inputs, [statusName]: { value: statusValue.value, error: false } });
+			} else if (statusName === 'name') {
+				setInputs({ ...inputs, [statusName]: { value: statusValue, error: false } });
+			}
+			setPlayerSelected({
+				...playerSelected,
+				informations: { ...playerSelected.informations, [statusName]: statusValue }
+			});
 		}
 		setPlayers(newPlayers);
+	};
+
+	const fetchAnswerCorrection = async (e, idStory, idPlayer, correct, value) => {
+		e.preventDefault();
+		const result = await fetch(`/games/${idStory}/players/${idPlayer}/question`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ question: { value: value, correct: correct }, answer: {} })
+		});
 	};
 
 	/* useInterval(
@@ -55,7 +74,7 @@ function Valutatore() {
 			}
 		},
 		isLoaded.loaded ? 10000 : 10000
-	);
+	); */
 
 	useInterval(
 		async () => {
@@ -69,8 +88,8 @@ function Valutatore() {
 				});
 			}
 		},
-		isLoaded.loaded ? 10000 : 10000
-	); */
+		isLoaded.loaded ? 5000 : null
+	);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -115,12 +134,12 @@ function Valutatore() {
 				{playerSelected ? (
 					<Col xs={8} lg={9}>
 						<PlayerInfo
-							idStory={playerSelected.story}
-							id={playerSelected.id}
-							status={playerSelected.status}
-							updateStatus={updateStatus}
+							player={playerSelected}
+							stories={stories.find(element => element.info.id === playerSelected.story)}
 							inputs={inputs}
+							updateStatus={updateStatus}
 							setInputs={setInputs}
+							fetchAnswerCorrection={fetchAnswerCorrection}
 						/>
 					</Col>
 				) : null}

@@ -1,37 +1,20 @@
 {
     "15c63997-f03a-4a71-82e4-fd5488e5ec5b": {
-        "3fb198c2-5079-4e8e-a1b7-9b6274543661": {
-            "status": {
-                "activity": "start",
-                "dateActivity": "2020-11-25T13:26:23.500Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2020-11-25T13:26:23.500Z"
-            },
-            "name": "player"
-        },
-        "861d66eb-d738-47cb-ae5c-3abf36ffd8b2": {
+        "db1c5c63-a8e3-4dfa-a530-cf0b52964fea": {
             "status": {
                 "activity": "0",
-                "dateActivity": "2020-11-25T13:34:59.950Z"
+                "dateActivity": "2020-11-27T21:24:54.504Z"
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2020-11-25T13:34:50.666Z"
+                "dateStart": "2020-11-27T21:24:37.603Z"
             },
-            "name": "player"
-        },
-        "df38bf0e-5970-42e1-add5-df1ffeb59389": {
-            "status": {
-                "activity": "start",
-                "dateActivity": "2020-11-25T13:53:44.910Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2020-11-25T13:53:44.910Z"
-            },
-            "name": "player"
+            "name": "Giacomino",
+            "answer": {},
+            "question": {
+                "value": "no quasi",
+                "correct": false
+            }
         }
     }
 }

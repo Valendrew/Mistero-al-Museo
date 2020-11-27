@@ -8,10 +8,9 @@ import MainPage from './MainPage';
 import Game from './Game/Game';
 
 function Player() {
-	const match = useRouteMatch('/player');
 	return (
 		<Switch>
-			<Route path={`${match.path}/game`}>
+			<Route path='/player/game'>
 				<Game />
 			</Route>
 			<Route path='/player/:id'>
@@ -22,12 +21,10 @@ function Player() {
 }
 
 function PlayerHome() {
-	const { id } = useParams();
+	const { id } = useParams(); // id per identificare la storia
 	const history = useHistory();
-
 	const [story, setStory] = useState();
 	const [player, setPlayer] = useState();
-
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 
 	useEffect(() => {
@@ -57,7 +54,7 @@ function PlayerHome() {
 			}
 		};
 
-		await fetch(`/games/${id}/players`, {
+		await fetch(`/games/${id}/players/status`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(newStatus)

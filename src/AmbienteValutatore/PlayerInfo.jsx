@@ -15,15 +15,15 @@ function PlayerInfo(props) {
 				<Col xs={6}>
 					<Status {...props} />
 				</Col>
-				<Col>
+				{/* <Col>
                     <Chat chat={props.status.chat} {...props}/>
-                </Col>
+                </Col> */}
 			</Row>
 			<Row>
 				<Col xs={12}>
-					<PlayerAnswer answer={props.status.answer} inputs={props.inputs} />
+					<PlayerAnswer {...props} />
 				</Col>
-            </Row>
+			</Row>
 		</Container>
 	);
 }
