@@ -157,6 +157,40 @@ router.put(
 		next();
 	},
 	updateStatusPlayer
-); */
+);
+
+/*usato da player*/
+router.put('/:id/answer', (req, res, next) => {
+	res.locals.playerID = req.cookies.playerId;
+	res.locals.emitName = "answer";
+	next();
+}, updateStatusPlayer);
+
+router.put('/:id/message/:name', (req, res, next)=>{
+	console.log(req.body);
+	res.locals.playerID=req.params.name;
+	res.locals.emitName = "chat";
+	next();
+}, updateStatusPlayer);
+
+router.put('/:id/message', (req, res, next)=>{
+	console.log(req.body);
+	res.locals.playerID=req.cookies.playerId;
+	res.locals.emitName = "chat";
+	next();
+}, updateStatusPlayer);
+
+/* DUE RICHIESTE PER INVIARE LA RISPOSTA 
+ post = fatta dal player,
+ get = fatta dal valutatore */
+
+/* DUE RICHIESTE PER INVIARE LA CORREZIONE
+  post = fatta dal valutatore
+  get = fatta dal player */
+
+/* PLAYER: post -> /games/question ---> get -> /games/correzione */
+/* VALUTATORE: get -> /games/question ---> get -> /games/question
+	
+	onSubmit -> post /games/correzione  ---> get -> /games/question */
 
 module.exports = router;
