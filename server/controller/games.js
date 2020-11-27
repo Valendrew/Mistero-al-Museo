@@ -57,6 +57,12 @@ router.get('/answer', async (req, res, next) => {
 	});
 });
 
+router.get('/chat', async (req, res, next) => {
+	emitter.once('chat', data => {
+		res.send(data);
+	});
+});
+
 router.get('/:id', async (req, res, next) => {
 	const uuidParam = req.params.id;
 	let data, stories;
@@ -159,6 +165,19 @@ router.put('/:id/answer', (req, res, next) => {
 	next();
 }, updateStatusPlayer);
 
+router.put('/:id/message/:name', (req, res, next)=>{
+	console.log(req.body);
+	res.locals.playerID=req.params.name;
+	res.locals.emitName = "chat";
+	next();
+}, updateStatusPlayer);
+
+router.put('/:id/message', (req, res, next)=>{
+	console.log(req.body);
+	res.locals.playerID=req.cookies.playerId;
+	res.locals.emitName = "chat";
+	next();
+}, updateStatusPlayer);
 
 /* DUE RICHIESTE PER INVIARE LA RISPOSTA 
  post = fatta dal player,
@@ -171,6 +190,6 @@ router.put('/:id/answer', (req, res, next) => {
 /* PLAYER: post -> /games/question ---> get -> /games/correzione */
 /* VALUTATORE: get -> /games/question ---> get -> /games/question
 	
-    onSubmit -> post /games/correzione  ---> get -> /games/question */
+	onSubmit -> post /games/correzione  ---> get -> /games/question */
 
 module.exports = router;

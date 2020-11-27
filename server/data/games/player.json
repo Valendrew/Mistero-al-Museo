@@ -2,11 +2,20 @@
     "15c63997-f03a-4a71-82e4-fd5488e5ec5b": {
         "a443777c-f54f-44ae-84ac-d2637445b67a": {
             "state": "0",
-            "name": "player",
+            "name": "player1",
             "transition": 0,
             "dateStart": "2020-11-24T20:39:36.722Z",
             "dateActivity": "2020-11-24T20:39:57.453Z",
-            "answer": "hhhhhhhh"
+            "answer": "hhhhhhhh",
+            "chat": [
+                "p:We zi",
+                "v:oh fra",
+                "p:maaaaaaaaaaaaaaaannnnnnnnnkkkkkkkkkkkb sdbcjshbc sdjcvjscv zdcb vjhnzg",
+                "v:aaaaaaa",
+                "v:madonna troiaaaaaaa",
+                "v:s",
+                "v:d"
+            ]
         },
         "f8af83c7-6246-4415-a1c0-906c751ea08b": {
             "state": "0",
@@ -14,7 +23,11 @@
             "transition": 0,
             "dateStart": "2020-11-24T20:40:09.242Z",
             "dateActivity": "2020-11-24T21:45:37.927Z",
-            "answer": "dddddggdddgfgfgfdfd"
+            "answer": "dddddggdddgfgfgfdfd",
+            "chat": [
+                "v:we",
+                "v:d"
+            ]
         },
         "cfbd3ea0-b5a7-4360-acc6-c41b6919e277": {
             "state": "0",
@@ -23,6 +36,17 @@
             "dateStart": "2020-11-24T20:54:41.486Z",
             "dateActivity": "2020-11-24T21:06:48.032Z",
             "answer": "jjjjuytkjhhgfkkkedoo"
+        },
+        "97b3d19f-ca22-40ad-8e48-9e06758f63da": {
+            "state": "0",
+            "name": "player",
+            "transition": 0,
+            "dateStart": "2020-11-27T08:36:42.879Z",
+            "dateActivity": "2020-11-27T17:17:07.978Z",
+            "answer": "4",
+            "chat": [
+                "v:ohhh"
+            ]
         }
     }
 }

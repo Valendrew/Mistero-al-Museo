@@ -69,6 +69,24 @@ function Valutatore() {
 			}
 		}
 	}, [isLoaded]);
+	/*
+	const fetchChatAtInterval = useMemo(async () => {
+		if (isLoaded.loaded) {
+			const result = await fetch('/games/chat');
+			if (!result.ok) fetchAnswerAtInterval();
+			else {
+				const data = await result.json();
+				fetch(`/games/${data.story}/players/${data.player}`)
+					.then(status => status.json())
+					.then(statusData => {
+						updateStatus(data.story, data.player, "chat", statusData.chat);
+						fetchAnswerAtInterval();
+					})
+					.catch(e => console.log(e));
+			}
+		}
+	}, [isLoaded]);
+	*/
 	/*useEffect(() => {
 		const interval = setInterval(async () => {
 			
