@@ -1,20 +1,33 @@
 {
     "15c63997-f03a-4a71-82e4-fd5488e5ec5b": {
-        "db1c5c63-a8e3-4dfa-a530-cf0b52964fea": {
+        "b6083df4-adc8-4fd0-8c31-a300614c3914": {
             "status": {
-                "activity": "0",
-                "dateActivity": "2020-11-27T21:24:54.504Z"
+                "activity": "end_game",
+                "dateActivity": "2020-11-28T11:54:56.809Z",
+                "score": 60
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2020-11-27T21:24:37.603Z"
+                "dateStart": "2020-11-28T11:51:17.345Z"
             },
-            "name": "Giacomino",
-            "answer": {},
+            "name": "player",
+            "answer": null,
             "question": {
-                "value": "no quasi",
-                "correct": false
+                "value": "25",
+                "correct": true
             }
+        },
+        "e5c27116-21f5-4d65-9c5a-ec34cd0d2e73": {
+            "status": {
+                "activity": "0",
+                "dateActivity": "2020-11-28T11:57:23.413Z",
+                "score": 0
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-11-28T11:57:02.738Z"
+            },
+            "name": "player"
         }
     }
 }

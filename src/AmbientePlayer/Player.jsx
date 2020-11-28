@@ -50,7 +50,8 @@ function PlayerHome() {
 		const newStatus = {
 			status: {
 				activity: story.missions[story.transitions[player.info.transition][0]].start,
-				dateActivity: new Date()
+				dateActivity: new Date(),
+				score: 0
 			}
 		};
 

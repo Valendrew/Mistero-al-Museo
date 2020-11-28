@@ -6,18 +6,18 @@ import Storyline from './Storyline';
 import Questions from './Questions';
 import { useState } from 'react';
 
-function Story({ player, story, errorAnswer, handleNextActivity }) {
+function Story(props) {
 	const [currentStory, setCurrentStory] = useState();
 	const [inputsQuestion, setInputsQuestion] = useState();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false });
 
 	useEffect(() => {
-		const activity = player.status.activity;
-		const questions = story.activities[activity].questions;
+		const activity = props.player.status.activity;
+		const questions = props.story.activities[activity].questions;
 
 		setCurrentStory({
 			activity: activity,
-			storyline: story.activities[activity].storyline,
+			storyline: props.story.activities[activity].storyline,
 			questions: questions
 		});
 
@@ -38,7 +38,7 @@ function Story({ player, story, errorAnswer, handleNextActivity }) {
 		} else setInputsQuestion();
 
 		setIsLoaded({ loaded: true });
-	}, [player, story]);
+	}, [props.player, props.story]);
 
 	const onChangeAnswer = (key, value) => {
 		setInputsQuestion(inputsQuestion.map((_, index) => (index === key ? { value: value } : { value: false })));
@@ -48,13 +48,18 @@ function Story({ player, story, errorAnswer, handleNextActivity }) {
 		e.preventDefault();
 
 		let answerValue;
+
+		/* Distinguo tra attività con una domanda oppure di sola narrazione */
 		if (currentStory.questions.length) {
-			// Se è una domanda multipla (radio)
 			if (currentStory.questions[0].type === 'radio') {
+				// Se è una domanda multipla (radio)
+				const index = inputsQuestion.findIndex(element => element.value === true);
+
 				answerValue = {
 					type: 'radio',
 					value: true,
-					index: inputsQuestion.findIndex(element => element.value === true)
+					index: index,
+					score: currentStory.questions[0].answers[index].score
 				};
 			} else if (currentStory.questions[0].type === 'open') {
 				answerValue = { type: 'open', value: inputsQuestion[0].value, index: 0 };
@@ -62,12 +67,13 @@ function Story({ player, story, errorAnswer, handleNextActivity }) {
 		} else {
 			answerValue = { type: 'storyline' };
 		}
-		handleNextActivity(answerValue);
+		props.handleNextActivity(answerValue);
 	};
 
 	return isLoaded.loaded ? (
 		<>
 			<h5>Al momento ti trovi nell'attività {currentStory.activity}</h5>
+			<h6>Il punteggio attuale è {props.player.status.score}</h6>
 			<Storyline storyline={currentStory.storyline} />
 			<hr />
 			{currentStory.questions.length ? (
@@ -77,10 +83,12 @@ function Story({ player, story, errorAnswer, handleNextActivity }) {
 					onChangeAnswer={onChangeAnswer}
 				/>
 			) : null}
-			{errorAnswer || null}
-			<Button name='nextActivity' variant='primary' onClick={e => fetchAnswers(e)}>
-				Prosegui attività
-			</Button>
+			{props.errorAnswer || null}
+			{props.waitingOpen ? null : (
+				<Button name='nextActivity' variant='primary' onClick={e => fetchAnswers(e)}>
+					Prosegui attività
+				</Button>
+			)}
 		</>
 	) : null;
 }

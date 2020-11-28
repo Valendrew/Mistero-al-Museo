@@ -68,19 +68,19 @@
                             "value": "Uccido una vecchietta",
                             "correct": true,
                             "transition": false,
-                            "score": "0"
+                            "score": "10"
                         },
                         {
                             "value": "Vado a lavorare",
                             "correct": false,
                             "transition": false,
-                            "score": "0"
+                            "score": "15"
                         },
                         {
                             "value": "Mi ubriaco",
                             "correct": false,
                             "transition": true,
-                            "score": "0"
+                            "score": "20"
                         }
                     ]
                 }
@@ -134,13 +134,13 @@
                             "value": "Sì",
                             "correct": true,
                             "transition": false,
-                            "score": "0"
+                            "score": "20"
                         },
                         {
                             "value": "No",
                             "correct": false,
                             "transition": false,
-                            "score": "0"
+                            "score": "-5"
                         }
                     ]
                 }

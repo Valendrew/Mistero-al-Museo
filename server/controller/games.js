@@ -94,6 +94,7 @@ router.post(
 				const playerStatus = {
 					status: {
 						activity: 'start',
+						score: 0,
 						dateActivity: date
 					},
 					info: {

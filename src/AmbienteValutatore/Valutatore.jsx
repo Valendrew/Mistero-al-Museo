@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 
 import SideBar from './SideBar';
 import PlayerInfo from './PlayerInfo';
-import useInterval from './useInterval';
+import useInterval from '../useInterval';
 
 function Valutatore() {
 	const [stories, setStories] = useState();
@@ -21,8 +21,7 @@ function Valutatore() {
 			id: idPlayer
 		});
 		setInputs({
-			name: { value: informations.name, error: false },
-			answer: { value: informations.answer.value, error: false }
+			name: { value: informations.name, error: false }
 		});
 	};
 
@@ -37,44 +36,45 @@ function Valutatore() {
 		};
 
 		if (playerSelected && playerSelected.id === idPlayer) {
-			if (statusName === 'answer') {
-				setInputs({ ...inputs, [statusName]: { value: statusValue.value, error: false } });
-			} else if (statusName === 'name') {
+			if (statusName === 'name') {
 				setInputs({ ...inputs, [statusName]: { value: statusValue, error: false } });
 			}
 			setPlayerSelected({
 				...playerSelected,
 				informations: { ...playerSelected.informations, [statusName]: statusValue }
 			});
+			console.log(playerSelected);
 		}
 		setPlayers(newPlayers);
 	};
 
 	const fetchAnswerCorrection = async (e, idStory, idPlayer, correct, value) => {
 		e.preventDefault();
+
 		const result = await fetch(`/games/${idStory}/players/${idPlayer}/question`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ question: { value: value, correct: correct }, answer: {} })
+			body: JSON.stringify({ question: { value: value, correct: correct }, answer: null })
 		});
+		if (result.ok) {
+			updateStatus(idStory, idPlayer, 'answer', null);
+		}
 	};
 
-	/* useInterval(
+	useInterval(
 		async () => {
 			const result = await fetch('/games/status');
 			if (result.ok) {
 				result.json().then(data => {
 					console.log(data);
-					Object.entries(data).forEach(([player, info]) => {
-						Object.entries(info.status).forEach(([key, value]) => {
-							updateStatus(info.story, player, key, value);
-						});
+					Object.entries(data).forEach(([key, value]) => {
+						updateStatus(value.story, key, 'status', value.status);
 					});
 				});
 			}
 		},
-		isLoaded.loaded ? 10000 : 10000
-	); */
+		isLoaded.loaded ? 5000 : null
+	);
 
 	useInterval(
 		async () => {
@@ -135,7 +135,7 @@ function Valutatore() {
 					<Col xs={8} lg={9}>
 						<PlayerInfo
 							player={playerSelected}
-							stories={stories.find(element => element.info.id === playerSelected.story)}
+							story={stories.find(element => element.info.id === playerSelected.story)}
 							inputs={inputs}
 							updateStatus={updateStatus}
 							setInputs={setInputs}
