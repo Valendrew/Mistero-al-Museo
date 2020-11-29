@@ -17,7 +17,14 @@ function OpenQuestion(props) {
 
 			<Form
 				onSubmit={e =>
-					props.fetchAnswerCorrection(e, props.player.story, props.player.id, true, props.inputs.score.value)
+					props.fetchAnswerCorrection(
+						e,
+						props.player.story,
+						props.player.id,
+						true,
+						props.inputs.score.value,
+						props.player.informations.answer.value
+					)
 				}>
 				<h5>In caso di risposta corretta: </h5>
 				<InputGroup>
@@ -44,7 +51,14 @@ function OpenQuestion(props) {
 
 			<Form
 				onSubmit={e =>
-					props.fetchAnswerCorrection(e, props.player.story, props.player.id, false, props.inputs.tipAnswer.value)
+					props.fetchAnswerCorrection(
+						e,
+						props.player.story,
+						props.player.id,
+						false,
+						props.inputs.tipAnswer.value,
+						props.player.informations.answer.value
+					)
 				}>
 				<h5>In caso di risposta non corretta: </h5>
 				<InputGroup>
@@ -69,7 +83,7 @@ function OpenQuestion(props) {
 
 function FormAnswerCorrect(props) {
 	const activity = props.player.informations.status.activity;
-	
+
 	let question = props.story.activities[activity].questions;
 	if (question.length) {
 		question = question[0];
@@ -83,7 +97,7 @@ function PlayerAnswer(props) {
 		<Card>
 			<Card.Header>Risposta del Giocatore</Card.Header>
 			<Card.Body>
-				{props.player.informations.answer ? (
+				{props.player.informations.answer && Number.isInteger(parseInt(props.player.informations.status.activity)) ? (
 					<>
 						<FormAnswerPlayer answer={props.player.informations.answer.value} />
 						<FormAnswerCorrect {...props} />

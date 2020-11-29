@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Status from './Status';
 import PlayerAnswer from './PlayerAnswer';
 import Chat from './Chat';
+import Help from './Help';
 
 function PlayerInfo(props) {
 	return (
@@ -14,6 +15,9 @@ function PlayerInfo(props) {
 			<Row>
 				<Col xs={6}>
 					<Status {...props} />
+				</Col>
+				<Col xs={6}>
+					<Help {...props} />
 				</Col>
 				{/* <Col>
                     <Chat chat={props.status.chat} {...props}/>

@@ -1,33 +1,40 @@
 {
     "15c63997-f03a-4a71-82e4-fd5488e5ec5b": {
-        "b6083df4-adc8-4fd0-8c31-a300614c3914": {
-            "status": {
-                "activity": "end_game",
-                "dateActivity": "2020-11-28T11:54:56.809Z",
-                "score": 60
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2020-11-28T11:51:17.345Z"
-            },
-            "name": "player",
-            "answer": null,
-            "question": {
-                "value": "25",
-                "correct": true
-            }
-        },
-        "e5c27116-21f5-4d65-9c5a-ec34cd0d2e73": {
+        "b4451488-a32d-409a-839b-8b845301d2aa": {
             "status": {
                 "activity": "0",
-                "dateActivity": "2020-11-28T11:57:23.413Z",
+                "dateActivity": "2020-11-29T10:27:16.473Z",
                 "score": 0
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2020-11-28T11:57:02.738Z"
+                "dateStart": "2020-11-29T10:27:08.679Z"
             },
-            "name": "player"
+            "name": "player",
+            "answer": null,
+            "question": {
+                "value": "no ci sei quasi",
+                "correct": false,
+                "answerPlayer": "6"
+            }
+        },
+        "1ba472f4-5eb9-47d1-94c9-f08f531f47e7": {
+            "status": {
+                "activity": "0",
+                "dateActivity": "2020-11-29T10:30:58.166Z",
+                "score": 0
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-11-29T10:30:54.025Z"
+            },
+            "name": "player",
+            "answer": null,
+            "question": {
+                "value": "5",
+                "correct": false,
+                "answerPlayer": "6"
+            }
         }
     }
 }
