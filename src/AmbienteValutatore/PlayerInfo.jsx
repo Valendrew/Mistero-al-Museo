@@ -18,16 +18,17 @@ function PlayerInfo(props) {
 				</Col>
 				<Col xs={6}>
 					<Help {...props} />
+					<Chat {...props}/>
 				</Col>
-				{/* <Col>
-                    <Chat chat={props.status.chat} {...props}/>
-                </Col> */}
+				
+                    
 			</Row>
 			<Row>
 				<Col xs={12}>
 					<PlayerAnswer {...props} />
 				</Col>
 			</Row>
+			
 		</Container>
 	);
 }

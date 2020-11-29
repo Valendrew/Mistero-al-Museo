@@ -220,16 +220,34 @@ router.put(
 	updateStatusPlayer
 );
 
-/*
+/*Richieste per la chat*/
+let chatPendingValutatore = {};
+router.get('/chatValutatore', (req, res) => {
+	res.send(chatPendingValutatore);
+	chatPendingValutatore = {};
+});
+let chatPendingPlayer = {};
+router.get('/chatPlayer', (req, res) => {
+	res.send(chatPendingPlayer[req.cookies.playerID] || {});
+	delete chatPendingPlayer[req.cookies.playerID];
+});
 router.put(
 	'/:id/message',
 	(req, res, next) => {
-		console.log(req.body);
-		res.locals.playerID = req.cookies.playerId;
-		res.locals.emitName = 'chat';
+		res.locals.playerID = req.cookies.playerID;
+		chatPendingValutatore[req.cookies.playerID] = {story: req.params.id, chat:req.body.chat}
 		next();
 	},
 	updateStatusPlayer
-); */
+);
+router.put(
+	'/:id/message/:name',
+	(req, res, next) => {
+		res.locals.playerID = req.params.name;
+		chatPendingPlayer[req.params.name] = {story: req.params.id, chat:req.body.chat}
+		next();
+	},
+	updateStatusPlayer
+);
 
 module.exports = router;

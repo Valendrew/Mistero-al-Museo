@@ -19,6 +19,8 @@ function Game() {
 	const [waitingOpen, setWaitingOpen] = useState(false);
 	const [waitingHelp, setWaitingHelp] = useState();
 
+	const [chat, setChat] = useState();
+	const [newMessage, setNewMessage] = useState(false);
 	useEffect(() => {
 		if (!isLoaded.loaded) {
 			setInformations({ ...informations, ...history.location.state });
@@ -51,6 +53,16 @@ function Game() {
 			fetchInformationsNextActivity(0, 0);
 		}
 	};
+	const handleSendMessage = async (message) => {
+		let data = chat;
+		data ? (data.push("p:" + message)) : (data = ["p:" + message]);
+		setChat(data);
+		await fetch(`/games/${informations.game}/message`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ "chat": data })
+		});
+	}
 
 	const fetchInformationsNextActivity = async (answerIndex, score, answer = null) => {
 		const { player, story, game } = informations;
@@ -140,7 +152,21 @@ function Game() {
 		},
 		waitingOpen ? 5000 : null
 	);
-
+	useInterval(
+		async () => {
+			const result = await fetch('/games/chatPlayer');
+			if (result.ok) {
+				result.json().then(data => {
+					if (Object.keys(data).length) {
+					console.log(data);
+						setNewMessage(true);
+						setChat(data.chat);
+					}
+				});
+			}
+		},
+		isLoaded.loaded ? 5000 : null
+	);
 	useInterval(
 		async () => {
 			const result = await fetch(`/games/${informations.game}/players/help`);
@@ -170,17 +196,21 @@ function Game() {
 				) : informations.player.status.activity === 'end_game' ? (
 					<h6>Ha terminato la partita, chiudi la finestra del browser</h6>
 				) : (
-					<Story
-						player={informations.player}
-						story={informations.story}
-						errorAnswer={errorAnswer}
-						waitingOpen={waitingOpen}
-						handleNextActivity={handleNextActivity}
-					/>
-				)
+							<Story
+								player={informations.player}
+								story={informations.story}
+								errorAnswer={errorAnswer}
+								waitingOpen={waitingOpen}
+								handleNextActivity={handleNextActivity}
+								handleSendMessage={handleSendMessage}
+								chat={chat}
+								newMessage={newMessage}
+								setNewMessage={setNewMessage}
+							/>
+						)
 			) : (
-				<h6>Caricamento in corso...</h6>
-			)}
+					<h6>Caricamento in corso...</h6>
+				)}
 		</Container>
 	);
 }

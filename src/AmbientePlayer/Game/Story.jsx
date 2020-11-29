@@ -4,12 +4,15 @@ import Button from 'react-bootstrap/Button';
 
 import Storyline from './Storyline';
 import Questions from './Questions';
+import Chat from './Chat';
 import { useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 
 function Story(props) {
 	const [currentStory, setCurrentStory] = useState();
 	const [inputsQuestion, setInputsQuestion] = useState();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false });
+	const [showChat, setShowChat] = useState(false);
 
 	useEffect(() => {
 		const activity = props.player.status.activity;
@@ -24,7 +27,7 @@ function Story(props) {
 		if (questions.length) {
 			if (questions[0].type === 'radio') {
 				/* Gli input della risposta multipla saranno dei radio
-                inizialmente nesusno sarà selezionato */
+				inizialmente nesusno sarà selezionato */
 				setInputsQuestion(
 					questions[0].answers.map(_ => ({
 						value: false
@@ -32,7 +35,7 @@ function Story(props) {
 				);
 			} else if (questions[0].type === 'open') {
 				/* L'input della domanda aperta sarà un text
-                inizialmente vuoto */
+				inizialmente vuoto */
 				setInputsQuestion([{ value: '' }]);
 			}
 		} else setInputsQuestion();
@@ -43,6 +46,7 @@ function Story(props) {
 	const onChangeAnswer = (key, value) => {
 		setInputsQuestion(inputsQuestion.map((_, index) => (index === key ? { value: value } : { value: false })));
 	};
+	
 
 	const fetchAnswers = e => {
 		e.preventDefault();
@@ -72,6 +76,18 @@ function Story(props) {
 
 	return isLoaded.loaded ? (
 		<>
+			<Button variant="primary" onClick={() => {setShowChat(true); props.setNewMessage(false)}}>
+				Chat
+				{props.newMessage?(<Spinner animation='grow' variant='warning' />):(null)}
+      		</Button>
+
+			<Chat
+				show={showChat}
+				onHide={() => setShowChat(false)}
+				chat={props.player.status.chat}
+				handleSendMessage={props.handleSendMessage}
+				chat={props.chat}
+			/>
 			<h5>Al momento ti trovi nell'attività {currentStory.activity}</h5>
 			<h6>Il punteggio attuale è {props.player.status.score}</h6>
 			<Storyline storyline={currentStory.storyline} />

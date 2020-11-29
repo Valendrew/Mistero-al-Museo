@@ -118,7 +118,21 @@ function Valutatore() {
 		};
 		if (!isLoaded.loaded) fetchData();
 	}, [isLoaded]);
-
+	
+	useInterval(
+		async () => {
+			const result = await fetch('/games/chatValutatore');
+			if (result.ok) {
+				result.json().then(data => {
+					console.log(data);
+					Object.entries(data).forEach(([key, value]) => {
+						updateStatus(value.story, key, value);
+					});
+				});
+			}
+		},
+		isLoaded.loaded ? 5000 : null
+	);
 	return isLoaded.loaded ? (
 		isLoaded.error ? (
 			<h6>Errore caricamento</h6>
