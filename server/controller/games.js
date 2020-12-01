@@ -125,41 +125,57 @@ router.post(
 	updateStatusPlayer
 );
 
-/* Richieste per aggiornare lo stato del player */
-let statusPending = {};
+let informationsPending = {};
 
-router.get('/status', (req, res, next) => {
-	res.send(statusPending);
-	statusPending = {};
+router.get('/informations', (req, res, next) => {
+	res.send(informationsPending);
+	informationsPending = {};
 });
 
+/* Richiesta per aggiornare lo stato del player */
 router.put(
 	'/:id/players/status',
 	(req, res, next) => {
 		res.locals.playerID = req.cookies.playerID;
-		statusPending[req.cookies.playerID] = { story: req.params.id, ...req.body };
+		informationsPending[req.cookies.playerID] = {
+			...informationsPending[req.cookies.playerID],
+			story: req.params.id,
+			status: req.body.status
+		};
 		next();
 	},
 	updateStatusPlayer
 );
 
-let answersPending = {};
-
-router.get('/answers', (req, res) => {
-	res.send(answersPending);
-	answersPending = {};
-});
-
+/* Richiesta per richiedere la valutazione della domanda aperta */
 router.put(
 	'/:id/players/answer',
 	(req, res, next) => {
 		res.locals.playerID = req.cookies.playerID;
-		answersPending[req.cookies.playerID] = { story: req.params.id, answer: req.body.answer };
+		informationsPending[req.cookies.playerID] = {
+			...informationsPending[req.cookies.playerID],
+			story: req.params.id,
+			answer: req.body.answer
+		};
 		next();
 	},
 	updateStatusPlayer
 );
 
+/* Richiesta per richiedere aiuto per la domanda */
+router.put('/:id/players/help', (req, res) => {
+	res.locals.playerID = req.cookies.playerID;
+
+	informationsPending[req.cookies.playerID] = {
+		...informationsPending[req.cookies.playerID],
+		story: req.params.id,
+		help: req.body.help
+	};
+
+	res.send('help request');
+});
+
+/* Richieste per inviare la correzione alla domanda aperta */
 let questionsPending = {};
 
 router.get('/:id/players/question', (req, res) => {
@@ -177,6 +193,23 @@ router.put(
 	updateStatusPlayer
 );
 
+/* Richieste per inviare aiuto al player */
+/* Richieste per inviare la correzione alla domanda aperta */
+let helpPending = {};
+
+router.get('/:id/players/help', (req, res) => {
+	res.send(helpPending[req.cookies.playerID] || '');
+
+	delete helpPending[req.cookies.playerID];
+});
+
+router.put('/:id/players/:name/help', (req, res) => {
+	res.locals.playerID = req.params.name;
+
+	helpPending[req.params.name] = req.body.help;
+	res.send('help sent');
+});
+
 /* Richiesta per modificare il nome */
 router.put(
 	'/:id/players/:name/name',
@@ -187,37 +220,34 @@ router.put(
 	updateStatusPlayer
 );
 
-/*
-router.put(
-	'/:id/answer',
-	(req, res, next) => {
-		res.locals.playerID = req.cookies.playerId;
-		res.locals.emitName = 'answer';
-		next();
-	},
-	updateStatusPlayer
-);
-
-router.put(
-	'/:id/message/:name',
-	(req, res, next) => {
-		console.log(req.body);
-		res.locals.playerID = req.params.name;
-		res.locals.emitName = 'chat';
-		next();
-	},
-	updateStatusPlayer
-);
-
+/*Richieste per la chat*/
+let chatPendingValutatore = {};
+router.get('/chatValutatore', (req, res) => {
+	res.send(chatPendingValutatore);
+	chatPendingValutatore = {};
+});
+let chatPendingPlayer = {};
+router.get('/chatPlayer', (req, res) => {
+	res.send(chatPendingPlayer[req.cookies.playerID] || {});
+	delete chatPendingPlayer[req.cookies.playerID];
+});
 router.put(
 	'/:id/message',
 	(req, res, next) => {
-		console.log(req.body);
-		res.locals.playerID = req.cookies.playerId;
-		res.locals.emitName = 'chat';
+		res.locals.playerID = req.cookies.playerID;
+		chatPendingValutatore[req.cookies.playerID] = {story: req.params.id, chat:req.body.chat}
 		next();
 	},
 	updateStatusPlayer
-); */
+);
+router.put(
+	'/:id/message/:name',
+	(req, res, next) => {
+		res.locals.playerID = req.params.name;
+		chatPendingPlayer[req.params.name] = {story: req.params.id, chat:req.body.chat}
+		next();
+	},
+	updateStatusPlayer
+);
 
 module.exports = router;

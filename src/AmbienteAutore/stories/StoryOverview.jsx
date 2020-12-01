@@ -33,9 +33,7 @@ const createEdges = (missions, transitions) => {
 						if (misTr + 1 < transitions.length) newEdge = { from: `a_${k}`, to: `m_${transitions[misTr + 1]}` };
 					} else newEdge = { from: `a_${k}`, to: `a_${act}` };
 
-					console.log(`from: ${k}, to: ${act}`);
 					if (newEdge !== null && !edges.some(value => value.from === newEdge.from && value.to === newEdge.to)) {
-						console.log('inserted');
 						edges.push(newEdge);
 					}
 					newEdge = null;

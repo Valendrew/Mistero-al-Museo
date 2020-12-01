@@ -2,26 +2,23 @@ import React from 'react';
 
 import { InputGroup, Form, Button } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
-import ListGroup from "react-bootstrap/ListGroup";
-import Row from 'react-bootstrap/Row';
-import Status from './Status';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
 function Chat(props) {
 	const [message, setMessage] = useState();
 
 	const fetchUpdateStatus = async e => {
-		let data = props.chat;
-		data?(data.push("v:" + message)):(data=["v:" + message])
-		
-		const result = await fetch(`/games/${props.idStory}/message/`, {
+		let data = props.player.informations.chat;
+		data ? data.push('v:' + message) : (data = ['v:' + message]);
+
+		const result = await fetch(`/games/${props.player.story}/message/${props.player.id}`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ "chat": data })
+			body: JSON.stringify({ chat: data })
 		});
-		setMessage(null);
-		props.updateStatus(props.idStory, props.id, "chat", data);
-		
+		setMessage("");
+		props.updateStatus(props.player.story, props.player.id, { chat: data });
 	};
 	const handleChangeInput = e => {
 		setMessage(e.target.value);
@@ -31,26 +28,31 @@ function Chat(props) {
 			<Card>
 				<Card.Header>Chat</Card.Header>
 				<Card.Body>
-					<ListGroup variant="flush">
-						{
-							props.chat ? (
-							props.chat.map(value => {
-								const mit = value.substr(0, 1);
-								const text = value.substr(2);
-								return (
-									mit == "v" ? (
-										<ListGroup.Item variant="primary" style={{ "text-align": "right", borderRadius: "20px", marginLeft: "10%", marginBottom: "4px" }}>{text}</ListGroup.Item>
+					<ListGroup variant='flush'>
+						{props.player.informations.chat
+							? props.player.informations.chat.map(value => {
+									const mit = value.substr(0, 1);
+									const text = value.substr(2);
+									return mit == 'v' ? (
+										<ListGroup.Item
+											variant='primary'
+											style={{ 'text-align': 'right', borderRadius: '20px', marginLeft: '10%', marginBottom: '4px' }}>
+											{text}
+										</ListGroup.Item>
 									) : (
-											<ListGroup.Item variant="secondary" style={{ borderRadius: "20px", marginRight: "10%", marginBottom: "4px" }}>{text}</ListGroup.Item>
-										)
-								);
-							})):(null)
-						}
+										<ListGroup.Item
+											variant='secondary'
+											style={{ borderRadius: '20px', marginRight: '10%', marginBottom: '4px' }}>
+											{text}
+										</ListGroup.Item>
+									);
+							  })
+							: null}
 					</ListGroup>
 					<InputGroup>
 						<Form.Control value={message} onChange={handleChangeInput} name='chat' />
 						<InputGroup.Append>
-							<Button name='invia' onClick={message ? (e => fetchUpdateStatus(e)):(null)}>
+							<Button name='invia' onClick={message ? e => fetchUpdateStatus(e) : null}>
 								Invia
 							</Button>
 						</InputGroup.Append>

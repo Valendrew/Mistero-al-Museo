@@ -1,100 +1,39 @@
 {
     "15c63997-f03a-4a71-82e4-fd5488e5ec5b": {
-        "90f02a39-87d1-471e-83f0-010967aa70d4": {
+        "b4451488-a32d-409a-839b-8b845301d2aa": {
             "status": {
-                "activity": "2",
-                "dateActivity": "2020-12-01T10:53:50.623Z",
-                "score": 23
+                "activity": "0",
+                "dateActivity": "2020-11-29T10:27:16.473Z",
+                "score": 0
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2020-12-01T10:44:27.622Z"
+                "dateStart": "2020-11-29T10:27:08.679Z"
             },
             "name": "player",
             "answer": null,
             "question": {
-                "value": "23",
-                "correct": true
+                "value": "no ci sei quasi",
+                "correct": false,
+                "answerPlayer": "6"
             }
         },
-        "0a43fcf6-8f3d-4b78-a9ce-b2be4ffe803e": {
+        "1ba472f4-5eb9-47d1-94c9-f08f531f47e7": {
             "status": {
-                "activity": "2",
-                "dateActivity": "2020-12-01T10:56:54.725Z",
-                "score": 7
+                "activity": "0",
+                "dateActivity": "2020-11-29T10:30:58.166Z",
+                "score": 0
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2020-12-01T10:56:31.361Z"
+                "dateStart": "2020-11-29T10:30:54.025Z"
             },
             "name": "player",
             "answer": null,
             "question": {
-                "value": "7",
-                "correct": true
-            }
-        },
-        "5f5d8184-44c3-41b5-84b6-a791bee302b0": {
-            "status": {
-                "activity": "4",
-                "dateActivity": "2020-12-01T10:59:38.471Z",
-                "score": 31
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2020-12-01T10:59:09.224Z"
-            },
-            "name": "player",
-            "answer": null,
-            "question": {
-                "value": "24",
-                "correct": true
-            }
-        },
-        "800181d1-192e-434e-835a-1c1f84cd4ed2": {
-            "status": {
-                "activity": "4",
-                "dateActivity": "2020-12-01T11:01:07.522Z",
-                "score": 35
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2020-12-01T11:00:31.804Z"
-            },
-            "name": "player",
-            "answer": null,
-            "question": {
-                "value": "30",
-                "correct": true
-            }
-        },
-        "f56dd399-bca9-46e7-8651-d8ac91a1dd90": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2020-12-01T11:41:59.077Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2020-12-01T11:41:59.077Z"
-            },
-            "name": "player"
-        },
-        "23921b20-94c2-4724-bd09-be94edee0706": {
-            "status": {
-                "activity": "4",
-                "dateActivity": "2020-12-01T11:44:12.629Z",
-                "score": 33
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2020-12-01T11:43:47.560Z"
-            },
-            "name": "player",
-            "answer": null,
-            "question": {
-                "value": "29",
-                "correct": true
+                "value": "5",
+                "correct": false,
+                "answerPlayer": "6"
             }
         }
     }

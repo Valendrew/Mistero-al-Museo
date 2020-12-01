@@ -18,7 +18,7 @@ function Status(props) {
 
 		if (!result.ok) props.setInputs({ ...props.inputs, name: { ...props.inputs.name, error: true } });
 		else {
-			props.updateStatus(props.player.story, props.player.id, 'name', props.inputs.name.value);
+			props.updateStatus(props.player.story, props.player.id, { name: props.inputs.name.value });
 			//props.setInputs({ ...props.inputs, name: { ...props.inputs.name, error: false } });
 		}
 	};
@@ -41,6 +41,7 @@ function Status(props) {
 							: `Attività ${props.player.informations.status.activity}`}
 					</Col>
 				</Row>
+
 				<Row className='mt-4'>
 					<Col>Nome del giocatore</Col>
 					<Col xs={6}>
@@ -61,6 +62,12 @@ function Status(props) {
 						</Col>
 					</Row>
 				) : null}
+
+				<Row className='mt-4'>
+					<Col>Punteggio</Col>
+					<Col xs={6}>{props.player.informations.status.score}</Col>
+				</Row>
+
 				<Row className='mt-4'>
 					<Col>Orario di inizio partita:</Col>
 					<Col>
@@ -68,6 +75,7 @@ function Status(props) {
 						{new Date(props.player.informations.info.dateStart).toLocaleTimeString('it-IT', optionsTime)}
 					</Col>
 				</Row>
+
 				<Row className='mt-4'>
 					<Col>Tempo nella fase attuale:</Col>
 					<Col>

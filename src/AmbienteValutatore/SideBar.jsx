@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
+import { Spinner } from 'react-bootstrap';
 
 function PlayerList(props) {
 	return (
@@ -11,7 +12,8 @@ function PlayerList(props) {
 			{Object.entries(props.players).map(([key, value]) => {
 				return (
 					<ListGroup.Item key={key} action onClick={() => props.setPlayer(key, value, props.id)}>
-						<h6>{value.name}</h6>
+						{value.name}
+						{value.answer ? <Spinner animation='grow' variant='warning' /> : null}
 					</ListGroup.Item>
 				);
 			})}

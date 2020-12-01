@@ -25,65 +25,61 @@ function Valutatore() {
 		});
 	};
 
-	const updateStatus = (idStory, idPlayer, statusName, statusValue) => {
+	const updateStatus = (idStory, idPlayer, statusUpdated) => {
 		/* Ricerco l'indice della storia richiesta */
 		const index = stories.findIndex(element => element.info.id === idStory);
 
 		let newPlayers = [...players];
 		newPlayers[index] = {
 			...newPlayers[index],
-			[idPlayer]: { ...newPlayers[index][idPlayer], [statusName]: statusValue }
+			[idPlayer]: { ...newPlayers[index][idPlayer], ...statusUpdated }
 		};
 
 		if (playerSelected && playerSelected.id === idPlayer) {
-			if (statusName === 'name') {
-				setInputs({ ...inputs, [statusName]: { value: statusValue, error: false } });
+			if (statusUpdated.hasOwnProperty('name')) {
+				setInputs({ ...inputs, name: { value: statusUpdated.name, error: false } });
 			}
 			setPlayerSelected({
 				...playerSelected,
-				informations: { ...playerSelected.informations, [statusName]: statusValue }
+				informations: { ...playerSelected.informations, ...statusUpdated }
 			});
-			console.log(playerSelected);
 		}
 		setPlayers(newPlayers);
 	};
 
-	const fetchAnswerCorrection = async (e, idStory, idPlayer, correct, value) => {
+	const fetchAnswerCorrection = async (e, idStory, idPlayer, correct, value, answerPlayer) => {
 		e.preventDefault();
 
 		const result = await fetch(`/games/${idStory}/players/${idPlayer}/question`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ question: { value: value, correct: correct }, answer: null })
+			body: JSON.stringify({ question: { value: value, correct: correct, answerPlayer: answerPlayer }, answer: null })
 		});
 		if (result.ok) {
-			updateStatus(idStory, idPlayer, 'answer', null);
+			updateStatus(idStory, idPlayer, { answer: null });
+			setInputs({ ...inputs, tipAnswer: undefined, score: undefined });
 		}
+	};
+
+	const sendHelpToPlayer = async (tip, idStory, idPlayer) => {
+		console.log(tip);
+
+		await fetch(`/games/${idStory}/players/${idPlayer}/help`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ help: tip })
+		});
+		updateStatus(idStory, idPlayer, { help: null }); 
 	};
 
 	useInterval(
 		async () => {
-			const result = await fetch('/games/status');
+			const result = await fetch('/games/informations');
 			if (result.ok) {
 				result.json().then(data => {
 					console.log(data);
 					Object.entries(data).forEach(([key, value]) => {
-						updateStatus(value.story, key, 'status', value.status);
-					});
-				});
-			}
-		},
-		isLoaded.loaded ? 5000 : null
-	);
-
-	useInterval(
-		async () => {
-			const result = await fetch('/games/answers');
-			if (result.ok) {
-				result.json().then(data => {
-					console.log(data);
-					Object.entries(data).forEach(([key, value]) => {
-						updateStatus(value.story, key, 'answer', value.answer);
+						updateStatus(value.story, key, value);
 					});
 				});
 			}
@@ -123,7 +119,21 @@ function Valutatore() {
 		};
 		if (!isLoaded.loaded) fetchData();
 	}, [isLoaded]);
-
+	
+	useInterval(
+		async () => {
+			const result = await fetch('/games/chatValutatore');
+			if (result.ok) {
+				result.json().then(data => {
+					console.log(data);
+					Object.entries(data).forEach(([key, value]) => {
+						updateStatus(value.story, key, value);
+					});
+				});
+			}
+		},
+		isLoaded.loaded ? 5000 : null
+	);
 	return isLoaded.loaded ? (
 		isLoaded.error ? (
 			<h6>Errore caricamento</h6>
@@ -141,6 +151,7 @@ function Valutatore() {
 							updateStatus={updateStatus}
 							setInputs={setInputs}
 							fetchAnswerCorrection={fetchAnswerCorrection}
+							sendHelpToPlayer={sendHelpToPlayer}
 						/>
 					</Col>
 				) : null}

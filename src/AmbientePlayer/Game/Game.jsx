@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 
 import Story from './Story';
 import useInterval from '../../useInterval';
-import { Spinner } from 'react-bootstrap';
+import { Button, InputGroup, Row, Spinner } from 'react-bootstrap';
 
 function getCurrentMission(activity, missions, transitions) {
 	return transitions.find(element => missions[element].hasOwnProperty(activity));
@@ -15,12 +15,17 @@ function Game() {
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 	const [informations, setInformations] = useState();
 	const [errorAnswer, setErrorAnswer] = useState();
-	const [waitingOpen, setWaitingOpen] = useState(false);
 
+	const [waitingOpen, setWaitingOpen] = useState(false);
+	const [waitingHelp, setWaitingHelp] = useState();
+
+	const [chat, setChat] = useState();
+	const [newMessage, setNewMessage] = useState(false);
 	useEffect(() => {
 		if (!isLoaded.loaded) {
 			setInformations({ ...informations, ...history.location.state });
-			setErrorAnswer();
+			setErrorAnswer(null);
+			setWaitingOpen(false);
 			setIsLoaded({ loaded: true });
 		}
 	}, [history, isLoaded]);
@@ -40,7 +45,7 @@ function Game() {
 
 			setWaitingOpen(true);
 		} else if (answer.type === 'radio') {
-			fetchInformationsNextActivity(answer.index, answer.score);
+			fetchInformationsNextActivity(answer.index, answer.score, answer);
 		} else if (answer.type === 'storyline') {
 			/* Nel caso di un'attività di sola narrazione verranno impostati
 			a 0 sia l'indice della risposta che il punteggio da assegnare */
@@ -48,8 +53,18 @@ function Game() {
 			fetchInformationsNextActivity(0, 0);
 		}
 	};
+	const handleSendMessage = async (message) => {
+		let data = chat;
+		data ? (data.push("p:" + message)) : (data = ["p:" + message]);
+		setChat(data);
+		await fetch(`/games/${informations.game}/message`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ "chat": data })
+		});
+	}
 
-	const fetchInformationsNextActivity = async (answerIndex, score) => {
+	const fetchInformationsNextActivity = async (answerIndex, score, answer = null) => {
 		const { player, story, game } = informations;
 
 		/* L'attività corrente e la transizione assegnata al player */
@@ -62,35 +77,54 @@ function Game() {
 		let nextActivity = story.missions[currentMission][activity][answerIndex];
 
 		if (nextActivity === activity) {
-			setErrorAnswer(<p>Risposta non corretta, riprovare</p>);
+			setErrorAnswer(
+				<InputGroup>
+					<InputGroup.Prepend className='mr-4'>Risposta non corretta, riprovare</InputGroup.Prepend>
+					<Button onClick={e => sendHelp(e, answer)}>Richiedi aiuto</Button>
+				</InputGroup>
+			);
+		} else {
+			if (nextActivity === 'new_mission') {
+				const currentTransitions = story.transitions[transition];
+				const nextMission = currentTransitions.indexOf(currentMission) + 1;
+
+				/* Se l'indice della missione successiva nel vettore delle transizioni
+				supera la lunghezza dello stesso, allora vuol dire che è finita la partita */
+				if (nextMission === currentTransitions.length) nextActivity = 'end_game';
+				else nextActivity = story.missions[currentTransitions[nextMission]].start;
+			}
+
+			const updatedStatus = {
+				activity: nextActivity,
+				dateActivity: new Date(),
+				score: parseInt(player.status.score) + parseInt(score)
+			};
+
+			await fetch(`/games/${game}/players/status`, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ status: updatedStatus })
+			}).catch(e => console.log(e));
+
+			history.push('/player/game', {
+				player: { ...informations.player, status: updatedStatus }
+			});
+
+			setIsLoaded({ loaded: false, error: null });
 		}
-		if (nextActivity === 'new_mission') {
-			const currentTransitions = story.transitions[transition];
-			const nextMission = currentTransitions.indexOf(currentMission) + 1;
+	};
 
-			/* Se l'indice della missione successiva nel vettore delle transizioni
-			supera la lunghezza dello stesso, allora vuol dire che è finita la partita */
-			if (nextMission === currentTransitions.length) nextActivity = 'end_game';
-			else nextActivity = story.missions[currentTransitions[nextMission]].start;
-		}
+	const sendHelp = async (e, latestAnswer) => {
+		e.preventDefault();
 
-		const updatedStatus = {
-			activity: nextActivity,
-			dateActivity: new Date(),
-			score: parseInt(player.status.score) + parseInt(score)
-		};
-
-		await fetch(`/games/${game}/players/status`, {
+		const result = await fetch(`/games/${informations.game}/players/help`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ status: updatedStatus })
-		}).catch(e => console.log(e));
-
-		history.push('/player/game', {
-			player: { ...informations.player, status: updatedStatus }
+			body: JSON.stringify({ help: latestAnswer })
 		});
-
-		setIsLoaded({ loaded: false, error: null });
+		if (result.ok) {
+			setWaitingHelp(true);
+		}
 	};
 
 	useInterval(
@@ -102,7 +136,14 @@ function Game() {
 						if (data.correct) {
 							fetchInformationsNextActivity(0, data.value);
 						} else {
-							setErrorAnswer(<p>Non corretta (da server) | {data.value}</p>);
+							setErrorAnswer(
+								<InputGroup>
+									<InputGroup.Prepend className='mr-4'>
+										Risposta non corretta, riprovare. Motivo: {data.value}
+									</InputGroup.Prepend>
+									<Button onClick={e => sendHelp(e, data.answerPlayer)}>Richiedi aiuto</Button>
+								</InputGroup>
+							);
 						}
 						setWaitingOpen(false);
 					}
@@ -111,6 +152,42 @@ function Game() {
 		},
 		waitingOpen ? 5000 : null
 	);
+	useInterval(
+		async () => {
+			const result = await fetch('/games/chatPlayer');
+			if (result.ok) {
+				result.json().then(data => {
+					if (Object.keys(data).length) {
+					console.log(data);
+						setNewMessage(true);
+						setChat(data.chat);
+					}
+				});
+			}
+		},
+		isLoaded.loaded ? 5000 : null
+	);
+	useInterval(
+		async () => {
+			const result = await fetch(`/games/${informations.game}/players/help`);
+			if (result.ok) {
+				result.text().then(data => {
+					if (data.trim()) {
+						setErrorAnswer(
+							<>
+								{errorAnswer}
+								<Row>Aiuto arrivato: {data}</Row>
+							</>
+						);
+
+						setWaitingHelp(false);
+					}
+				});
+			}
+		},
+		waitingHelp ? 5000 : null
+	);
+
 	return (
 		<Container>
 			{isLoaded.loaded ? (
@@ -119,17 +196,21 @@ function Game() {
 				) : informations.player.status.activity === 'end_game' ? (
 					<h6>Ha terminato la partita, chiudi la finestra del browser</h6>
 				) : (
-					<Story
-						player={informations.player}
-						story={informations.story}
-						errorAnswer={errorAnswer}
-						waitingOpen={waitingOpen}
-						handleNextActivity={handleNextActivity}
-					/>
-				)
+							<Story
+								player={informations.player}
+								story={informations.story}
+								errorAnswer={errorAnswer}
+								waitingOpen={waitingOpen}
+								handleNextActivity={handleNextActivity}
+								handleSendMessage={handleSendMessage}
+								chat={chat}
+								newMessage={newMessage}
+								setNewMessage={setNewMessage}
+							/>
+						)
 			) : (
-				<h6>Caricamento in corso...</h6>
-			)}
+					<h6>Caricamento in corso...</h6>
+				)}
 		</Container>
 	);
 }
