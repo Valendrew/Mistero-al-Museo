@@ -60,6 +60,7 @@
                 {
                     "type": "radio",
                     "value": "Come potrò ottenerli?",
+                    "dinamicRating":true,
                     "tips": [
                         "Sei una persona cattiva"
                     ],
@@ -126,6 +127,7 @@
                 {
                     "type": "radio",
                     "value": "Vuoi comprarla?",
+                    "dinamicRating":false,
                     "tips": [
                         "Anche per forza"
                     ],

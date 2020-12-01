@@ -26,7 +26,7 @@ router.get('/:id/players', async (req, res, next) => {
 	} catch (e) {
 		result = {};
 	}
-	res.send(result[storyID]);
+	res.send(result[storyID]||{});
 });
 
 const updateStatusPlayer = async (req, res, next) => {

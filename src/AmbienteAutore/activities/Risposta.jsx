@@ -6,6 +6,7 @@ import InputDomanda from './InputDomanda';
 import RemoveButton from './RemoveButton';
 import DropdownInputs from './DropdownInputs';
 import Tips from './Tips';
+import Rating from './Rating';
 
 import { Row, Col, Card, Tabs, Tab } from 'react-bootstrap';
 
@@ -71,6 +72,16 @@ export default function Risposta(props) {
 									handleInput={props.handleInput}
 								/>
 							</Tab>
+							{props.inputs[key].type === 'radio' ? (
+								<Tab eventKey='rating' title='Modalità valutazione'>
+									<Rating
+										questionId={key}
+										inputs={props.inputs}
+										handleInput={props.handleInput}
+										dinamicRatingId={val.dinamicRating}
+									/>
+								</Tab>
+							) : null}
 						</Tabs>
 					</Card.Body>
 				);
