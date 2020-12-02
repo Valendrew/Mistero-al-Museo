@@ -58,12 +58,13 @@ function Story(props) {
 			if (currentStory.questions[0].type === 'radio') {
 				// Se è una domanda multipla (radio)
 				const index = inputsQuestion.findIndex(element => element.value === true);
-
+				const partialScore = currentStory.questions[0].answers[index].score;
+				const dateStart = props.player.status.dateActivity;
 				answerValue = {
 					type: 'radio',
 					value: true,
 					index: index,
-					score: currentStory.questions[0].answers[index].score
+					score: currentStory.questions[0].dinamicRating ? partialScore - ((Date.now()-dateStart)/1000) : partialScore
 				};
 			} else if (currentStory.questions[0].type === 'open') {
 				answerValue = { type: 'open', value: inputsQuestion[0].value, index: 0 };

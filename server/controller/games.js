@@ -26,8 +26,12 @@ router.get('/:id/players', async (req, res, next) => {
 	} catch (e) {
 		result = {};
 	}
+<<<<<<< HEAD
 	console.log(result);
 	res.send(result[storyID] || {});
+=======
+	res.send(result[storyID]||{});
+>>>>>>> 61a89212f595482447e370a13efe1865d391762f
 });
 
 const updateStatusPlayer = async (req, res, next) => {

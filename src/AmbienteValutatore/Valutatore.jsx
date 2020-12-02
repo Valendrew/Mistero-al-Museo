@@ -97,9 +97,10 @@ function Valutatore() {
 					error: storiesRequest.statusText
 				});
 			else {
+				
 				const storiesFetched = await storiesRequest.json(); // stories
 				const playersRequested = await Promise.all(
-					storiesFetched.map(value => fetch(`/games/${value.info.id}/players`))
+					storiesFetched.map(value =>  fetch(`/games/${value.info.id}/players`))
 				);
 
 				Promise.all(playersRequested.map(res => res.json()))

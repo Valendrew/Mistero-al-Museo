@@ -79,6 +79,7 @@ function processQuestions(questions, inputs) {
 		} else {
 			question = {
 				...question,
+				dinamicRating: inputs[val.dinamicRating].value,
 				answers: Object.entries(val.answers).map(([key, val]) => {
 					return {
 						value: inputs[val[0]].value,
@@ -171,8 +172,10 @@ function addInputsToActivity(type, category, categoryLength) {
 
 		/* Aggiunto l'input per poter aumentare o diminuire il numero di suggerimenti */
 		const tipsRangeID = nanoid();
+		
 		newInputs = {
-			[tipsRangeID]: { type: 'number', value: '0' }
+			[tipsRangeID]: { type: 'number', value: '0' },
+			
 		};
 		/* Nel caso in cui l'input sia una domanda aperta verranno aggiunti 
 		due campi per indicare il punteggio minimo e massimo assegnabili, mentre
@@ -202,9 +205,11 @@ function addInputsToActivity(type, category, categoryLength) {
 			per poter aumentare o diminuire il numero di risposte da associare
 			alla domanda */
 			const answersRangeID = nanoid();
+			const dinamicRatingID = nanoid();
 			newInputs = {
 				...newInputs,
-				[answersRangeID]: { type: 'number', value: '0' }
+				[answersRangeID]: { type: 'number', value: '0' },
+				[dinamicRatingID]: { value: false }
 			};
 			child = {
 				[elementID]: {
@@ -212,7 +217,8 @@ function addInputsToActivity(type, category, categoryLength) {
 					answersRange: answersRangeID,
 					answers: {},
 					tipsRange: tipsRangeID,
-					tips: {}
+					tips: {},
+					dinamicRating: dinamicRatingID
 				}
 			};
 		}
@@ -442,6 +448,13 @@ function Activity() {
 				inputsEdited.inputs[value].value = val.tips[key];
 			}
 			inputs = { ...inputs, ...inputsEdited.inputs };
+			
+			/* Aggiungo la modalità di valutazione */
+
+			inputs = {
+				...inputs,
+				[question.dinamicRating]: { ...inputs[question.dinamicRating], value: val.dinamicRating }
+			};
 
 			inputs = { ...inputs, [mainElementID]: { ...inputs[mainElementID], value: val.value } };
 			newInputs = { ...newInputs, ...inputs };
