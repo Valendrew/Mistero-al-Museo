@@ -211,6 +211,17 @@ async function deleteHandler(req, res, next) {
 		.catch(next);
 }
 
+router.delete('/:id', (req, res, next) => {
+	const storyPath = path.join(app.get('stories'), req.username, `story_${req.params.id}.json`);
+
+	fileOperations
+		.remove(storyPath)
+		.then(() => {
+			res.send('story removed');
+		})
+		.catch(next);
+});
+
 router.delete('/:id/qrcode', async (req, res, next) => {
 	const userDir = path.join(app.get('stories'), req.username);
 	const storyCode = req.params.id;
@@ -257,4 +268,5 @@ router.delete(
 	},
 	deleteHandler
 );
+
 module.exports = router;

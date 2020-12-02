@@ -221,6 +221,13 @@ function StoryOverview() {
 		history.push('activity', { idStory: idStory, idActivity: numberActivity });
 	};
 
+	const handleDeleteStory = async e => {
+		const result = await fetch(`/stories/${idStory}`, {
+			method: 'DELETE'
+		});
+		if (!result.ok) console.log(result.statusText);
+		else history.replace('/autore');
+	};
 	return (
 		<Container>
 			{story.isLoaded ? (
@@ -244,6 +251,9 @@ function StoryOverview() {
 							onSubmit={onSubmit}
 							onChange={(value, name) => setInputs({ ...inputs, [name]: value })}
 						/>
+						<Button name='deleteStory' variant='danger' onClick={handleDeleteStory}>
+							Elimina la storia
+						</Button>
 						{story.items.activities && Object.keys(story.items.activities).length >= 10 ? (
 							<>
 								{story.items.activities ? (
