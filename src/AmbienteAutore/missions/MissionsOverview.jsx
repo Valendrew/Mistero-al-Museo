@@ -48,7 +48,7 @@ function Activities() {
 			body: JSON.stringify(missions)
 		})
 			.then(response => {
-				history.push('transitions', { idStory: idStory });
+				history.push('conclusion', { idStory: idStory });
 			})
 			.catch(console.log);
 	};

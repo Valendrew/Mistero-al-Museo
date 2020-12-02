@@ -195,7 +195,7 @@ function Missions(props) {
 				<Col>
 					{activitiesIncompleted() ? (
 						<Button variant="success" type="button" onClick={() => props.fetchMissions(missions)}>
-							Crea storia
+							Procedi per concludere la storia
 						</Button>
 					) : null}
 				</Col>

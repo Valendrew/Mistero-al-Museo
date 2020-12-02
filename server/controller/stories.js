@@ -122,6 +122,26 @@ router.post(
 	postHandler
 );
 
+router.post('/:id', async (req, res, next) => {
+	const userDir = path.join(app.get('stories'), req.username);
+
+	let data;
+	try {
+		data = await fileOperations.read(`story_${req.params.id}.json`, userDir);
+	} catch (e) {
+		next(e);
+	}
+
+	const id = uuidv4();
+	data.info.id = id;
+	delete data.info.qr;
+
+	fileOperations
+		.write(data, `story_${id}.json`, userDir)
+		.then(() => res.send('stories copied'))
+		.catch(next);
+});
+
 router.post(
 	'/:id/activities/:name',
 	(req, res, next) => {

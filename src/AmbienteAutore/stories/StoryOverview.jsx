@@ -210,15 +210,23 @@ function StoryOverview() {
 	const handleEditStory = e => {
 		if (e.target.name === 'missions') history.push('missions', { idStory: idStory, action: 'edit' });
 		else if (e.target.name === 'activities') history.push('activities', { idStory: idStory });
-		else if (e.target.name === 'transitions') history.push('transitions', { idStory: idStory, action: 'edit' });
+		else if (e.target.name === 'transitions') history.push('conclusions', { idStory: idStory, action: 'edit' });
 	};
 
 	const handleRetrieveStory = e => {
 		let numberActivity = 0;
-		if (story.activities) {
+		if (story.items.activities) {
 			numberActivity = Object.keys(story.items.activities).length;
 		}
 		history.push('activity', { idStory: idStory, idActivity: numberActivity });
+	};
+
+	const handleDuplicateStory = async e => {
+		const result = await fetch(`/stories/${idStory}`, {
+			method: 'POST'
+		});
+		if (!result.ok) console.log(result.statusText);
+		else history.replace('/autore');
 	};
 
 	const handleDeleteStory = async e => {
@@ -270,6 +278,9 @@ function StoryOverview() {
 									<>
 										<Button name='transitions' onClick={handleEditStory}>
 											Modifica impostazioni della storia
+										</Button>
+										<Button name='duplicateStory' onClick={handleDuplicateStory}>
+											Crea una copia della storia
 										</Button>
 										<StoryQRCode
 											value={story.items.info.qr}
