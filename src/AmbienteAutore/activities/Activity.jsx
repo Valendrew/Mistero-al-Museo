@@ -327,28 +327,43 @@ function Activity() {
 
 	const gestisciDati = async (e, buttonPressed) => {
 		e.preventDefault();
+
 		if (fetchValidInputs(inputs, activity)) {
 			const storyline = await processStoryline(activity.storyline, inputs);
 			const questions = processQuestions(activity.questions, inputs);
+
 			const data = {
 				name: inputs.activityName.value,
 				storyline: storyline,
 				questions: questions
 			};
-			fetch(`/stories/${historyState.idStory}/activities/${historyState.idActivity}`, {
+
+			await fetch(`/stories/${historyState.idStory}/activities/${historyState.idActivity}`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data)
-			}).then(res => {
-				if (buttonPressed === 'nextActivity') {
-					const nextActivity = parseInt(historyState.idActivity) + 1;
-					history.push('activity', {
-						idStory: historyState.idStory,
-						idActivity: nextActivity
-					});
-				} else history.replace('missions', { idStory: historyState.idStory });
-				setIsLoaded({ loaded: false, error: null });
 			});
+
+			if (buttonPressed === 'nextActivity') {
+				const nextActivity = parseInt(historyState.idActivity) + 1;
+				history.push('activity', {
+					idStory: historyState.idStory,
+					idActivity: nextActivity
+				});
+			} else {
+				await fetch(`/stories/${historyState.idStory}/missions`, { method: 'DELETE' });
+
+				await fetch(`/stories/${historyState.idStory}/transitions`, { method: 'DELETE' });
+
+				if (buttonPressed === 'newMissions') {
+					history.replace('missions', { idStory: historyState.idStory });
+				} else if (buttonPressed === 'saveTemp') {
+					/* Se salvataggio temporaneo, allora viene reinderizzato a home */
+					history.replace('/autore');
+				}
+			}
+
+			setIsLoaded({ loaded: false, error: null });
 		} else {
 			setInvalidInputs(<p className='text-danger'>I campi non sono stati completati, ricontrolla!</p>);
 		}
@@ -510,19 +525,28 @@ function Activity() {
 								<Row>
 									<ButtonGroup>
 										{historyState.action ? null : (
-											<Button
-												className='mt-2'
-												type='submit'
-												name='nextActivity'
-												variant='success'
-												onClick={e => gestisciDati(e, e.target.name)}>
-												Prossima attività
-											</Button>
+											<>
+												<Button
+													className='mt-2 mr-2'
+													type='submit'
+													name='nextActivity'
+													variant='success'
+													onClick={e => gestisciDati(e, e.target.name)}>
+													Prossima attività
+												</Button>
+												<Button
+													className='mt-2 mr-2'
+													type='submit'
+													name='saveTemp'
+													variant='success'
+													onClick={e => gestisciDati(e, e.target.name)}>
+													Salva temporaneamente la missione
+												</Button>
+											</>
 										)}
-										{/* TODO: reimpostare da 4 a 9 */}
-										{historyState.idActivity >= 4 || historyState.action ? (
+										{historyState.idActivity >= 9 || historyState.action ? (
 											<Button
-												className='mt-2'
+												className='mt-2 mr-2'
 												type='submit'
 												name='newMissions'
 												variant='success'

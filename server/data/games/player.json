@@ -1,40 +1,78 @@
 {
-    "15c63997-f03a-4a71-82e4-fd5488e5ec5b": {
-        "b4451488-a32d-409a-839b-8b845301d2aa": {
-            "status": {
-                "activity": "0",
-                "dateActivity": "2020-11-29T10:27:16.473Z",
-                "score": 0
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2020-11-29T10:27:08.679Z"
-            },
-            "name": "player",
-            "answer": null,
-            "question": {
-                "value": "no ci sei quasi",
-                "correct": false,
-                "answerPlayer": "6"
-            }
-        },
-        "1ba472f4-5eb9-47d1-94c9-f08f531f47e7": {
-            "status": {
-                "activity": "0",
-                "dateActivity": "2020-11-29T10:30:58.166Z",
-                "score": 0
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2020-11-29T10:30:54.025Z"
-            },
-            "name": "player",
-            "answer": null,
-            "question": {
-                "value": "5",
-                "correct": false,
-                "answerPlayer": "6"
-            }
-        }
-    }
+	"15c63997-f03a-4a71-82e4-fd5488e5ec5b": {
+		"3c6469ee-8cd2-45da-a241-897f69ba97d0": {
+			"status": {
+				"activity": "0",
+				"dateActivity": "2020-11-29T11:06:41.549Z",
+				"score": 0
+			},
+			"info": {
+				"transition": 0,
+				"dateStart": "2020-11-29T11:04:28.932Z"
+			},
+			"name": "player",
+			"answer": null,
+			"question": {
+				"value": "sorry",
+				"correct": false,
+				"answerPlayer": "5"
+			}
+		},
+		"86dea0f2-cd9e-42fb-ae7d-fd7f0a4b66c6": {
+			"status": {
+				"activity": "end_game",
+				"dateActivity": "2020-11-29T11:10:03.621Z",
+				"score": 40
+			},
+			"info": {
+				"transition": 0,
+				"dateStart": "2020-11-29T11:06:32.061Z"
+			},
+			"name": "player",
+			"answer": null,
+			"question": {
+				"value": "10",
+				"correct": true,
+				"answerPlayer": "4"
+			}
+		},
+		"1cd1d927-aada-481d-bf07-df258d10b018": {
+			"status": {
+				"activity": "end_game",
+				"dateActivity": "2020-11-29T11:09:48.165Z",
+				"score": 62
+			},
+			"info": {
+				"transition": 0,
+				"dateStart": "2020-11-29T11:07:35.380Z"
+			},
+			"name": "player",
+			"answer": null,
+			"question": {
+				"value": "12",
+				"correct": true,
+				"answerPlayer": "sì un po'"
+			}
+		},
+		"b14d8e19-e992-4a4f-87eb-f164546f42b9": {
+			"status": {
+				"activity": "0",
+				"dateActivity": "2020-12-01T10:16:23.205Z",
+				"score": 0
+			},
+			"info": {
+				"transition": 0,
+				"dateStart": "2020-12-01T10:16:18.165Z"
+			},
+			"name": "player",
+			"chat": [
+				"p:caio fabrizio",
+				"v:ciao giacomo",
+				"p:come va fabrizio?",
+				"p:bene fra?",
+				"v:si molto bene grazie",
+				"p:perfetto arrivderci"
+			]
+		}
+	}
 }

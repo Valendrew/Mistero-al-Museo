@@ -8,7 +8,6 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-//TODO modificare grafo che non funziona
 const createNodes = (activities, missions) => {
 	return Object.keys(activities)
 		.map(value => {
@@ -150,6 +149,7 @@ function StoryOverview() {
 	const idStory = history.location.state.idStory;
 
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: {} });
+	const [storyCompleted, setStoryCompleted] = useState(false);
 	const [inputs, setInputs] = useState({
 		name: undefined,
 		description: undefined
@@ -172,6 +172,9 @@ function StoryOverview() {
 					name: data.info.name || '',
 					description: data.info.description || ''
 				});
+				if (data.activities && data.missions && data.transitions) {
+					setStoryCompleted(true);
+				}
 			}
 		};
 		if (!story.isLoaded) fetchData();
@@ -206,7 +209,16 @@ function StoryOverview() {
 
 	const handleEditStory = e => {
 		if (e.target.name === 'missions') history.push('missions', { idStory: idStory, action: 'edit' });
-		else history.push('activities', { idStory: idStory });
+		else if (e.target.name === 'activities') history.push('activities', { idStory: idStory });
+		else if (e.target.name === 'transitions') history.push('transitions', { idStory: idStory, action: 'edit' });
+	};
+
+	const handleRetrieveStory = e => {
+		let numberActivity = 0;
+		if (story.activities) {
+			numberActivity = Object.keys(story.items.activities).length;
+		}
+		history.push('activity', { idStory: idStory, idActivity: numberActivity });
 	};
 
 	return (
@@ -232,18 +244,39 @@ function StoryOverview() {
 							onSubmit={onSubmit}
 							onChange={(value, name) => setInputs({ ...inputs, [name]: value })}
 						/>
-						<StoryQRCode value={story.items.info.qr} removeQRCode={removeQRCode} generateQRCode={generateQRCode} />
-						{story.items.missions && story.items.activities
-							? story.items.transitions.map((value, key) => (
-									<StoryGraph key={key} index={key} story={story.items} transitions={value} />
-							  ))
-							: null}
-						<Button name='activities' onClick={handleEditStory}>
-							Modifica attività
-						</Button>
-						<Button name='missions' onClick={handleEditStory}>
-							Modifica missioni
-						</Button>
+						{story.items.activities && Object.keys(story.items.activities).length >= 10 ? (
+							<>
+								{story.items.activities ? (
+									<Button name='activities' onClick={handleEditStory}>
+										Modifica attività
+									</Button>
+								) : null}
+								{story.items.missions ? (
+									<Button name='missions' onClick={handleEditStory}>
+										Modifica missioni
+									</Button>
+								) : null}
+								{storyCompleted ? (
+									<>
+										<Button name='transitions' onClick={handleEditStory}>
+											Modifica impostazioni della storia
+										</Button>
+										<StoryQRCode
+											value={story.items.info.qr}
+											removeQRCode={removeQRCode}
+											generateQRCode={generateQRCode}
+										/>
+										{story.items.transitions.map((value, key) => (
+											<StoryGraph key={key} index={key} story={story.items} transitions={value} />
+										))}
+									</>
+								) : null}
+							</>
+						) : (
+							<Button name='retrieveStory' onClick={handleRetrieveStory}>
+								Continua a creare la storia
+							</Button>
+						)}
 					</>
 				)
 			) : (

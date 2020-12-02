@@ -39,7 +39,9 @@ function Activities() {
 		fetchData();
 	}, [idStory, action]);
 
-	const fetchMissions = missions => {
+	const fetchMissions = async missions => {
+		await fetch(`/stories/${idStory}/transitions`, { method: 'DELETE' });
+		
 		fetch(`/stories/${idStory}/missions`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },

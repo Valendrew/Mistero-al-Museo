@@ -30,6 +30,7 @@ function StoryIndex() {
 		description: "",
 	});
 	const [errorInputs, setErrorInputs] = useState();
+	
 	const onSubmit = (e) => {
 		e.preventDefault();
 		const stories = {

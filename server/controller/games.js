@@ -26,7 +26,8 @@ router.get('/:id/players', async (req, res, next) => {
 	} catch (e) {
 		result = {};
 	}
-	res.send(result[storyID]);
+	console.log(result);
+	res.send(result[storyID] || {});
 });
 
 const updateStatusPlayer = async (req, res, next) => {
@@ -235,7 +236,7 @@ router.put(
 	'/:id/message',
 	(req, res, next) => {
 		res.locals.playerID = req.cookies.playerID;
-		chatPendingValutatore[req.cookies.playerID] = {story: req.params.id, chat:req.body.chat}
+		chatPendingValutatore[req.cookies.playerID] = { story: req.params.id, chat: req.body.chat };
 		next();
 	},
 	updateStatusPlayer
@@ -244,7 +245,7 @@ router.put(
 	'/:id/message/:name',
 	(req, res, next) => {
 		res.locals.playerID = req.params.name;
-		chatPendingPlayer[req.params.name] = {story: req.params.id, chat:req.body.chat}
+		chatPendingPlayer[req.params.name] = { story: req.params.id, chat: req.body.chat };
 		next();
 	},
 	updateStatusPlayer

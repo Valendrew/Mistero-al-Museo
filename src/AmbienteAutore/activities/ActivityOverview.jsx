@@ -22,7 +22,7 @@ function ActivityOverview() {
 		if (!activities.isLoaded) fetchData();
 	}, [idStory, activities]);
 
-	const onEditActivity = (e, id) => {
+	const onEditActivity = async (e, id) => {
 		history.push('activity', { idStory: idStory, idActivity: id, action: 'activityToEdit' });
 	};
 
