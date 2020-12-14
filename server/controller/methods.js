@@ -11,7 +11,7 @@ const promiseReaddir = util.promisify(fs.readdir);
 //const promiseRm = util.promisify(fs.rm);
 
 const methods = {
-	read: function readFile(filePath, dirPath, encoding = 'utf-8') {
+	read: async function readFile(filePath, dirPath, encoding = 'utf-8') {
 		const dataPath = path.join(dirPath, filePath);
 		return promiseRead(dataPath, encoding)
 			.then(data => JSON.parse(data))
@@ -40,7 +40,7 @@ const methods = {
 		return files.map(file => methods.read(file, dirPath));
 	},
 
-	remove: async function removeFle(path, force = true) {
+	remove: async function removeFile(path, force = true) {
 		return promiseRm(path, { force: force });
 	}
 };
