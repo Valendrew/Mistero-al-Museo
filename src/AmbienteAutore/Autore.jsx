@@ -134,7 +134,7 @@ function Autore() {
 					<MissionsOverview />
 				</Container>
 			</Route>
-			<Route path={`${match.path}/story/conclusions`}>
+			<Route path={`${match.path}/story/conclusion`}>
 				<Container>
 					<NavbarAutore name='Conclusione storia' />
 					<StoryConclusion />

@@ -38,22 +38,14 @@ function ListStories(props) {
 }
 
 function SideBar({ stories, players, setPlayer }) {
-	return (
-		<Row>
-			<Col sm={12}>
-				{stories.map((value, key) => {
-					return (
-						<ListStories
-							key={key}
-							players={players[key]}
-							setPlayer={setPlayer}
-							id={value.info.id}
-							name={value.info.name}
-						/>
-					);
-				})}
-			</Col>
-		</Row>
-	);
+	return stories.map((value, key) => {
+		return (
+			<Row key={value.info.id}>
+				<Col sm={12}>
+					<ListStories players={players[key]} setPlayer={setPlayer} id={value.info.id} name={value.info.name} />
+				</Col>
+			</Row>
+		);
+	});
 }
 export default SideBar;

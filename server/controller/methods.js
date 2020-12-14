@@ -8,7 +8,7 @@ const promiseWrite = util.promisify(fs.writeFile);
 const promiseAccess = util.promisify(fs.access);
 const promiseMkdir = util.promisify(fs.mkdir);
 const promiseReaddir = util.promisify(fs.readdir);
-const promiseRm = util.promisify(fs.rm);
+//const promiseRm = util.promisify(fs.rm);
 
 const methods = {
 	read: function readFile(filePath, dirPath, encoding = 'utf-8') {
