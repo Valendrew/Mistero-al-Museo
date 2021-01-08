@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import SideBar from './SideBar';
 import PlayerInfo from './PlayerInfo';
 import useInterval from '../useInterval';
+import Ranking from './Ranking'
 
 function Valutatore() {
 	const [stories, setStories] = useState();
@@ -13,6 +14,7 @@ function Valutatore() {
 	const [playerSelected, setPlayerSelected] = useState();
 	const [inputs, setInputs] = useState();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
+	const [showRanking, setShowRanking] = useState(false);
 
 	const setPlayerDashboard = (idPlayer, informations, idStory) => {
 		setPlayerSelected({
@@ -69,7 +71,7 @@ function Valutatore() {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ help: tip })
 		});
-		updateStatus(idStory, idPlayer, { help: null }); 
+		updateStatus(idStory, idPlayer, { help: null });
 	};
 
 	useInterval(
@@ -97,10 +99,9 @@ function Valutatore() {
 					error: storiesRequest.statusText
 				});
 			else {
-				
 				const storiesFetched = await storiesRequest.json(); // stories
 				const playersRequested = await Promise.all(
-					storiesFetched.map(value =>  fetch(`/games/${value.info.id}/players`))
+					storiesFetched.map(value => fetch(`/games/${value.info.id}/players`))
 				);
 
 				Promise.all(playersRequested.map(res => res.json()))
@@ -119,7 +120,7 @@ function Valutatore() {
 		};
 		if (!isLoaded.loaded) fetchData();
 	}, [isLoaded]);
-	
+
 	useInterval(
 		async () => {
 			const result = await fetch('/games/chatValutatore');
@@ -140,9 +141,16 @@ function Valutatore() {
 		) : (
 			<Row>
 				<Col xs={4} lg={3}>
-					<SideBar stories={stories} players={players} setPlayer={setPlayerDashboard} />
+					<SideBar
+						stories={stories}
+						players={players}
+						setPlayer={setPlayerDashboard}
+						setRanking={setShowRanking}
+					/>
 				</Col>
-				{playerSelected ? (
+				{showRanking ? (
+					<Ranking players={players}/>
+				) : playerSelected ? (
 					<Col xs={8} lg={9}>
 						<PlayerInfo
 							player={playerSelected}

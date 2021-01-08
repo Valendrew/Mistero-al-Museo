@@ -86,13 +86,68 @@
                 "transition": 0,
                 "dateStart": "2020-12-04T20:12:44.035Z"
             },
-            "name": "player",
+            "name": "perdente",
             "answer": null,
             "question": {
                 "value": "50",
                 "correct": true,
                 "answerPlayer": "Canopi, hanno sembianze animali"
             }
+        },
+        "8be62a3a-f15b-43a4-80c1-5686a72efa13": {
+            "status": {
+                "activity": "1",
+                "dateActivity": "2020-12-14T11:34:34.344Z",
+                "score": 0
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-12-14T11:34:31.829Z"
+            },
+            "name": "player",
+            "chat": [
+                "p:ciao",
+                "v:come va?",
+                "p:totto ok grz",
+                "p:dd",
+                "p:dd",
+                "p:dd",
+                "p:dd",
+                "p:dd",
+                "p:s",
+                "p:d",
+                "p:s",
+                "p:sd",
+                "p:ds",
+                "p:ds",
+                "p:ds",
+                "p:ds",
+                "v:sdsds"
+            ]
+        },
+        "b6c58194-300a-42c5-8d3c-b22809b193cd": {
+            "status": {
+                "activity": "6",
+                "dateActivity": "2020-12-14T15:34:48.128Z",
+                "score": 15
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-12-14T15:33:52.240Z"
+            },
+            "name": "player"
+        },
+        "75c16d2d-27ba-456a-9a73-84afe40d0d3e": {
+            "status": {
+                "activity": "7",
+                "dateActivity": "2020-12-14T17:18:39.226Z",
+                "score": 60
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-12-14T17:17:42.497Z"
+            },
+            "name": "edoo"
         }
     }
 }
