@@ -41,7 +41,7 @@ function Activities() {
 
 	const fetchMissions = async missions => {
 		await fetch(`/stories/${idStory}/transitions`, { method: 'DELETE' });
-		
+
 		fetch(`/stories/${idStory}/missions`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -60,7 +60,7 @@ function Activities() {
 					<h5>Errore nel caricamento, riprovare</h5>
 				) : (
 					<>
-						<Row className='row row-cols-4 row-cols-lg-6'>
+						<Row className='row row-cols-1 row-cols-sm-2 row-cols-xl-4'>
 							{Object.entries(story.items).map(([key, value]) => {
 								return <ActivityCard key={key} id={parseInt(key)} storyline={value.storyline} />;
 							})}

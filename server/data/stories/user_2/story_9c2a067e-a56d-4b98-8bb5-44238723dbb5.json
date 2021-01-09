@@ -3,7 +3,8 @@
         "name": "Furto nella piramide",
         "description": "La storia parla di un ladro di gioielli che per portare a termine il colpo dovrà destrarsi tra guardie, trabocchetti ed indovinelli a tema antico egitto per riuscire a portare a termine il colpo.",
         "id": "9c2a067e-a56d-4b98-8bb5-44238723dbb5",
-        "qr": "http://localhost:3000/player/9c2a067e-a56d-4b98-8bb5-44238723dbb5"
+        "qr": "http://localhost:3000/player/9c2a067e-a56d-4b98-8bb5-44238723dbb5",
+        "archived": true
     },
     "activities": {
         "0": {

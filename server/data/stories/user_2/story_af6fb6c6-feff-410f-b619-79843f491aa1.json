@@ -2,9 +2,8 @@
     "info": {
         "name": "Gigino e la nuova macchina",
         "description": "Gigino va a comprare una macchina",
-        "id": "958fd5ed-6d44-462d-94d9-269e83963cf1",
-        "qr": "http://localhost:3000/player/958fd5ed-6d44-462d-94d9-269e83963cf1",
-        "archived": false
+        "id": "af6fb6c6-feff-410f-b619-79843f491aa1",
+        "archived": true
     },
     "activities": {
         "0": {

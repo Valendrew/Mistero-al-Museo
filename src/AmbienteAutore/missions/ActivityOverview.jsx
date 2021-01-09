@@ -9,7 +9,7 @@ import ChildrenCard from "./ChildrenCard";
 
 function ActivityOverview(props) {
 	return (
-		<ListGroup.Item>
+		<ListGroup.Item className="mx-4">
 			<Card>
 				<Card.Header>
 					Attività {props.activityNmb}
@@ -20,7 +20,7 @@ function ActivityOverview(props) {
 						</Button>
 					) : null}
 				</Card.Header>
-				<Card.Body>
+				<Card.Body className="mx-2">
 					<Answers {...props} />
 					<ChildrenCard {...props} />
 				</Card.Body>

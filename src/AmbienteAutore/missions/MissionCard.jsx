@@ -9,11 +9,11 @@ import ActivityOverview from "./ActivityOverview";
 function MissionCard(props) {
 	const selPrefix = `m${props.missionNmb}_a${props.missions['start']}`;
 	return (
-		<Row>
+		<Row className="my-4">
 			<Card>
 				<Card.Header>Missione {props.missionNmb}</Card.Header>
 				<Card.Body>
-					<ListGroup>
+					<ListGroup variant="flush">
 						<ActivityOverview {...props}  selPrefix={selPrefix} activityNmb={props.missions['start']} />
 					</ListGroup>
 				</Card.Body>
