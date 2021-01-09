@@ -1,78 +1,153 @@
 {
-	"15c63997-f03a-4a71-82e4-fd5488e5ec5b": {
-		"3c6469ee-8cd2-45da-a241-897f69ba97d0": {
-			"status": {
-				"activity": "0",
-				"dateActivity": "2020-11-29T11:06:41.549Z",
-				"score": 0
-			},
-			"info": {
-				"transition": 0,
-				"dateStart": "2020-11-29T11:04:28.932Z"
-			},
-			"name": "player",
-			"answer": null,
-			"question": {
-				"value": "sorry",
-				"correct": false,
-				"answerPlayer": "5"
-			}
-		},
-		"86dea0f2-cd9e-42fb-ae7d-fd7f0a4b66c6": {
-			"status": {
-				"activity": "end_game",
-				"dateActivity": "2020-11-29T11:10:03.621Z",
-				"score": 40
-			},
-			"info": {
-				"transition": 0,
-				"dateStart": "2020-11-29T11:06:32.061Z"
-			},
-			"name": "player",
-			"answer": null,
-			"question": {
-				"value": "10",
-				"correct": true,
-				"answerPlayer": "4"
-			}
-		},
-		"1cd1d927-aada-481d-bf07-df258d10b018": {
-			"status": {
-				"activity": "end_game",
-				"dateActivity": "2020-11-29T11:09:48.165Z",
-				"score": 62
-			},
-			"info": {
-				"transition": 0,
-				"dateStart": "2020-11-29T11:07:35.380Z"
-			},
-			"name": "player",
-			"answer": null,
-			"question": {
-				"value": "12",
-				"correct": true,
-				"answerPlayer": "sì un po'"
-			}
-		},
-		"b14d8e19-e992-4a4f-87eb-f164546f42b9": {
-			"status": {
-				"activity": "0",
-				"dateActivity": "2020-12-01T10:16:23.205Z",
-				"score": 0
-			},
-			"info": {
-				"transition": 0,
-				"dateStart": "2020-12-01T10:16:18.165Z"
-			},
-			"name": "player",
-			"chat": [
-				"p:caio fabrizio",
-				"v:ciao giacomo",
-				"p:come va fabrizio?",
-				"p:bene fra?",
-				"v:si molto bene grazie",
-				"p:perfetto arrivderci"
-			]
-		}
-	}
+    "15c63997-f03a-4a71-82e4-fd5488e5ec5b": {
+        "3c6469ee-8cd2-45da-a241-897f69ba97d0": {
+            "status": {
+                "activity": "0",
+                "dateActivity": "2020-11-29T11:06:41.549Z",
+                "score": 0
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-11-29T11:04:28.932Z"
+            },
+            "name": "player",
+            "answer": null,
+            "question": {
+                "value": "sorry",
+                "correct": false,
+                "answerPlayer": "5"
+            }
+        },
+        "86dea0f2-cd9e-42fb-ae7d-fd7f0a4b66c6": {
+            "status": {
+                "activity": "end_game",
+                "dateActivity": "2020-11-29T11:10:03.621Z",
+                "score": 40
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-11-29T11:06:32.061Z"
+            },
+            "name": "player",
+            "answer": null,
+            "question": {
+                "value": "10",
+                "correct": true,
+                "answerPlayer": "4"
+            }
+        },
+        "1cd1d927-aada-481d-bf07-df258d10b018": {
+            "status": {
+                "activity": "end_game",
+                "dateActivity": "2020-11-29T11:09:48.165Z",
+                "score": 62
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-11-29T11:07:35.380Z"
+            },
+            "name": "player",
+            "answer": null,
+            "question": {
+                "value": "12",
+                "correct": true,
+                "answerPlayer": "sì un po'"
+            }
+        },
+        "b14d8e19-e992-4a4f-87eb-f164546f42b9": {
+            "status": {
+                "activity": "0",
+                "dateActivity": "2020-12-01T10:16:23.205Z",
+                "score": 0
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-12-01T10:16:18.165Z"
+            },
+            "name": "player",
+            "chat": [
+                "p:caio fabrizio",
+                "v:ciao giacomo",
+                "p:come va fabrizio?",
+                "p:bene fra?",
+                "v:si molto bene grazie",
+                "p:perfetto arrivderci"
+            ]
+        }
+    },
+    "9c2a067e-a56d-4b98-8bb5-44238723dbb5": {
+        "6afce944-24b4-4e85-a939-b8d1742a0b37": {
+            "status": {
+                "activity": "end_game",
+                "dateActivity": "2020-12-04T20:27:06.797Z",
+                "score": -94
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-12-04T20:12:44.035Z"
+            },
+            "name": "perdente",
+            "answer": null,
+            "question": {
+                "value": "50",
+                "correct": true,
+                "answerPlayer": "Canopi, hanno sembianze animali"
+            }
+        },
+        "8be62a3a-f15b-43a4-80c1-5686a72efa13": {
+            "status": {
+                "activity": "1",
+                "dateActivity": "2020-12-14T11:34:34.344Z",
+                "score": 0
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-12-14T11:34:31.829Z"
+            },
+            "name": "player",
+            "chat": [
+                "p:ciao",
+                "v:come va?",
+                "p:totto ok grz",
+                "p:dd",
+                "p:dd",
+                "p:dd",
+                "p:dd",
+                "p:dd",
+                "p:s",
+                "p:d",
+                "p:s",
+                "p:sd",
+                "p:ds",
+                "p:ds",
+                "p:ds",
+                "p:ds",
+                "v:sdsds"
+            ]
+        },
+        "b6c58194-300a-42c5-8d3c-b22809b193cd": {
+            "status": {
+                "activity": "6",
+                "dateActivity": "2020-12-14T15:34:48.128Z",
+                "score": 15
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-12-14T15:33:52.240Z"
+            },
+            "name": "player"
+        },
+        "75c16d2d-27ba-456a-9a73-84afe40d0d3e": {
+            "status": {
+                "activity": "7",
+                "dateActivity": "2020-12-14T17:18:39.226Z",
+                "score": 60
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2020-12-14T17:17:42.497Z"
+            },
+            "name": "edoo"
+        }
+    }
 }

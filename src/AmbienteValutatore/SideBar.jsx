@@ -6,12 +6,15 @@ import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 import { Spinner } from 'react-bootstrap';
 
+import ExportData from './ExportData';
+import ShowRanking from './ShowRanking';
+
 function PlayerList(props) {
 	return (
 		<ListGroup variant='flush'>
 			{Object.entries(props.players).map(([key, value]) => {
 				return (
-					<ListGroup.Item key={key} action onClick={() => props.setPlayer(key, value, props.id)}>
+					<ListGroup.Item key={key} action onClick={() => {props.setPlayer(key, value, props.id); props.setRanking(false)}}>
 						{value.name}
 						{value.answer ? <Spinner animation='grow' variant='warning' /> : null}
 					</ListGroup.Item>
@@ -23,10 +26,19 @@ function PlayerList(props) {
 function ListStories(props) {
 	return (
 		<Accordion>
+			{console.log('PLAYERS: ')}
+			{console.log(props.players)}
 			<Card style={{ height: '100vh', overflowY: 'scroll' }}>
 				<Accordion.Toggle as={Card.Header} variant='light' eventKey={props.id}>
 					{props.name}
 				</Accordion.Toggle>
+				<Accordion.Collapse eventKey={props.id}>
+					<Row className='m-2'>
+						<ExportData players={props.players} />
+						<ShowRanking setRanking={props.setRanking} />
+					</Row>
+				</Accordion.Collapse>
+
 				<Accordion.Collapse eventKey={props.id}>
 					<Card.Body>
 						<PlayerList {...props} />
@@ -37,23 +49,21 @@ function ListStories(props) {
 	);
 }
 
-function SideBar({ stories, players, setPlayer }) {
-	return (
-		<Row>
-			<Col sm={12}>
-				{stories.map((value, key) => {
-					return (
-						<ListStories
-							key={key}
-							players={players[key]}
-							setPlayer={setPlayer}
-							id={value.info.id}
-							name={value.info.name}
-						/>
-					);
-				})}
-			</Col>
-		</Row>
-	);
+function SideBar({ stories, players, setPlayer, setRanking }) {
+	return stories.map((value, key) => {
+		return (
+			<Row key={value.info.id}>
+				<Col sm={12}>
+					<ListStories
+						players={players[key]}
+						setPlayer={setPlayer}
+						id={value.info.id}
+						name={value.info.name}
+						setRanking={setRanking}
+					/>
+				</Col>
+			</Row>
+		);
+	});
 }
 export default SideBar;
