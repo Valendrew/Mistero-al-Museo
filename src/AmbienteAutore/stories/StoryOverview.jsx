@@ -210,7 +210,7 @@ function StoryOverview() {
 	const handleEditStory = e => {
 		if (e.target.name === 'missions') history.push('missions', { idStory: idStory, action: 'edit' });
 		else if (e.target.name === 'activities') history.push('activities', { idStory: idStory });
-		else if (e.target.name === 'transitions') history.push('conclusions', { idStory: idStory, action: 'edit' });
+		else if (e.target.name === 'transitions') history.push('conclusion', { idStory: idStory, action: 'edit' });
 	};
 
 	const handleRetrieveStory = e => {

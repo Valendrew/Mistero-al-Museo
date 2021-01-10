@@ -3,7 +3,7 @@
         "name": "Gigino e la nuova macchina",
         "description": "Gigino va a comprare una macchina",
         "id": "af6fb6c6-feff-410f-b619-79843f491aa1",
-        "archived": true
+        "archived": false
     },
     "activities": {
         "0": {

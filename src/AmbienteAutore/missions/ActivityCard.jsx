@@ -58,7 +58,7 @@ function ActivityList(props) {
 function ActivityCard(props) {
 	return (
 		<Col className='my-2'>
-			<Card style={{ height: '50vh' }}>
+			<Card style={{ height: props.height || '50vh' }}>
 				<Card.Header>Attività {props.id.toString()}</Card.Header>
 				<Card.Body style={{ heigth: '50%', overflowY: 'auto' }}>
 					<Card.Title>Elementi narrazione</Card.Title>
