@@ -212,7 +212,6 @@ router.put(
 	postHandler
 );
 
-
 router.put(
 	'/:id/description',
 	(req, res, next) => {
@@ -234,7 +233,7 @@ async function deleteHandler(req, res, next) {
 		next(e);
 	}
 
-	delete data[res.locals.key];
+	res.locals.name ? delete data[res.locals.key][res.locals.name] : delete data[res.locals.key];
 
 	fileOperations
 		.write(data, storyFile, userDir)
@@ -290,6 +289,16 @@ router.delete('/:id/qrcode', async (req, res, next) => {
 		.then(() => res.send('qrcode removed'))
 		.catch(next);
 });
+
+router.delete(
+	'/:id/activities/:name',
+	async (req, res, next) => {
+		res.locals.key = 'activities';
+		res.locals.name = req.params.name;
+		next();
+	},
+	deleteHandler
+);
 
 router.delete(
 	'/:id/missions',

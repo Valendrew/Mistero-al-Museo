@@ -66,8 +66,11 @@ function ActivityCard(props) {
 					<ActivityList {...props} />
 				</Card.Body>
 				<Card.Footer>
-					<Button variant="danger" onClick={(e) => props.onEditActivity(e, props.id)}>
+					<Button variant="light" onClick={(e) => props.onEditActivity(e, props.id)}>
 						Modifica
+					</Button>
+					<Button variant="danger" onClick={(e) => props.onRemoveActivity(e, props.id)}>
+						Elimina
 					</Button>
 				</Card.Footer>
 			</Card>

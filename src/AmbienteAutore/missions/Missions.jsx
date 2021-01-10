@@ -21,7 +21,6 @@ function convertFieldToNumbers(field) {
 }
 
 function getDifference(missions, activities) {
-	console.log(activities);
 	Object.entries(missions).forEach(([key, value]) => {
 		Object.entries(value).forEach(([i, act]) => {
 			if (i === 'start') {
@@ -31,7 +30,6 @@ function getDifference(missions, activities) {
 			}
 		});
 	});
-	console.log(Array.from(Object.keys(activities)));
 	return Array.from(Object.keys(activities));
 }
 
