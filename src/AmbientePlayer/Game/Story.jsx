@@ -64,7 +64,8 @@ function Story(props) {
 					type: 'radio',
 					value: true,
 					index: index,
-					score: currentStory.questions[0].dinamicRating ? partialScore - ((Date.now()-dateStart)/1000) : partialScore
+					score: currentStory.questions[0].dinamicRating ? partialScore - ((Date.now()-dateStart)/1000) : partialScore,
+					ansVal: currentStory.questions[0].answers[index].value
 				};
 			} else if (currentStory.questions[0].type === 'open') {
 				answerValue = { type: 'open', value: inputsQuestion[0].value, index: 0 };

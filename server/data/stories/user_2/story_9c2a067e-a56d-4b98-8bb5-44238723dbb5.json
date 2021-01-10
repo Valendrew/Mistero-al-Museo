@@ -39,7 +39,7 @@
             "questions": [
                 {
                     "type": "radio",
-                    "value": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto.",
+                    "value": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
                     "tips": [],
                     "dinamicRating": true,
                     "answers": [

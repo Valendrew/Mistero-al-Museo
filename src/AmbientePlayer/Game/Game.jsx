@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Story from './Story';
 import useInterval from '../../useInterval';
 import { Button, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { nanoid } from 'nanoid';
 
 function getCurrentMission(activity, missions, transitions) {
 	return transitions.find(element => missions[element].hasOwnProperty(activity));
@@ -20,6 +21,7 @@ function Game() {
 	const [waitingHelp, setWaitingHelp] = useState();
 
 	const [chat, setChat] = useState();
+	const [givenAnswers, setGivenAnswers] = useState();
 	const [newMessage, setNewMessage] = useState(false);
 	useEffect(() => {
 		if (!isLoaded.loaded) {
@@ -53,20 +55,20 @@ function Game() {
 			fetchInformationsNextActivity(0, 0);
 		}
 	};
-	const handleSendMessage = async (message) => {
+	const handleSendMessage = async message => {
 		let data = chat;
-		data ? (data.push("p:" + message)) : (data = ["p:" + message]);
+		data ? data.push('p:' + message) : (data = ['p:' + message]);
 		setChat(data);
 		await fetch(`/games/${informations.game}/message`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ "chat": data })
+			body: JSON.stringify({ chat: data })
 		});
-	}
+	};
 
 	const fetchInformationsNextActivity = async (answerIndex, score, answer = null) => {
 		const { player, story, game } = informations;
-
+		if (answer) console.log(answer.ansVal);
 		/* L'attività corrente e la transizione assegnata al player */
 		const activity = player.status.activity;
 		const transition = parseInt(player.info.transition);
@@ -99,7 +101,18 @@ function Game() {
 				dateActivity: new Date(),
 				score: parseInt(player.status.score) + parseInt(score)
 			};
-
+			if (answer) {
+				let data = givenAnswers;
+				data
+					? (data = { ...data, [Object.keys(data).length]: { value: answer.ansVal, score: parseInt(score).toString(),question:story.activities[activity].questions[0].value} })
+					: (data = { 0: { value: answer.ansVal, score: parseInt(score).toString(), question:story.activities[activity].questions[0].value } });
+				setGivenAnswers(data);
+				await fetch(`/games/${game}/players/answers`, {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({givenAnswer: data})
+				}).catch(e => console.log(e));
+			}
 			await fetch(`/games/${game}/players/status`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
@@ -134,7 +147,8 @@ function Game() {
 				result.json().then(data => {
 					if (Object.keys(data).length) {
 						if (data.correct) {
-							fetchInformationsNextActivity(0, data.value);
+							const answer = { ansVal: data.answerPlayer };
+							fetchInformationsNextActivity(0, data.value, answer);
 						} else {
 							setErrorAnswer(
 								<InputGroup>
@@ -158,7 +172,7 @@ function Game() {
 			if (result.ok) {
 				result.json().then(data => {
 					if (Object.keys(data).length) {
-					console.log(data);
+						console.log(data);
 						setNewMessage(true);
 						setChat(data.chat);
 					}
@@ -196,21 +210,21 @@ function Game() {
 				) : informations.player.status.activity === 'end_game' ? (
 					<h6>Ha terminato la partita, chiudi la finestra del browser</h6>
 				) : (
-							<Story
-								player={informations.player}
-								story={informations.story}
-								errorAnswer={errorAnswer}
-								waitingOpen={waitingOpen}
-								handleNextActivity={handleNextActivity}
-								handleSendMessage={handleSendMessage}
-								chat={chat}
-								newMessage={newMessage}
-								setNewMessage={setNewMessage}
-							/>
-						)
+					<Story
+						player={informations.player}
+						story={informations.story}
+						errorAnswer={errorAnswer}
+						waitingOpen={waitingOpen}
+						handleNextActivity={handleNextActivity}
+						handleSendMessage={handleSendMessage}
+						chat={chat}
+						newMessage={newMessage}
+						setNewMessage={setNewMessage}
+					/>
+				)
 			) : (
-					<h6>Caricamento in corso...</h6>
-				)}
+				<h6>Caricamento in corso...</h6>
+			)}
 		</Container>
 	);
 }
