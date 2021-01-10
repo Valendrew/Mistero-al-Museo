@@ -29,7 +29,9 @@ function Media({ value }) {
 		isLoaded.error ? (
 			<p>Immagine: {value[2]}</p>
 		) : value[0] === "img" ? (
-			<Image width="25%" height="25%" src={mediaURL} thumbnail fluid />
+			<div class="backImg">
+				<Image width="85%" height="85%" src={mediaURL} thumbnail fluid />
+			</div>
 		) : (
 			<video alt="" width="320" height="240" controls>
 				<source src={mediaURL}></source>
@@ -42,7 +44,7 @@ function Media({ value }) {
 
 function Storyline({ storyline }) {
 	return (
-		<Container>
+		<Container fluid>
 			{storyline.map((value, key) => {
 				return (
 					<Row key={key}>

@@ -203,7 +203,7 @@ function Game() {
 	);
 
 	return (
-		<Container>
+		<div class="main">
 			{isLoaded.loaded ? (
 				isLoaded.error ? (
 					<h6>Errore nel caricamento</h6>
@@ -225,7 +225,7 @@ function Game() {
 			) : (
 				<h6>Caricamento in corso...</h6>
 			)}
-		</Container>
+		</div>
 	);
 }
 

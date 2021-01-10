@@ -8,6 +8,9 @@ import Chat from './Chat';
 import { useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 
+import './Style/style.css';/* Stile comune */
+import './Style/styleEgypt.css';/* Stile specifico, TODO: da includere diversamente */
+
 function Story(props) {
 	const [currentStory, setCurrentStory] = useState();
 	const [inputsQuestion, setInputsQuestion] = useState();
@@ -46,7 +49,7 @@ function Story(props) {
 	const onChangeAnswer = (key, value) => {
 		setInputsQuestion(inputsQuestion.map((_, index) => (index === key ? { value: value } : { value: false })));
 	};
-	
+
 
 	const fetchAnswers = e => {
 		e.preventDefault();
@@ -78,10 +81,10 @@ function Story(props) {
 
 	return isLoaded.loaded ? (
 		<>
-			<Button variant="primary" onClick={() => {setShowChat(true); props.setNewMessage(false)}}>
+			<Button variant="primary" onClick={() => { setShowChat(true); props.setNewMessage(false) }}>
 				Chat
-				{props.newMessage?(<Spinner animation='grow' variant='warning' />):(null)}
-      		</Button>
+				{props.newMessage ? (<Spinner animation='grow' variant='warning' />) : (null)}
+			</Button>
 
 			<Chat
 				show={showChat}
@@ -90,8 +93,10 @@ function Story(props) {
 				handleSendMessage={props.handleSendMessage}
 				chat={props.chat}
 			/>
-			<h5>Al momento ti trovi nell'attività {currentStory.activity}</h5>
-			<h6>Il punteggio attuale è {props.player.status.score}</h6>
+			<p>
+			<h3>Al momento ti trovi nell'attività {currentStory.activity}</h3>
+			<h4>Il punteggio attuale è {props.player.status.score}</h4>
+			</p>
 			<Storyline storyline={currentStory.storyline} />
 			<hr />
 			{currentStory.questions.length ? (
