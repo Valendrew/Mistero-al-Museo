@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import Image from "react-bootstrap/Image";
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Image from 'react-bootstrap/Image';
 
 function ActivityListItem({ value }) {
 	const [mediaURL, setMediaURL] = useState(undefined);
@@ -11,15 +11,15 @@ function ActivityListItem({ value }) {
 
 	useEffect(() => {
 		if (!mediaURL) {
-			if (value[0] === "img" || value[0] === "video") {
+			if (value[0] === 'img' || value[0] === 'video') {
 				fetch(`/files/${value[1]}.${value[2]}`)
-					.then((result) => result.blob())
-					.then((data) => {
+					.then(result => result.blob())
+					.then(data => {
 						var objectURL = URL.createObjectURL(data);
 						setMediaURL(objectURL);
 						setIsLoaded(true);
 					})
-					.catch((e) => console.log(e));
+					.catch(e => console.log(e));
 			} else setIsLoaded(true);
 		}
 	}, [mediaURL, value]);
@@ -28,10 +28,10 @@ function ActivityListItem({ value }) {
 			{isLoaded ? (
 				<>
 					{value[0]} :
-					{value[0] === "img" ? (
+					{value[0] === 'img' ? (
 						<Image src={mediaURL} thumbnail fluid />
-					) : value[0] === "video" ? (
-						<video alt="" width="320" height="240" controls>
+					) : value[0] === 'video' ? (
+						<video alt='' width='320' height='240' controls>
 							<source src={mediaURL}></source>
 						</video>
 					) : (
@@ -39,14 +39,14 @@ function ActivityListItem({ value }) {
 					)}
 				</>
 			) : (
-				"Loading..."
+				'Loading...'
 			)}
 		</ListGroup.Item>
 	);
 }
 function ActivityList(props) {
 	return (
-		<ListGroup variant="flush">
+		<ListGroup variant='flush'>
 			{props.storyline.map((value, key) => (
 				<ActivityListItem key={key} value={value} />
 			))}
@@ -56,10 +56,10 @@ function ActivityList(props) {
 
 function ActivityCard(props) {
 	return (
-		<Col>
-			<Card>
+		<Col className='my-2' style={props.style}>
+			<Card style={{ height: props.height || '50vh' }}>
 				<Card.Header>Attività {props.id.toString()}</Card.Header>
-				<Card.Body>
+				<Card.Body style={{ heigth: '50%', overflowY: 'auto' }}>
 					<Card.Title>Elementi narrazione</Card.Title>
 					<ActivityList {...props} />
 				</Card.Body>

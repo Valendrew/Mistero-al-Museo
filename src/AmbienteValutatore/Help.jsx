@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, Form, InputGroup, ListGroup } from 'react-bootstrap';
+import { Button, Card, Form } from 'react-bootstrap';
 
 function HelpBody(props) {
 	const [radioButtons, setRadioButtons] = useState(Array.from({ length: props.question.tips.length + 1 }, v => false));

@@ -21,12 +21,21 @@ import StoryConclusion from './stories/StoryConclusion';
 function StoryCard(props) {
 	return (
 		<Card>
-			<Card.Header>{props.title}</Card.Header>
+			<Card.Header>
+				{props.title}{' '}
+				{props.archived ? (
+					<>
+						- <Button onClick={() => props.enableStory(props.id)}>Riattiva storia</Button>
+					</>
+				) : null}
+			</Card.Header>
 			<Card.Body>
 				<Card.Text>{props.description}</Card.Text>
-				<Button variant='primary' onClick={() => props.onEditStory(props.id)}>
-					Modifica storia
-				</Button>
+				{props.archived ? null : (
+					<Button variant='primary' onClick={() => props.onEditStory(props.id)}>
+						Modifica storia
+					</Button>
+				)}
 			</Card.Body>
 		</Card>
 	);
@@ -37,26 +46,36 @@ function AutoreHome(props) {
 	const [stories, setStories] = useState({ error: null, isLoaded: false, items: [] });
 
 	useEffect(() => {
-		fetch(`/stories`, {
-			method: 'GET',
-			headers: { 'Content-Type': 'application/json' }
+		if (!stories.isLoaded) {
+			fetch(`/stories`, {
+				method: 'GET',
+				headers: { 'Content-Type': 'application/json' }
+			})
+				.then(res => res.json())
+				.then(
+					result => {
+						setStories({
+							isLoaded: true,
+							items: result
+						});
+					},
+					error => {
+						setStories({
+							isLoaded: true,
+							error
+						});
+					}
+				);
+		}
+	}, [stories]);
+
+	const enableStory = id => {
+		fetch(`/stories/${id}/archived`, {
+			method: 'POST'
 		})
-			.then(res => res.json())
-			.then(
-				result => {
-					setStories({
-						isLoaded: true,
-						items: result
-					});
-				},
-				error => {
-					setStories({
-						isLoaded: true,
-						error
-					});
-				}
-			);
-	}, []);
+			.then(res => setStories({ error: null, isLoaded: false, items: [] }))
+			.catch(console.log);
+	};
 
 	return (
 		<Container>
@@ -84,6 +103,8 @@ function AutoreHome(props) {
 										id={value.info.id}
 										title={value.info.name}
 										description={value.info.description}
+										archived={value.info.archived}
+										enableStory={enableStory}
 										{...props}
 									/>
 								</Col>

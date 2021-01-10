@@ -15,8 +15,12 @@ function ActivityOverview() {
 			let result = await fetch(`/stories/${idStory}/activities`);
 			if (!result.ok) setActivities({ isLoaded: true, error: result.statusText });
 			else {
-				const data = await result.json();
-				setActivities({ isLoaded: true, items: data });
+				result
+					.json()
+					.then(data => {
+						setActivities({ isLoaded: true, items: data });
+					})
+					.catch(e => console.log(e));
 			}
 		};
 		if (!activities.isLoaded) fetchData();
@@ -24,6 +28,13 @@ function ActivityOverview() {
 
 	const onEditActivity = async (e, id) => {
 		history.push('activity', { idStory: idStory, idActivity: id, action: 'activityToEdit' });
+	};
+
+	const onRemoveActivity = async (e, id) => {
+		await fetch(`/stories/${idStory}/activities/${id}`, {
+			method: 'DELETE'
+		});
+		setActivities({ isLoaded: false });
 	};
 
 	return (
@@ -34,7 +45,13 @@ function ActivityOverview() {
 				) : (
 					<Row className='row row-cols-1 row-cols-sm-2 row-cols-xl-4'>
 						{Object.entries(activities.items).map(([key, value]) => (
-							<ActivityCard key={key} id={parseInt(key)} activity={value} onEditActivity={onEditActivity} />
+							<ActivityCard
+								key={key}
+								id={parseInt(key)}
+								activity={value}
+								onEditActivity={onEditActivity}
+								onRemoveActivity={onRemoveActivity}
+							/>
 						))}
 					</Row>
 				)

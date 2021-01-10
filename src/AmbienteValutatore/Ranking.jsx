@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Col } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
 
 function RankingTable(props) {
@@ -11,17 +9,17 @@ function RankingTable(props) {
 	);
 	return props.players
 		? playerSorted.map(([key, val], index) => {
-				return index == 0 ? (
+				return index === 0 ? (
 					<tr style={{ backgroundColor: 'goldenrod' }}>
 						<td>{val.name}</td>
 						<td>{val.status.score}</td>
 					</tr>
-				) : index == 1 ? (
+				) : index === 1 ? (
 					<tr style={{ backgroundColor: 'silver' }}>
 						<td>{val.name}</td>
 						<td>{val.status.score}</td>
 					</tr>
-				) : index == 2 ? (
+				) : index === 2 ? (
 					<tr style={{ backgroundColor: 'rgb(205,127,50)' }}>
 						<td>{val.name}</td>
 						<td>{val.status.score}</td>

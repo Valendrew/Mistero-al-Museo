@@ -86,7 +86,7 @@ function Story(props) {
 			<Chat
 				show={showChat}
 				onHide={() => setShowChat(false)}
-				chat={props.player.status.chat}
+				/* chat={props.player.status.chat} */
 				handleSendMessage={props.handleSendMessage}
 				chat={props.chat}
 			/>

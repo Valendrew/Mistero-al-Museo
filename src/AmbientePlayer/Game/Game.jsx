@@ -30,7 +30,7 @@ function Game() {
 			setWaitingOpen(false);
 			setIsLoaded({ loaded: true });
 		}
-	}, [history, isLoaded]);
+	}, [history, isLoaded, informations]);
 
 	const handleNextActivity = async answer => {
 		if (answer.type === 'open') {

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, Card, Col, Form, Image, ListGroup, Row, Tab } from 'react-bootstrap';
+import { Card, Col, Form, ListGroup, Row, Tab } from 'react-bootstrap';
 
-const themeNature = {};
 function ThemePreviewNature() {
 	return (
 		<>

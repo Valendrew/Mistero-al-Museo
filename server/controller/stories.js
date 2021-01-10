@@ -193,6 +193,16 @@ router.post(
 	postHandler
 );
 
+router.post(
+	'/:id/archived',
+	(req, res, next) => {
+		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'info', value: 'archived' };
+		req.body = false;
+		next();
+	},
+	postHandler
+);
+
 router.put(
 	'/:id/name',
 	(req, res, next) => {
@@ -223,7 +233,7 @@ async function deleteHandler(req, res, next) {
 		next(e);
 	}
 
-	delete data[res.locals.key];
+	res.locals.name ? delete data[res.locals.key][res.locals.name] : delete data[res.locals.key];
 
 	fileOperations
 		.write(data, storyFile, userDir)
@@ -231,11 +241,20 @@ async function deleteHandler(req, res, next) {
 		.catch(next);
 }
 
-router.delete('/:id', (req, res, next) => {
-	const storyPath = path.join(app.get('stories'), req.username, `story_${req.params.id}.json`);
+router.delete('/:id', async (req, res, next) => {
+	const userDir = path.join(app.get('stories'), req.username);
+	const storyFile = `story_${req.params.id}.json`;
+
+	let data;
+	try {
+		data = await fileOperations.read(storyFile, userDir);
+		data.info.archived = true;
+	} catch (e) {
+		next(e);
+	}
 
 	fileOperations
-		.remove(storyPath)
+		.write(data, storyFile, userDir)
 		.then(() => {
 			res.send('story removed');
 		})
@@ -270,6 +289,16 @@ router.delete('/:id/qrcode', async (req, res, next) => {
 		.then(() => res.send('qrcode removed'))
 		.catch(next);
 });
+
+router.delete(
+	'/:id/activities/:name',
+	async (req, res, next) => {
+		res.locals.key = 'activities';
+		res.locals.name = req.params.name;
+		next();
+	},
+	deleteHandler
+);
 
 router.delete(
 	'/:id/missions',

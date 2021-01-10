@@ -8,7 +8,6 @@ const promiseWrite = util.promisify(fs.writeFile);
 const promiseAccess = util.promisify(fs.access);
 const promiseMkdir = util.promisify(fs.mkdir);
 const promiseReaddir = util.promisify(fs.readdir);
-//const promiseRm = util.promisify(fs.rm);
 
 const methods = {
 	read: async function readFile(filePath, dirPath, encoding = 'utf-8') {
@@ -38,10 +37,6 @@ const methods = {
 			throw new Error(e);
 		}
 		return files.map(file => methods.read(file, dirPath));
-	},
-
-	remove: async function removeFile(path, force = true) {
-		return promiseRm(path, { force: force });
 	}
 };
 
