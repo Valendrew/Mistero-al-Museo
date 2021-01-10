@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
+import { Button } from 'react-bootstrap';
 
 function ActivityListItem({ value }) {
 	const [mediaURL, setMediaURL] = useState(undefined);

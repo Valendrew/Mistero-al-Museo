@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
-import MissionModal from "./MissionModal";
-import MissionCard from "./MissionCard";
+import MissionModal from './MissionModal';
+import MissionCard from './MissionCard';
 
 function convertFieldToNumbers(field) {
 	/* 
@@ -14,15 +14,32 @@ function convertFieldToNumbers(field) {
 	1 == activity number
 	n - 1 == mission number
 	*/
-	const fieldInfo = field.split("_").reverse();
-	return fieldInfo.filter((_, key) => [0, 1, fieldInfo.length - 1].includes(key)).map((val) => parseInt(val.replace(/[^0-9]/g, "")));
+	const fieldInfo = field.split('_').reverse();
+	return fieldInfo
+		.filter((_, key) => [0, 1, fieldInfo.length - 1].includes(key))
+		.map(val => parseInt(val.replace(/[^0-9]/g, '')));
+}
+
+function getDifference(missions, activities) {
+	console.log(activities);
+	Object.entries(missions).forEach(([key, value]) => {
+		Object.entries(value).forEach(([i, act]) => {
+			if (i === 'start') {
+				delete activities[act];
+			} else {
+				act.forEach(v => delete activities[v]);
+			}
+		});
+	});
+	console.log(Array.from(Object.keys(activities)));
+	return Array.from(Object.keys(activities));
 }
 
 function Missions(props) {
 	const [showModal, setShowModal] = useState(false);
 	const [inputs, setInputs] = useState({});
 	const [missions, setMissions] = useState(props.missions ? props.missions : {}); // missioni
-	const [activities, setActivities] = useState(props.missions ? [] : Array.from(Object.keys(props.activities))); // indici attività disponibili
+	const [activities, setActivities] = useState(getDifference(props.missions, { ...props.activities })); // indici attività disponibili
 
 	const handleAddActivity = (field, event) => {
 		event.preventDefault();
@@ -35,7 +52,7 @@ function Missions(props) {
 
 			/* Valore della option selezionata e ottenute le risposte 
 			possibili nel caso di nuova attività (!= new_mission) */
-			if (inputs[field] === "new_mission") actChild = inputs[field];
+			if (inputs[field] === 'new_mission') actChild = inputs[field];
 			else {
 				actChild = inputs[field];
 				const questions = props.activities[actChild].questions;
@@ -50,11 +67,11 @@ function Missions(props) {
 
 			/* Nel caso di missionModal verrà creato un oggetto per la nuova missione, negli
 			altri casi verrà cambiato l'array dell'attività padre per impostare il nuovo figlio */
-			if (field === "missionModal") {
+			if (field === 'missionModal') {
 				missionNmb = Object.keys(missions).length;
 				/* newMission è un oggetto e conterrà la nuova missione */
 				newMission = {
-					start: inputs[field],
+					start: inputs[field]
 				};
 				selectPrefix = `m${missionNmb}_a${actChild}_`; // prefisso identificato per le select
 				setShowModal(false); // chiusura del modal
@@ -69,33 +86,35 @@ function Missions(props) {
 				newMission = { ...mission, [actNmb]: newActChildren }; // impostato nuovo vettore dei figli
 
 				// Nel caso di nuova attività (!= new_mission) viene impostato il prefisso per le select
-				if (actChild !== "new_mission") selectPrefix = `${field.replace(`_ans${ansNmb}`, "")}_a${actChild}_`;
+				if (actChild !== 'new_mission') selectPrefix = `${field.replace(`_ans${ansNmb}`, '')}_a${actChild}_`;
 			}
 			/* Nel caso di nuova attività (!= new_mission) viene creato l'array dei figli
 			per essa e vengono aggiunti i nuovi identificativi per le select */
-			if (actChild !== "new_mission") {
+			if (actChild !== 'new_mission') {
 				//debugger;
 				/* Creato array di dimensione pari alle risposte possibili per l'attività creata*/
-				newMission = { ...newMission, [actChild]: new Array(answersNmb).fill("") };
-				let newInputs = Array.from({ length: answersNmb }, (_, i) => [selectPrefix.concat(`ans${i}`), ""]);
+				newMission = { ...newMission, [actChild]: new Array(answersNmb).fill('') };
+				let newInputs = Array.from({ length: answersNmb }, (_, i) => [selectPrefix.concat(`ans${i}`), '']);
 				if (props.activities[actChild].questions.length) {
 					const answers = props.activities[actChild].questions[0].answers;
 					if (answers) {
 						newMission = {
 							...newMission,
-							[actChild]: newMission[actChild].map((value, key) => (!answers[key].correct && !answers[key].transition ? actChild : value)),
+							[actChild]: newMission[actChild].map((value, key) =>
+								!answers[key].correct && !answers[key].transition ? actChild : value
+							)
 						};
 						newInputs = newInputs.filter((value, key) => answers[key].correct || answers[key].transition);
 					}
 				}
 				setInputs({ ...inputs, ...Object.fromEntries(newInputs) });
-				setActivities(activities.filter((value) => parseInt(value) !== parseInt(actChild)));
+				setActivities(activities.filter(value => parseInt(value) !== parseInt(actChild)));
 			}
 			setMissions({ ...missions, [missionNmb]: newMission });
 		}
 	};
 
-	const handleRemoveActivity = (field) => {
+	const handleRemoveActivity = field => {
 		const [act, parentAct, mis] = convertFieldToNumbers(field);
 		let start = -1;
 
@@ -106,7 +125,7 @@ function Missions(props) {
 			setMissions(otherMission);
 		} else {
 			/* Cambiare l'array dell'attività (padre) modificando il figlio i-esimo con il valore vuoto ("")*/
-			const newActChildren = missions[mis][parentAct].map((value) => (parseInt(value) === act ? "" : value));
+			const newActChildren = missions[mis][parentAct].map(value => (parseInt(value) === act ? '' : value));
 			const { [act]: children, ...otherMission } = { ...missions[mis] };
 			const newMission = { ...missions, [mis]: { ...otherMission, [parentAct]: newActChildren } };
 			setMissions(newMission);
@@ -137,7 +156,7 @@ function Missions(props) {
 		setShowModal(false);
 	};
 
-	const handleSelect = (e) => {
+	const handleSelect = e => {
 		setInputs({ ...inputs, [e.target.name]: e.target.value });
 	};
 
@@ -147,18 +166,26 @@ function Missions(props) {
 		for (let i = 0; i < mission.length && !incompleted; i++) {
 			let children = Object.values(mission[i]);
 			for (let j = 0; j < children.length && !incompleted; j++) {
-				if (Array.isArray(children[j])) incompleted = children[j].includes("");
+				if (Array.isArray(children[j])) incompleted = children[j].includes('');
 			}
 		}
-		return !incompleted && activities.length === 0;
+		return !incompleted && activities.length !== Object.keys(props.activities).length;
 	};
 
 	useEffect(() => {
-		setInputs((prevState) => {
-			return Object.fromEntries(Object.entries(prevState).map(([key, value]) => [key, activities.length ? activities[0].toString() : "new_mission"]));
+		setInputs(prevState => {
+			return Object.fromEntries(
+				Object.entries(prevState).map(([key, value]) => [
+					key,
+					activities.length ? activities[0].toString() : 'new_mission'
+				])
+			);
 		});
 	}, [activities]);
 
+	useEffect(() => {
+		setActivities(getDifference(missions, { ...props.activities }));
+	}, [props.activities]);
 	return (
 		<Container>
 			<MissionModal
@@ -187,14 +214,14 @@ function Missions(props) {
 			<Row>
 				<Col>
 					{activities.length ? (
-						<Button variant="primary" type="button" onClick={handleShow}>
+						<Button variant='primary' type='button' onClick={handleShow}>
 							Aggiungi missione
 						</Button>
 					) : null}
 				</Col>
 				<Col>
 					{activitiesIncompleted() ? (
-						<Button variant="success" type="button" onClick={() => props.fetchMissions(missions)}>
+						<Button variant='success' type='button' onClick={() => props.fetchMissions(missions)}>
 							Procedi per concludere la storia
 						</Button>
 					) : null}

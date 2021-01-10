@@ -3,19 +3,30 @@ import { useHistory } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
 
 import ActivityCard from './ActivityCard';
 import Missions from './Missions';
+import { Col, ListGroup, Modal, Tab, Tabs } from 'react-bootstrap';
 
-function Activities() {
+function MissionsOverview() {
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: {} });
+	const [importedStories, setImportedStories] = useState({ error: null, items: {} });
 	const [missions, setMissions] = useState();
 	const history = useHistory();
 	const idStory = history.location.state.idStory;
 	const action = history.location.state.action;
 
+	const [showImport, setShowImport] = useState(false);
+
 	useEffect(() => {
 		const fetchData = async () => {
+			fetch(`/stories/`)
+				.then(result => result.json())
+				.then(data => {
+					setImportedStories({ items: data.filter(value => value.activities && value.info.id != idStory) });
+				});
+
 			let result = await fetch(`/stories/${idStory}/activities`);
 			if (!result.ok) setStory({ isLoaded: true, error: result.statusText });
 			else {
@@ -53,6 +64,25 @@ function Activities() {
 			.catch(console.log);
 	};
 
+	const handleCloseModal = () => {
+		setShowImport(false);
+	};
+
+	const handleImport = async (idImportedStory, numberActivity) => {
+		const newActivityIndex = Object.keys(story.items).length;
+		setStory({
+			...story,
+			items: { ...story.items, [newActivityIndex]: importedStories.items[idImportedStory].activities[numberActivity] }
+		});
+
+		await fetch(`/stories/${idStory}/activities/${newActivityIndex}`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(importedStories.items[idImportedStory].activities[numberActivity])
+		});
+		setShowImport(false);
+	};
+
 	return (
 		<Container fluid>
 			{story.isLoaded ? (
@@ -64,10 +94,37 @@ function Activities() {
 							{Object.entries(story.items).map(([key, value]) => {
 								return <ActivityCard key={key} id={parseInt(key)} storyline={value.storyline} />;
 							})}
+
+							<Button className='my-2' style={{ height: '25%' }} onClick={() => setShowImport(true)}>
+								Importa attività da storie differenti
+							</Button>
 						</Row>
 						<Row>
 							<Missions activities={story.items} fetchMissions={fetchMissions} missions={missions} />
 						</Row>
+
+						<Modal show={showImport} onHide={handleCloseModal}>
+							<Modal.Header closeButton>
+								<Modal.Title>Importa attività</Modal.Title>
+							</Modal.Header>
+							<Modal.Body>
+								<Tabs defaultActiveKey='0' id='uncontrolled-tab-example'>
+									{importedStories.items.map((value, key) => (
+										<Tab eventKey={key} title={value.info.name}>
+											<ListGroup variant='flush'>
+												{Object.entries(value.activities).map(([numberAct, value]) => {
+													return (
+														<ListGroup.Item>
+															<Button onClick={() => handleImport(key, numberAct)}>{value.name}</Button>
+														</ListGroup.Item>
+													);
+												})}
+											</ListGroup>
+										</Tab>
+									))}
+								</Tabs>
+							</Modal.Body>
+						</Modal>
 					</>
 				)
 			) : (
@@ -77,4 +134,4 @@ function Activities() {
 	);
 }
 
-export default Activities;
+export default MissionsOverview;
