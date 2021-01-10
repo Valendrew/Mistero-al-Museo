@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 
 import ActivityCard from './ActivityCard';
 import Missions from './Missions';
-import { Col, ListGroup, Modal, Tab, Tabs } from 'react-bootstrap';
+import { ListGroup, Modal, Tab, Tabs } from 'react-bootstrap';
 
 function MissionsOverview() {
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: {} });
@@ -24,7 +24,7 @@ function MissionsOverview() {
 			fetch(`/stories/`)
 				.then(result => result.json())
 				.then(data => {
-					setImportedStories({ items: data.filter(value => value.activities && value.info.id != idStory) });
+					setImportedStories({ items: data.filter(value => value.activities && value.info.id !== idStory) });
 				});
 
 			let result = await fetch(`/stories/${idStory}/activities`);

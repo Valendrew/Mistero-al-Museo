@@ -4,7 +4,6 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
-import { Button } from 'react-bootstrap';
 
 function ActivityListItem({ value }) {
 	const [mediaURL, setMediaURL] = useState(undefined);
@@ -57,7 +56,7 @@ function ActivityList(props) {
 
 function ActivityCard(props) {
 	return (
-		<Col className='my-2'>
+		<Col className='my-2' style={props.style}>
 			<Card style={{ height: props.height || '50vh' }}>
 				<Card.Header>Attività {props.id.toString()}</Card.Header>
 				<Card.Body style={{ heigth: '50%', overflowY: 'auto' }}>

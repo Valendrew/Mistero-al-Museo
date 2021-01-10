@@ -28,7 +28,7 @@ function Game() {
 			setWaitingOpen(false);
 			setIsLoaded({ loaded: true });
 		}
-	}, [history, isLoaded]);
+	}, [history, isLoaded, informations]);
 
 	const handleNextActivity = async answer => {
 		if (answer.type === 'open') {
@@ -53,16 +53,16 @@ function Game() {
 			fetchInformationsNextActivity(0, 0);
 		}
 	};
-	const handleSendMessage = async (message) => {
+	const handleSendMessage = async message => {
 		let data = chat;
-		data ? (data.push("p:" + message)) : (data = ["p:" + message]);
+		data ? data.push('p:' + message) : (data = ['p:' + message]);
 		setChat(data);
 		await fetch(`/games/${informations.game}/message`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ "chat": data })
+			body: JSON.stringify({ chat: data })
 		});
-	}
+	};
 
 	const fetchInformationsNextActivity = async (answerIndex, score, answer = null) => {
 		const { player, story, game } = informations;
@@ -158,7 +158,7 @@ function Game() {
 			if (result.ok) {
 				result.json().then(data => {
 					if (Object.keys(data).length) {
-					console.log(data);
+						console.log(data);
 						setNewMessage(true);
 						setChat(data.chat);
 					}
@@ -196,21 +196,21 @@ function Game() {
 				) : informations.player.status.activity === 'end_game' ? (
 					<h6>Ha terminato la partita, chiudi la finestra del browser</h6>
 				) : (
-							<Story
-								player={informations.player}
-								story={informations.story}
-								errorAnswer={errorAnswer}
-								waitingOpen={waitingOpen}
-								handleNextActivity={handleNextActivity}
-								handleSendMessage={handleSendMessage}
-								chat={chat}
-								newMessage={newMessage}
-								setNewMessage={setNewMessage}
-							/>
-						)
+					<Story
+						player={informations.player}
+						story={informations.story}
+						errorAnswer={errorAnswer}
+						waitingOpen={waitingOpen}
+						handleNextActivity={handleNextActivity}
+						handleSendMessage={handleSendMessage}
+						chat={chat}
+						newMessage={newMessage}
+						setNewMessage={setNewMessage}
+					/>
+				)
 			) : (
-					<h6>Caricamento in corso...</h6>
-				)}
+				<h6>Caricamento in corso...</h6>
+			)}
 		</Container>
 	);
 }

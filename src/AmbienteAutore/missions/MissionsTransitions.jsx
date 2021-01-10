@@ -68,9 +68,22 @@ function addToObjectNested(data, parentKey, key, value) {
 
 function ActivityCards(props) {
 	return (
-		<Row className='row row-cols-1 row-cols-sm-3'>
+		<Row
+			style={{
+				overflowX: 'auto',
+				whiteSpace: 'nowrap',
+				display: 'block'
+			}}>
 			{Object.entries(props.activities).map(([key, value]) => {
-				return <ActivityCard key={key} id={parseInt(key)} storyline={value.storyline} height='30vh' />;
+				return (
+					<ActivityCard
+						key={key}
+						id={parseInt(key)}
+						storyline={value.storyline}
+						height='30vh'
+						style={{ display: 'inline-block', width: '300px' }}
+					/>
+				);
 			})}
 		</Row>
 	);
@@ -110,7 +123,6 @@ function MissionsTransitions() {
 						}
 					});
 				});
-				console.log(missionsWithAct);
 				setMissionsWithActs(missionsWithAct);
 
 				setStory({ isLoaded: true, items: data });

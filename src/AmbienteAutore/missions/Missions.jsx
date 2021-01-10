@@ -183,7 +183,7 @@ function Missions(props) {
 
 	useEffect(() => {
 		setActivities(getDifference(missions, { ...props.activities }));
-	}, [props.activities]);
+	}, [props.activities, missions]);
 	return (
 		<Container>
 			<MissionModal
