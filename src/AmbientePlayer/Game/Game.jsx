@@ -102,13 +102,28 @@ function Game() {
 			if (answer) {
 				let data = givenAnswers;
 				data
-					? (data = { ...data, [Object.keys(data).length]: { value: answer.ansVal, score: parseInt(score).toString(),question:story.activities[activity].questions[0].value} })
-					: (data = { 0: { value: answer.ansVal, score: parseInt(score).toString(), question:story.activities[activity].questions[0].value } });
+					? (data = {
+							...data,
+							[Object.keys(data).length]: {
+								value: answer.ansVal,
+								score: parseInt(score).toString(),
+								question: story.activities[activity].questions[0].value,
+								activity: activity.toString()
+							}
+					  })
+					: (data = {
+							0: {
+								value: answer.ansVal,
+								score: parseInt(score).toString(),
+								question: story.activities[activity].questions[0].value,
+								activity: activity.toString()
+							}
+					  });
 				setGivenAnswers(data);
 				await fetch(`/games/${game}/players/answers`, {
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({givenAnswer: data})
+					body: JSON.stringify({ givenAnswer: data })
 				}).catch(e => console.log(e));
 			}
 			await fetch(`/games/${game}/players/status`, {
@@ -201,7 +216,7 @@ function Game() {
 	);
 
 	return (
-		<div class="main">
+		<div class='main'>
 			{isLoaded.loaded ? (
 				isLoaded.error ? (
 					<h6>Errore nel caricamento</h6>

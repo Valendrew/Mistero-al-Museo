@@ -4,7 +4,8 @@ import { Col } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 
 function RankingTable(props) {
-	const playerSorted = Object.entries(props.players[0]).sort(
+	console.log(props.players);
+	const playerSorted = Object.entries(props.players[props.storySelected]).sort(
 		([key, val], [key_2, val_2]) => val_2.status.score - val.status.score
 	);
 	return props.players

@@ -10,44 +10,52 @@
                 "transition": 0,
                 "dateStart": "2021-01-11T12:08:59.709Z"
             },
-            "name": "player",
+            "name": "gino",
             "givenAnswer": {
                 "0": {
+                    "activity": "1",
                     "value": "Uccido una vecchietta",
                     "score": "1",
                     "question": "Come potrò ottenerli?"
                 },
                 "1": {
+                    "activity": "2",
                     "value": "Sì",
                     "score": "20",
                     "question": "Vuoi comprarla?"
                 },
                 "2": {
+                    "activity": "3",
                     "value": "6",
                     "score": "30",
                     "question": "quanto fa 2+2?"
                 },
                 "3": {
+                    "activity": "4",
                     "value": "si",
                     "score": "20",
                     "question": "Sei scemo?"
                 },
                 "4": {
+                    "activity": "5",
                     "value": "nnoooo",
                     "score": "5",
                     "question": "contento?"
                 },
                 "5": {
+                    "activity": "6",
                     "value": "andrea",
                     "score": "3",
                     "question": "Dai dimmi come ti chiami"
                 },
                 "6": {
+                    "activity": "7",
                     "value": "yes",
                     "score": "10",
                     "question": "lo sei?"
                 },
                 "7": {
+                    "activity": "8",
                     "value": "Tutankhamon",
                     "score": "47",
                     "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di..."
@@ -58,6 +66,72 @@
                 "value": "3",
                 "correct": true,
                 "answerPlayer": "andrea"
+            }
+        }
+    },
+    "9c2a067e-a56d-4b98-8bb5-44238723dbb5": {
+        "6d9f006b-6ac7-4720-bec3-6db5ffb8778b": {
+            "status": {
+                "activity": "end_game",
+                "dateActivity": "2021-01-11T14:23:43.504Z",
+                "score": 70
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-11T14:23:07.376Z"
+            },
+            "name": "player",
+            "givenAnswer": {
+                "0": {
+                    "value": "Tutankhamon",
+                    "score": "47",
+                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
+                    "activity": "1"
+                },
+                "1": {
+                    "value": "Porta con Ammit",
+                    "score": "-5",
+                    "question": "Quale porta apri?",
+                    "activity": "4"
+                },
+                "2": {
+                    "value": "Una piuma",
+                    "score": "38",
+                    "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:",
+                    "activity": "6"
+                },
+                "3": {
+                    "value": "ciaooo",
+                    "score": "-10",
+                    "question": "Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?",
+                    "activity": "7"
+                }
+            },
+            "answer": null,
+            "question": {
+                "value": "-10",
+                "correct": true,
+                "answerPlayer": "ciaooo"
+            }
+        },
+        "8b519bfc-b716-4a42-b446-fe1984ff0bb9": {
+            "status": {
+                "activity": "4",
+                "dateActivity": "2021-01-11T15:11:01.726Z",
+                "score": 48
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-11T15:10:57.706Z"
+            },
+            "name": "player",
+            "givenAnswer": {
+                "0": {
+                    "value": "Tutankhamon",
+                    "score": "48",
+                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
+                    "activity": "1"
+                }
             }
         }
     }

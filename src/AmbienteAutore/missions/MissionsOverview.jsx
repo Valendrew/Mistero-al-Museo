@@ -109,19 +109,23 @@ function MissionsOverview() {
 							</Modal.Header>
 							<Modal.Body>
 								<Tabs defaultActiveKey='0' id='uncontrolled-tab-example'>
-									{importedStories.items.map((value, key) => (
-										<Tab eventKey={key} title={value.info.name}>
-											<ListGroup variant='flush'>
-												{Object.entries(value.activities).map(([numberAct, value]) => {
-													return (
-														<ListGroup.Item>
-															<Button onClick={() => handleImport(key, numberAct)}>{value.name}</Button>
-														</ListGroup.Item>
-													);
-												})}
-											</ListGroup>
-										</Tab>
-									))}
+									{console.log("importedStories\n")}
+									{console.log(importedStories.items)}
+									{importedStories.items
+										? importedStories.items.map((value, key) => (
+												<Tab eventKey={key} title={value.info.name}>
+													<ListGroup variant='flush'>
+														{Object.entries(value.activities).map(([numberAct, value]) => {
+															return (
+																<ListGroup.Item>
+																	<Button onClick={() => handleImport(key, numberAct)}>{value.name}</Button>
+																</ListGroup.Item>
+															);
+														})}
+													</ListGroup>
+												</Tab>
+										  ))
+										: null}
 								</Tabs>
 							</Modal.Body>
 						</Modal>

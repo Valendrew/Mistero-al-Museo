@@ -40,7 +40,12 @@ function ListStories(props) {
 				<Accordion.Collapse eventKey={props.id}>
 					<Card.Body>
 						<ExportData players={props.players} storyID={props.id} />
-						<ShowRanking setRanking={props.setRanking} />
+						<ShowRanking
+							setRanking={props.setRanking}
+							setStorySelected={props.setStorySelected}
+							stories={props.stories}
+							storyID={props.id}
+						/>
 						<PlayerList {...props} />
 					</Card.Body>
 				</Accordion.Collapse>
@@ -49,17 +54,19 @@ function ListStories(props) {
 	);
 }
 
-function SideBar({ stories, players, setPlayer, setRanking }) {
+function SideBar({ stories, players, setPlayer, setRanking, setStorySelected }) {
 	return stories.map((value, key) => {
 		return !value.info.archived && value.info.qr && Object.keys(players[key]).length ? (
 			<Row key={value.info.id}>
 				<Col sm={12}>
 					<ListStories
+						setStorySelected={setStorySelected}
 						players={players[key]}
 						setPlayer={setPlayer}
 						id={value.info.id}
 						name={value.info.name}
 						setRanking={setRanking}
+						stories={stories}
 					/>
 				</Col>
 			</Row>

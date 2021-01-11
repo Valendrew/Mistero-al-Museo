@@ -15,7 +15,7 @@ export default function ExportData(props) {
 		const pdf = new jsPDF();
 		let header = [];
 		if (player !== 'classifica') {
-			header = ['Domanda', 'Risposta', 'Punteggio ottenuto'];
+			header = ['Numero attività', 'Domanda', 'Risposta', 'Punteggio ottenuto'];
 
 			let headerConfig = header.map(key => ({ name: key, prompt: key, width: 50, align: 'center', padding: 0 }));
 			let tableRows = [];
@@ -25,9 +25,10 @@ export default function ExportData(props) {
 					tableRows = Object.values(data.answers);
 					//Rinomino le chiavi perché devono corrispondere al valore delle colonne
 					tableRows.forEach(element => {
-						element[header[0]] = element['question'];
-						element[header[1]] = element['value'];
-						element[header[2]] = element['score'];
+						element[header[0]] = element['activity'];
+						element[header[1]] = element['question'];
+						element[header[2]] = element['value'];
+						element[header[3]] = element['score'];
 					});
 					pdf.table(20, 30, tableRows, headerConfig);
 					pdf.save(data.name + '.pdf');
@@ -38,6 +39,7 @@ export default function ExportData(props) {
 			let headerConfig = header.map(key => ({ name: key, prompt: key, width: 50, align: 'center', padding: 0 }));
 
 			//Ordino i giocatori di questa storia in ordine decrescente in base al punteggio
+			console.log(props.players);
 			const playerSorted = Object.entries(props.players).sort(
 				([key, val], [key_2, val_2]) => val_2.status.score - val.status.score
 			);

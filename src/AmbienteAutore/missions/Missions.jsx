@@ -21,15 +21,17 @@ function convertFieldToNumbers(field) {
 }
 
 function getDifference(missions, activities) {
-	Object.entries(missions).forEach(([key, value]) => {
-		Object.entries(value).forEach(([i, act]) => {
-			if (i === 'start') {
-				delete activities[act];
-			} else {
-				act.forEach(v => delete activities[v]);
-			}
+	if (missions) {
+		Object.entries(missions).forEach(([key, value]) => {
+			Object.entries(value).forEach(([i, act]) => {
+				if (i === 'start') {
+					delete activities[act];
+				} else {
+					act.forEach(v => delete activities[v]);
+				}
+			});
 		});
-	});
+	}
 	return Array.from(Object.keys(activities));
 }
 

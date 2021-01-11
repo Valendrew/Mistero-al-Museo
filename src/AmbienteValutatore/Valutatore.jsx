@@ -15,6 +15,7 @@ function Valutatore() {
 	const [inputs, setInputs] = useState();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 	const [showRanking, setShowRanking] = useState(false);
+	const [storySelected, setStorySelected] = useState();
 
 	const setPlayerDashboard = (idPlayer, informations, idStory) => {
 		setPlayerSelected({
@@ -140,10 +141,16 @@ function Valutatore() {
 		) : (
 			<Row>
 				<Col xs={4} lg={3} style={{ height: '100vh', overflowY: 'scroll' }}>
-					<SideBar stories={stories} players={players} setPlayer={setPlayerDashboard} setRanking={setShowRanking} />
+					<SideBar
+						stories={stories}
+						players={players}
+						setPlayer={setPlayerDashboard}
+						setRanking={setShowRanking}
+						setStorySelected={setStorySelected}
+					/>
 				</Col>
 				{showRanking ? (
-					<Ranking players={players} />
+					<Ranking players={players} storySelected={storySelected} />
 				) : playerSelected ? (
 					<Col xs={8} lg={9}>
 						<PlayerInfo
