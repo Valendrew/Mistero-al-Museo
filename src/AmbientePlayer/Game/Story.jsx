@@ -50,7 +50,6 @@ function Story(props) {
 		setInputsQuestion(inputsQuestion.map((_, index) => (index === key ? { value: value } : { value: false })));
 	};
 
-
 	const fetchAnswers = e => {
 		e.preventDefault();
 
@@ -67,7 +66,9 @@ function Story(props) {
 					type: 'radio',
 					value: true,
 					index: index,
-					score: currentStory.questions[0].dinamicRating ? partialScore - ((Date.now()-dateStart)/1000) : partialScore,
+					score: currentStory.questions[0].dinamicRating
+						? partialScore - (Date.now() - dateStart) / 1000
+						: partialScore,
 					ansVal: currentStory.questions[0].answers[index].value
 				};
 			} else if (currentStory.questions[0].type === 'open') {
@@ -81,9 +82,14 @@ function Story(props) {
 
 	return isLoaded.loaded ? (
 		<>
-			<Button variant="primary" onClick={() => { setShowChat(true); props.setNewMessage(false) }}>
+			<Button
+				variant='primary'
+				onClick={() => {
+					setShowChat(true);
+					props.setNewMessage(false);
+				}}>
 				Chat
-				{props.newMessage ? (<Spinner animation='grow' variant='warning' />) : (null)}
+				{props.newMessage ? <Spinner animation='grow' variant='warning' /> : null}
 			</Button>
 
 			<Chat
@@ -93,10 +99,8 @@ function Story(props) {
 				handleSendMessage={props.handleSendMessage}
 				chat={props.chat}
 			/>
-			<p>
 			<h3>Al momento ti trovi nell'attività {currentStory.activity}</h3>
 			<h4>Il punteggio attuale è {props.player.status.score}</h4>
-			</p>
 			<Storyline storyline={currentStory.storyline} />
 			<hr />
 			{currentStory.questions.length ? (

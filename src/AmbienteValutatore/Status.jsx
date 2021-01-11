@@ -1,6 +1,13 @@
 import React from 'react';
 import { Button, Card, Col, Form, InputGroup, Row } from 'react-bootstrap';
 
+function getTimeFormatted(timeMS) {
+	const hours = Math.floor(timeMS / (1000 * 3600));
+	const minutes = Math.floor(timeMS / (1000 * 60)) - hours * 60;
+	const seconds = Math.floor(timeMS / 1000) - hours * 3600 - minutes * 60;
+	return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+}
+
 function Status(props) {
 	const optionsDate = { dateStyle: 'short' };
 	const optionsTime = { timeStyle: 'medium' };
@@ -76,14 +83,12 @@ function Status(props) {
 					</Col>
 				</Row>
 
-				<Row className='mt-4'>
-					<Col>Tempo nella fase attuale:</Col>
-					<Col>
-						{new Date(
-							new Date() - Date.parse('1970-01-01T02:00:00') - new Date(props.player.informations.status.dateActivity)
-						).toLocaleTimeString('it-IT', optionsTime)}
-					</Col>
-				</Row>
+				{props.player.informations.status.interval ? (
+					<Row className='mt-4'>
+						<Col>Tempo nella fase attuale:</Col>
+						<Col>{getTimeFormatted(props.player.informations.status.interval)}</Col>
+					</Row>
+				) : null}
 			</Card.Body>
 		</Card>
 	);

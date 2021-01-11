@@ -30,7 +30,7 @@ function Media({ value }) {
 			<p>Immagine: {value[2]}</p>
 		) : value[0] === "img" ? (
 			<div class="backImg">
-				<Image width="85%" height="85%" src={mediaURL} thumbnail fluid />
+				<Image width="200px" src={mediaURL} thumbnail fluid />
 			</div>
 		) : (
 			<video alt="" width="320" height="240" controls>
