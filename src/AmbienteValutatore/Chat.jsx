@@ -6,7 +6,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
 function Chat(props) {
-	const [message, setMessage] = useState();
+	const [message, setMessage] = useState('');
 
 	const fetchUpdateStatus = async e => {
 		let data = props.player.informations.chat;
@@ -30,17 +30,19 @@ function Chat(props) {
 				<Card.Body>
 					<ListGroup variant='flush'>
 						{props.player.informations.chat
-							? props.player.informations.chat.map(value => {
+							? props.player.informations.chat.map((value, key) => {
 									const mit = value.substr(0, 1);
 									const text = value.substr(2);
 									return mit === 'v' ? (
 										<ListGroup.Item
+											key={key}
 											variant='primary'
-											style={{ 'text-align': 'right', borderRadius: '20px', marginLeft: '10%', marginBottom: '4px' }}>
+											style={{ textAlign: 'right', borderRadius: '20px', marginLeft: '10%', marginBottom: '4px' }}>
 											{text}
 										</ListGroup.Item>
 									) : (
 										<ListGroup.Item
+											key={key}
 											variant='secondary'
 											style={{ borderRadius: '20px', marginRight: '10%', marginBottom: '4px' }}>
 											{text}

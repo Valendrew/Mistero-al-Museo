@@ -21,6 +21,7 @@ function Game() {
 	const [chat, setChat] = useState();
 	const [givenAnswers, setGivenAnswers] = useState();
 	const [newMessage, setNewMessage] = useState(false);
+
 	useEffect(() => {
 		if (!isLoaded.loaded) {
 			setInformations({ ...informations, ...history.location.state });
@@ -53,6 +54,7 @@ function Game() {
 			fetchInformationsNextActivity(0, 0);
 		}
 	};
+
 	const handleSendMessage = async message => {
 		let data = chat;
 		data ? data.push('p:' + message) : (data = ['p:' + message]);
@@ -66,7 +68,7 @@ function Game() {
 
 	const fetchInformationsNextActivity = async (answerIndex, score, answer = null) => {
 		const { player, story, game } = informations;
-		if (answer) console.log(answer.ansVal);
+
 		/* L'attività corrente e la transizione assegnata al player */
 		const activity = player.status.activity;
 		const transition = parseInt(player.info.transition);
@@ -102,13 +104,26 @@ function Game() {
 			if (answer) {
 				let data = givenAnswers;
 				data
-					? (data = { ...data, [Object.keys(data).length]: { value: answer.ansVal, score: parseInt(score).toString(),question:story.activities[activity].questions[0].value} })
-					: (data = { 0: { value: answer.ansVal, score: parseInt(score).toString(), question:story.activities[activity].questions[0].value } });
+					? (data = {
+							...data,
+							[Object.keys(data).length]: {
+								value: answer.ansVal,
+								score: parseInt(score).toString(),
+								question: story.activities[activity].questions[0].value
+							}
+					  })
+					: (data = {
+							0: {
+								value: answer.ansVal,
+								score: parseInt(score).toString(),
+								question: story.activities[activity].questions[0].value
+							}
+					  });
 				setGivenAnswers(data);
 				await fetch(`/games/${game}/players/answers`, {
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({givenAnswer: data})
+					body: JSON.stringify({ givenAnswer: data })
 				}).catch(e => console.log(e));
 			}
 			await fetch(`/games/${game}/players/status`, {
@@ -164,13 +179,13 @@ function Game() {
 		},
 		waitingOpen ? 5000 : null
 	);
+
 	useInterval(
 		async () => {
 			const result = await fetch('/games/chatPlayer');
 			if (result.ok) {
 				result.json().then(data => {
 					if (Object.keys(data).length) {
-						console.log(data);
 						setNewMessage(true);
 						setChat(data.chat);
 					}
@@ -179,6 +194,7 @@ function Game() {
 		},
 		isLoaded.loaded ? 5000 : null
 	);
+
 	useInterval(
 		async () => {
 			const result = await fetch(`/games/${informations.game}/players/help`);
@@ -200,8 +216,24 @@ function Game() {
 		waitingHelp ? 5000 : null
 	);
 
+	useInterval(
+		async () => {
+			await fetch(`/games/${informations.game}/players/status`, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					status: {
+						...informations.player.status,
+						interval: new Date() - Date.parse('1970-01-01T01:00:00') - new Date(informations.player.status.dateActivity)
+					}
+				})
+			});
+		},
+		isLoaded.loaded ? 5000 : null
+	);
+
 	return (
-		<div class="main">
+		<div class='main'>
 			{isLoaded.loaded ? (
 				isLoaded.error ? (
 					<h6>Errore nel caricamento</h6>

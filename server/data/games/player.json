@@ -10,7 +10,7 @@
                 "transition": 0,
                 "dateStart": "2021-01-11T12:08:59.709Z"
             },
-            "name": "player",
+            "name": "test1",
             "givenAnswer": {
                 "0": {
                     "value": "Uccido una vecchietta",
@@ -58,6 +58,101 @@
                 "value": "3",
                 "correct": true,
                 "answerPlayer": "andrea"
+            },
+            "chat": [
+                "v:socca"
+            ]
+        }
+    },
+    "9c2a067e-a56d-4b98-8bb5-44238723dbb5": {
+        "5fc95bf7-927c-454c-a03e-ad631d9ff6a7": {
+            "status": {
+                "activity": "9",
+                "dateActivity": "2021-01-11T15:33:58.868Z",
+                "score": 42
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-11T14:25:39.982Z"
+            },
+            "name": "player",
+            "chat": [
+                "v:ciao",
+                "v:we",
+                "v:we",
+                "v:we",
+                "v:a",
+                "p:ciao",
+                "p:aa",
+                "p:ahah",
+                "p:we",
+                "p:ciao",
+                "p:ehi",
+                "p:we",
+                "p:cia",
+                "p:ehi"
+            ],
+            "givenAnswer": {
+                "0": {
+                    "value": "Tutankhamon",
+                    "score": "8",
+                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di..."
+                },
+                "1": {
+                    "value": "Porta con Ammit",
+                    "score": "-5",
+                    "question": "Quale porta apri?"
+                },
+                "2": {
+                    "value": "Una piuma",
+                    "score": "37",
+                    "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:"
+                },
+                "3": {
+                    "value": "we",
+                    "score": "2",
+                    "question": "Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?"
+                }
+            },
+            "answer": null,
+            "question": {
+                "value": "2",
+                "correct": true,
+                "answerPlayer": "we"
+            }
+        },
+        "26a3b223-5d5d-4139-931f-08bab7a0ed25": {
+            "status": {
+                "activity": "7",
+                "dateActivity": "2021-01-11T16:04:59.551Z",
+                "score": -452,
+                "interval": 54807
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-11T15:47:15.294Z"
+            },
+            "name": "player",
+            "activity": "1",
+            "dateActivity": "2021-01-11T15:49:57.179Z",
+            "score": 0,
+            "interval": 93230,
+            "givenAnswer": {
+                "0": {
+                    "value": "Tutankhamon",
+                    "score": "-76",
+                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di..."
+                },
+                "1": {
+                    "value": "Porta con Ammit",
+                    "score": "-5",
+                    "question": "Quale porta apri?"
+                },
+                "2": {
+                    "value": "Una piuma",
+                    "score": "-371",
+                    "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:"
+                }
             }
         }
     }

@@ -150,6 +150,7 @@ router.put(
 	'/:id/players/status',
 	(req, res, next) => {
 		res.locals.playerID = req.cookies.playerID;
+		
 		informationsPending[req.cookies.playerID] = {
 			...informationsPending[req.cookies.playerID],
 			story: req.params.id,
@@ -251,11 +252,13 @@ router.get('/chatValutatore', (req, res) => {
 	res.send(chatPendingValutatore);
 	chatPendingValutatore = {};
 });
+
 let chatPendingPlayer = {};
 router.get('/chatPlayer', (req, res) => {
 	res.send(chatPendingPlayer[req.cookies.playerID] || {});
 	delete chatPendingPlayer[req.cookies.playerID];
 });
+
 router.put(
 	'/:id/message',
 	(req, res, next) => {
@@ -265,6 +268,7 @@ router.put(
 	},
 	updateStatusPlayer
 );
+
 router.put(
 	'/:id/message/:name',
 	(req, res, next) => {

@@ -41,11 +41,13 @@ function Valutatore() {
 			if (statusUpdated.hasOwnProperty('name')) {
 				setInputs({ ...inputs, name: { value: statusUpdated.name, error: false } });
 			}
+
 			setPlayerSelected({
 				...playerSelected,
 				informations: { ...playerSelected.informations, ...statusUpdated }
 			});
 		}
+
 		setPlayers(newPlayers);
 	};
 
