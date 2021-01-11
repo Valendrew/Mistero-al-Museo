@@ -29,6 +29,18 @@ router.get('/:id/players', async (req, res, next) => {
 	console.log(result);
 	res.send(result[storyID] || {});
 });
+//Per ottenere tutte le risposte date dal giocatore
+router.get('/:playerId/:storyId/playerAnswers', async (req, res, next) => {
+	const playerID = req.params.playerId;
+	const storyID = req.params.storyId;
+	let result;
+	try {
+		result = await fileOperations.read('player.json', app.get('games'));
+	} catch (e) {
+		result = {};
+	}
+	res.send({answers:result[storyID][playerID].givenAnswer, name:result[storyID][playerID].name} || {});
+});
 
 const updateStatusPlayer = async (req, res, next) => {
 	const playerID = res.locals.playerID;
@@ -143,6 +155,18 @@ router.put(
 			story: req.params.id,
 			status: req.body.status
 		};
+		next();
+	},
+	updateStatusPlayer
+);
+
+/* Richiesta per aggiornare le risposte del player */
+let answersPending = {};
+router.put(
+	'/:id/players/answers',
+	(req, res, next) => {
+		res.locals.playerID = req.cookies.playerID;
+		answersPending[req.cookies.playerID] = { story: req.params.id, givenAnswer: req.body.givenAnswer };
 		next();
 	},
 	updateStatusPlayer

@@ -15,25 +15,27 @@ function OpenQuestion(props) {
 
 function MultipleQuestion(props) {
 	return (
-		<Form>
-			{props.question.answers.map((value, key) => {
-				return (
-					<Form.Check
-						key={key}
-						defaultChecked={props.inputsQuestion[key].value}
-						name='radio_question'
-						onChange={e => props.onChangeAnswer(key, e.target.checked)}
-						type={props.question.type}
-						label={value.value}
-					/>
-				);
-			})}
-		</Form>
+		<div class="multipleQuestion">
+			<Form>
+				{props.question.answers.map((value, key) => {
+					return (
+						<Form.Check
+							key={key}
+							defaultChecked={props.inputsQuestion[key].value}
+							name='radio_question'
+							onChange={e => props.onChangeAnswer(key, e.target.checked)}
+							type={props.question.type}
+							label={value.value}
+						/>
+					);
+				})}
+			</Form>
+		</div>
 	);
 }
 function Questions(props) {
 	return (
-		<Container>
+		<Container fluid>
 			<p>{props.question.value}</p>
 
 			{props.question.type === 'open' ? (

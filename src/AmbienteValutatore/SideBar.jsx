@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
-import { Spinner } from 'react-bootstrap';
+import { ButtonGroup, Spinner } from 'react-bootstrap';
 
 import ExportData from './ExportData';
 import ShowRanking from './ShowRanking';
@@ -14,7 +14,13 @@ function PlayerList(props) {
 		<ListGroup variant='flush'>
 			{Object.entries(props.players).map(([key, value]) => {
 				return (
-					<ListGroup.Item key={key} action onClick={() => {props.setPlayer(key, value, props.id); props.setRanking(false)}}>
+					<ListGroup.Item
+						key={key}
+						action
+						onClick={() => {
+							props.setPlayer(key, value, props.id);
+							props.setRanking(false);
+						}}>
 						{value.name}
 						{value.answer ? <Spinner animation='grow' variant='warning' /> : null}
 					</ListGroup.Item>
@@ -34,8 +40,10 @@ function ListStories(props) {
 				</Accordion.Toggle>
 				<Accordion.Collapse eventKey={props.id}>
 					<Row className='m-2'>
-						<ExportData players={props.players} />
-						<ShowRanking setRanking={props.setRanking} />
+						<ButtonGroup>
+							<ExportData players={props.players} storyID={props.id} />
+							<ShowRanking setRanking={props.setRanking} />
+						</ButtonGroup>
 					</Row>
 				</Accordion.Collapse>
 

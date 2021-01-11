@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Story from './Story';
 import useInterval from '../../useInterval';
 import { Button, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { nanoid } from 'nanoid';
 
 function getCurrentMission(activity, missions, transitions) {
 	return transitions.find(element => missions[element].hasOwnProperty(activity));
@@ -20,6 +21,7 @@ function Game() {
 	const [waitingHelp, setWaitingHelp] = useState();
 
 	const [chat, setChat] = useState();
+	const [givenAnswers, setGivenAnswers] = useState();
 	const [newMessage, setNewMessage] = useState(false);
 	useEffect(() => {
 		if (!isLoaded.loaded) {
@@ -66,7 +68,7 @@ function Game() {
 
 	const fetchInformationsNextActivity = async (answerIndex, score, answer = null) => {
 		const { player, story, game } = informations;
-
+		if (answer) console.log(answer.ansVal);
 		/* L'attività corrente e la transizione assegnata al player */
 		const activity = player.status.activity;
 		const transition = parseInt(player.info.transition);
@@ -99,7 +101,18 @@ function Game() {
 				dateActivity: new Date(),
 				score: parseInt(player.status.score) + parseInt(score)
 			};
-
+			if (answer) {
+				let data = givenAnswers;
+				data
+					? (data = { ...data, [Object.keys(data).length]: { value: answer.ansVal, score: parseInt(score).toString(),question:story.activities[activity].questions[0].value} })
+					: (data = { 0: { value: answer.ansVal, score: parseInt(score).toString(), question:story.activities[activity].questions[0].value } });
+				setGivenAnswers(data);
+				await fetch(`/games/${game}/players/answers`, {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({givenAnswer: data})
+				}).catch(e => console.log(e));
+			}
 			await fetch(`/games/${game}/players/status`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
@@ -134,7 +147,8 @@ function Game() {
 				result.json().then(data => {
 					if (Object.keys(data).length) {
 						if (data.correct) {
-							fetchInformationsNextActivity(0, data.value);
+							const answer = { ansVal: data.answerPlayer };
+							fetchInformationsNextActivity(0, data.value, answer);
 						} else {
 							setErrorAnswer(
 								<InputGroup>
@@ -189,7 +203,7 @@ function Game() {
 	);
 
 	return (
-		<Container>
+		<div class="main">
 			{isLoaded.loaded ? (
 				isLoaded.error ? (
 					<h6>Errore nel caricamento</h6>
@@ -211,7 +225,7 @@ function Game() {
 			) : (
 				<h6>Caricamento in corso...</h6>
 			)}
-		</Container>
+		</div>
 	);
 }
 

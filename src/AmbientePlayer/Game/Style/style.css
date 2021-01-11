@@ -1,0 +1,65 @@
+#root,
+body,
+html {
+    height: 100%;
+}
+
+.main {
+    text-align: center;
+    background-size: cover;
+    height: 100%;
+    color: white;
+}
+
+.backImg {
+    background-color: rgb(97, 97, 97, 0.5);
+    background-image: url("https://besthqwallpapers.com/Uploads/20-7-2020/137659/thumb2-gray-rock-texture-stone-texture-gray-stone-background-rock-background-natural-stone-texture.jpg");
+    background-size: cover;
+    padding: 30px;
+    margin: 0 10% 0 10%;
+    border-radius: 15px;
+}
+
+.img-thumbnail {
+    padding: 0;
+    border: 0;
+    border-radius: 15px;
+    box-shadow: 0 0 8px 8px slategrey;
+}
+
+.btn {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.container {
+    margin: 4%;
+    text-align: center;
+}
+
+.row {
+    display: block;
+}
+
+p {
+    font-size: 200%;
+    background-color: rgb(97, 97, 97, 0.5);
+    margin: 0px 15% 0px 15%;
+    border-radius: 15px;
+}
+
+.form-check {
+    font-size: 300%;
+    font-weight: bold;
+    background-color: rgb(173, 0, 0);
+    color: white;
+    border-radius: 20px;
+    padding: 10px 0 10px 0;
+    margin: 10px 20% 0px 20%;
+}
+
+.form-control {
+    height: 200px;
+    font-size: 250%;
+    text-align: center;
+}
