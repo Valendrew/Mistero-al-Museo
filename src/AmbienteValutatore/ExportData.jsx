@@ -16,7 +16,7 @@ export default function ExportData(props) {
 		let header = [];
 		if (player !== 'classifica') {
 			header = ['Domanda', 'Risposta', 'Punteggio ottenuto'];
-			
+
 			let headerConfig = header.map(key => ({ name: key, prompt: key, width: 50, align: 'center', padding: 0 }));
 			let tableRows = [];
 			const result = await fetch(`/games/${player}/${props.storyID}/playerAnswers`);
@@ -35,7 +35,7 @@ export default function ExportData(props) {
 			}
 		} else {
 			header = ['Nome', 'Punteggio'];
-			let headerConfig = header.map(key => ({ name: key, prompt: key, width: 50, align: 'center', padding: 0}));
+			let headerConfig = header.map(key => ({ name: key, prompt: key, width: 50, align: 'center', padding: 0 }));
 
 			//Ordino i giocatori di questa storia in ordine decrescente in base al punteggio
 			const playerSorted = Object.entries(props.players).sort(
@@ -43,14 +43,14 @@ export default function ExportData(props) {
 			);
 
 			//Dato che ho sia la chiave che i valori tengo solo i valori
-			playerSorted.forEach((elem,index)=>{
-				playerSorted[index] = elem.slice(1,2);
+			playerSorted.forEach((elem, index) => {
+				playerSorted[index] = elem.slice(1, 2);
 			});
 
 			//In tableRows metto ciò che mi interessa
-			let tableRows=[];
-			playerSorted.forEach((elem, index)=>{
-				tableRows.push({'Nome': elem[0]['name'], 'Punteggio':(elem[0].status['score']).toString()});
+			let tableRows = [];
+			playerSorted.forEach((elem, index) => {
+				tableRows.push({ Nome: elem[0]['name'], Punteggio: elem[0].status['score'].toString() });
 			});
 
 			pdf.table(20, 30, tableRows, headerConfig);

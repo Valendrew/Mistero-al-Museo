@@ -39,7 +39,7 @@ router.get('/:playerId/:storyId/playerAnswers', async (req, res, next) => {
 	} catch (e) {
 		result = {};
 	}
-	res.send({answers:result[storyID][playerID].givenAnswer, name:result[storyID][playerID].name} || {});
+	res.send({ answers: result[storyID][playerID].givenAnswer || {}, name: result[storyID][playerID].name } || {});
 });
 
 const updateStatusPlayer = async (req, res, next) => {

@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
-import { ButtonGroup, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 
 import ExportData from './ExportData';
 import ShowRanking from './ShowRanking';
@@ -30,7 +30,6 @@ function PlayerList(props) {
 	);
 }
 function ListStories(props) {
-	console.log(props.id);
 	return (
 		<Accordion>
 			<Card>
@@ -51,9 +50,8 @@ function ListStories(props) {
 }
 
 function SideBar({ stories, players, setPlayer, setRanking }) {
-	console.log(stories);
 	return stories.map((value, key) => {
-		return !value.info.archived && value.info.qr ? (
+		return !value.info.archived && value.info.qr && Object.keys(players[key]).length ? (
 			<Row key={value.info.id}>
 				<Col sm={12}>
 					<ListStories

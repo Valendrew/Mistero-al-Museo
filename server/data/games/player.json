@@ -2,15 +2,63 @@
     "af6fb6c6-feff-410f-b619-79843f491aa1": {
         "eb809ef9-901b-4581-8762-496403869d62": {
             "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-11T12:08:59.709Z"
+                "activity": "end_game",
+                "dateActivity": "2021-01-11T13:12:51.445Z",
+                "score": 136
             },
             "info": {
                 "transition": 0,
                 "dateStart": "2021-01-11T12:08:59.709Z"
             },
-            "name": "player"
+            "name": "player",
+            "givenAnswer": {
+                "0": {
+                    "value": "Uccido una vecchietta",
+                    "score": "1",
+                    "question": "Come potrò ottenerli?"
+                },
+                "1": {
+                    "value": "Sì",
+                    "score": "20",
+                    "question": "Vuoi comprarla?"
+                },
+                "2": {
+                    "value": "6",
+                    "score": "30",
+                    "question": "quanto fa 2+2?"
+                },
+                "3": {
+                    "value": "si",
+                    "score": "20",
+                    "question": "Sei scemo?"
+                },
+                "4": {
+                    "value": "nnoooo",
+                    "score": "5",
+                    "question": "contento?"
+                },
+                "5": {
+                    "value": "andrea",
+                    "score": "3",
+                    "question": "Dai dimmi come ti chiami"
+                },
+                "6": {
+                    "value": "yes",
+                    "score": "10",
+                    "question": "lo sei?"
+                },
+                "7": {
+                    "value": "Tutankhamon",
+                    "score": "47",
+                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di..."
+                }
+            },
+            "answer": null,
+            "question": {
+                "value": "3",
+                "correct": true,
+                "answerPlayer": "andrea"
+            }
         }
     }
 }
