@@ -225,6 +225,11 @@ function MissionsTransitions() {
 		}
 
 		const newMissionsIndex = Object.keys(story.items).length;
+		await fetch(`/stories/${idStory}/missions`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ ...story.items, [newMissionsIndex]: newMissions })
+		});
 
 		setStory({ ...story, items: { ...story.items, [newMissionsIndex]: newMissions } });
 		setMissionsWithActs({ ...missionsWithActs, [newMissionsIndex]: newMissionsWithActs });

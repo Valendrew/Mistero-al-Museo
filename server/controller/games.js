@@ -26,7 +26,6 @@ router.get('/:id/players', async (req, res, next) => {
 	} catch (e) {
 		result = {};
 	}
-	console.log(result);
 	res.send(result[storyID] || {});
 });
 //Per ottenere tutte le risposte date dal giocatore
