@@ -8,8 +8,8 @@ import Chat from './Chat';
 import { useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 
-import './Style/style.css';/* Stile comune */
-import './Style/styleEgypt.css';/* Stile specifico, TODO: da includere diversamente */
+/*import styles from './Style/style.css'; Stile comune */
+/*import './Style/styleEgypt.css'; Stile specifico, TODO: da includere diversamente */
 
 function Story(props) {
 	const [currentStory, setCurrentStory] = useState();
