@@ -30,25 +30,18 @@ function PlayerList(props) {
 	);
 }
 function ListStories(props) {
+	console.log(props.id);
 	return (
 		<Accordion>
-			{console.log('PLAYERS: ')}
-			{console.log(props.players)}
-			<Card style={{ height: '100vh', overflowY: 'scroll' }}>
+			<Card>
 				<Accordion.Toggle as={Card.Header} variant='light' eventKey={props.id}>
 					{props.name}
 				</Accordion.Toggle>
-				<Accordion.Collapse eventKey={props.id}>
-					<Row className='m-2'>
-						<ButtonGroup>
-							<ExportData players={props.players} storyID={props.id} />
-							<ShowRanking setRanking={props.setRanking} />
-						</ButtonGroup>
-					</Row>
-				</Accordion.Collapse>
 
 				<Accordion.Collapse eventKey={props.id}>
 					<Card.Body>
+						<ExportData players={props.players} storyID={props.id} />
+						<ShowRanking setRanking={props.setRanking} />
 						<PlayerList {...props} />
 					</Card.Body>
 				</Accordion.Collapse>
@@ -58,8 +51,9 @@ function ListStories(props) {
 }
 
 function SideBar({ stories, players, setPlayer, setRanking }) {
+	console.log(stories);
 	return stories.map((value, key) => {
-		return (
+		return !value.info.archived && value.info.qr ? (
 			<Row key={value.info.id}>
 				<Col sm={12}>
 					<ListStories
@@ -71,7 +65,7 @@ function SideBar({ stories, players, setPlayer, setRanking }) {
 					/>
 				</Col>
 			</Row>
-		);
+		) : null;
 	});
 }
 export default SideBar;

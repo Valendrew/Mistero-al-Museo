@@ -28,6 +28,7 @@ router.get('/:id/players', async (req, res, next) => {
 	}
 	res.send(result[storyID] || {});
 });
+
 //Per ottenere tutte le risposte date dal giocatore
 router.get('/:playerId/:storyId/playerAnswers', async (req, res, next) => {
 	const playerID = req.params.playerId;

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
 
 import Story from './Story';
 import useInterval from '../../useInterval';
 import { Button, InputGroup, Row, Spinner } from 'react-bootstrap';
-import { nanoid } from 'nanoid';
 
 function getCurrentMission(activity, missions, transitions) {
 	return transitions.find(element => missions[element].hasOwnProperty(activity));

@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import SideBar from './SideBar';
 import PlayerInfo from './PlayerInfo';
 import useInterval from '../useInterval';
-import Ranking from './Ranking'
+import Ranking from './Ranking';
 
 function Valutatore() {
 	const [stories, setStories] = useState();
@@ -79,7 +79,6 @@ function Valutatore() {
 			const result = await fetch('/games/informations');
 			if (result.ok) {
 				result.json().then(data => {
-					console.log(data);
 					Object.entries(data).forEach(([key, value]) => {
 						updateStatus(value.story, key, value);
 					});
@@ -91,7 +90,7 @@ function Valutatore() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const storiesRequest = await fetch(`/stories`);
+			const storiesRequest = await fetch(`/stories/`);
 
 			if (!storiesRequest.ok)
 				setStories({
@@ -126,7 +125,6 @@ function Valutatore() {
 			const result = await fetch('/games/chatValutatore');
 			if (result.ok) {
 				result.json().then(data => {
-					console.log(data);
 					Object.entries(data).forEach(([key, value]) => {
 						updateStatus(value.story, key, value);
 					});
@@ -135,21 +133,17 @@ function Valutatore() {
 		},
 		isLoaded.loaded ? 5000 : null
 	);
+
 	return isLoaded.loaded ? (
 		isLoaded.error ? (
 			<h6>Errore caricamento</h6>
 		) : (
 			<Row>
-				<Col xs={4} lg={3}>
-					<SideBar
-						stories={stories}
-						players={players}
-						setPlayer={setPlayerDashboard}
-						setRanking={setShowRanking}
-					/>
+				<Col xs={4} lg={3} style={{ height: '100vh', overflowY: 'scroll' }}>
+					<SideBar stories={stories} players={players} setPlayer={setPlayerDashboard} setRanking={setShowRanking} />
 				</Col>
 				{showRanking ? (
-					<Ranking players={players}/>
+					<Ranking players={players} />
 				) : playerSelected ? (
 					<Col xs={8} lg={9}>
 						<PlayerInfo
