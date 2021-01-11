@@ -245,6 +245,174 @@
                     ]
                 }
             ]
+        },
+        "10": {
+            "name": "Inizio dell'avventura",
+            "storyline": [
+                [
+                    "text",
+                    "Tra le altre cose, l'antico egitto è ricordato per le sue grandi ricchezze. Le tombe dei faraoni erano ornate con gioielli e affreschi così che potessero portare con loro la ricchezza accumulata in vita.\nPer non lasciare quei prezziosi gioielli lì in eterno, decidi di andare a rubare qualche pietra prezziosa all'interno della tomba, non ancora chiusa dell'ultimo faraone. Ti travesti da sacerdote (gli unici che potevano entrare all'interno delle piramidi) e ti incammini verso la tua destinazione..."
+                ]
+            ],
+            "questions": []
+        },
+        "11": {
+            "name": "Un primo inghippo",
+            "storyline": [
+                [
+                    "img",
+                    "eb917858-7100-4657-b467-4d95658f5299",
+                    "jpeg",
+                    "Geroglifici egiziani che compongono il nome del faraone"
+                ],
+                [
+                    "img",
+                    "edba6469-a6df-462b-8077-318e69efcdde",
+                    "jpeg",
+                    "Alfabeto con geroglifi"
+                ],
+                [
+                    "text",
+                    "Arrivi all'ingresso della piramide e trovi un sacerdote che ti chiede perché sei lì."
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto.",
+                    "tips": [],
+                    "dinamicRating": true,
+                    "answers": [
+                        {
+                            "value": "Akhenaton",
+                            "correct": false,
+                            "transition": true,
+                            "score": "-10"
+                        },
+                        {
+                            "value": "Hatshepsut",
+                            "correct": false,
+                            "transition": false,
+                            "score": "-10"
+                        },
+                        {
+                            "value": "Tutankhamon",
+                            "correct": true,
+                            "transition": false,
+                            "score": "50"
+                        },
+                        {
+                            "value": "Hatshepsut",
+                            "correct": false,
+                            "transition": false,
+                            "score": "-10"
+                        }
+                    ]
+                }
+            ]
+        },
+        "12": {
+            "name": "Cerca di convincere il sacerdote!",
+            "storyline": [],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Il sacerdote si insospettisce e ti chiede di chi era figlio il faraone",
+                    "tips": [
+                        "Il faraone era considerato come una divinità... Presto cambia risposta prima che il sacerdote chiami le guardie!"
+                    ],
+                    "dinamicRating": true,
+                    "answers": [
+                        {
+                            "value": "Del Dio Ra",
+                            "correct": true,
+                            "transition": false,
+                            "score": "30"
+                        },
+                        {
+                            "value": "Di suo padre",
+                            "correct": false,
+                            "transition": false,
+                            "score": "-10"
+                        },
+                        {
+                            "value": "Del popolo",
+                            "correct": false,
+                            "transition": false,
+                            "score": "-10"
+                        }
+                    ]
+                }
+            ]
+        },
+        "13": {
+            "name": "Il dio del sole Ra",
+            "storyline": [
+                [
+                    "img",
+                    "0318ccbc-6a5f-4efb-a404-5f6ea6463ba0",
+                    "png",
+                    "Immagine raffigurante il Dio del sole Ra"
+                ],
+                [
+                    "text",
+                    "Esatto! Ra infatti era il Dio del sole e il faraone era considerato suo figlio."
+                ]
+            ],
+            "questions": []
+        },
+        "14": {
+            "name": "Porta uno o porta due?",
+            "storyline": [
+                [
+                    "img",
+                    "74848aa7-e6c7-4b06-bf97-a3d623bf22c5",
+                    "png",
+                    "Immagine di ammit, una bestia con la parte posteriore da ipopotamo, il busto di leone e la testa di coccodrillo."
+                ],
+                [
+                    "img",
+                    "f3ff8c70-c4c8-4860-9cd7-345026ffc8d9",
+                    "png",
+                    "Immagine del Dio anubi"
+                ],
+                [
+                    "text",
+                    "Il sacerdote decide di farti passare, entri in una stanza con due porte.\nSulla prima è raffigurato Ammit, una bestia con la parte posteriore da ipopotamo, il busto di leone e la testa di coccodrillo, nella seconda è raffigurato il Dio Anubi."
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Quale porta apri?",
+                    "tips": [],
+                    "dinamicRating": false,
+                    "answers": [
+                        {
+                            "value": "Porta con Ammit",
+                            "correct": true,
+                            "transition": true,
+                            "score": "-5"
+                        },
+                        {
+                            "value": "Porta con Anubi",
+                            "correct": true,
+                            "transition": false,
+                            "score": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        "15": {
+            "name": "Scappa!",
+            "storyline": [
+                [
+                    "text",
+                    "Apri la porta e ti trovi davanti dei serpenti velenosi, chiudi velocemente e, mentre riprendi fiato, ti ricordi che Ammit è la bestia che mangia il cuore e l'anima di coloro che in vita si sono comportati male non facendoli quindi accedere alla beatitudine. \nProsegui entrando nell'altra porta."
+                ]
+            ],
+            "questions": []
         }
     },
     "missions": {
@@ -298,22 +466,10 @@
     },
     "transitions": [
         [
+            "0",
+            "2",
             "3",
-            "0",
-            "1",
-            "2"
-        ],
-        [
-            "0",
-            "1",
-            "2",
-            "3"
-        ],
-        [
-            "0",
-            "2",
-            "1",
-            "3"
+            "1"
         ]
     ]
 }

@@ -26,7 +26,7 @@ const methods = {
 		} catch (e) {
 			await promiseMkdir(dirPath, { recursive: true });
 		}
-		return promiseWrite(dataPath, JSON.stringify(data, null, json_spaces), encoding);
+		return promiseWrite(dataPath, JSON.stringify(data, null, json_spaces), { encoding: encoding, flag: 'w' });
 	},
 
 	readAll: async function readFilesInFolder(dirPath, encoding = 'utf-8') {
