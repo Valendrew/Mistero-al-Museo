@@ -1,0 +1,242 @@
+{
+    "info": {
+        "name": "testone",
+        "description": "cio",
+        "id": "47209a22-ba82-4695-af35-1be0d8ee25b3",
+        "qr": "http://localhost:3000/player/47209a22-ba82-4695-af35-1be0d8ee25b3"
+    },
+    "activities": {
+        "0": {
+            "name": "3",
+            "storyline": [
+                [
+                    "text",
+                    "erer"
+                ]
+            ],
+            "questions": []
+        },
+        "1": {
+            "name": "34",
+            "storyline": [
+                [
+                    "text",
+                    "43"
+                ]
+            ],
+            "questions": []
+        },
+        "2": {
+            "name": "34",
+            "storyline": [
+                [
+                    "text",
+                    "56"
+                ]
+            ],
+            "questions": []
+        },
+        "3": {
+            "name": "56",
+            "storyline": [
+                [
+                    "text",
+                    "56"
+                ]
+            ],
+            "questions": []
+        },
+        "4": {
+            "name": "56",
+            "storyline": [
+                [
+                    "text",
+                    "56"
+                ]
+            ],
+            "questions": []
+        },
+        "5": {
+            "name": "67",
+            "storyline": [
+                [
+                    "text",
+                    "67"
+                ]
+            ],
+            "questions": []
+        },
+        "6": {
+            "name": "54",
+            "storyline": [
+                [
+                    "text",
+                    "65"
+                ]
+            ],
+            "questions": []
+        },
+        "7": {
+            "name": "78",
+            "storyline": [
+                [
+                    "text",
+                    "87"
+                ]
+            ],
+            "questions": []
+        },
+        "8": {
+            "name": "46",
+            "storyline": [
+                [
+                    "text",
+                    "546"
+                ]
+            ],
+            "questions": []
+        },
+        "9": {
+            "name": "5675",
+            "storyline": [
+                [
+                    "text",
+                    "tryty"
+                ]
+            ],
+            "questions": []
+        },
+        "10": {
+            "name": "Porta uno o porta due?",
+            "storyline": [
+                [
+                    "img",
+                    "74848aa7-e6c7-4b06-bf97-a3d623bf22c5",
+                    "png",
+                    "Immagine di ammit, una bestia con la parte posteriore da ipopotamo, il busto di leone e la testa di coccodrillo."
+                ],
+                [
+                    "img",
+                    "f3ff8c70-c4c8-4860-9cd7-345026ffc8d9",
+                    "png",
+                    "Immagine del Dio anubi"
+                ],
+                [
+                    "text",
+                    "Il sacerdote decide di farti passare, entri in una stanza con due porte.\nSulla prima è raffigurato Ammit, una bestia con la parte posteriore da ipopotamo, il busto di leone e la testa di coccodrillo, nella seconda è raffigurato il Dio Anubi."
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Quale porta apri?",
+                    "tips": [],
+                    "dinamicRating": false,
+                    "answers": [
+                        {
+                            "value": "Porta con Ammit",
+                            "correct": true,
+                            "transition": true,
+                            "score": "-5"
+                        },
+                        {
+                            "value": "Porta con Anubi",
+                            "correct": true,
+                            "transition": false,
+                            "score": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        "11": {
+            "name": "Porta uno o porta due?",
+            "storyline": [
+                [
+                    "img",
+                    "74848aa7-e6c7-4b06-bf97-a3d623bf22c5",
+                    "png",
+                    "Immagine di ammit, una bestia con la parte posteriore da ipopotamo, il busto di leone e la testa di coccodrillo."
+                ],
+                [
+                    "img",
+                    "f3ff8c70-c4c8-4860-9cd7-345026ffc8d9",
+                    "png",
+                    "Immagine del Dio anubi"
+                ],
+                [
+                    "text",
+                    "Il sacerdote decide di farti passare, entri in una stanza con due porte.\nSulla prima è raffigurato Ammit, una bestia con la parte posteriore da ipopotamo, il busto di leone e la testa di coccodrillo, nella seconda è raffigurato il Dio Anubi."
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Quale porta apri?",
+                    "tips": [],
+                    "dinamicRating": false,
+                    "answers": [
+                        {
+                            "value": "Porta con Ammit",
+                            "correct": true,
+                            "transition": true,
+                            "score": "-5"
+                        },
+                        {
+                            "value": "Porta con Anubi",
+                            "correct": true,
+                            "transition": false,
+                            "score": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        "12": {
+            "name": "Scappa!",
+            "storyline": [
+                [
+                    "text",
+                    "Apri la porta e ti trovi davanti dei serpenti velenosi, chiudi velocemente e, mentre riprendi fiato, ti ricordi che Ammit è la bestia che mangia il cuore e l'anima di coloro che in vita si sono comportati male non facendoli quindi accedere alla beatitudine. \nProsegui entrando nell'altra porta."
+                ]
+            ],
+            "questions": []
+        }
+    },
+    "missions": {
+        "0": {
+            "0": [
+                "1"
+            ],
+            "1": [
+                "2"
+            ],
+            "2": [
+                "3"
+            ],
+            "3": [
+                "4"
+            ],
+            "4": [
+                "new_mission"
+            ],
+            "start": "0"
+        },
+        "1": {
+            "11": [
+                "new_mission",
+                12
+            ],
+            "12": [
+                "new_mission"
+            ],
+            "start": 11
+        }
+    },
+    "transitions": [
+        [
+            "0",
+            "1"
+        ]
+    ]
+}

@@ -311,6 +311,12 @@
             "start": "6"
         }
     },
+    "finalMessages": {
+        "0": {
+            "message": "rfgrfrfrfgh",
+            "score": "7"
+        }
+    },
     "transitions": [
         [
             "0",

@@ -89,13 +89,13 @@ function ActivityCards(props) {
 	);
 }
 
-function MissionsTransitions() {
+function MissionsTransitions(props) {
 	let history = useHistory();
 	const idStory = history.location.state.idStory;
 
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: {} });
 	const [missions, setMissions] = useState([]);
-	const [transitions, setTransitions] = useState([[]]);
+	
 	const [input, setInput] = useState();
 
 	const [missionsWithActs, setMissionsWithActs] = useState({});
@@ -148,10 +148,10 @@ function MissionsTransitions() {
 
 	const handleSubmit = (e, index) => {
 		e.preventDefault();
-		let newTransitions = [...transitions];
+		let newTransitions = [...props.transitions];
 		let newTransition = [...newTransitions[index], input];
 		newTransitions[index] = newTransition;
-		setTransitions(newTransitions);
+		props.setTransitions(newTransitions);
 		setMissions(missions.filter(val => input !== val));
 	};
 
@@ -162,19 +162,7 @@ function MissionsTransitions() {
 	const resetMissions = e => {
 		e.preventDefault();
 		setMissions(Object.keys(story.items));
-		setTransitions(transitions.concat([[]]));
-	};
-
-	const createStory = () => {
-		fetch(`/stories/${idStory}/transitions`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(transitions)
-		})
-			.then(response => {
-				history.push(`overview`, { idStory: idStory });
-			})
-			.catch(console.log);
+		props.setTransitions(props.transitions.concat([[]]));
 	};
 
 	const handleCloseModal = () => {
@@ -302,7 +290,7 @@ function MissionsTransitions() {
 							</Modal>
 						</Row>
 						<Row>
-							{transitions.map((value, key) => {
+							{props.transitions.map((value, key) => {
 								return (
 									<TransitionsListGroup
 										transition={value}
@@ -312,7 +300,7 @@ function MissionsTransitions() {
 										missions={missions}
 										handleSelect={handleSelect}
 										handleSubmit={handleSubmit}
-										maxTransitions={transitions.length - 1}
+										maxTransitions={props.transitions.length - 1}
 									/>
 								);
 							})}
@@ -322,9 +310,6 @@ function MissionsTransitions() {
 							<Col>
 								{missions.length ? null : (
 									<>
-										<Button variant='primary' onClick={createStory}>
-											Crea storia
-										</Button>
 										<Button variant='primary' onClick={resetMissions}>
 											Aggiungi altra transizione parallela
 										</Button>

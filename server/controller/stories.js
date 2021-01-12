@@ -170,6 +170,15 @@ router.post(
 );
 
 router.post(
+	'/:id/finalMessages',
+	(req, res, next) => {
+		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'finalMessages' };
+		next();
+	},
+	postHandler
+);
+
+router.post(
 	'/:id/qrcode',
 	async (req, res, next) => {
 		const storyCode = req.params.id;

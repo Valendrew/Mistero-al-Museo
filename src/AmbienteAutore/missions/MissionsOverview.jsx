@@ -21,11 +21,11 @@ function MissionsOverview() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			fetch(`/stories/`)
-				.then(result => result.json())
-				.then(data => {
-					setImportedStories({ items: data.filter(value => value.activities && value.info.id !== idStory) });
-				});
+			let resultImport = await fetch(`/stories/`);
+			if(resultImport.ok){
+				let dataImport = await resultImport.json();
+				setImportedStories({ items: dataImport.filter(value => value.activities && value.info.id !== idStory)});
+			}
 
 			let result = await fetch(`/stories/${idStory}/activities`);
 			if (!result.ok) setStory({ isLoaded: true, error: result.statusText });
@@ -109,15 +109,13 @@ function MissionsOverview() {
 							</Modal.Header>
 							<Modal.Body>
 								<Tabs defaultActiveKey='0' id='uncontrolled-tab-example'>
-									{console.log("importedStories\n")}
-									{console.log(importedStories.items)}
 									{importedStories.items
 										? importedStories.items.map((value, key) => (
-												<Tab eventKey={key} title={value.info.name}>
+												<Tab eventKey={key} title={value.info.name} key={key}>
 													<ListGroup variant='flush'>
 														{Object.entries(value.activities).map(([numberAct, value]) => {
 															return (
-																<ListGroup.Item>
+																<ListGroup.Item key={`${key}_${numberAct}`}>
 																	<Button onClick={() => handleImport(key, numberAct)}>{value.name}</Button>
 																</ListGroup.Item>
 															);

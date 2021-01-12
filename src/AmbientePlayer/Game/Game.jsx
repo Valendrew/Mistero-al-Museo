@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Story from './Story';
 import useInterval from '../../useInterval';
 import { Button, InputGroup, Row, Spinner } from 'react-bootstrap';
-
+import EndGame from './EndGame'
 function getCurrentMission(activity, missions, transitions) {
 	return transitions.find(element => missions[element].hasOwnProperty(activity));
 }
@@ -240,7 +240,7 @@ function Game() {
 				isLoaded.error ? (
 					<h6>Errore nel caricamento</h6>
 				) : informations.player.status.activity === 'end_game' ? (
-					<h6>Ha terminato la partita, chiudi la finestra del browser</h6>
+					<EndGame finalMessages={informations.story.finalMessages} playerScore={informations.player.status.score}/>
 				) : (
 					<Story
 						player={informations.player}
