@@ -1,60 +1,122 @@
-import React from 'react';
-import { Form, Row, Col, Container } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Row, Col, Container, InputGroup } from 'react-bootstrap';
 
-function setScore(e, message, setMessage, index, key) {
-	let obj = message;
-	if (obj.hasOwnProperty(index)) {
-		obj[index][key] = e.target.value;
-	} else {
-		obj = { ...obj, [index]: { [key]: e.target.value } };
-	}
-	setMessage(obj);
+function InputMessage(props) {
+	return (
+		<Col xs={4}>
+			<InputGroup>
+				<InputGroup.Prepend>
+					<InputGroup.Text>Messaggio:</InputGroup.Text>
+				</InputGroup.Prepend>
+
+				<Form.Control
+					value={props.inputs[`message_${props.id}`] || ''}
+					onChange={e => props.setScore(e, props.id, 'message')}
+				/>
+			</InputGroup>
+		</Col>
+	);
 }
 
 function FinalMessages(props) {
+	const [inputs, setInputs] = useState({ score_0: 0, score_1: 1 });
+
+	const setScore = (e, index, key) => {
+		let newFinalMsgs = { ...props.finalMessages };
+		let newInputs = {};
+
+		const addToFinalMsgs = (i, value) => {
+			if (newFinalMsgs.hasOwnProperty(i)) {
+				newFinalMsgs[i][key] = value;
+			} else {
+				newFinalMsgs = { ...newFinalMsgs, [i]: { [key]: value } };
+			}
+		};
+
+		if (index === 0 && key === 'score' && parseInt(e.target.value) >= parseInt(inputs['score_1'])) {
+			const nextValue = (parseInt(e.target.value) + 1).toString();
+
+			newInputs = { [`${key}_1`]: nextValue };
+			addToFinalMsgs(1, nextValue);
+		}
+		if (index === 1 && key === 'score' && parseInt(e.target.value) <= parseInt(inputs['score_0'])) {
+			const prevValue = (parseInt(e.target.value) - 1).toString();
+
+			newInputs = { [`${key}_0`]: prevValue };
+			addToFinalMsgs(1, prevValue);
+		}
+
+		newInputs = { ...newInputs, [`${key}_${index}`]: e.target.value };
+		setInputs({ ...inputs, ...newInputs });
+
+		addToFinalMsgs(index, e.target.value);
+		props.setFinalMessages(newFinalMsgs);
+	};
+
 	return (
-		<Container fluid>
-			<Form  className="mt-3 ml-3 mb-3">
-				<Row>
-					<Form.Label>Messeggio Conclusivo il giocatore ha fatto meno di </Form.Label>
+		<>
+			<Row className='my-4'>
+				<InputGroup>
+					<InputGroup.Prepend>
+						<Form.Label style={{ display: 'flex', alignItems: 'center' }}>Se il giocatore ha ottenuto un punteggio inferiore a </Form.Label>
+					</InputGroup.Prepend>
 					<Col xs={1}>
 						<Form.Control
 							type='number'
-							onChange={e => setScore(e, props.finalMessages, props.setFinalMessages, 0, 'score')}
+							defaultValue={0}
+							min={0}
+							value={inputs['score_0'] || 0}
+							onChange={e => setScore(e, 0, 'score')}
 						/>
 					</Col>
-					<Form.Label> punti (giocatore non bravo)</Form.Label>
-				</Row>
-				<Row>
-					<Col xs={4}>
-						<Form.Control onChange={e => setScore(e, props.finalMessages, props.setFinalMessages, 0, 'message')} />
-					</Col>
-				</Row>
-				<Row>
-					<Form.Label>Messeggio Conclusivo il giocatore ha fatto meno di </Form.Label>
+					<InputGroup.Append>
+						<Form.Label style={{ display: 'flex', alignItems: 'center' }}> punti (giocatore non bravo)</Form.Label>
+					</InputGroup.Append>
+				</InputGroup>
+			</Row>
+
+			<Row className='mb-4'>
+				<InputMessage inputs={inputs} setScore={setScore} id={0} />
+			</Row>
+
+			<Row className='mb-4'>
+				<InputGroup>
+					<InputGroup.Prepend>
+						<Form.Label style={{ display: 'flex', alignItems: 'center' }}>
+							Se il giocatore ha ottenuto un punteggio compreso tra {inputs['score_0'] || 0} e
+						</Form.Label>
+					</InputGroup.Prepend>
+
 					<Col xs={1}>
 						<Form.Control
 							type='number'
-							onChange={e => setScore(e, props.finalMessages, props.setFinalMessages, 1, 'score')}
+							defaultValue={1}
+							min={1}
+							value={inputs['score_1'] || 1}
+							onChange={e => setScore(e, 1, 'score')}
 						/>
 					</Col>
-					<Form.Label> punti (giocatore bravo)</Form.Label>
-				</Row>
-				<Row>
-					<Col xs={4}>
-						<Form.Control onChange={e => setScore(e, props.finalMessages, props.setFinalMessages, 1, 'message')} />
-					</Col>
-				</Row>
-				<Row>
-					<Form.Label>Messeggio conclusivo se il giocstore ha giocato benissimo</Form.Label>
-				</Row>
-				<Row>
-					<Col xs={4}>
-						<Form.Control onChange={e => setScore(e, props.finalMessages, props.setFinalMessages, 2, 'message')} />
-					</Col>
-				</Row>
-			</Form>
-		</Container>
+
+					<InputGroup.Append>
+						<Form.Label style={{ display: 'flex', alignItems: 'center' }}> punti (giocatore bravo)</Form.Label>
+					</InputGroup.Append>
+				</InputGroup>
+			</Row>
+
+			<Row className='mb-4'>
+				<InputMessage inputs={inputs} setScore={setScore} id={1} />
+			</Row>
+
+			<Row className='mb-4'>
+				<Form.Label style={{ display: 'flex', alignItems: 'center' }}>
+					Se il giocatore ha ottenuto un punteggio superiore a {inputs['score_1'] || 1} (ha giocato benissimo)
+				</Form.Label>
+			</Row>
+
+			<Row>
+				<InputMessage inputs={inputs} setScore={setScore} id={2} />
+			</Row>
+		</>
 	);
 }
 

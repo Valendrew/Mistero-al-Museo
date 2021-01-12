@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { DropdownButton, InputGroup, ButtonGroup, Dropdown, Row, Col } from 'react-bootstrap';
 
 const createNodes = (activities, missions) => {
 	return Object.keys(activities)
@@ -85,62 +86,77 @@ function StoryGraph({ story, transitions, index }) {
 	}, [story, transitions]);
 
 	return (
-		<Card>
-			<Card.Header>Grafo delle storie (Transizione {index})</Card.Header>
-			<Card.Body>
-				<div style={{ height: '400px' }} ref={domNode} />
-			</Card.Body>
-		</Card>
+		<Row className='my-4'>
+			<Col>
+				<Card>
+					<Card.Header>Grafo delle storie (Transizione {index})</Card.Header>
+					<Card.Body>
+						<div style={{ height: '400px' }} ref={domNode} />
+					</Card.Body>
+				</Card>
+			</Col>
+		</Row>
 	);
 }
 
 function StoryQRCode(props) {
 	return (
-		<Card>
-			<Card.Header>QRCode</Card.Header>
-			{props.value ? (
-				<>
-					<Card.Body>
-						<QRCode value={props.value} />
-						<a href={props.value}>Vai alla storia</a>
-					</Card.Body>
-					<Card.Footer>
-						<Button variant='primary' onClick={props.removeQRCode}>
-							Ritira
-						</Button>
-					</Card.Footer>
-				</>
-			) : (
-				<Card.Body>
-					<Button variant='primary' onClick={props.generateQRCode}>
-						Genera QRCode
-					</Button>
-				</Card.Body>
-			)}
-		</Card>
+		<Row className='my-4'>
+			<Col>
+				<Card>
+					<Card.Header>QRCode</Card.Header>
+					{props.value ? (
+						<>
+							<Card.Body>
+								<QRCode value={props.value} />
+								<a href={props.value}>Vai alla storia</a>
+							</Card.Body>
+							<Card.Footer>
+								<Button variant='primary' onClick={props.removeQRCode}>
+									Ritira
+								</Button>
+							</Card.Footer>
+						</>
+					) : (
+						<Card.Body>
+							<Button variant='primary' onClick={props.generateQRCode}>
+								Genera QRCode
+							</Button>
+						</Card.Body>
+					)}
+				</Card>
+			</Col>
+		</Row>
 	);
 }
 
 function StoryPropertyCard(props) {
 	return (
-		<Card>
-			<Card.Header>{props.title}</Card.Header>
-			<Form onSubmit={e => props.onSubmit(e, props.inputName)}>
-				<Card.Body>
-					<Form.Control
-						value={props.input || ''}
-						as={props.as}
-						type='text'
-						rows='5'
-						onChange={e => props.onChange(e.target.value, props.inputName)}></Form.Control>
-				</Card.Body>
-				<Card.Footer>
-					<Button variant='primary' type='submit'>
-						Modifica
-					</Button>
-				</Card.Footer>
-			</Form>
-		</Card>
+		<Row className='my-4'>
+			<Col>
+				<Card>
+					<Card.Header>{props.title}</Card.Header>
+					<Form onSubmit={e => props.onSubmit(e, props.inputName)}>
+						<Card.Body>
+							<InputGroup>
+								<Form.Control
+									value={props.input || ''}
+									as={props.as}
+									type='text'
+									rows='4'
+									onChange={e => props.onChange(e.target.value, props.inputName)}
+								/>
+								<InputGroup.Append>
+									<Button variant='primary' type='submit'>
+										Modifica
+									</Button>
+								</InputGroup.Append>
+							</InputGroup>
+						</Card.Body>
+					</Form>
+				</Card>
+			</Col>
+		</Row>
 	);
 }
 
@@ -236,6 +252,7 @@ function StoryOverview() {
 		if (!result.ok) console.log(result.statusText);
 		else history.replace('/autore');
 	};
+
 	return (
 		<Container>
 			{story.isLoaded ? (
@@ -259,45 +276,57 @@ function StoryOverview() {
 							onSubmit={onSubmit}
 							onChange={(value, name) => setInputs({ ...inputs, [name]: value })}
 						/>
-						<Button name='deleteStory' variant='danger' onClick={handleDeleteStory}>
-							Elimina la storia
-						</Button>
-						{story.items.activities && Object.keys(story.items.activities).length >= 10 ? (
+
+						{storyCompleted && Object.keys(story.items.activities).length >= 10 ? (
 							<>
-								{story.items.activities ? (
-									<Button name='activities' onClick={handleEditStory}>
-										Modifica attività
-									</Button>
-								) : null}
-								{story.items.missions ? (
-									<Button name='missions' onClick={handleEditStory}>
-										Modifica missioni
-									</Button>
-								) : null}
-								{storyCompleted ? (
-									<>
-										<Button name='transitions' onClick={handleEditStory}>
-											Modifica impostazioni della storia
-										</Button>
-										<Button name='duplicateStory' onClick={handleDuplicateStory}>
-											Crea una copia della storia
-										</Button>
-										<StoryQRCode
-											value={story.items.info.qr}
-											removeQRCode={removeQRCode}
-											generateQRCode={generateQRCode}
-										/>
-										{story.items.transitions.map((value, key) => (
-											<StoryGraph key={key} index={key} story={story.items} transitions={value} />
-										))}
-									</>
-								) : null}
+								<StoryQRCode value={story.items.info.qr} removeQRCode={removeQRCode} generateQRCode={generateQRCode} />
+								{story.items.transitions.map((value, key) => (
+									<StoryGraph key={key} index={key} story={story.items} transitions={value} />
+								))}
 							</>
-						) : (
-							<Button name='retrieveStory' onClick={handleRetrieveStory}>
-								Continua a creare la storia
-							</Button>
-						)}
+						) : null}
+
+						<Row>
+							{story.items.activities && Object.keys(story.items.activities).length >= 10 ? (
+								<Col className='d-flex justify-content-start'>
+									<ButtonGroup>
+										<DropdownButton as={ButtonGroup} title='Modifica storia'>
+											<Dropdown.Item eventKey='1' name='activities' onClick={handleEditStory}>
+												Modifica attività
+											</Dropdown.Item>
+											<Dropdown.Item eventKey='2' name='missions' onClick={handleEditStory}>
+												Modifica missioni
+											</Dropdown.Item>
+											{storyCompleted ? (
+												<>
+													<Dropdown.Item eventKey='3' name='transitions' onClick={handleEditStory}>
+														Modifica impostazioni della storia
+													</Dropdown.Item>
+												</>
+											) : null}
+										</DropdownButton>
+									</ButtonGroup>
+								</Col>
+							) : (
+								<Col className='d-flex justify-content-start'>
+									<Button name='retrieveStory' onClick={handleRetrieveStory}>
+										Continua a creare la storia
+									</Button>
+								</Col>
+							)}
+							<Col className='d-flex justify-content-end'>
+								<ButtonGroup>
+									<DropdownButton as={ButtonGroup} title='Gestisci storia'>
+										<Dropdown.Item eventKey='1' name='duplicateStory' onClick={handleDuplicateStory}>
+											Crea una copia della storia
+										</Dropdown.Item>
+										<Dropdown.Item eventKey='2' name='deleteStory' onClick={handleDeleteStory}>
+											Elimina la storia
+										</Dropdown.Item>
+									</DropdownButton>
+								</ButtonGroup>
+							</Col>
+						</Row>
 					</>
 				)
 			) : (

@@ -1,0 +1,8 @@
+#widget {
+	background: transparent;
+}
+
+textarea:focus {
+    outline: none;
+    background: transparent;
+}

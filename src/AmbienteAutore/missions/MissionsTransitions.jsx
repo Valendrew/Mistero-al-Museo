@@ -7,53 +7,64 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Nav, Tab, Modal, Tabs } from 'react-bootstrap';
+import { Nav, Tab, Modal, Tabs, InputGroup, Card, ButtonGroup } from 'react-bootstrap';
 
 import ActivityCard from './ActivityCard';
 
 function SelectMission(props) {
 	return (
 		<Form onSubmit={e => props.handleSubmit(e, props.index)}>
-			<Form.Group>
-				<Col>
-					<Form.Group as='select' name='mission' value={props.input} onChange={e => props.handleSelect(e)}>
-						{props.missions.map((value, key) => {
-							return (
-								<option key={key} value={value}>
-									Missione {value}
-								</option>
-							);
-						})}
-					</Form.Group>
-				</Col>
-				<Col>
+			<InputGroup>
+				<Form.Control as='select' name='mission' value={props.input} onChange={e => props.handleSelect(e)}>
+					{props.missions.map((value, key) => {
+						return (
+							<option key={key} value={value}>
+								Missione {value}
+							</option>
+						);
+					})}
+				</Form.Control>
+				<InputGroup.Append>
 					<Button variant='success' type='submit'>
 						Procedi
 					</Button>
-				</Col>
-			</Form.Group>
+				</InputGroup.Append>
+			</InputGroup>
 		</Form>
 	);
 }
 
 function TransitionsListGroup(props) {
 	return (
-		<Col>
-			<ListGroup variant='flush'>
-				<h6>Transizione {props.index}</h6>
-				{props.transition.map(val => {
-					return <ListGroup.Item key={val}>Missione {val}</ListGroup.Item>;
-				})}
-				{props.index === props.maxTransitions && props.missions.length ? (
-					<SelectMission
-						index={props.index}
-						input={props.input}
-						missions={props.missions}
-						handleSelect={props.handleSelect}
-						handleSubmit={props.handleSubmit}
-					/>
-				) : null}
-			</ListGroup>
+		<Col className='mb-2'>
+			<Card>
+				<Card.Header>Transizione {props.index}</Card.Header>
+				<Card.Body>
+					{props.index === props.maxTransitions && props.missions.length ? (
+						<Row className='mb-4'>
+							<Col xs={12}>
+								<SelectMission
+									index={props.index}
+									input={props.input}
+									missions={props.missions}
+									handleSelect={props.handleSelect}
+									handleSubmit={props.handleSubmit}
+								/>
+							</Col>
+						</Row>
+					) : null}
+
+					<Row className='row-cols-2 row-cols-sm-3 row-cols-xl-4'>
+						{props.transition.map((val, i) => {
+							return (
+								<Col key={val} className='text-nowrap'>
+									Missione {val} {i < props.transition.length - 1 ? '→' : null}
+								</Col>
+							);
+						})}
+					</Row>
+				</Card.Body>
+			</Card>
 		</Col>
 	);
 }
@@ -70,7 +81,7 @@ function ActivityCards(props) {
 	return (
 		<Row
 			style={{
-				overflowX: 'auto',
+				overflowX: 'scroll',
 				whiteSpace: 'nowrap',
 				display: 'block'
 			}}>
@@ -95,7 +106,7 @@ function MissionsTransitions(props) {
 
 	const [story, setStory] = useState({ error: null, isLoaded: false, items: {} });
 	const [missions, setMissions] = useState([]);
-	
+
 	const [input, setInput] = useState();
 
 	const [missionsWithActs, setMissionsWithActs] = useState({});
@@ -228,101 +239,103 @@ function MissionsTransitions(props) {
 		setShowImport(false);
 	};
 
-	return (
-		<Container fluid>
-			{story.isLoaded ? (
-				story.error ? (
-					<h5>Errore nel caricamento, riprovare</h5>
-				) : (
-					<>
-						<Tab.Container defaultActiveKey='0'>
-							<Row>
-								<Col sm={3}>
-									<Nav variant='pills' className='flex-column'>
-										{Object.keys(missionsWithActs).map(value => {
+	return story.isLoaded ? (
+		story.error ? (
+			<h5>Errore nel caricamento, riprovare</h5>
+		) : (
+			<>
+				<Row className='my-4'>
+					<Col xs={12}>
+						<Card>
+							<Card.Header>Scegli l'ordine in cui le missioni compariranno nella storia</Card.Header>
+							<Card.Body>
+								<Row className='row-cols-1 row-cols-lg-2'>
+									{props.transitions.map((value, key) => {
+										return (
+											<TransitionsListGroup
+												transition={value}
+												key={key}
+												index={key}
+												input={input}
+												missions={missions}
+												handleSelect={handleSelect}
+												handleSubmit={handleSubmit}
+												maxTransitions={props.transitions.length - 1}
+											/>
+										);
+									})}
+								</Row>
+							</Card.Body>
+						</Card>
+					</Col>
+				</Row>
+
+				<Row className='mb-4'>
+					<ButtonGroup>
+						<Button onClick={() => setShowImport(true)}>Importa missioni da altre storie</Button>
+
+						{missions.length ? null : (
+							<Button variant='primary' onClick={resetMissions}>
+								Aggiungi altra transizione parallela
+							</Button>
+						)}
+					</ButtonGroup>
+				</Row>
+
+				<Tab.Container defaultActiveKey='0'>
+					<Row>
+						<Col sm={3} style={{ overflowY: 'scroll' }}>
+							<Nav variant='pills' className='flex-column'>
+								{Object.keys(missionsWithActs).map(value => {
+									return (
+										<Nav.Item key={value}>
+											<Nav.Link eventKey={value}>Missione {value}</Nav.Link>
+										</Nav.Item>
+									);
+								})}
+							</Nav>
+						</Col>
+
+						<Col sm={9}>
+							<Tab.Content>
+								{Object.entries(missionsWithActs).map(([key, value]) => {
+									return (
+										<Tab.Pane key={key} eventKey={key}>
+											<ActivityCards activities={value} />
+										</Tab.Pane>
+									);
+								})}
+							</Tab.Content>
+						</Col>
+					</Row>
+				</Tab.Container>
+
+				<Modal dialogClassName='modal-lg' show={showImport} onHide={handleCloseModal}>
+					<Modal.Header closeButton>
+						<Modal.Title>Importa attività</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<Tabs defaultActiveKey='0' id='uncontrolled-tab-example'>
+							{importedStories.map((value, key) => (
+								<Tab key={key} eventKey={key} title={value.info.name}>
+									<ListGroup variant='flush'>
+										{Object.entries(value.missions).map(([numberMis, value]) => {
 											return (
-												<Nav.Item key={value}>
-													<Nav.Link eventKey={value}>Missione {value}</Nav.Link>
-												</Nav.Item>
+												<ListGroup.Item key={numberMis}>
+													<Button onClick={() => handleImport(key, numberMis)}>Missione {numberMis}</Button>
+												</ListGroup.Item>
 											);
 										})}
-									</Nav>
-								</Col>
-
-								<Col sm={9}>
-									<Tab.Content>
-										{Object.entries(missionsWithActs).map(([key, value]) => {
-											return (
-												<Tab.Pane key={key} eventKey={key}>
-													<ActivityCards activities={value} />
-												</Tab.Pane>
-											);
-										})}
-									</Tab.Content>
-								</Col>
-							</Row>
-						</Tab.Container>
-						<Row>
-							<h5>Crea transizioni per le missioni</h5>
-							<Button onClick={() => setShowImport(true)}>Importa missioni da altre storie</Button>
-
-							<Modal show={showImport} onHide={handleCloseModal}>
-								<Modal.Header closeButton>
-									<Modal.Title>Importa attività</Modal.Title>
-								</Modal.Header>
-								<Modal.Body>
-									<Tabs defaultActiveKey='0' id='uncontrolled-tab-example'>
-										{importedStories.map((value, key) => (
-											<Tab key={key} eventKey={key} title={value.info.name}>
-												<ListGroup variant='flush'>
-													{Object.entries(value.missions).map(([numberMis, value]) => {
-														return (
-															<ListGroup.Item key={numberMis}>
-																<Button onClick={() => handleImport(key, numberMis)}>Missione {numberMis}</Button>
-															</ListGroup.Item>
-														);
-													})}
-												</ListGroup>
-											</Tab>
-										))}
-									</Tabs>
-								</Modal.Body>
-							</Modal>
-						</Row>
-						<Row>
-							{props.transitions.map((value, key) => {
-								return (
-									<TransitionsListGroup
-										transition={value}
-										key={key}
-										index={key}
-										input={input}
-										missions={missions}
-										handleSelect={handleSelect}
-										handleSubmit={handleSubmit}
-										maxTransitions={props.transitions.length - 1}
-									/>
-								);
-							})}
-						</Row>
-
-						<Row>
-							<Col>
-								{missions.length ? null : (
-									<>
-										<Button variant='primary' onClick={resetMissions}>
-											Aggiungi altra transizione parallela
-										</Button>
-									</>
-								)}
-							</Col>
-						</Row>
-					</>
-				)
-			) : (
-				<h5>Loading</h5>
-			)}
-		</Container>
+									</ListGroup>
+								</Tab>
+							))}
+						</Tabs>
+					</Modal.Body>
+				</Modal>
+			</>
+		)
+	) : (
+		<h5>Loading</h5>
 	);
 }
 export default MissionsTransitions;

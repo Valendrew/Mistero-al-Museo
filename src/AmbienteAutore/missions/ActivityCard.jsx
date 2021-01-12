@@ -27,7 +27,6 @@ function ActivityListItem({ value }) {
 		<ListGroup.Item>
 			{isLoaded ? (
 				<>
-					{value[0]} :
 					{value[0] === 'img' ? (
 						<Image src={mediaURL} thumbnail fluid />
 					) : value[0] === 'video' ? (

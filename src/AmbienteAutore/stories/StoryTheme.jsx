@@ -1,6 +1,9 @@
 import React from 'react';
 import { Card, Col, Form, ListGroup, Row, Tab } from 'react-bootstrap';
 
+import './Text.css';
+import Papiro from './Papyrus-psd26583.png';
+
 function ThemePreviewNature() {
 	return (
 		<>
@@ -36,6 +39,21 @@ function ThemePreviewNature() {
 	);
 }
 
+function ThemePreview() {
+	const style = {
+		backgroundImage: `url(${Papiro})`,
+		backgroundRepeat: 'no-repeat',
+		backgroundSize: '100% 100%',
+		padding: '12%'
+	};
+
+	return (
+		<Col xs={6} style={style}>
+			<Form.Control as='textarea' id='widget' rows={14} />
+		</Col>
+	);
+}
+
 function StoryTheme() {
 	return (
 		<Row>
@@ -61,7 +79,9 @@ function StoryTheme() {
 										<Tab.Pane eventKey='link1'>
 											<ThemePreviewNature />
 										</Tab.Pane>
-										<Tab.Pane eventKey='link2'>{/* <ThemePreview /> */}</Tab.Pane>
+										<Tab.Pane eventKey='link2'>
+											<ThemePreview />
+										</Tab.Pane>
 									</Tab.Content>
 								</Col>
 							</Row>
