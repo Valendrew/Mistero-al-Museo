@@ -37,28 +37,24 @@ function ActivityOverview() {
 		setActivities({ isLoaded: false });
 	};
 
-	return (
-		<Container>
-			{activities.isLoaded ? (
-				activities.error ? (
-					<h5>Errore caricamento</h5>
-				) : (
-					<Row className='row row-cols-1 row-cols-sm-2 row-cols-xl-4'>
-						{Object.entries(activities.items).map(([key, value]) => (
-							<ActivityCard
-								key={key}
-								id={parseInt(key)}
-								activity={value}
-								onEditActivity={onEditActivity}
-								onRemoveActivity={onRemoveActivity}
-							/>
-						))}
-					</Row>
-				)
-			) : (
-				<h5>Caricamento...</h5>
-			)}
-		</Container>
+	return activities.isLoaded ? (
+		activities.error ? (
+			<h5>Errore caricamento</h5>
+		) : (
+			<Row className='row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6'>
+				{Object.entries(activities.items).map(([key, value]) => (
+					<ActivityCard
+						key={key}
+						id={parseInt(key)}
+						activity={value}
+						onEditActivity={onEditActivity}
+						onRemoveActivity={onRemoveActivity}
+					/>
+				))}
+			</Row>
+		)
+	) : (
+		<h5>Caricamento...</h5>
 	);
 }
 

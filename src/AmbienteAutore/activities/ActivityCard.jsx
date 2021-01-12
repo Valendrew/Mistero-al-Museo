@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
+import { Row } from 'react-bootstrap';
 
 function ActivityListItem({ value }) {
 	const [mediaURL, setMediaURL] = useState(undefined);
@@ -57,7 +58,7 @@ function ActivityList(props) {
 
 function ActivityCard(props) {
 	return (
-		<Col className='my-2'>
+		<Col className='mb-4'>
 			<Card style={{ height: '50vh' }}>
 				<Card.Header>{props.activity.name}</Card.Header>
 				<Card.Body style={{ heigth: '50%', overflowY: 'auto' }}>
@@ -65,12 +66,14 @@ function ActivityCard(props) {
 					<ActivityList {...props} />
 				</Card.Body>
 				<Card.Footer>
-					<Button variant='light' onClick={e => props.onEditActivity(e, props.id)}>
-						Modifica
-					</Button>
-					<Button variant='danger' onClick={e => props.onRemoveActivity(e, props.id)}>
-						Elimina
-					</Button>
+					<Row className='justify-content-center'>
+						<Button variant='info' className="m-1" onClick={e => props.onEditActivity(e, props.id)}>
+							Modifica
+						</Button>
+						<Button variant='danger' className="m-1" onClick={e => props.onRemoveActivity(e, props.id)}>
+							Elimina
+						</Button>
+					</Row>
 				</Card.Footer>
 			</Card>
 		</Col>

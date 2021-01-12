@@ -20,24 +20,21 @@ import StoryConclusion from './stories/StoryConclusion';
 
 function StoryCard(props) {
 	return (
-		<Card>
-			<Card.Header>
-				{props.title}{' '}
-				{props.archived ? (
-					<>
-						- <Button onClick={() => props.enableStory(props.id)}>Riattiva storia</Button>
-					</>
-				) : null}
-			</Card.Header>
-			<Card.Body>
-				<Card.Text>{props.description}</Card.Text>
-				{props.archived ? null : (
-					<Button variant='primary' onClick={() => props.onEditStory(props.id)}>
-						Modifica storia
-					</Button>
-				)}
-			</Card.Body>
-		</Card>
+		<Col className={`mb-4 ${props.archived ? 'order-last' : null}`}>
+			<Card style={{ height: '25vh' }}>
+				<Card.Header>{props.title}</Card.Header>
+				<Card.Body style={{ overflowY: 'auto' }}>
+					<Card.Text>{props.description}</Card.Text>
+				</Card.Body>
+				<Card.Footer>
+					{props.archived ? (
+						<Button variant="info" onClick={() => props.enableStory(props.id)}>Riattiva storia</Button>
+					) : (
+						<Button onClick={() => props.onEditStory(props.id)}>Modifica storia</Button>
+					)}
+				</Card.Footer>
+			</Card>
+		</Col>
 	);
 }
 
@@ -78,7 +75,7 @@ function AutoreHome(props) {
 	};
 
 	return (
-		<Container>
+		<Container fluid>
 			<Breadcrumb>
 				<LinkContainer to='/'>
 					<Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -91,23 +88,22 @@ function AutoreHome(props) {
 					<Breadcrumb.Item>Crea nuova storia</Breadcrumb.Item>
 				</LinkContainer>
 			</Breadcrumb>
-			<Row>
+			<Row className='row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4'>
 				{stories.isLoaded ? (
 					stories.error ? (
 						<h5>Nessuna storia presente</h5>
 					) : (
 						stories.items.map(value => {
 							return (
-								<Col lg='4' key={value.info.id}>
-									<StoryCard
-										id={value.info.id}
-										title={value.info.name}
-										description={value.info.description}
-										archived={value.info.archived}
-										enableStory={enableStory}
-										{...props}
-									/>
-								</Col>
+								<StoryCard
+									key={value.info.id}
+									id={value.info.id}
+									title={value.info.name}
+									description={value.info.description}
+									archived={value.info.archived}
+									enableStory={enableStory}
+									{...props}
+								/>
 							);
 						})
 					)
@@ -132,19 +128,19 @@ function Autore() {
 				<AutoreHome onEditStory={onEditStory} />
 			</Route>
 			<Route exact path={`${match.path}/story`}>
-				<Container>
+				<Container fluid>
 					<NavbarAutore name='Creazione storia' />
 					<StoryIndex />
 				</Container>
 			</Route>
 			<Route exact path={`${match.path}/story/overview`}>
-				<Container>
+				<Container fluid>
 					<NavbarAutore name='Riassunto storia' />
 					<StoryOverview />
 				</Container>
 			</Route>
 			<Route path={`${match.path}/story/activities`}>
-				<Container>
+				<Container fluid>
 					<NavbarAutore name='Riassunto attività' />
 					<ActivityOverview />
 				</Container>
@@ -162,7 +158,7 @@ function Autore() {
 				</Container>
 			</Route>
 			<Route path={`${match.path}/story/activity`}>
-				<Container>
+				<Container fluid>
 					<NavbarAutore name='Crea attività' />
 					<Activity />
 				</Container>

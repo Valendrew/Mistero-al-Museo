@@ -34,7 +34,7 @@ function StoryConclusion() {
 	};
 
 	return (
-		<Container fluid>
+		<Container>
 			<Tabs>
 				<Tab eventKey='Transizioni' title='Transizioni'>
 					{/* Transizioni missioni */}

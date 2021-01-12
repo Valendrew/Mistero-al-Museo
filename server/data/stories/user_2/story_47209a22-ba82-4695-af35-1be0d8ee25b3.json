@@ -3,7 +3,8 @@
         "name": "testone",
         "description": "cio",
         "id": "47209a22-ba82-4695-af35-1be0d8ee25b3",
-        "qr": "http://localhost:3000/player/47209a22-ba82-4695-af35-1be0d8ee25b3"
+        "qr": "http://localhost:3000/player/47209a22-ba82-4695-af35-1be0d8ee25b3",
+        "archived": true
     },
     "activities": {
         "0": {

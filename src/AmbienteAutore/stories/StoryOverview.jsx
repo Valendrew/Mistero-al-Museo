@@ -253,86 +253,82 @@ function StoryOverview() {
 		else history.replace('/autore');
 	};
 
-	return (
-		<Container>
-			{story.isLoaded ? (
-				story.error ? (
-					<h5>Errore nel caricamento, ricaricare</h5>
-				) : (
+	return story.isLoaded ? (
+		story.error ? (
+			<h5>Errore nel caricamento, ricaricare</h5>
+		) : (
+			<>
+				<StoryPropertyCard
+					title={'Nome'}
+					inputName={'name'}
+					input={inputs.name}
+					as={'input'}
+					onSubmit={onSubmit}
+					onChange={(value, name) => setInputs({ ...inputs, [name]: value })}
+				/>
+				<StoryPropertyCard
+					title={'Descrizione'}
+					inputName={'description'}
+					input={inputs.description}
+					as={'textarea'}
+					onSubmit={onSubmit}
+					onChange={(value, name) => setInputs({ ...inputs, [name]: value })}
+				/>
+
+				{storyCompleted && Object.keys(story.items.activities).length >= 10 ? (
 					<>
-						<StoryPropertyCard
-							title={'Nome'}
-							inputName={'name'}
-							input={inputs.name}
-							as={'input'}
-							onSubmit={onSubmit}
-							onChange={(value, name) => setInputs({ ...inputs, [name]: value })}
-						/>
-						<StoryPropertyCard
-							title={'Descrizione'}
-							inputName={'description'}
-							input={inputs.description}
-							as={'textarea'}
-							onSubmit={onSubmit}
-							onChange={(value, name) => setInputs({ ...inputs, [name]: value })}
-						/>
-
-						{storyCompleted && Object.keys(story.items.activities).length >= 10 ? (
-							<>
-								<StoryQRCode value={story.items.info.qr} removeQRCode={removeQRCode} generateQRCode={generateQRCode} />
-								{story.items.transitions.map((value, key) => (
-									<StoryGraph key={key} index={key} story={story.items} transitions={value} />
-								))}
-							</>
-						) : null}
-
-						<Row>
-							{story.items.activities && Object.keys(story.items.activities).length >= 10 ? (
-								<Col className='d-flex justify-content-start'>
-									<ButtonGroup>
-										<DropdownButton as={ButtonGroup} title='Modifica storia'>
-											<Dropdown.Item eventKey='1' name='activities' onClick={handleEditStory}>
-												Modifica attività
-											</Dropdown.Item>
-											<Dropdown.Item eventKey='2' name='missions' onClick={handleEditStory}>
-												Modifica missioni
-											</Dropdown.Item>
-											{storyCompleted ? (
-												<>
-													<Dropdown.Item eventKey='3' name='transitions' onClick={handleEditStory}>
-														Modifica impostazioni della storia
-													</Dropdown.Item>
-												</>
-											) : null}
-										</DropdownButton>
-									</ButtonGroup>
-								</Col>
-							) : (
-								<Col className='d-flex justify-content-start'>
-									<Button name='retrieveStory' onClick={handleRetrieveStory}>
-										Continua a creare la storia
-									</Button>
-								</Col>
-							)}
-							<Col className='d-flex justify-content-end'>
-								<ButtonGroup>
-									<DropdownButton as={ButtonGroup} title='Gestisci storia'>
-										<Dropdown.Item eventKey='1' name='duplicateStory' onClick={handleDuplicateStory}>
-											Crea una copia della storia
-										</Dropdown.Item>
-										<Dropdown.Item eventKey='2' name='deleteStory' onClick={handleDeleteStory}>
-											Elimina la storia
-										</Dropdown.Item>
-									</DropdownButton>
-								</ButtonGroup>
-							</Col>
-						</Row>
+						<StoryQRCode value={story.items.info.qr} removeQRCode={removeQRCode} generateQRCode={generateQRCode} />
+						{story.items.transitions.map((value, key) => (
+							<StoryGraph key={key} index={key} story={story.items} transitions={value} />
+						))}
 					</>
-				)
-			) : (
-				<h5>Loading...</h5>
-			)}
-		</Container>
+				) : null}
+
+				<Row>
+					{story.items.activities && Object.keys(story.items.activities).length >= 10 ? (
+						<Col className='d-flex justify-content-start'>
+							<ButtonGroup>
+								<DropdownButton as={ButtonGroup} title='Modifica storia'>
+									<Dropdown.Item eventKey='1' name='activities' onClick={handleEditStory}>
+										Modifica attività
+									</Dropdown.Item>
+									<Dropdown.Item eventKey='2' name='missions' onClick={handleEditStory}>
+										Modifica missioni
+									</Dropdown.Item>
+									{storyCompleted ? (
+										<>
+											<Dropdown.Item eventKey='3' name='transitions' onClick={handleEditStory}>
+												Modifica impostazioni della storia
+											</Dropdown.Item>
+										</>
+									) : null}
+								</DropdownButton>
+							</ButtonGroup>
+						</Col>
+					) : (
+						<Col className='d-flex justify-content-start'>
+							<Button name='retrieveStory' onClick={handleRetrieveStory}>
+								Continua a creare la storia
+							</Button>
+						</Col>
+					)}
+					<Col className='d-flex justify-content-end'>
+						<ButtonGroup>
+							<DropdownButton as={ButtonGroup} title='Gestisci storia'>
+								<Dropdown.Item eventKey='1' name='duplicateStory' onClick={handleDuplicateStory}>
+									Crea una copia della storia
+								</Dropdown.Item>
+								<Dropdown.Item eventKey='2' name='deleteStory' onClick={handleDeleteStory}>
+									Archivia la storia
+								</Dropdown.Item>
+							</DropdownButton>
+						</ButtonGroup>
+					</Col>
+				</Row>
+			</>
+		)
+	) : (
+		<h5>Loading...</h5>
 	);
 }
 

@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import Narrazione from './Narrazione';
 import Risposta from './Risposta';
 
-import { Form, Button, ButtonGroup, Card, Row, Col } from 'react-bootstrap';
+import { Form, Button, ButtonGroup, Card, Row, Col, InputGroup } from 'react-bootstrap';
 import { useEffect } from 'react';
 
 const storylineInputs = [
@@ -172,10 +172,9 @@ function addInputsToActivity(type, category, categoryLength) {
 
 		/* Aggiunto l'input per poter aumentare o diminuire il numero di suggerimenti */
 		const tipsRangeID = nanoid();
-		
+
 		newInputs = {
-			[tipsRangeID]: { type: 'number', value: '0' },
-			
+			[tipsRangeID]: { type: 'number', value: '0' }
 		};
 		/* Nel caso in cui l'input sia una domanda aperta verranno aggiunti 
 		due campi per indicare il punteggio minimo e massimo assegnabili, mentre
@@ -448,7 +447,7 @@ function Activity() {
 				inputsEdited.inputs[value].value = val.tips[key];
 			}
 			inputs = { ...inputs, ...inputsEdited.inputs };
-			
+
 			/* Aggiungo la modalità di valutazione */
 
 			inputs = {
@@ -488,7 +487,7 @@ function Activity() {
 	}, [isLoaded, history]);
 
 	return (
-		<Card border={'light'}>
+		<Card>
 			{isLoaded.loaded ? (
 				isLoaded.error ? (
 					<h5>Errore {isLoaded.error}</h5>
@@ -499,13 +498,18 @@ function Activity() {
 							<Card.Body>
 								<Row className='mb-4'>
 									<Col sm={12}>
-										<Form.Label>Aggiungi nome attività</Form.Label>
-										<Form.Control
-											type='text'
-											name='activityName'
-											value={inputs.activityName.value}
-											onChange={e => handleInput(e.target.value, 'activityName')}
-										/>
+										<InputGroup>
+											<InputGroup.Prepend>
+												<InputGroup.Text>Nome attività</InputGroup.Text>
+											</InputGroup.Prepend>
+
+											<Form.Control
+												type='text'
+												name='activityName'
+												value={inputs.activityName.value}
+												onChange={e => handleInput(e.target.value, 'activityName')}
+											/>
+										</InputGroup>
 									</Col>
 								</Row>
 
