@@ -383,6 +383,90 @@
                 "dateStart": "2021-01-12T10:55:19.271Z"
             },
             "name": "player"
+        },
+        "4f0cfda7-215e-4dd8-b8e2-4c0656d9633f": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-12T16:03:07.535Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-12T16:03:07.535Z"
+            },
+            "name": "player"
+        },
+        "fa5715ea-1bc3-4600-b104-0e5f44840d1c": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-12T16:12:30.990Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-12T16:12:30.990Z"
+            },
+            "name": "player"
+        },
+        "339029cc-30db-463c-b91d-297b0e8b3ea6": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-12T16:13:37.749Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-12T16:13:37.749Z"
+            },
+            "name": "player"
+        },
+        "7399c099-660d-4374-a946-150351132535": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-12T16:21:40.141Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-12T16:21:40.141Z"
+            },
+            "name": "player"
+        },
+        "d46c1748-5c73-4745-8b53-929aaea85881": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-12T17:42:07.725Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-12T17:42:07.725Z"
+            },
+            "name": "player"
+        },
+        "0a1d6dec-009a-4f1b-801c-76354814d0fd": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-12T18:01:49.827Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-12T18:01:49.827Z"
+            },
+            "name": "player"
+        },
+        "11f1e71a-9e11-437d-ba66-f6e80de50f55": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-12T18:14:02.997Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-12T18:14:02.997Z"
+            },
+            "name": "player"
         }
     }
 }
