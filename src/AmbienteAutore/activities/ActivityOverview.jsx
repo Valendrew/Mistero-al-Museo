@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ActivityCard from './ActivityCard';
 
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { useHistory } from 'react-router-dom';
 
@@ -34,6 +33,10 @@ function ActivityOverview() {
 		await fetch(`/stories/${idStory}/activities/${id}`, {
 			method: 'DELETE'
 		});
+
+		await fetch(`/stories/${idStory}/missions`, { method: 'DELETE' });
+		await fetch(`/stories/${idStory}/transitions`, { method: 'DELETE' });
+
 		setActivities({ isLoaded: false });
 	};
 

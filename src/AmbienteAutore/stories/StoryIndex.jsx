@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Col, InputGroup, Row } from 'react-bootstrap';
+import {  InputGroup } from 'react-bootstrap';
 
 function StoryPropertyCard(props) {
 	return (

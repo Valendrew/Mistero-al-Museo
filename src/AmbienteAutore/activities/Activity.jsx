@@ -300,8 +300,11 @@ function Activity() {
 	const [activity, setActivity] = useState({ questions: {}, storyline: {} });
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 
-	const handleInput = (value, id, questionID = null, type = null) => {
+	const [editedPrevQuestion, setEditedPrevQuestion] = useState(false);
+
+	const handleInput = (value, id, questionID = null, type = null, editedQuestion = false) => {
 		let inputEdited;
+
 		if (questionID) {
 			let { [type]: child, ...other } = activity.questions[questionID];
 			inputEdited = editInput(inputs[id], id, value, child, questionID, type);
@@ -316,6 +319,10 @@ function Activity() {
 			inputEdited = editInput(inputs[id], id, value);
 		}
 		setInputs({ ...inputs, ...inputEdited.inputs });
+
+		if (editedQuestion) {
+			setEditedPrevQuestion(true);
+		}
 	};
 
 	const handleAddInput = (type, category) => {
@@ -328,6 +335,10 @@ function Activity() {
 	const handleRemoveInput = (id, category) => {
 		const { [id]: child, ...other } = activity[category];
 		setActivity({ ...activity, [category]: other });
+
+		if (category === 'questions') {
+			setEditedPrevQuestion(true);
+		}
 	};
 
 	const gestisciDati = async (e, buttonPressed) => {
@@ -349,22 +360,26 @@ function Activity() {
 				body: JSON.stringify(data)
 			});
 
-			if (buttonPressed === 'nextActivity') {
-				const nextActivity = parseInt(historyState.idActivity) + 1;
-				history.push('activity', {
-					idStory: historyState.idStory,
-					idActivity: nextActivity
-				});
+			if (buttonPressed === 'saveActivity') {
+				history.replace('/autore/story/overview', { idStory: historyState.idStory });
 			} else {
-				await fetch(`/stories/${historyState.idStory}/missions`, { method: 'DELETE' });
+				if (buttonPressed === 'nextActivity') {
+					const nextActivity = parseInt(historyState.idActivity) + 1;
+					history.push('activity', {
+						idStory: historyState.idStory,
+						idActivity: nextActivity
+					});
+				} else {
+					await fetch(`/stories/${historyState.idStory}/missions`, { method: 'DELETE' });
 
-				await fetch(`/stories/${historyState.idStory}/transitions`, { method: 'DELETE' });
+					await fetch(`/stories/${historyState.idStory}/transitions`, { method: 'DELETE' });
 
-				if (buttonPressed === 'newMissions') {
-					history.replace('missions', { idStory: historyState.idStory });
-				} else if (buttonPressed === 'saveTemp') {
-					/* Se salvataggio temporaneo, allora viene reinderizzato a home */
-					history.replace('/autore');
+					if (buttonPressed === 'newMissions') {
+						history.replace('missions', { idStory: historyState.idStory });
+					} else if (buttonPressed === 'saveTemp') {
+						/* Se salvataggio temporaneo, allora viene reinderizzato a home */
+						history.replace('/autore/story/overview', { idStory: historyState.idStory });
+					}
 				}
 			}
 
@@ -525,7 +540,8 @@ function Activity() {
 										/>
 									</Col>
 								</Row>
-								<Row className='mb-4'>
+
+								<Row>
 									<Col sm={12}>
 										<Risposta
 											questions={activity.questions}
@@ -557,19 +573,32 @@ function Activity() {
 													name='saveTemp'
 													variant='success'
 													onClick={e => gestisciDati(e, e.target.name)}>
-													Salva temporaneamente la missione
+													Salva temporaneamente la storia
 												</Button>
 											</>
 										)}
 										{historyState.idActivity >= 9 || historyState.action ? (
-											<Button
-												className='mt-2 mr-2'
-												type='submit'
-												name='newMissions'
-												variant='success'
-												onClick={e => gestisciDati(e, e.target.name)}>
-												Procedi a creare le missione
-											</Button>
+											<>
+												{!editedPrevQuestion ? (
+													<Button
+														className='mt-2 mr-2'
+														type='submit'
+														name='saveActivity'
+														variant='success'
+														onClick={e => gestisciDati(e, e.target.name)}>
+														Salva l'attività modificata
+													</Button>
+												) : null}
+
+												<Button
+													className='mt-2 mr-2'
+													type='submit'
+													name='newMissions'
+													variant='success'
+													onClick={e => gestisciDati(e, e.target.name)}>
+													Crea nuovamente le missioni
+												</Button>
+											</>
 										) : null}
 									</ButtonGroup>
 								</Row>

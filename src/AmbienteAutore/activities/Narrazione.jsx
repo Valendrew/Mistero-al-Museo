@@ -3,7 +3,7 @@ import InputScritto from './InputScritto';
 import InputMedia from './InputMedia';
 import RemoveButton from './RemoveButton';
 import DropdownInputs from './DropdownInputs';
-import { Row, Col, Card, Form, ListGroup, Tab, InputGroup } from 'react-bootstrap';
+import { Row, Col, Card, Tab, ListGroup } from 'react-bootstrap';
 
 export default function Narrazione(props) {
 	const inputsAsArray = Object.entries(props.storyline);

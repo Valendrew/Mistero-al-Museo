@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { DataSet, Network } from 'vis-network/standalone/esm/vis-network';
 import QRCode from 'qrcode.react';
 
-import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';

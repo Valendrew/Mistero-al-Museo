@@ -17,10 +17,11 @@ export default function RispostaMultipla(props) {
 						min='0'
 						max='5'
 						onChange={e =>
-							props.handleInput(e.target.value, props.rangeId, props.questionId, 'answers')
+							props.handleInput(e.target.value, props.rangeId, props.questionId, 'answers', true)
 						}></Form.Control>
 				</Col>
 			</Row>
+
 			{answersArray.length ? (
 				<Row>
 					<Col>Risposta</Col>
@@ -47,7 +48,7 @@ export default function RispostaMultipla(props) {
 								value={props.inputs[val[1]].value}
 								defaultChecked={props.inputs[val[1]].value}
 								type='checkbox'
-								onChange={e => props.handleInput(e.target.checked, e.target.name)}
+								onChange={e => props.handleInput(e.target.checked, e.target.name, null, null, true)}
 							/>
 						</Col>
 						<Col>
@@ -56,7 +57,7 @@ export default function RispostaMultipla(props) {
 								value={props.inputs[val[2]].value}
 								defaultChecked={props.inputs[val[2]].value}
 								type='checkbox'
-								onChange={e => props.handleInput(e.target.checked, e.target.name)}
+								onChange={e => props.handleInput(e.target.checked, e.target.name, null, null, true)}
 							/>
 						</Col>
 						<Col>

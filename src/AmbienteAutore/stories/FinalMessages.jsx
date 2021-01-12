@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Row, Col, Container, InputGroup } from 'react-bootstrap';
+import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 
 function InputMessage(props) {
 	return (

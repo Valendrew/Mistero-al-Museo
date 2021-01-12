@@ -74,7 +74,12 @@
         },
         "2": {
             "name": "Cerca di convincere il sacerdote!",
-            "storyline": [],
+            "storyline": [
+                [
+                    "text",
+                    "ciao"
+                ]
+            ],
             "questions": [
                 {
                     "type": "radio",
