@@ -26,6 +26,7 @@
     "react-scripts": "^4.0.0",
     "react-useinterval": "^1.0.2",
     "sha256": "^0.2.0",
+    "style-it": "^2.1.4",
     "uuid": "^8.3.1",
     "vis-network": "^8.5.1"
   },

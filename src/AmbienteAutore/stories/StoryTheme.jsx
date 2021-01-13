@@ -3,7 +3,6 @@ import { Card, Col, Form, ListGroup, Row, Tab } from 'react-bootstrap';
 
 import './Text.css';
 import Papiro from './Papyrus-psd26583.png';
-
 function ThemePreviewNature() {
 	return (
 		<>
@@ -49,7 +48,7 @@ function ThemePreview() {
 
 	return (
 		<Col xs={6} style={style}>
-			<Form.Control className="papiro" as='textarea' maxLength="230" id='widget' rows={14} />
+			<Form.Control className='papiro' as='textarea' spellcheck='false' maxLength='200' id='widget' rows={14} />
 		</Col>
 	);
 }

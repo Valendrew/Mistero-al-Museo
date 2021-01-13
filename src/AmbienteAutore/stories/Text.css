@@ -4,7 +4,12 @@
 	background: transparent;
 }
 
-
-textarea.papiro{
+textarea.papiro {
     font-family: 'Dancing Script', cursive;
+    border: transparent solid 0px;
+    font-size: 18px;
+}
+
+.papiro:focus {
+	box-shadow: none !important;
 }
