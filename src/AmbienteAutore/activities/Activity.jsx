@@ -596,7 +596,7 @@ function Activity() {
 													name='newMissions'
 													variant='success'
 													onClick={e => gestisciDati(e, e.target.name)}>
-													Crea nuovamente le missioni
+													Crea {historyState.action ? 'nuovamente' : null} le missioni
 												</Button>
 											</>
 										) : null}

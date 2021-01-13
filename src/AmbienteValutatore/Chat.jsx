@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { InputGroup, Form, Button } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container';
+import { InputGroup, Form, Button, Col, Row } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
+
 import { useState } from 'react';
 function Chat(props) {
 	const [message, setMessage] = useState('');
@@ -24,44 +24,42 @@ function Chat(props) {
 		setMessage(e.target.value);
 	};
 	return (
-		<Container fluid>
-			<Card>
-				<Card.Header>Chat</Card.Header>
-				<Card.Body>
-					<ListGroup variant='flush'>
-						{props.player.informations.chat
-							? props.player.informations.chat.map((value, key) => {
-									const mit = value.substr(0, 1);
-									const text = value.substr(2);
-									return mit === 'v' ? (
-										<ListGroup.Item
-											key={key}
-											variant='primary'
-											style={{ textAlign: 'right', borderRadius: '20px', marginLeft: '10%', marginBottom: '4px' }}>
-											{text}
-										</ListGroup.Item>
-									) : (
-										<ListGroup.Item
-											key={key}
-											variant='secondary'
-											style={{ borderRadius: '20px', marginRight: '10%', marginBottom: '4px' }}>
-											{text}
-										</ListGroup.Item>
-									);
-							  })
-							: null}
-					</ListGroup>
-					<InputGroup>
-						<Form.Control value={message} onChange={handleChangeInput} name='chat' />
-						<InputGroup.Append>
-							<Button name='invia' onClick={message ? e => fetchUpdateStatus(e) : null}>
-								Invia
-							</Button>
-						</InputGroup.Append>
-					</InputGroup>
-				</Card.Body>
-			</Card>
-		</Container>
+		<Card style={{ height: '100%' }}>
+			<Card.Header>Chat</Card.Header>
+			<Card.Body>
+				<InputGroup>
+					<Form.Control value={message} onChange={handleChangeInput} name='chat' />
+					<InputGroup.Append>
+						<Button name='invia' onClick={message ? e => fetchUpdateStatus(e) : null}>
+							Invia
+						</Button>
+					</InputGroup.Append>
+				</InputGroup>
+				<ListGroup className='mt-4' variant='flush' style={{ height: '300px', overflowY: 'scroll' }}>
+					{props.player.informations.chat
+						? props.player.informations.chat.map((value, key) => {
+								const mit = value.substr(0, 1);
+								const text = value.substr(2);
+								return mit === 'v' ? (
+									<ListGroup.Item
+										key={key}
+										variant='primary'
+										style={{ textAlign: 'right', borderRadius: '20px', marginLeft: '10%', marginBottom: '4px' }}>
+										{text}
+									</ListGroup.Item>
+								) : (
+									<ListGroup.Item
+										key={key}
+										variant='secondary'
+										style={{ borderRadius: '20px', marginRight: '10%', marginBottom: '4px' }}>
+										{text}
+									</ListGroup.Item>
+								);
+						  })
+						: null}
+				</ListGroup>
+			</Card.Body>
+		</Card>
 	);
 }
 export default Chat;

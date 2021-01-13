@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Col } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 
 import Status from './Status';
@@ -11,25 +10,25 @@ import Help from './Help';
 
 function PlayerInfo(props) {
 	return (
-		<Container fluid>
-			<Row>
+		<>
+			<Row className='p-4' style={{ height: '50vh' }}>
 				<Col xs={6}>
 					<Status {...props} />
 				</Col>
 				<Col xs={6}>
-					<Help {...props} />
-					<Chat {...props}/>
+					<Chat {...props} />
 				</Col>
-				
-                    
 			</Row>
-			<Row>
-				<Col xs={12}>
+			<Row className='p-4' style={{ height: '50vh' }}>
+				<Col xs={6}>
+					<Help {...props} />
+				</Col>
+
+				<Col xs={6}>
 					<PlayerAnswer {...props} />
 				</Col>
 			</Row>
-			
-		</Container>
+		</>
 	);
 }
 export default PlayerInfo;

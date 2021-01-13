@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Form, Row, Col } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 
 function aumentaValore(index, valoreAttuale, setValue) {
 	let oldVal = valoreAttuale;

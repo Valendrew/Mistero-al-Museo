@@ -15,7 +15,7 @@ function Chat(props) {
 		setMessage(e.target.value);
 	};
 	return (
-		<Modal show={props.show} size='lg' aria-labelledby='contained-modal-title-vcenter' centered>
+		<Modal show={props.show} onHide={props.onHide} size='lg' aria-labelledby='contained-modal-title-vcenter' centered>
 			<Modal.Header closeButton>
 				<Modal.Title id='contained-modal-title-vcenter'>Chat</Modal.Title>
 			</Modal.Header>

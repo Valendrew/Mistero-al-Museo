@@ -5,7 +5,9 @@ function getTimeFormatted(timeMS) {
 	const hours = Math.floor(timeMS / (1000 * 3600));
 	const minutes = Math.floor(timeMS / (1000 * 60)) - hours * 60;
 	const seconds = Math.floor(timeMS / 1000) - hours * 3600 - minutes * 60;
-	return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+	return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${
+		seconds < 10 ? '0' + seconds : seconds
+	}`;
 }
 
 function Status(props) {
@@ -35,7 +37,7 @@ function Status(props) {
 	};
 
 	return (
-		<Card>
+		<Card style={{ height: '100%' }}>
 			<Card.Header>Stato del giocatore</Card.Header>
 			<Card.Body>
 				<Row>
@@ -49,8 +51,8 @@ function Status(props) {
 					</Col>
 				</Row>
 
-				<Row className='mt-4'>
-					<Col>Nome del giocatore</Col>
+				<Row className='mt-3'>
+					<Col style={{ display: 'flex', alignItems: 'center' }}>Nome del giocatore</Col>
 					<Col xs={6}>
 						<InputGroup>
 							<Form.Control name='name' value={props.inputs.name.value} onChange={handleChangeInput} />
@@ -70,12 +72,12 @@ function Status(props) {
 					</Row>
 				) : null}
 
-				<Row className='mt-4'>
+				<Row className='mt-3'>
 					<Col>Punteggio</Col>
 					<Col xs={6}>{props.player.informations.status.score}</Col>
 				</Row>
 
-				<Row className='mt-4'>
+				<Row className='mt-3'>
 					<Col>Orario di inizio partita:</Col>
 					<Col>
 						Il {new Date(props.player.informations.info.dateStart).toLocaleDateString('it-IT', optionsDate)} alle{' '}
@@ -84,7 +86,7 @@ function Status(props) {
 				</Row>
 
 				{props.player.informations.status.interval ? (
-					<Row className='mt-4'>
+					<Row className='mt-3'>
 						<Col>Tempo nella fase attuale:</Col>
 						<Col>{getTimeFormatted(props.player.informations.status.interval)}</Col>
 					</Row>

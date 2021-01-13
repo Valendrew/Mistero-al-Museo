@@ -22,9 +22,9 @@ function MissionsOverview() {
 	useEffect(() => {
 		const fetchData = async () => {
 			let resultImport = await fetch(`/stories/`);
-			if(resultImport.ok){
+			if (resultImport.ok) {
 				let dataImport = await resultImport.json();
-				setImportedStories({ items: dataImport.filter(value => value.activities && value.info.id !== idStory)});
+				setImportedStories({ items: dataImport.filter(value => value.activities && value.info.id !== idStory) });
 			}
 
 			let result = await fetch(`/stories/${idStory}/activities`);
@@ -90,9 +90,11 @@ function MissionsOverview() {
 					<h5>Errore nel caricamento, riprovare</h5>
 				) : (
 					<>
-						<Row className='row row-cols-1 row-cols-sm-2 row-cols-xl-4'>
+						<Row className='row row-cols-1 row-cols-sm-2 row-cols-xl-3'>
 							{Object.entries(story.items).map(([key, value]) => {
-								return <ActivityCard key={key} id={parseInt(key)} storyline={value.storyline} />;
+								return (
+									<ActivityCard key={key} id={parseInt(key)} storyline={value.storyline} questions={value.questions} />
+								);
 							})}
 
 							<Button className='my-2' style={{ height: '25%' }} onClick={() => setShowImport(true)}>

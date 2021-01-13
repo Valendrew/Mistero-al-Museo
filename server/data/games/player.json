@@ -1,21 +1,21 @@
 {
     "9c2a067e-a56d-4b98-8bb5-44238723dbb5": {
-        "1914b718-ce5d-40bd-8cfc-ce5ec0424d63": {
+        "ed21022a-47c7-43e3-ad24-3c62d1d90521": {
             "status": {
-                "activity": "end_game",
-                "dateActivity": "2021-01-11T20:12:57.121Z",
-                "score": 56,
-                "interval": 49530154
+                "activity": "8",
+                "dateActivity": "2021-01-13T15:36:33.878Z",
+                "score": 61,
+                "interval": 203999
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2021-01-11T20:10:48.446Z"
+                "dateStart": "2021-01-13T15:33:53.860Z"
             },
             "name": "player",
             "givenAnswer": {
                 "0": {
                     "value": "Tutankhamon",
-                    "score": "40",
+                    "score": "41",
                     "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
                     "activity": "1"
                 },
@@ -27,743 +27,115 @@
                 },
                 "2": {
                     "value": "Una piuma",
-                    "score": "38",
+                    "score": "27",
                     "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:",
                     "activity": "6"
                 },
                 "3": {
-                    "value": "bfbb",
-                    "score": "-17",
+                    "value": "Ciaooo",
+                    "score": "-2",
                     "question": "Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?",
                     "activity": "7"
                 }
             },
             "answer": null,
             "question": {
-                "value": "-17",
+                "value": "-2",
                 "correct": true,
-                "answerPlayer": "bfbb"
-            }
-        },
-        "b83a24dd-2600-45a7-83a8-7c3c715935d5": {
-            "status": {
-                "activity": "end_game",
-                "dateActivity": "2021-01-12T09:59:53.343Z",
-                "score": 73,
-                "interval": 1114050
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T09:59:11.077Z"
-            },
-            "name": "player",
-            "givenAnswer": {
-                "0": {
-                    "value": "Tutankhamon",
-                    "score": "46",
-                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
-                    "activity": "1"
-                },
-                "1": {
-                    "value": "Porta con Ammit",
-                    "score": "-5",
-                    "question": "Quale porta apri?",
-                    "activity": "4"
-                },
-                "2": {
-                    "value": "Una piuma",
-                    "score": "37",
-                    "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:",
-                    "activity": "6"
-                },
-                "3": {
-                    "value": "hhhh",
-                    "score": "-5",
-                    "question": "Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?",
-                    "activity": "7"
-                }
-            },
-            "answer": null,
-            "question": {
-                "value": "-5",
-                "correct": true,
-                "answerPlayer": "hhhh"
-            }
-        },
-        "ad329bdd-9299-4019-aa51-4212579951d4": {
-            "status": {
-                "activity": "end_game",
-                "dateActivity": "2021-01-12T10:19:38.931Z",
-                "score": 69,
-                "interval": 875040
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T10:19:01.489Z"
-            },
-            "name": "player",
-            "givenAnswer": {
-                "0": {
-                    "value": "Tutankhamon",
-                    "score": "47",
-                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
-                    "activity": "1"
-                },
-                "1": {
-                    "value": "Porta con Ammit",
-                    "score": "-5",
-                    "question": "Quale porta apri?",
-                    "activity": "4"
-                },
-                "2": {
-                    "value": "Una piuma",
-                    "score": "37",
-                    "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:",
-                    "activity": "6"
-                },
-                "3": {
-                    "value": "ciaooo",
-                    "score": "-10",
-                    "question": "Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?",
-                    "activity": "7"
-                }
-            },
-            "answer": null,
-            "question": {
-                "value": "-10",
-                "correct": true,
-                "answerPlayer": "ciaooo"
+                "answerPlayer": "Ciaooo"
             },
             "chat": [
-                "v:bbbbbbbb",
-                "v:fg",
-                "v:gf",
-                "v:fgfg",
-                "v:gfgf",
-                "v:fgfg",
-                "v:fgfg",
-                "v:gfgfg",
-                "v:dsdsds",
-                "v:sdsd",
-                "v:sdsdsd",
-                "v:sdsds",
-                "v:fhhfgfg",
-                "v:gdgdg",
-                "v:dgddffsd",
-                "v:zszsf",
-                "v:vbvbbv"
+                "p:Dioc",
+                "v:/ban",
+                "v:sium???????"
             ]
         },
-        "c8759f7a-c8a6-4245-b2ed-188eb46ea18f": {
+        "f16fac9d-0850-4790-9cdc-31548d7952d2": {
             "status": {
-                "activity": "end_game",
-                "dateActivity": "2021-01-12T10:34:52.933Z",
-                "score": 68,
-                "interval": 35016
+                "activity": "9",
+                "dateActivity": "2021-01-13T16:23:24.807Z",
+                "score": -605,
+                "interval": 107544
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2021-01-12T10:34:21.499Z"
+                "dateStart": "2021-01-13T15:50:25.408Z"
             },
             "name": "player",
             "givenAnswer": {
                 "0": {
-                    "value": "Tutankhamon",
-                    "score": "48",
+                    "value": "Akhenaton",
+                    "score": "-15",
                     "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
                     "activity": "1"
                 },
                 "1": {
+                    "value": "Del Dio Ra",
+                    "score": "-602",
+                    "question": "Il sacerdote si insospettisce e ti chiede di chi era figlio il faraone",
+                    "activity": "2"
+                },
+                "2": {
                     "value": "Porta con Ammit",
                     "score": "-5",
                     "question": "Quale porta apri?",
                     "activity": "4"
-                },
-                "2": {
-                    "value": "Una piuma",
-                    "score": "38",
-                    "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:",
-                    "activity": "6"
                 },
                 "3": {
-                    "value": "ciaoooo",
-                    "score": "-13",
-                    "question": "Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?",
-                    "activity": "7"
-                }
-            },
-            "answer": null,
-            "question": {
-                "value": "-13",
-                "correct": true,
-                "answerPlayer": "ciaoooo"
-            }
-        },
-        "82a874dd-0256-4802-bf35-631e4d55bce1": {
-            "status": {
-                "activity": "end_game",
-                "dateActivity": "2021-01-12T10:36:35.598Z",
-                "score": 55,
-                "interval": 45047
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T10:35:42.116Z"
-            },
-            "name": "player",
-            "givenAnswer": {
-                "0": {
-                    "value": "Tutankhamon",
-                    "score": "42",
-                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
-                    "activity": "1"
-                },
-                "1": {
-                    "value": "Porta con Ammit",
-                    "score": "-5",
-                    "question": "Quale porta apri?",
-                    "activity": "4"
-                },
-                "2": {
                     "value": "Una piuma",
                     "score": "37",
                     "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:",
                     "activity": "6"
                 },
-                "3": {
-                    "value": "fg",
-                    "score": "-19",
+                "4": {
+                    "value": "Correggimi puttana",
+                    "score": "-20",
                     "question": "Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?",
                     "activity": "7"
                 }
             },
-            "answer": null,
-            "question": {
-                "value": "-19",
-                "correct": true,
-                "answerPlayer": "fg"
-            }
-        },
-        "20dc4f33-80f3-4053-abdf-71aca43efbd1": {
-            "status": {
-                "activity": "end_game",
-                "dateActivity": "2021-01-12T10:38:07.372Z",
-                "score": 55,
-                "interval": 10049
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T10:37:27.029Z"
-            },
-            "name": "player",
-            "givenAnswer": {
-                "0": {
-                    "value": "Tutankhamon",
-                    "score": "45",
-                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
-                    "activity": "1"
-                },
-                "1": {
-                    "value": "Porta con Ammit",
-                    "score": "-5",
-                    "question": "Quale porta apri?",
-                    "activity": "4"
-                },
-                "2": {
-                    "value": "Una piuma",
-                    "score": "34",
-                    "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:",
-                    "activity": "6"
-                },
-                "3": {
-                    "value": "jjj",
-                    "score": "-19",
-                    "question": "Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?",
-                    "activity": "7"
-                }
-            },
-            "answer": null,
-            "question": {
-                "value": "-19",
-                "correct": true,
-                "answerPlayer": "jjj"
-            }
-        },
-        "e85e9015-8bfc-471a-b23a-6f7d370baad4": {
-            "status": {
-                "activity": "end_game",
-                "dateActivity": "2021-01-12T10:39:12.946Z",
-                "score": 82,
-                "interval": 5048
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T10:38:25.700Z"
-            },
-            "name": "player",
-            "givenAnswer": {
-                "0": {
-                    "value": "Tutankhamon",
-                    "score": "47",
-                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
-                    "activity": "1"
-                },
-                "1": {
-                    "value": "Porta con Ammit",
-                    "score": "-5",
-                    "question": "Quale porta apri?",
-                    "activity": "4"
-                },
-                "2": {
-                    "value": "Una piuma",
-                    "score": "38",
-                    "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:",
-                    "activity": "6"
-                },
-                "3": {
-                    "value": "gbg",
-                    "score": "2",
-                    "question": "Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?",
-                    "activity": "7"
-                }
-            },
-            "answer": null,
-            "question": {
-                "value": "2",
-                "correct": true,
-                "answerPlayer": "gbg"
-            }
-        },
-        "f837711b-c385-4198-9c7f-b57d3924dfda": {
-            "status": {
-                "activity": "end_game",
-                "dateActivity": "2021-01-12T10:40:23.541Z",
-                "score": 67,
-                "interval": 10042
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T10:39:25.044Z"
-            },
-            "name": "player",
-            "givenAnswer": {
-                "0": {
-                    "value": "Tutankhamon",
-                    "score": "48",
-                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
-                    "activity": "1"
-                },
-                "1": {
-                    "value": "Porta con Ammit",
-                    "score": "-5",
-                    "question": "Quale porta apri?",
-                    "activity": "4"
-                },
-                "2": {
-                    "value": "Una piuma",
-                    "score": "38",
-                    "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:",
-                    "activity": "6"
-                },
-                "3": {
-                    "value": "ciaoo",
-                    "score": "-14",
-                    "question": "Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?",
-                    "activity": "7"
-                }
-            },
-            "answer": null,
-            "question": {
-                "value": "-14",
-                "correct": true,
-                "answerPlayer": "ciaoo"
-            }
-        },
-        "9158677d-8982-414e-b131-b95d5f234fa1": {
-            "status": {
-                "activity": "0",
-                "dateActivity": "2021-01-12T10:40:41.397Z",
-                "score": 0
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T10:40:40.407Z"
-            },
-            "name": "player"
-        },
-        "4c71f92f-4cf1-4b90-b758-9b791819ba86": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-12T10:55:19.271Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T10:55:19.271Z"
-            },
-            "name": "player"
-        },
-        "4f0cfda7-215e-4dd8-b8e2-4c0656d9633f": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-12T16:03:07.535Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T16:03:07.535Z"
-            },
-            "name": "player"
-        },
-        "fa5715ea-1bc3-4600-b104-0e5f44840d1c": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-12T16:12:30.990Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T16:12:30.990Z"
-            },
-            "name": "player"
-        },
-        "339029cc-30db-463c-b91d-297b0e8b3ea6": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-12T16:13:37.749Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T16:13:37.749Z"
-            },
-            "name": "player"
-        },
-        "7399c099-660d-4374-a946-150351132535": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-12T16:21:40.141Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T16:21:40.141Z"
-            },
-            "name": "player"
-        },
-        "d46c1748-5c73-4745-8b53-929aaea85881": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-12T17:42:07.725Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T17:42:07.725Z"
-            },
-            "name": "player"
-        },
-        "0a1d6dec-009a-4f1b-801c-76354814d0fd": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-12T18:01:49.827Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T18:01:49.827Z"
-            },
-            "name": "player"
-        },
-        "11f1e71a-9e11-437d-ba66-f6e80de50f55": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-12T18:14:02.997Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-12T18:14:02.997Z"
-            },
-            "name": "player"
-        },
-        "d1bb4d0e-3401-4f03-9cb0-4f72ee8c02db": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-13T08:48:13.983Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T08:48:13.983Z"
-            },
-            "name": "player"
-        },
-        "d162f1ca-9cb0-4d61-9bea-fd906ad8c70f": {
-            "status": {
-                "activity": "end_game",
-                "dateActivity": "2021-01-13T10:30:55.385Z",
-                "score": -93,
-                "interval": 80804
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T10:24:47.041Z"
-            },
-            "name": "edo",
             "chat": [
-                "v:ciao edo",
-                "p:bella zi",
-                "p:che si dice?",
-                "v:nnt"
+                "v:ciao",
+                "v:ada",
+                "v:adad",
+                "v:dada",
+                "v:adad",
+                "v:adad",
+                "v:adada",
+                "v:adad"
             ],
-            "givenAnswer": {
-                "0": {
-                    "value": "Tutankhamon",
-                    "score": "-113",
-                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
-                    "activity": "1"
-                },
-                "1": {
-                    "value": "Porta con Ammit",
-                    "score": "-5",
-                    "question": "Quale porta apri?",
-                    "activity": "4"
-                },
-                "2": {
-                    "value": "Una piuma",
-                    "score": "36",
-                    "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:",
-                    "activity": "6"
-                },
-                "3": {
-                    "value": "ciaooo",
-                    "score": "-11",
-                    "question": "Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?",
-                    "activity": "7"
-                }
-            },
             "answer": null,
             "question": {
-                "value": "-11",
+                "value": "-20",
                 "correct": true,
-                "answerPlayer": "ciaooo"
+                "answerPlayer": "Correggimi puttana"
             }
         },
-        "64e59243-f9e0-4568-b7df-03b7e3465dc1": {
+        "31bb03ea-a917-454e-a233-c64193578f90": {
             "status": {
-                "activity": "7",
-                "dateActivity": "2021-01-13T10:32:47.591Z",
-                "score": 66,
-                "interval": 1330042
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T10:32:24.877Z"
-            },
-            "name": "player",
-            "givenAnswer": {
-                "0": {
-                    "value": "Tutankhamon",
-                    "score": "47",
-                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
-                    "activity": "1"
-                },
-                "1": {
-                    "value": "Porta con Ammit",
-                    "score": "-5",
-                    "question": "Quale porta apri?",
-                    "activity": "4"
-                },
-                "2": {
-                    "value": "Una piuma",
-                    "score": "24",
-                    "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:",
-                    "activity": "6"
-                }
-            },
-            "answer": null,
-            "question": {
-                "value": "-13",
-                "correct": true,
-                "answerPlayer": "hiuuh"
-            }
-        },
-        "cad51cd4-e317-4a34-affa-366d4710f626": {
-            "status": {
-                "activity": "start",
+                "activity": "1",
+                "dateActivity": "2021-01-13T16:26:08.014Z",
                 "score": 0,
-                "dateActivity": "2021-01-13T10:55:04.606Z"
+                "interval": 187193
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2021-01-13T10:55:04.606Z"
+                "dateStart": "2021-01-13T16:25:33.650Z"
             },
             "name": "player"
         },
-        "9e0bf65f-181f-417f-b2fc-a8513b2e05c2": {
+        "4e627665-0627-4e30-8106-380a413b55c6": {
             "status": {
-                "activity": "start",
+                "activity": "1",
+                "dateActivity": "2021-01-13T16:29:24.669Z",
                 "score": 0,
-                "dateActivity": "2021-01-13T10:57:09.383Z"
+                "interval": 55568
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2021-01-13T10:57:09.383Z"
+                "dateStart": "2021-01-13T16:29:20.530Z"
             },
             "name": "player"
-        },
-        "d3fdb42a-b683-402f-82ed-03a0870c329f": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-13T14:59:31.288Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T14:59:31.288Z"
-            },
-            "name": "player"
-        },
-        "e006edd9-8d40-402c-9023-8953019e2bbb": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-13T15:09:22.360Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T15:09:22.360Z"
-            },
-            "name": "player"
-        },
-        "2c5ce227-f51f-42dd-9daa-6b93f71b50d8": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-13T15:13:14.701Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T15:13:14.701Z"
-            },
-            "name": "player"
-        },
-        "e0e616dd-b921-4989-be3e-da4742da988e": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-13T15:13:22.991Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T15:13:22.991Z"
-            },
-            "name": "player"
-        },
-        "8077e673-7908-46ea-b6b6-e22a41e380fe": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-13T15:21:24.993Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T15:21:24.993Z"
-            },
-            "name": "player"
-        },
-        "93b0d7a0-0b70-4a0d-948b-91a4fa64af7c": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-13T15:21:26.427Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T15:21:26.427Z"
-            },
-            "name": "player"
-        },
-        "9f54654d-05bf-4248-8f0f-737c3f28e4fa": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-13T15:21:29.089Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T15:21:29.089Z"
-            },
-            "name": "player"
-        },
-        "b3a5a98c-5554-4a19-8ba0-aba0808e1fa6": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-13T15:21:32.571Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T15:21:32.571Z"
-            },
-            "name": "player"
-        },
-        "06fb4c31-8de1-41d3-a446-4440b6eedd13": {
-            "status": {
-                "activity": "0",
-                "dateActivity": "2021-01-13T15:29:36.805Z",
-                "score": 0,
-                "interval": 65182
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T15:23:29.515Z"
-            },
-            "name": "player",
-            "chat": [
-                "v:oi",
-                "v:oi",
-                "p:Ciaoo",
-                "v:aooo",
-                "p:No",
-                "v:a scemo",
-                "v:a scemo"
-            ]
-        },
-        "78d589b5-245a-4b6b-850d-983923efdfd5": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-13T15:30:45.852Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T15:30:45.852Z"
-            },
-            "name": "player"
-        }
-    },
-    "dae5896b-34dc-4348-af6b-222824b72a29": {
-        "c978aa04-e612-4aaf-9c86-1123d179d703": {
-            "status": {
-                "activity": "3",
-                "dateActivity": "2021-01-13T10:12:49.460Z",
-                "score": -19
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-13T10:12:45.141Z"
-            },
-            "name": "player",
-            "givenAnswer": {
-                "0": {
-                    "value": "bella",
-                    "score": "-19",
-                    "question": "Questa è la domanda",
-                    "activity": "0"
-                }
-            }
         }
     }
 }

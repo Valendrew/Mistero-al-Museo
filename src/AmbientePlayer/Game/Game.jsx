@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Story from './Story';
 import useInterval from '../../useInterval';
-import { Button, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { Button, Container, InputGroup, Row, Spinner } from 'react-bootstrap';
 import EndGame from './EndGame'
 function getCurrentMission(activity, missions, transitions) {
 	return transitions.find(element => missions[element].hasOwnProperty(activity));
@@ -235,7 +235,7 @@ function Game() {
 	);
 
 	return (
-		<div class='main'>
+		<Container fluid>
 			{isLoaded.loaded ? (
 				isLoaded.error ? (
 					<h6>Errore nel caricamento</h6>
@@ -257,7 +257,7 @@ function Game() {
 			) : (
 				<h6>Caricamento in corso...</h6>
 			)}
-		</div>
+		</Container>
 	);
 }
 

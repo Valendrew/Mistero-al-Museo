@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 
 function HelpBody(props) {
 	const [radioButtons, setRadioButtons] = useState(Array.from({ length: props.question.tips.length + 1 }, v => false));
@@ -87,10 +87,14 @@ function Help(props) {
 	}
 
 	return (
-		<Card>
+		<Card style={{ height: '100%' }}>
 			<Card.Header>Aiuti e suggerimenti</Card.Header>
 			<Card.Body>
-				{props.player.informations.help && question ? <HelpBody {...props} question={question} /> : null}
+				{props.player.informations.help && question ? (
+					<HelpBody {...props} question={question} />
+				) : (
+					'Nessun aiuto richiesto'
+				)}
 			</Card.Body>
 		</Card>
 	);

@@ -7,6 +7,7 @@ import SideBar from './SideBar';
 import PlayerInfo from './PlayerInfo';
 import useInterval from '../useInterval';
 import Ranking from './Ranking';
+import { Container } from 'react-bootstrap';
 
 function Valutatore() {
 	const [stories, setStories] = useState();
@@ -32,28 +33,29 @@ function Valutatore() {
 		/* Ricerco l'indice della storia richiesta */
 		const index = stories.findIndex(element => element.info.id === idStory);
 
-		let newPlayers = [...players];
-		newPlayers[index] = {
-			...newPlayers[index],
-			[idPlayer]: { ...newPlayers[index][idPlayer], ...statusUpdated }
-		};
+		if (players[index].hasOwnProperty(idPlayer)) {
+			let newPlayers = [...players];
+			newPlayers[index] = {
+				...newPlayers[index],
+				[idPlayer]: { ...newPlayers[index][idPlayer], ...statusUpdated }
+			};
 
-		if (playerSelected && playerSelected.id === idPlayer) {
-			if (statusUpdated.hasOwnProperty('name')) {
-				setInputs({ ...inputs, name: { value: statusUpdated.name, error: false } });
+			if (playerSelected && playerSelected.id === idPlayer) {
+				if (statusUpdated.hasOwnProperty('name')) {
+					setInputs({ ...inputs, name: { value: statusUpdated.name, error: false } });
+				}
+
+				setPlayerSelected({
+					...playerSelected,
+					informations: { ...playerSelected.informations, ...statusUpdated }
+				});
 			}
 
-			setPlayerSelected({
-				...playerSelected,
-				informations: { ...playerSelected.informations, ...statusUpdated }
-			});
+			setPlayers(newPlayers);
 		}
-
-		setPlayers(newPlayers);
 	};
 
-	const fetchAnswerCorrection = async (e, idStory, idPlayer, correct, value, answerPlayer) => {
-		e.preventDefault();
+	const fetchAnswerCorrection = async (idStory, idPlayer, correct, value, answerPlayer) => {
 
 		const result = await fetch(`/games/${idStory}/players/${idPlayer}/question`, {
 			method: 'PUT',
@@ -141,32 +143,34 @@ function Valutatore() {
 		isLoaded.error ? (
 			<h6>Errore caricamento</h6>
 		) : (
-			<Row>
-				<Col xs={4} lg={3} style={{ height: '100vh', overflowY: 'scroll' }}>
-					<SideBar
-						stories={stories}
-						players={players}
-						setPlayer={setPlayerDashboard}
-						setRanking={setShowRanking}
-						setStorySelected={setStorySelected}
-					/>
-				</Col>
-				{showRanking ? (
-					<Ranking players={players} storySelected={storySelected} />
-				) : playerSelected ? (
-					<Col xs={8} lg={9}>
-						<PlayerInfo
-							player={playerSelected}
-							story={stories.find(element => element.info.id === playerSelected.story)}
-							inputs={inputs}
-							updateStatus={updateStatus}
-							setInputs={setInputs}
-							fetchAnswerCorrection={fetchAnswerCorrection}
-							sendHelpToPlayer={sendHelpToPlayer}
+			<Container fluid>
+				<Row>
+					<Col xs={4} style={{ height: '100vh', overflowY: 'scroll' }}>
+						<SideBar
+							stories={stories}
+							players={players}
+							setPlayer={setPlayerDashboard}
+							setRanking={setShowRanking}
+							setStorySelected={setStorySelected}
 						/>
 					</Col>
-				) : null}
-			</Row>
+					{showRanking ? (
+						<Ranking players={players} storySelected={storySelected} />
+					) : playerSelected ? (
+						<Col xs={8}>
+							<PlayerInfo
+								player={playerSelected}
+								story={stories.find(element => element.info.id === playerSelected.story)}
+								inputs={inputs}
+								updateStatus={updateStatus}
+								setInputs={setInputs}
+								fetchAnswerCorrection={fetchAnswerCorrection}
+								sendHelpToPlayer={sendHelpToPlayer}
+							/>
+						</Col>
+					) : null}
+				</Row>
+			</Container>
 		)
 	) : null;
 }

@@ -53,7 +53,22 @@ function ActivityList(props) {
 	);
 }
 
+function QuestionList(props) {
+	return (
+		<ListGroup variant='flush'>
+			<ListGroup.Item>
+				Domanda di tipologia <span style={{ textDecoration: 'underline' }}>{props.question.type}</span>:{' '}
+				{props.question.value}
+			</ListGroup.Item>
+		</ListGroup>
+	);
+}
+
 function ActivityCard(props) {
+	let question;
+	if (props.questions.length) {
+		question = props.questions[0];
+	}
 	return (
 		<Col className='my-2' style={props.style}>
 			<Card style={{ height: props.height || '50vh' }}>
@@ -61,6 +76,12 @@ function ActivityCard(props) {
 				<Card.Body style={{ heigth: '50%', overflowY: 'auto' }}>
 					<Card.Title>Elementi narrazione</Card.Title>
 					<ActivityList {...props} />
+					{question ? (
+						<>
+							<Card.Title>Domanda e risposte</Card.Title>
+							<QuestionList question={question} />
+						</>
+					) : null}
 				</Card.Body>
 			</Card>
 		</Col>
