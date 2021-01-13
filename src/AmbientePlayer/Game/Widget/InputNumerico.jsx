@@ -49,8 +49,8 @@ function DownArrow(props) {
 function InputNumerico(props) {
 	const [value, setValue] = useState('0000');
 	return (
-		<Container className='bg-primary' style={{ width: '18%', borderRadius: '15px' }}>
-			<Row>
+		<Container className='bg-secondary' style={{ width: '18%', borderRadius: '15px', padding:"auto"}}>
+			<Row style={{paddingLeft:"5%"}}>
 				<Col>
 					<UpArrow index={0} valoreAttuale={value} setValue={setValue} />
 					<UpArrow index={1} valoreAttuale={value} setValue={setValue} />
@@ -58,12 +58,12 @@ function InputNumerico(props) {
 					<UpArrow index={3} valoreAttuale={value} setValue={setValue} />
 				</Col>
 			</Row>
-			<Row>
+			<Row style={{paddingLeft:"5%"}}>
 				<Col>
-					<Form.Control readOnly value={value} className='mt-3 mb-3' style={{letterSpacing: "28px", fontSize:"20px"}}/>
+					<Form.Control readOnly value={value} className='mt-3 mb-3 bg-secondary' style={{letterSpacing: "30px", fontSize:"20px", border:"0px", color:"limegreen"}}/>
 				</Col>
 			</Row>
-			<Row>
+			<Row style={{paddingLeft:"5%"}}>
 				<Col>
 					<DownArrow index={0} valoreAttuale={value} setValue={setValue} />
 					<DownArrow index={1} valoreAttuale={value} setValue={setValue} />

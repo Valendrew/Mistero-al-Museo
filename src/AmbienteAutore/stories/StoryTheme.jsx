@@ -49,7 +49,7 @@ function ThemePreview() {
 
 	return (
 		<Col xs={6} style={style}>
-			<Form.Control as='textarea' id='widget' rows={14} />
+			<Form.Control className="papiro" as='textarea' maxLength="230" id='widget' rows={14} />
 		</Col>
 	);
 }
