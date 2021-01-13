@@ -69,14 +69,14 @@ function PlayerHome() {
 	};
 
 	return (
-		<Container>
+		<Container fluid style={{ fontSize: '3vh' }}>
 			{isLoaded.loaded ? (
 				isLoaded.error ? (
 					<h5>Errore nel caricamento, riprovare</h5>
 				) : (
 					<>
 						<Row>
-							<h5>Benvenuto giocatore {player.name}</h5>
+							Benvenuto {player.name}
 						</Row>
 						<MainPage name={story.info.name} description={story.info.description} startGame={startGame} />
 					</>

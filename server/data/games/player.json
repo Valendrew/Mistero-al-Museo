@@ -133,7 +133,26 @@
                 "value": "-10",
                 "correct": true,
                 "answerPlayer": "ciaooo"
-            }
+            },
+            "chat": [
+                "v:bbbbbbbb",
+                "v:fg",
+                "v:gf",
+                "v:fgfg",
+                "v:gfgf",
+                "v:fgfg",
+                "v:fgfg",
+                "v:gfgfg",
+                "v:dsdsds",
+                "v:sdsd",
+                "v:sdsdsd",
+                "v:sdsds",
+                "v:fhhfgfg",
+                "v:gdgdg",
+                "v:dgddffsd",
+                "v:zszsf",
+                "v:vbvbbv"
+            ]
         },
         "c8759f7a-c8a6-4245-b2ed-188eb46ea18f": {
             "status": {
@@ -563,12 +582,12 @@
                     "activity": "6"
                 }
             },
-            "answer": {
-                "type": "open",
-                "value": "hiuuh",
-                "index": 0
-            },
-            "question": null
+            "answer": null,
+            "question": {
+                "value": "-13",
+                "correct": true,
+                "answerPlayer": "hiuuh"
+            }
         },
         "cad51cd4-e317-4a34-affa-366d4710f626": {
             "status": {
@@ -591,6 +610,136 @@
             "info": {
                 "transition": 0,
                 "dateStart": "2021-01-13T10:57:09.383Z"
+            },
+            "name": "player"
+        },
+        "d3fdb42a-b683-402f-82ed-03a0870c329f": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-13T14:59:31.288Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-13T14:59:31.288Z"
+            },
+            "name": "player"
+        },
+        "e006edd9-8d40-402c-9023-8953019e2bbb": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-13T15:09:22.360Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-13T15:09:22.360Z"
+            },
+            "name": "player"
+        },
+        "2c5ce227-f51f-42dd-9daa-6b93f71b50d8": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-13T15:13:14.701Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-13T15:13:14.701Z"
+            },
+            "name": "player"
+        },
+        "e0e616dd-b921-4989-be3e-da4742da988e": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-13T15:13:22.991Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-13T15:13:22.991Z"
+            },
+            "name": "player"
+        },
+        "8077e673-7908-46ea-b6b6-e22a41e380fe": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-13T15:21:24.993Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-13T15:21:24.993Z"
+            },
+            "name": "player"
+        },
+        "93b0d7a0-0b70-4a0d-948b-91a4fa64af7c": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-13T15:21:26.427Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-13T15:21:26.427Z"
+            },
+            "name": "player"
+        },
+        "9f54654d-05bf-4248-8f0f-737c3f28e4fa": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-13T15:21:29.089Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-13T15:21:29.089Z"
+            },
+            "name": "player"
+        },
+        "b3a5a98c-5554-4a19-8ba0-aba0808e1fa6": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-13T15:21:32.571Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-13T15:21:32.571Z"
+            },
+            "name": "player"
+        },
+        "06fb4c31-8de1-41d3-a446-4440b6eedd13": {
+            "status": {
+                "activity": "0",
+                "dateActivity": "2021-01-13T15:29:36.805Z",
+                "score": 0,
+                "interval": 65182
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-13T15:23:29.515Z"
+            },
+            "name": "player",
+            "chat": [
+                "v:oi",
+                "v:oi",
+                "p:Ciaoo",
+                "v:aooo",
+                "p:No",
+                "v:a scemo",
+                "v:a scemo"
+            ]
+        },
+        "78d589b5-245a-4b6b-850d-983923efdfd5": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-13T15:30:45.852Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-13T15:30:45.852Z"
             },
             "name": "player"
         }
