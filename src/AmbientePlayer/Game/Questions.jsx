@@ -9,6 +9,7 @@ function OpenQuestion(props) {
 			name='open_question'
 			value={props.inputsQuestion[0].value}
 			onChange={e => props.onChangeAnswer(0, e.target.value)}
+			className={props.style.rispostaAperta}
 		/>
 	);
 }
@@ -19,6 +20,7 @@ function MultipleQuestion(props) {
 			<Form>
 				{props.question.answers.map((value, key) => {
 					return (
+						<div className={props.style.rispostaMultipla}>
 						<Form.Check
 							key={key}
 							defaultChecked={props.inputsQuestion[key].value}
@@ -27,6 +29,7 @@ function MultipleQuestion(props) {
 							type={props.question.type}
 							label={value.value}
 						/>
+						</div>
 					);
 				})}
 			</Form>
@@ -36,7 +39,7 @@ function MultipleQuestion(props) {
 function Questions(props) {
 	return (
 		<Container fluid>
-			<p>{props.question.value}</p>
+			<p className={props.style.paragrafo}>{props.question.value}</p>
 
 			{props.question.type === 'open' ? (
 				<OpenQuestion {...props} />

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
-import Image from "react-bootstrap/Image";
+import Image, { propTypes } from "react-bootstrap/Image";
 
-function TextParagraph({ text }) {
-	return <p>{text[1]}</p>;
+function TextParagraph(props) {
+	return <p className={props.style.paragrafo}>{props.text[1]}</p>;
 }
 
-function Media({ value }) {
+function Media(props) {
 	const [mediaURL, setMediaURL] = useState();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 
 	useEffect(() => {
 		const fetchMedia = () => {
-			fetch(`/files/${value[1]}.${value[2]}`)
+			fetch(`/files/${props.value[1]}.${props.value[2]}`)
 				.then((result) => result.blob())
 				.then((data) => {
 					const objectURL = URL.createObjectURL(data);
@@ -23,34 +23,36 @@ function Media({ value }) {
 				.catch((e) => console.log(e));
 		};
 		if (!isLoaded.loaded) fetchMedia();
-	}, [isLoaded, value]);
+	}, [isLoaded, props.value]);
 
 	return isLoaded.loaded ? (
 		isLoaded.error ? (
-			<p>Immagine: {value[2]}</p>
-		) : value[0] === "img" ? (
-			<div class="backImg">
-				<Image width="200px" src={mediaURL} thumbnail fluid />
+			<p>Immagine: {props.value[2]}</p>
+		) : props.value[0] === "img" ? (
+			<div className={props.style.backMedia}>
+				<Image width="200px" src={mediaURL} thumbnail fluid className={props.style.immagine}/>
 			</div>
 		) : (
-			<video alt="" width="320" height="240" controls>
-				<source src={mediaURL}></source>
-			</video>
+			<div className={props.style.backMedia}>
+				<video alt="" width="320" height="240" controls>
+					<source src={mediaURL}></source>
+				</video>
+			</div>
 		)
 	) : (
 		"Loading..."
 	);
 }
 
-function Storyline({ storyline }) {
+function Storyline(props) {
 	return (
 		<Container fluid>
-			{storyline.map((value, key) => {
+			{props.storyline.map((value, key) => {
 				return (
-					<Row key={key}>
-						{value[0] === "text" ? <TextParagraph text={value} /> : <Media value={value} />}
+					<div >
+						{value[0] === "text" ? <TextParagraph text={value} style={props.style}/> : <Media value={value} style={props.style}/>}
 						<hr />
-					</Row>
+					</div>
 				);
 			})}
 		</Container>

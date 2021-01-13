@@ -235,7 +235,7 @@ function Game() {
 	);
 
 	return (
-		<Container fluid>
+		<>
 			{isLoaded.loaded ? (
 				isLoaded.error ? (
 					<h6>Errore nel caricamento</h6>
@@ -257,7 +257,7 @@ function Game() {
 			) : (
 				<h6>Caricamento in corso...</h6>
 			)}
-		</Container>
+		</>
 	);
 }
 

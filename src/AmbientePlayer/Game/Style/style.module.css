@@ -1,33 +1,30 @@
-#root,
-body,
-html {
-    height: 100%;
-}
-
-.main {
+.sfondo {
     text-align: center;
     background-size: cover;
-    height: 100%;
-    color: white;
+    height: 2500px;
 }
 
-.backImg {
+.backMedia {
     background-color: rgb(97, 97, 97, 0.5);
-    background-image: url("https://besthqwallpapers.com/Uploads/20-7-2020/137659/thumb2-gray-rock-texture-stone-texture-gray-stone-background-rock-background-natural-stone-texture.jpg");
     background-size: cover;
+    align-items: center;
+    display: flex;
     padding: 30px;
-    margin: 0 10% 0 10%;
+    margin: 0 20% 0 20%;
     border-radius: 15px;
 }
 
-.img-thumbnail {
+.immagine {
     padding: 0;
+    margin: auto;
     border: 0;
+    max-height: 400px;
+    width: auto;
     border-radius: 15px;
     box-shadow: 0 0 8px 8px slategrey;
 }
 
-.btn {
+.bottone {
     font-size: xx-large;
     font-weight: bold;
 }
@@ -37,28 +34,29 @@ html {
     text-align: center;
 }
 
-.row {
-    display: block;
-}
-
-p {
-    font-size: 200%;
+.paragrafo {
+    font-size: 230%;
     background-color: rgb(97, 97, 97, 0.5);
-    margin: 0px 15% 0px 15%;
+    color: white;
+    margin: 0px 15% 10px 15%;
+    padding: 5px;
     border-radius: 15px;
 }
 
-.form-check {
-    font-size: 300%;
+.rispostaMultipla {
     font-weight: bold;
     background-color: rgb(173, 0, 0);
     color: white;
+    display: block;
     border-radius: 20px;
-    padding: 10px 0 10px 0;
-    margin: 10px 20% 0px 20%;
+    padding: 10px 10px 10px 10px;
+    margin: 80px 33% 90px 33%;
+    transform: scale(2.5);
 }
 
-.form-control {
+.rispostaAperta {
+    margin-top: 30px;
+    margin-bottom: 20px;
     height: 200px;
     font-size: 250%;
     text-align: center;

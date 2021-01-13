@@ -8,15 +8,16 @@ import Chat from './Chat';
 import { useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 
-/*import styles from './Style/style.css'; Stile comune */
-/*import './Style/styleEgypt.css'; Stile specifico, TODO: da includere diversamente */
+import styleGeneric from './Style/style.module.css';
+import styleEgypt from './Style/styleEgypt.module.css';
+import stylePrehistory from './Style/stylePrehistory.module.css';
 
 function Story(props) {
 	const [currentStory, setCurrentStory] = useState();
 	const [inputsQuestion, setInputsQuestion] = useState();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false });
 	const [showChat, setShowChat] = useState(false);
-
+	const [style, setStyle] = useState(styleEgypt);
 	useEffect(() => {
 		const activity = props.player.status.activity;
 		const questions = props.story.activities[activity].questions;
@@ -81,13 +82,14 @@ function Story(props) {
 	};
 
 	return isLoaded.loaded ? (
-		<>
+		<div className={style.sfondo}>
 			<Button
 				variant='primary'
 				onClick={() => {
 					setShowChat(true);
 					props.setNewMessage(false);
-				}}>
+				}}
+				className={style.bottone}>
 				Chat
 				{props.newMessage ? <Spinner animation='grow' variant='warning' /> : null}
 			</Button>
@@ -99,24 +101,27 @@ function Story(props) {
 				handleSendMessage={props.handleSendMessage}
 				chat={props.chat}
 			/>
-			<h3>Al momento ti trovi nell'attività {currentStory.activity}</h3>
-			<h4>Il punteggio attuale è {props.player.status.score}</h4>
-			<Storyline storyline={currentStory.storyline} />
+			<p className={style.paragrafo}>
+				<h3>Al momento ti trovi nell'attività {currentStory.activity}</h3>
+				<h4>Il punteggio attuale è {props.player.status.score}</h4>
+			</p>
+			<Storyline storyline={currentStory.storyline} style={style} />
 			<hr />
 			{currentStory.questions.length ? (
 				<Questions
 					question={currentStory.questions[0]}
 					inputsQuestion={inputsQuestion}
 					onChangeAnswer={onChangeAnswer}
+					style={style}
 				/>
 			) : null}
 			{props.errorAnswer || null}
 			{props.waitingOpen ? null : (
-				<Button name='nextActivity' variant='primary' onClick={e => fetchAnswers(e)}>
+				<Button name='nextActivity' variant='primary' onClick={e => fetchAnswers(e)} className={style.bottone}>
 					Prosegui attività
 				</Button>
 			)}
-		</>
+		</div>
 	) : null;
 }
 
