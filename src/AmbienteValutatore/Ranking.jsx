@@ -37,19 +37,17 @@ function RankingTable(props) {
 
 function Ranking(props) {
 	return (
-		<Col xs={6}>
-			<Table bordered>
-				<thead>
-					<tr>
-						<th>Nome</th>
-						<th>Punteggio</th>
-					</tr>
-				</thead>
-				<tbody>
-					<RankingTable {...props} />
-				</tbody>
-			</Table>
-		</Col>
+		<Table bordered className="my-4">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Punteggio</th>
+				</tr>
+			</thead>
+			<tbody>
+				<RankingTable {...props} />
+			</tbody>
+		</Table>
 	);
 }
 export default Ranking;

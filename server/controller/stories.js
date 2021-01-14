@@ -179,6 +179,15 @@ router.post(
 );
 
 router.post(
+	'/:id/accessibilita',
+	(req, res, next) => {
+		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'accessibility' };
+		next();
+	},
+	postHandler
+);
+
+router.post(
 	'/:id/qrcode',
 	async (req, res, next) => {
 		const storyCode = req.params.id;

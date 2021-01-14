@@ -78,7 +78,7 @@ function PlayerHome() {
 						<Row>
 							Benvenuto {player.name}
 						</Row>
-						<MainPage name={story.info.name} description={story.info.description} startGame={startGame} />
+						<MainPage accessibilita={story.accessibility.value} name={story.info.name} description={story.info.description} startGame={startGame} />
 					</>
 				)
 			) : null}

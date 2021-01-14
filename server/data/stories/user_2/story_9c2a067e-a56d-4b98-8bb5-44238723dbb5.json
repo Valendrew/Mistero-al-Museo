@@ -318,15 +318,15 @@
     },
     "finalMessages": {
         "0": {
-            "score": 0,
-            "message": "insomma"
+            "score": "22",
+            "message": "insomma..."
         },
         "1": {
-            "score": "10",
-            "message": "ok"
+            "score": "55",
+            "message": "Bravino"
         },
         "2": {
-            "message": "bravino"
+            "message": "Bravo!"
         }
     },
     "transitions": [
@@ -335,5 +335,8 @@
             "1",
             "2"
         ]
-    ]
+    ],
+    "accessibility": {
+        "value": true
+    }
 }

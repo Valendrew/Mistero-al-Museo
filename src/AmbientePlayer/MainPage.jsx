@@ -9,7 +9,7 @@ function MainPage(props) {
 		<>
 			<Row >
 				<Card>
-					<Card.Header>{props.name}</Card.Header>
+					<Card.Header>{props.name} {props.accessibilita ? " - storia accessibile" : null}</Card.Header>
 					<Card.Body>{props.description}</Card.Body>
 					<Card.Footer>
 						<Button onClick={props.startGame}>Inizia la partita</Button>
