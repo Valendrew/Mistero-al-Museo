@@ -66,7 +66,7 @@ function QuestionList(props) {
 
 function ActivityCard(props) {
 	let question;
-	if (props.questions.length) {
+	if (props.questions && props.questions.length) {
 		question = props.questions[0];
 	}
 	return (
@@ -78,7 +78,7 @@ function ActivityCard(props) {
 					<ActivityList {...props} />
 					{question ? (
 						<>
-							<Card.Title>Domanda e risposte</Card.Title>
+							<Card.Title>Domanda</Card.Title>
 							<QuestionList question={question} />
 						</>
 					) : null}

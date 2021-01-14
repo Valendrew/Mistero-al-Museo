@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { InputGroup, Form, Button, Col, Row } from 'react-bootstrap';
+import { InputGroup, Form, Button} from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 

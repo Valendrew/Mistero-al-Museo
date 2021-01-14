@@ -5,7 +5,7 @@ import StoryTheme from './StoryTheme';
 import FinalMessages from './FinalMessages';
 import { Button, Tabs, Tab, Container } from 'react-bootstrap';
 
-function StoryConclusion() {
+function StoryConclusion(props) {
 	let history = useHistory();
 	const idStory = history.location.state.idStory;
 
@@ -34,11 +34,12 @@ function StoryConclusion() {
 	};
 
 	return (
+		
 		<Container>
 			<Tabs>
 				<Tab eventKey='Transizioni' title='Transizioni'>
 					{/* Transizioni missioni */}
-					<MissionsTransitions transitions={transitions} setTransitions={setTransitions} />
+					<MissionsTransitions transitions={transitions} setTransitions={setTransitions}/>
 				</Tab>
 				<Tab eventKey='Temi' title='Temi'>
 					{/* Temi del player */}

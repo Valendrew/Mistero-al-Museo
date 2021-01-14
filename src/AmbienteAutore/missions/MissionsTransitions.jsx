@@ -92,6 +92,8 @@ function ActivityCards(props) {
 						storyline={value.storyline}
 						height='30vh'
 						style={{ display: 'inline-block', width: '300px' }}
+						value={value}
+						questions={value.questions}
 					/>
 				);
 			})}
@@ -300,7 +302,7 @@ function MissionsTransitions(props) {
 								{Object.entries(missionsWithActs).map(([key, value]) => {
 									return (
 										<Tab.Pane key={key} eventKey={key}>
-											<ActivityCards activities={value} />
+											<ActivityCards activities={value}/>
 										</Tab.Pane>
 									);
 								})}

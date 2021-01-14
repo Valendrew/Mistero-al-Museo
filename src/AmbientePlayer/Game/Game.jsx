@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Story from './Story';
 import useInterval from '../../useInterval';
-import { Button, Container, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { Button, InputGroup, Row, Spinner } from 'react-bootstrap';
 import EndGame from './EndGame'
 function getCurrentMission(activity, missions, transitions) {
 	return transitions.find(element => missions[element].hasOwnProperty(activity));

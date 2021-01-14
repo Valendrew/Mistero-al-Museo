@@ -40,10 +40,10 @@ function StoryCard(props) {
 
 function AutoreHome(props) {
 	const match = useRouteMatch('/autore');
-	const [stories, setStories] = useState({ error: null, isLoaded: false, items: [] });
+	
 
 	useEffect(() => {
-		if (!stories.isLoaded) {
+		if (!props.stories.isLoaded) {
 			fetch(`/stories`, {
 				method: 'GET',
 				headers: { 'Content-Type': 'application/json' }
@@ -51,26 +51,26 @@ function AutoreHome(props) {
 				.then(res => res.json())
 				.then(
 					result => {
-						setStories({
+						props.setStories({
 							isLoaded: true,
 							items: result
 						});
 					},
 					error => {
-						setStories({
+						props.setStories({
 							isLoaded: true,
 							error
 						});
 					}
 				);
 		}
-	}, [stories]);
+	}, [props.stories]);
 
 	const enableStory = id => {
 		fetch(`/stories/${id}/archived`, {
 			method: 'POST'
 		})
-			.then(res => setStories({ error: null, isLoaded: false, items: [] }))
+			.then(res => props.setStories({ error: null, isLoaded: false, items: [] }))
 			.catch(console.log);
 	};
 
@@ -89,11 +89,11 @@ function AutoreHome(props) {
 				</LinkContainer>
 			</Breadcrumb>
 			<Row className='row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4'>
-				{stories.isLoaded ? (
-					stories.error ? (
+				{props.stories.isLoaded ? (
+					props.stories.error ? (
 						<h5>Nessuna storia presente</h5>
 					) : (
-						stories.items.map(value => {
+						props.stories.items.map(value => {
 							return (
 								<StoryCard
 									key={value.info.id}
@@ -117,7 +117,7 @@ function AutoreHome(props) {
 function Autore() {
 	const match = useRouteMatch('/autore');
 	let history = useHistory();
-
+	const [stories, setStories] = useState({ error: null, isLoaded: false, items: [] });
 	const onEditStory = idStory => {
 		history.push(`${match.path}/story/overview`, { idStory: idStory });
 	};
@@ -125,7 +125,7 @@ function Autore() {
 	return (
 		<Switch>
 			<Route exact path='/autore'>
-				<AutoreHome onEditStory={onEditStory} />
+				<AutoreHome onEditStory={onEditStory} setStories={setStories} stories={stories}/>
 			</Route>
 			<Route exact path={`${match.path}/story`}>
 				<Container fluid>

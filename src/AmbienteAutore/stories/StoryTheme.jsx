@@ -40,16 +40,20 @@ function ThemePreviewNature() {
 
 function ThemePreview() {
 	const style = {
+		width: '370px',
 		backgroundImage: `url(${Papiro})`,
 		backgroundRepeat: 'no-repeat',
 		backgroundSize: '100% 100%',
-		padding: '12%'
+		padding: '12%',
+		height: '550px'
 	};
 
 	return (
-		<Col xs={6} style={style}>
-			<Form.Control className='papiro' as='textarea' spellcheck='false' maxLength='200' id='widget' rows={14} />
-		</Col>
+		<div xs={6} style={style}>
+			<Col>
+				<Form.Control className='papiro' as='textarea' spellcheck='false' maxLength='230' id='widget' rows={14}/>
+			</Col>
+		</div>
 	);
 }
 

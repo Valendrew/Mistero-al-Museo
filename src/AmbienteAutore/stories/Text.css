@@ -3,11 +3,26 @@
 #widget {
 	background: transparent;
 }
+@media screen and (max-width: 1000px){
+    textarea.papiro{
+        margin-top: 50px;
+        font-size: 32px;
+    }
+}
+@media screen and (min-width: 1100px){
+    textarea.papiro{
+        width: 240px;
+        font-size: 24px;
+        margin-left: -30px;
 
+    }
+}
 textarea.papiro {
-    font-family: 'Dancing Script', cursive;
-    border: transparent solid 0px;
-    font-size: 18px;
+	font-family: 'Dancing Script', cursive;
+	border: transparent solid 0px;
+    
+    height: 350px;
+    
 }
 
 .papiro:focus {
