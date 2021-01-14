@@ -1,4 +1,5 @@
 import React from 'react';
+import { Container } from 'react-bootstrap';
 
 function findMessage(messagesSorted, playerScore) {
 	let message = '';
@@ -25,10 +26,10 @@ function getMessage(finalMessages, playerScore) {
 
 function EndGame(props) {
 	return (
-		<>
+		<Container>
 			<h2>Hai terminato la storia con {props.playerScore} punti</h2>
 			{getMessage(props.finalMessages, props.playerScore)}
-		</>
+		</Container>
 	);
 }
 

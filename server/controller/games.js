@@ -50,9 +50,18 @@ const updateStatusPlayer = async (req, res, next) => {
 	let data;
 	try {
 		data = await fileOperations.read('player.json', app.get('games'));
+
 		if (data.hasOwnProperty(storyID)) {
+			if (playerStatus.hasOwnProperty('name')) {
+				playerStatus.name = 'player' + Object.keys(data[storyID]).length;
+			}
+
 			data[storyID][playerID] = { ...data[storyID][playerID], ...playerStatus };
 		} else {
+			if (playerStatus.hasOwnProperty('name')) {
+				playerStatus.name = 'player0';
+			}
+
 			data[storyID] = { [playerID]: playerStatus };
 		}
 	} catch (e) {
@@ -150,7 +159,7 @@ router.put(
 	'/:id/players/status',
 	(req, res, next) => {
 		res.locals.playerID = req.cookies.playerID;
-		
+
 		informationsPending[req.cookies.playerID] = {
 			...informationsPending[req.cookies.playerID],
 			story: req.params.id,

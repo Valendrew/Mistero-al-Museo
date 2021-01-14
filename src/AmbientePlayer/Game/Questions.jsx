@@ -16,19 +16,19 @@ function OpenQuestion(props) {
 
 function MultipleQuestion(props) {
 	return (
-		<div class="multipleQuestion">
+		<div class='multipleQuestion'>
 			<Form>
 				{props.question.answers.map((value, key) => {
 					return (
 						<div className={props.style.rispostaMultipla}>
-						<Form.Check
-							key={key}
-							defaultChecked={props.inputsQuestion[key].value}
-							name='radio_question'
-							onChange={e => props.onChangeAnswer(key, e.target.checked)}
-							type={props.question.type}
-							label={value.value}
-						/>
+							<Form.Check
+								key={key}
+								defaultChecked={props.inputsQuestion[key].value}
+								name='radio_question'
+								onChange={e => props.onChangeAnswer(key, e.target.checked)}
+								type={props.question.type}
+								label={value.value}
+							/>
 						</div>
 					);
 				})}

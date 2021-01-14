@@ -7,24 +7,34 @@ import Row from 'react-bootstrap/Row';
 import MainPage from './MainPage';
 import Game from './Game/Game';
 
+import styleGeneric from './Style/style.module.css';
+import styleEgypt from './Style/styleEgypt.module.css';
+import stylePrehistory from './Style/stylePrehistory.module.css';
+import { Col } from 'react-bootstrap';
+
+const themeConverter = { egypt: styleEgypt, generico: styleGeneric, prehistory: stylePrehistory };
+
 function Player() {
+	const [style, setStyle] = useState();
+
 	return (
 		<Switch>
 			<Route path='/player/game'>
-				<Game />
+				<Game style={style} />
 			</Route>
 			<Route path='/player/:id'>
-				<PlayerHome />
+				<PlayerHome style={style} setStyle={setStyle} />
 			</Route>
 		</Switch>
 	);
 }
 
-function PlayerHome() {
+function PlayerHome(props) {
 	const { id } = useParams(); // id per identificare la storia
 	const history = useHistory();
 	const [story, setStory] = useState();
 	const [player, setPlayer] = useState();
+	const [fetchIsLoaded, setFetchIsLoaded] = useState({ loaded: false, error: null });
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 
 	useEffect(() => {
@@ -33,16 +43,20 @@ function PlayerHome() {
 				method: 'POST'
 			});
 			// Se la richiesta non è andata a buon fine
-			if (!result.ok) setIsLoaded({ loaded: true, error: result.statusText });
+			if (!result.ok) setFetchIsLoaded({ loaded: true, error: result.statusText });
 			else {
 				const data = await result.json();
+
+				setFetchIsLoaded({ loaded: true });
+
+				props.setStyle(themeConverter[data.story.info.theme]);
 				setStory({ ...data.story });
 				setPlayer({ ...data.player });
 				setIsLoaded({ loaded: true });
 			}
 		};
-		if (!isLoaded.loaded) fetchData();
-	}, [id, isLoaded]);
+		if (!fetchIsLoaded.loaded) fetchData();
+	}, [id, fetchIsLoaded, props]);
 
 	const startGame = async () => {
 		/* Aggiorno lo stato sia nel server e sia localmente per
@@ -68,22 +82,29 @@ function PlayerHome() {
 		});
 	};
 
-	return (
-		<Container fluid style={{ fontSize: '3vh' }}>
-			{isLoaded.loaded ? (
-				isLoaded.error ? (
-					<h5>Errore nel caricamento, riprovare</h5>
-				) : (
-					<>
-						<Row>
-							Benvenuto {player.name}
-						</Row>
-						<MainPage accessibilita={story.accessibility.value} name={story.info.name} description={story.info.description} startGame={startGame} />
-					</>
-				)
-			) : null}
-		</Container>
-	);
+	return isLoaded.loaded ? (
+		isLoaded.error ? (
+			<h1>Errore nel caricamento, riprovare</h1>
+		) : (
+			<Container fluid className={`p-4 ${props.style.sfondo}`}>
+				<header>
+					<Row>
+						<Col className={props.style.container}>
+							<h1>{`Benvenuto ${player.name} nella partita`}</h1>
+						</Col>
+					</Row>
+				</header>
+
+				<MainPage
+					name={story.info.name}
+					description={story.info.description}
+					style={props.style}
+					startGame={startGame}
+					accessibilita={story.accessibility.value}
+				/>
+			</Container>
+		)
+	) : null;
 }
 
 export default Player;
