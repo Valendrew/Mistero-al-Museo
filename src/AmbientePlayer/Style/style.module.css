@@ -1,0 +1,62 @@
+.sfondo {
+	text-align: center;
+	background-size: cover;
+	height: 100vh;
+	color: white;
+	font-size: 1.5vh;
+}
+
+.backMedia {
+	background-color: rgb(97, 97, 97, 0.5);
+	background-size: cover;
+	align-items: center;
+	display: flex;
+	padding: 30px;
+	margin: 0 20% 0 20%;
+	border-radius: 15px;
+}
+
+.immagine {
+	padding: 0;
+	margin: auto;
+	border: 0;
+	max-height: 400px;
+	width: auto;
+	border-radius: 15px;
+	box-shadow: 0 0 8px 8px slategrey;
+}
+
+.bottone {
+	font-size: 1.5vh;
+	font-weight: bold;
+}
+
+.container {
+	background-color: rgb(94, 94, 94);
+	border-radius: 15px;
+	margin: 0px 15% 10px 15%;
+	padding: 5px;
+}
+
+.paragrafo {
+	color: white;
+}
+
+.rispostaMultipla {
+	font-weight: bold;
+	background-color: rgb(173, 0, 0);
+	color: white;
+	display: block;
+	border-radius: 20px;
+	padding: 10px 10px 10px 10px;
+	margin: 80px 33% 90px 33%;
+	transform: scale(2.5);
+}
+
+.rispostaAperta {
+	margin-top: 30px;
+	margin-bottom: 20px;
+	height: 200px;
+	font-size: 250%;
+	text-align: center;
+}

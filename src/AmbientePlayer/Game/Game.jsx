@@ -4,12 +4,13 @@ import { useHistory } from 'react-router-dom';
 import Story from './Story';
 import useInterval from '../../useInterval';
 import { Button, InputGroup, Row, Spinner } from 'react-bootstrap';
-import EndGame from './EndGame'
+import EndGame from './EndGame';
+
 function getCurrentMission(activity, missions, transitions) {
 	return transitions.find(element => missions[element].hasOwnProperty(activity));
 }
 
-function Game() {
+function Game(props) {
 	const history = useHistory();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
 	const [informations, setInformations] = useState();
@@ -18,16 +19,20 @@ function Game() {
 	const [waitingOpen, setWaitingOpen] = useState(false);
 	const [waitingHelp, setWaitingHelp] = useState();
 
-	const [chat, setChat] = useState();
+	const [chat, setChat] = useState([]);
 	const [givenAnswers, setGivenAnswers] = useState();
 	const [newMessage, setNewMessage] = useState(false);
 
 	useEffect(() => {
 		if (!isLoaded.loaded) {
-			setInformations({ ...informations, ...history.location.state });
-			setErrorAnswer(null);
-			setWaitingOpen(false);
-			setIsLoaded({ loaded: true });
+			if (history.location.state) {
+				setInformations({ ...informations, ...history.location.state });
+				setErrorAnswer(null);
+				setWaitingOpen(false);
+				setIsLoaded({ loaded: true });
+			} else {
+				setIsLoaded({ loaded: true, error: 'error' });
+			}
 		}
 	}, [history, isLoaded, informations]);
 
@@ -135,6 +140,7 @@ function Game() {
 			}).catch(e => console.log(e));
 
 			history.push('/player/game', {
+				...informations,
 				player: { ...informations.player, status: updatedStatus }
 			});
 
@@ -188,7 +194,8 @@ function Game() {
 			if (result.ok) {
 				result.json().then(data => {
 					if (Object.keys(data).length) {
-						setNewMessage(true);
+						console.log(data.chat.length - chat.length);
+						setNewMessage(data.chat.length - chat.length);
 						setChat(data.chat);
 					}
 				});
@@ -234,30 +241,27 @@ function Game() {
 		isLoaded.loaded ? 5000 : null
 	);
 
-	return (
-		<>
-			{isLoaded.loaded ? (
-				isLoaded.error ? (
-					<h6>Errore nel caricamento</h6>
-				) : informations.player.status.activity === 'end_game' ? (
-					<EndGame finalMessages={informations.story.finalMessages} playerScore={informations.player.status.score}/>
-				) : (
-					<Story
-						player={informations.player}
-						story={informations.story}
-						errorAnswer={errorAnswer}
-						waitingOpen={waitingOpen}
-						handleNextActivity={handleNextActivity}
-						handleSendMessage={handleSendMessage}
-						chat={chat}
-						newMessage={newMessage}
-						setNewMessage={setNewMessage}
-					/>
-				)
-			) : (
-				<h6>Caricamento in corso...</h6>
-			)}
-		</>
+	return isLoaded.loaded ? (
+		isLoaded.error ? (
+			<h6>Errore nel caricamento</h6>
+		) : informations.player.status.activity === 'end_game' ? (
+			<EndGame finalMessages={informations.story.finalMessages} playerScore={informations.player.status.score} />
+		) : (
+			<Story
+				player={informations.player}
+				story={informations.story}
+				errorAnswer={errorAnswer}
+				waitingOpen={waitingOpen}
+				handleNextActivity={handleNextActivity}
+				handleSendMessage={handleSendMessage}
+				chat={chat}
+				newMessage={newMessage}
+				setNewMessage={setNewMessage}
+				style={props.style}
+			/>
+		)
+	) : (
+		<h6>Caricamento in corso...</h6>
 	);
 }
 

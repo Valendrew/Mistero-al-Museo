@@ -64,7 +64,7 @@ function AutoreHome(props) {
 					}
 				);
 		}
-	}, [props.stories]);
+	}, [props]);
 
 	const enableStory = id => {
 		fetch(`/stories/${id}/archived`, {

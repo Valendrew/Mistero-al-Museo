@@ -6,18 +6,14 @@ import Storyline from './Storyline';
 import Questions from './Questions';
 import Chat from './Chat';
 import { useState } from 'react';
-import { Spinner } from 'react-bootstrap';
-
-import styleGeneric from './Style/style.module.css';
-import styleEgypt from './Style/styleEgypt.module.css';
-import stylePrehistory from './Style/stylePrehistory.module.css';
+import { Container, Spinner, Row, Col } from 'react-bootstrap';
 
 function Story(props) {
 	const [currentStory, setCurrentStory] = useState();
 	const [inputsQuestion, setInputsQuestion] = useState();
 	const [isLoaded, setIsLoaded] = useState({ loaded: false });
-	const [showChat, setShowChat] = useState(false);
-	const [style, setStyle] = useState(styleEgypt);
+	const [showChat, setShowChat] = useState({ msg: 0, state: false });
+
 	useEffect(() => {
 		const activity = props.player.status.activity;
 		const questions = props.story.activities[activity].questions;
@@ -82,46 +78,69 @@ function Story(props) {
 	};
 
 	return isLoaded.loaded ? (
-		<div className={style.sfondo}>
-			<Button
-				variant='primary'
-				onClick={() => {
-					setShowChat(true);
-					props.setNewMessage(false);
-				}}
-				className={style.bottone}>
-				Chat
-				{props.newMessage ? <Spinner animation='grow' variant='warning' /> : null}
-			</Button>
+		<Container fluid className={props.style.sfondo}>
+			<section>
+				<Row>
+					<Col>
+						<Button
+							onClick={() => {
+								setShowChat({ msg: props.newMessage, state: true });
+								props.setNewMessage(0);
+							}}
+							className={props.style.bottone}>
+							Apri Chat
+							{props.newMessage > 0 ? (
+								<Spinner animation='grow' variant='warning' role='status'>
+									<span className='sr-only'>Nuovo messaggio in chat</span>
+								</Spinner>
+							) : null}
+						</Button>
+					</Col>
+				</Row>
 
-			<Chat
-				show={showChat}
-				onHide={() => setShowChat(false)}
-				/* chat={props.player.status.chat} */
-				handleSendMessage={props.handleSendMessage}
-				chat={props.chat}
-			/>
-			<p className={style.paragrafo}>
-				<h3>Al momento ti trovi nell'attività {currentStory.activity}</h3>
-				<h4>Il punteggio attuale è {props.player.status.score}</h4>
-			</p>
-			<Storyline storyline={currentStory.storyline} style={style} />
-			<hr />
-			{currentStory.questions.length ? (
-				<Questions
-					question={currentStory.questions[0]}
-					inputsQuestion={inputsQuestion}
-					onChangeAnswer={onChangeAnswer}
-					style={style}
+				<Chat
+					show={showChat}
+					onHide={() => setShowChat({ msg: 0, state: false })}
+					/* chat={props.player.status.chat} */
+					handleSendMessage={props.handleSendMessage}
+					chat={props.chat}
 				/>
-			) : null}
-			{props.errorAnswer || null}
-			{props.waitingOpen ? null : (
-				<Button name='nextActivity' variant='primary' onClick={e => fetchAnswers(e)} className={style.bottone}>
-					Prosegui attività
-				</Button>
-			)}
-		</div>
+			</section>
+
+			<section className={props.style.paragrafo}>
+				<Row>
+					<Col>
+						<h1>Al momento ti trovi nell'attività {currentStory.activity}</h1>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<h2>Il punteggio attuale è {props.player.status.score}</h2>
+					</Col>
+				</Row>
+			</section>
+
+			<main>
+				{currentStory.storyline.map((value, key) => (
+					<Storyline key={key} storyline={value} style={props.style} />
+				))}
+				<hr />
+				{currentStory.questions.length ? (
+					<Questions
+						question={currentStory.questions[0]}
+						inputsQuestion={inputsQuestion}
+						onChangeAnswer={onChangeAnswer}
+						style={props.style}
+					/>
+				) : null}
+				{props.errorAnswer || null}
+				{props.waitingOpen ? null : (
+					<Button name='nextActivity' variant='primary' onClick={e => fetchAnswers(e)} className={props.style.bottone}>
+						Prosegui attività
+					</Button>
+				)}
+			</main>
+		</Container>
 	) : null;
 }
 

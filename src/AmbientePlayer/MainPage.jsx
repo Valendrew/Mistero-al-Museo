@@ -1,24 +1,32 @@
 import React from 'react';
 
-import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import InputNumerico from './Game/Widget/InputNumerico';
-import { Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
+
 function MainPage(props) {
 	return (
-		<>
-			<Row >
-				<Card>
-					<Card.Header>{props.name}</Card.Header>
-					<Card.Body>{props.description}</Card.Body>
-					<Card.Footer>
-						<Button onClick={props.startGame}>Inizia la partita</Button>
-					</Card.Footer>
-				</Card>
+		<main className='mt-4'>
+			<Row>
+				<Col className={`m-2 ${props.style.container}`}>
+					<h2 className={props.style.paragrafo}>Nome storia</h2>
+					<p className={props.style.paragrafo}>{props.name}</p>
+				</Col>
 			</Row>
 
-			<InputNumerico />
-		</>
+			<Row>
+				<Col className={`m-2 ${props.style.container}`}>
+					<h2 className={props.style.paragrafo}>Descrizione storia</h2>
+					<p className={props.style.paragrafo}>{props.description}</p>
+				</Col>
+			</Row>
+			<Row>
+				<Col>
+					<Button onClick={props.startGame} className={props.style.bottone}>
+						Inizia la partita
+					</Button>
+				</Col>
+			</Row>
+		</main>
 	);
 }
 

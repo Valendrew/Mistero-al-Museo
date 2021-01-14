@@ -2,7 +2,8 @@
     "info": {
         "name": "prova",
         "description": "ddddd",
-        "id": "72e74982-7169-4d2a-b8b3-7196ea930fb8"
+        "id": "72e74982-7169-4d2a-b8b3-7196ea930fb8",
+        "archived": true
     },
     "activities": {
         "0": {
