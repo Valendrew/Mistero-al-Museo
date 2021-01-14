@@ -8,6 +8,8 @@ import Chat from './Chat';
 import { useState } from 'react';
 import { Container, Spinner, Row, Col } from 'react-bootstrap';
 
+import style from '../Style/styleEgypt.module.css';
+
 function Story(props) {
 	const [currentStory, setCurrentStory] = useState();
 	const [inputsQuestion, setInputsQuestion] = useState();
@@ -78,19 +80,20 @@ function Story(props) {
 	};
 
 	return isLoaded.loaded ? (
-		<Container fluid className={props.style.sfondo}>
+		<Container fluid className={style.sfondo}>
 			<section>
 				<Row>
 					<Col>
 						<Button
+							variant='dark'
 							onClick={() => {
 								setShowChat({ msg: props.newMessage, state: true });
 								props.setNewMessage(0);
 							}}
-							className={props.style.bottone}>
+							className={style.bottone}>
 							Apri Chat
 							{props.newMessage > 0 ? (
-								<Spinner animation='grow' variant='warning' role='status'>
+								<Spinner animation='grow' variant='secondary' role='status'>
 									<span className='sr-only'>Nuovo messaggio in chat</span>
 								</Spinner>
 							) : null}
@@ -99,6 +102,7 @@ function Story(props) {
 				</Row>
 
 				<Chat
+					style={style}
 					show={showChat}
 					onHide={() => setShowChat({ msg: 0, state: false })}
 					/* chat={props.player.status.chat} */
@@ -107,7 +111,7 @@ function Story(props) {
 				/>
 			</section>
 
-			<section className={props.style.paragrafo}>
+			<section className={style.container}>
 				<Row>
 					<Col>
 						<h1>Al momento ti trovi nell'attività {currentStory.activity}</h1>
@@ -122,7 +126,7 @@ function Story(props) {
 
 			<main>
 				{currentStory.storyline.map((value, key) => (
-					<Storyline key={key} storyline={value} style={props.style} />
+					<Storyline key={key} storyline={value} style={style} />
 				))}
 				<hr />
 				{currentStory.questions.length ? (
@@ -130,12 +134,12 @@ function Story(props) {
 						question={currentStory.questions[0]}
 						inputsQuestion={inputsQuestion}
 						onChangeAnswer={onChangeAnswer}
-						style={props.style}
+						style={style}
 					/>
 				) : null}
 				{props.errorAnswer || null}
 				{props.waitingOpen ? null : (
-					<Button name='nextActivity' variant='primary' onClick={e => fetchAnswers(e)} className={props.style.bottone}>
+					<Button name='nextActivity' variant='dark' onClick={e => fetchAnswers(e)} className={style.bottone}>
 						Prosegui attività
 					</Button>
 				)}

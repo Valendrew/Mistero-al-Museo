@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Image from 'react-bootstrap/Image';
 
 function TextParagraph(props) {
-	return <p className={props.style.paragrafo}>{props.text[1]}</p>;
+	return (
+		<div className={props.style.container}>
+			<p className={props.style.paragrafo}>{props.text[1]}</p>
+		</div>
+	);
 }
 
 function Media(props) {
@@ -44,14 +48,14 @@ function Media(props) {
 
 function Storyline(props) {
 	return (
-		<div>
+		<>
 			{props.storyline[0] === 'text' ? (
 				<TextParagraph text={props.storyline} style={props.style} />
 			) : (
 				<Media value={props.storyline} style={props.style} />
 			)}
 			<hr />
-		</div>
+		</>
 	);
 }
 

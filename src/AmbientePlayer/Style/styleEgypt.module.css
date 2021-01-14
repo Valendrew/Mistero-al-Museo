@@ -17,12 +17,22 @@
 	background-color: rgb(107, 87, 0);
 }
 
+.bottonealt {
+	composes: bottone from './style.module.css';
+	background-color: rgb(190, 168, 170);
+	color: black;
+}
+
 .container {
 	composes: container from './style.module.css';
 }
 
 .paragrafo {
 	composes: paragrafo from './style.module.css';
+}
+
+.paragrafoalt {
+	composes: paragrafoalt from './style.module.css';
 }
 
 .rispostaMultipla {

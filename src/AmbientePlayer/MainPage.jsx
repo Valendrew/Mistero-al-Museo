@@ -21,7 +21,7 @@ function MainPage(props) {
 			</Row>
 			<Row>
 				<Col>
-					<Button onClick={props.startGame} className={props.style.bottone}>
+					<Button variant='dark' onClick={props.startGame} className={props.style.bottone}>
 						Inizia la partita
 					</Button>
 				</Col>
