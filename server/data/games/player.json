@@ -1,1 +1,54 @@
-{}
+{
+    "9c2a067e-a56d-4b98-8bb5-44238723dbb5": {
+        "131c1dee-c084-4308-b26a-a670d5fffa30": {
+            "status": {
+                "activity": "end_game",
+                "dateActivity": "2021-01-15T20:47:42.770Z",
+                "score": 80
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-15T20:45:20.546Z"
+            },
+            "name": "player0",
+            "chat": [
+                "p:wei",
+                "p:come va?",
+                "v:tutto bene, te?",
+                "p:bene grazie"
+            ],
+            "givenAnswer": {
+                "0": {
+                    "value": "Tutankhamon",
+                    "score": "24",
+                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
+                    "activity": "1"
+                },
+                "1": {
+                    "value": "Porta con Anubi",
+                    "score": "10",
+                    "question": "Quale porta apri?",
+                    "activity": "4"
+                },
+                "2": {
+                    "value": "Una piuma",
+                    "score": "36",
+                    "question": "Anubi è colui che pesa il cuore del defunto, il quale viene confrontato con:",
+                    "activity": "6"
+                },
+                "3": {
+                    "value": "ehi ehi",
+                    "score": "10",
+                    "question": "Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?",
+                    "activity": "7"
+                }
+            },
+            "answer": null,
+            "question": {
+                "value": "10",
+                "correct": true,
+                "answerPlayer": "ehi ehi"
+            }
+        }
+    }
+}

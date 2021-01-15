@@ -13,7 +13,9 @@ router.use(express.json());
 router.use(express.text());
 
 router.use((req, res, next) => {
-	console.log(`Request ${req.method} at /games${req.path} on Time: ${new Date(Date.now()).toUTCString()}`);
+	console.log(
+		`Request ${req.method} at /games${req.path} on Time: ${new Date(Date.now()).toUTCString()}`
+	);
 	next();
 });
 
@@ -39,7 +41,12 @@ router.get('/:playerId/:storyId/playerAnswers', async (req, res, next) => {
 	} catch (e) {
 		result = {};
 	}
-	res.send({ answers: result[storyID][playerID].givenAnswer || {}, name: result[storyID][playerID].name } || {});
+	res.send(
+		{
+			answers: result[storyID][playerID].givenAnswer || {},
+			name: result[storyID][playerID].name
+		} || {}
+	);
 });
 
 const updateStatusPlayer = async (req, res, next) => {
@@ -102,7 +109,10 @@ router.post(
 				transizioni presenti nella storia */
 				let storyFile, startTransition;
 				try {
-					storyFile = await fileOperations.read(`story_${uuidParam}.json`, path.join(app.get('stories'), user));
+					storyFile = await fileOperations.read(
+						`story_${uuidParam}.json`,
+						path.join(app.get('stories'), user)
+					);
 					startTransition = Math.floor(Math.random() * Object.keys(storyFile.transitions).length);
 				} catch (e) {
 					next(e);
@@ -165,7 +175,10 @@ router.put(
 			story: req.params.id,
 			status: req.body.status
 		};
-		next();
+
+		if (req.body.status.hasOwnProperty('interval')) {
+			res.send('status updated');
+		} else next();
 	},
 	updateStatusPlayer
 );
@@ -176,7 +189,10 @@ router.put(
 	'/:id/players/answers',
 	(req, res, next) => {
 		res.locals.playerID = req.cookies.playerID;
-		answersPending[req.cookies.playerID] = { story: req.params.id, givenAnswer: req.body.givenAnswer };
+		answersPending[req.cookies.playerID] = {
+			story: req.params.id,
+			givenAnswer: req.body.givenAnswer
+		};
 		next();
 	},
 	updateStatusPlayer

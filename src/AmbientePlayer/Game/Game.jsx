@@ -241,7 +241,7 @@ function Game(props) {
 				})
 			});
 		},
-		isLoaded.loaded ? 5000 : null
+		isLoaded.loaded && informations.player.status.activity !== 'end_game' ? 5000 : null
 	);
 
 	return isLoaded.loaded ? (
