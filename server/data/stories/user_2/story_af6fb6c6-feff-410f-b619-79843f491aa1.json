@@ -3,8 +3,10 @@
         "name": "Gigino e la nuova macchina",
         "description": "Gigino va a comprare una macchina",
         "id": "af6fb6c6-feff-410f-b619-79843f491aa1",
-        "archived": true,
-        "qr": "http://localhost:3000/player/af6fb6c6-feff-410f-b619-79843f491aa1"
+        "archived": false,
+        "qr": "http://localhost:3000/player/af6fb6c6-feff-410f-b619-79843f491aa1",
+        "accessibility": false,
+        "theme": "generico"
     },
     "activities": {
         "0": {
@@ -436,7 +438,13 @@
         }
     },
     "transitions": [
-        []
+        [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4"
+        ]
     ],
     "finalMessages": {
         "0": {

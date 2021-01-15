@@ -275,6 +275,31 @@
                 "index": 0
             },
             "question": null
+        },
+        "487de97a-6525-4211-a53b-f18f7ae00608": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-15T17:27:14.914Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-15T17:27:14.914Z"
+            },
+            "name": "player11"
+        },
+        "24e6c644-1948-4e93-b7be-3b7416b9611c": {
+            "status": {
+                "activity": "1",
+                "dateActivity": "2021-01-15T17:28:10.733Z",
+                "score": 0,
+                "interval": 360045
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-15T17:27:41.478Z"
+            },
+            "name": "player12"
         }
     }
 }

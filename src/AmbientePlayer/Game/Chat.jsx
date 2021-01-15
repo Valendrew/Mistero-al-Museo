@@ -10,8 +10,11 @@ function Chat(props) {
 	const [message, setMessage] = useState('');
 
 	const fetchUpdateChat = async e => {
-		props.handleSendMessage(message);
-		setMessage('');
+		if (message !== '') {
+			props.setNewMessage(0);
+			props.handleSendMessage(message);
+			setMessage('');
+		}
 	};
 	const handleChangeInput = e => {
 		setMessage(e.target.value);
@@ -67,7 +70,9 @@ function Chat(props) {
 												borderRadius: '1rem',
 												height: '3.5rem'
 											}}>
-											<span className='sr-only'>I messaggi successivi sono stati appena ricevuti</span>
+											<span className='sr-only'>
+												I messaggi successivi sono stati appena ricevuti
+											</span>
 											<p className={props.style.paragrafoalt}>Messaggi non letti</p>
 										</ListGroup.Item>
 									) : null}
@@ -80,7 +85,10 @@ function Chat(props) {
 											<p className={props.style.paragrafoalt}>{text}</p>
 										</ListGroup.Item>
 									) : (
-										<ListGroup.Item variant='secondary' className='mr-5 mb-3' style={{ borderRadius: '1rem' }}>
+										<ListGroup.Item
+											variant='secondary'
+											className='mr-5 mb-3'
+											style={{ borderRadius: '1rem' }}>
 											<span className='sr-only'>Valutatore: </span>
 											<p className={props.style.paragrafoalt}>{text}</p>
 										</ListGroup.Item>

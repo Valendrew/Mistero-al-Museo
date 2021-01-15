@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 
 function TextParagraph(props) {
 	return (
-		<Row>
-			<Col className={props.style.container}>
-				<p className={props.style.paragrafo}>{props.text[1]}</p>
-			</Col>
-		</Row>
+		<Col className={props.style.container}>
+			<p className={props.style.paragrafo}>{props.text[1]}</p>
+		</Col>
 	);
 }
 
@@ -38,15 +36,21 @@ function Media(props) {
 				<p>Video non disponibile</p>
 			)
 		) : props.value[0] === 'img' ? (
-			<div className={props.style.backMedia}>
-				<Image alt={props.value[3]} src={mediaURL} thumbnail fluid className={props.style.immagine} />
-			</div>
+			<Col className={props.style.backMedia}>
+				<Image
+					alt={props.value[3]}
+					src={mediaURL}
+					thumbnail
+					fluid
+					className={props.style.immagine}
+				/>
+			</Col>
 		) : (
-			<div className={props.style.backMedia}>
+			<Col className={props.style.backMedia}>
 				<video width='320' height='240' controls>
 					<source src={mediaURL}></source>
 				</video>
-			</div>
+			</Col>
 		)
 	) : (
 		'Loading...'
@@ -55,14 +59,14 @@ function Media(props) {
 
 function Storyline(props) {
 	return (
-		<>
+		<Row>
 			{props.storyline[0] === 'text' ? (
 				<TextParagraph text={props.storyline} style={props.style} />
 			) : (
 				<Media value={props.storyline} style={props.style} />
 			)}
 			<hr />
-		</>
+		</Row>
 	);
 }
 

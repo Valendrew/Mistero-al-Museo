@@ -5,7 +5,7 @@ import { Col, Row } from 'react-bootstrap';
 
 function MainPage(props) {
 	return (
-		<main className='mt-3'>
+		<main>
 			<Row>
 				<Col className={props.style.container}>
 					<h2>Nome storia</h2>

@@ -8,13 +8,13 @@ function Accessibilita(props) {
 	return (
 		<Row>
 			<Col>
-				<h4 ref={target} onMouseEnter={() => setShow(true)} onMouseOut={() => setShow(false)}>
+				<p ref={target} onMouseEnter={() => setShow(true)} onMouseOut={() => setShow(false)}>
 					Spunta la casella se hai reso accessibile la storia
-				</h4>
+				</p>
 				<Overlay target={target.current} show={show} placement='bottom'>
 					{props => (
 						<Tooltip id='overlay' {...props}>
-							L'accessibilità è una proprieta che puo avere la tua storia. Permette agli utenti con disabilità visive di
+							L'accessibilità è una proprietà che può avere la tua storia. Permette agli utenti con disabilità visive di
 							poter comunque giocare. (e.g: hai messo una descrizione soddisfacente a tutte le immagini?)
 						</Tooltip>
 					)}
@@ -24,7 +24,9 @@ function Accessibilita(props) {
 				<Form.Check
 					type='checkbox'
 					value={props.accessibilita}
-					onChange={()=>{props.setAccessibilita(!props.accessibilita)}}
+					onChange={() => {
+						props.setAccessibilita(!props.accessibilita);
+					}}
 				/>
 			</Col>
 		</Row>

@@ -4,12 +4,12 @@ import MissionsTransitions from '../missions/MissionsTransitions';
 import StoryTheme from './StoryTheme';
 import FinalMessages from './FinalMessages';
 import Accessibilita from './Accessibilita';
-import { Button, Tabs, Tab, Container} from 'react-bootstrap';
+import { Button, Tabs, Tab, Container } from 'react-bootstrap';
 
 function StoryConclusion(props) {
 	let history = useHistory();
 	const idStory = history.location.state.idStory;
-	
+
 	const [accessibilita, setAccessibilita] = useState(false);
 
 	const [finalMessages, setFinalMessages] = useState({
@@ -20,7 +20,7 @@ function StoryConclusion(props) {
 
 	const [transitions, setTransitions] = useState([[]]);
 
-	const [tema, setTema]=useState("generico");
+	const [tema, setTema] = useState('generico');
 
 	const saveData = async (idStory, finalMessages, transitions) => {
 		const resultF = await fetch(`/stories/${idStory}/finalMessages`, {
@@ -38,7 +38,7 @@ function StoryConclusion(props) {
 		const resultA = await fetch(`/stories/${idStory}/accessibility`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({value: accessibilita})
+			body: JSON.stringify({ value: accessibilita })
 		});
 
 		const resultTheme = await fetch(`/stories/${idStory}/theme`, {
@@ -54,21 +54,21 @@ function StoryConclusion(props) {
 
 	return (
 		<Container>
-			<Tabs>
+			<Tabs defaultActiveKey='Transizioni'>
 				<Tab eventKey='Transizioni' title='Transizioni'>
 					{/* Transizioni missioni */}
 					<MissionsTransitions transitions={transitions} setTransitions={setTransitions} />
 				</Tab>
 				<Tab eventKey='Temi' title='Temi'>
 					{/* Temi del player */}
-					<StoryTheme setTema={setTema}/>
+					<StoryTheme setTema={setTema} />
 				</Tab>
 				<Tab eventKey='Messaggio conclusivo' title='Messaggio conclusivo'>
 					{/* Fasce conclusive storia */}
 					<FinalMessages setFinalMessages={setFinalMessages} finalMessages={finalMessages} />
 				</Tab>
 				<Tab eventKey='Accessibilità' title='Accessibilità'>
-					<Accessibilita setAccessibilita={setAccessibilita} accessibilita={accessibilita}/>
+					<Accessibilita setAccessibilita={setAccessibilita} accessibilita={accessibilita} />
 				</Tab>
 			</Tabs>
 			<Button className='mt-4' onClick={() => saveData(idStory, finalMessages, transitions, history)}>

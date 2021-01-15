@@ -44,7 +44,9 @@ function Story(props) {
 	}, [props.player, props.story]);
 
 	const onChangeAnswer = (key, value) => {
-		setInputsQuestion(inputsQuestion.map((_, index) => (index === key ? { value: value } : { value: false })));
+		setInputsQuestion(
+			inputsQuestion.map((_, index) => (index === key ? { value: value } : { value: false }))
+		);
 	};
 
 	const fetchAnswers = e => {
@@ -60,7 +62,9 @@ function Story(props) {
 
 				if (index === -1) {
 					props.setErrorAnswer(
-						<span className={props.style.paragrafoerrore}>Seleziona almeno un elemento come risposta</span>
+						<span className={props.style.paragrafoerrore}>
+							Seleziona almeno un elemento come risposta
+						</span>
 					);
 				} else {
 					const partialScore = currentStory.questions[0].answers[index].score;
@@ -104,7 +108,10 @@ function Story(props) {
 				<section>
 					<Row>
 						<Col>
-							<Button variant='dark' onClick={() => setShowChat(true)} className={props.style.bottone}>
+							<Button
+								variant='dark'
+								onClick={() => setShowChat(true)}
+								className={props.style.bottone}>
 								Apri Chat
 								{props.newMessage > 0 ? (
 									<Spinner animation='grow' variant='secondary' role='status'>
@@ -120,6 +127,7 @@ function Story(props) {
 					style={props.style}
 					show={showChat}
 					numberMessages={props.newMessage}
+					setNewMessage={props.setNewMessage}
 					onHide={() => {
 						props.setNewMessage(0);
 						setShowChat(false);
@@ -128,12 +136,14 @@ function Story(props) {
 					handleSendMessage={props.handleSendMessage}
 					chat={props.chat}
 				/>
-				
+
 				<section aria-label='Narrazione'>
 					{currentStory.storyline.map((value, key) => (
 						<Storyline key={key} storyline={value} style={props.style} />
 					))}
 				</section>
+
+				<hr />
 
 				<section aria-label='Domanda'>
 					{currentStory.questions.length ? (
@@ -147,7 +157,11 @@ function Story(props) {
 							waitingOpen={props.waitingOpen}
 						/>
 					) : (
-						<Button name='nextActivity' variant='dark' onClick={e => fetchAnswers(e)} className={props.style.bottone}>
+						<Button
+							name='nextActivity'
+							variant='dark'
+							onClick={e => fetchAnswers(e)}
+							className={props.style.bottone}>
 							Prosegui all'attività successiva
 						</Button>
 					)}
