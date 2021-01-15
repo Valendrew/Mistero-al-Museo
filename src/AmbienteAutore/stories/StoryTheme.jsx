@@ -8,6 +8,7 @@ import Placeholder from './placehold.jpg';
 import styleEgypt from '../../AmbientePlayer/Style/styleEgypt.module.css';
 import stylePrehistory from '../../AmbientePlayer/Style/stylePrehistory.module.css';
 import styleBase from '../../AmbientePlayer/Style/style.module.css';
+import styleMuseum from '../../AmbientePlayer/Style/styleMuseum.module.css';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
 /*function ThemePreview() {
@@ -76,6 +77,15 @@ function StoryTheme(props) {
 												props.setTema("prehistory");
 											}}>
 											Preistoria
+										</ListGroup.Item>
+										<ListGroup.Item
+											action
+											eventKey='link43'
+											onClick={() => {
+												setStoryStyle(styleMuseum);
+												props.setTema("museum");
+											}}>
+											Museo
 										</ListGroup.Item>
 									</ListGroup>
 								</Col>
