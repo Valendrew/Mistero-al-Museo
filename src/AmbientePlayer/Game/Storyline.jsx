@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 
 function TextParagraph(props) {
 	return (
-		<div className={props.style.container}>
-			<p className={props.style.paragrafo}>{props.text[1]}</p>
-		</div>
+		<Row>
+			<Col className={props.style.container}>
+				<p className={props.style.paragrafo}>{props.text[1]}</p>
+			</Col>
+		</Row>
 	);
 }
 
@@ -29,14 +32,18 @@ function Media(props) {
 
 	return isLoaded.loaded ? (
 		isLoaded.error ? (
-			<p>Immagine: {props.value[2]}</p>
+			props.value[0] === 'img' ? (
+				<p>Immagine: {props.value[3]}</p>
+			) : (
+				<p>Video non disponibile</p>
+			)
 		) : props.value[0] === 'img' ? (
 			<div className={props.style.backMedia}>
-				<Image width='200px' src={mediaURL} thumbnail fluid className={props.style.immagine} />
+				<Image alt={props.value[3]} src={mediaURL} thumbnail fluid className={props.style.immagine} />
 			</div>
 		) : (
 			<div className={props.style.backMedia}>
-				<video alt='' width='320' height='240' controls>
+				<video width='320' height='240' controls>
 					<source src={mediaURL}></source>
 				</video>
 			</div>

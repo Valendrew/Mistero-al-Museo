@@ -5,17 +5,17 @@ import { Col, Row } from 'react-bootstrap';
 
 function MainPage(props) {
 	return (
-		<main className='mt-4'>
+		<main className='mt-3'>
 			<Row>
-				<Col className={`m-2 ${props.style.container}`}>
-					<h2 className={props.style.paragrafo}>Nome storia</h2>
+				<Col className={props.style.container}>
+					<h2>Nome storia</h2>
 					<p className={props.style.paragrafo}>{props.name}</p>
 				</Col>
 			</Row>
 
 			<Row>
-				<Col className={`m-2 ${props.style.container}`}>
-					<h2 className={props.style.paragrafo}>Descrizione storia</h2>
+				<Col className={props.style.container}>
+					<h2>Descrizione storia</h2>
 					<p className={props.style.paragrafo}>{props.description}</p>
 				</Col>
 			</Row>

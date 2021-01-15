@@ -6,6 +6,17 @@ import useInterval from '../../useInterval';
 import { Button, InputGroup, Row, Spinner } from 'react-bootstrap';
 import EndGame from './EndGame';
 
+function ShowRequestHelp(props) {
+	return (
+		<>
+			<span className={props.style.paragrafoerrore}>Risposta non corretta: {props.additionalText || 'riprovare'}</span>
+			<Button variant='dark' className={props.style.bottone} onClick={e => props.sendHelp(e, props.answer)}>
+				Richiedi aiuto al valutatore
+			</Button>
+		</>
+	);
+}
+
 function getCurrentMission(activity, missions, transitions) {
 	return transitions.find(element => missions[element].hasOwnProperty(activity));
 }
@@ -16,7 +27,7 @@ function Game(props) {
 	const [informations, setInformations] = useState();
 	const [errorAnswer, setErrorAnswer] = useState();
 
-	const [waitingOpen, setWaitingOpen] = useState(false);
+	const [waitingOpen, setWaitingOpen] = useState(undefined);
 	const [waitingHelp, setWaitingHelp] = useState();
 
 	const [chat, setChat] = useState([]);
@@ -28,7 +39,7 @@ function Game(props) {
 			if (history.location.state) {
 				setInformations({ ...informations, ...history.location.state });
 				setErrorAnswer(null);
-				setWaitingOpen(false);
+				setWaitingOpen(undefined);
 				setIsLoaded({ loaded: true });
 			} else {
 				setIsLoaded({ loaded: true, error: 'error' });
@@ -47,9 +58,11 @@ function Game(props) {
 				body: JSON.stringify({ answer: answer, question: null })
 			});
 
-			setErrorAnswer(<Spinner animation='border' />);
-
-			setWaitingOpen(true);
+			setWaitingOpen(
+				<Spinner animation='border' variant='info' role='status'>
+					<span className='sr-only'>In attesa della valutazione della risposta da parte del valutatore</span>
+				</Spinner>
+			);
 		} else if (answer.type === 'radio') {
 			fetchInformationsNextActivity(answer.index, answer.score, answer);
 		} else if (answer.type === 'storyline') {
@@ -84,12 +97,7 @@ function Game(props) {
 		let nextActivity = story.missions[currentMission][activity][answerIndex];
 
 		if (nextActivity === activity) {
-			setErrorAnswer(
-				<InputGroup>
-					<InputGroup.Prepend className='mr-4'>Risposta non corretta, riprovare</InputGroup.Prepend>
-					<Button onClick={e => sendHelp(e, answer)}>Richiedi aiuto</Button>
-				</InputGroup>
-			);
+			setErrorAnswer(<ShowRequestHelp style={props.style} sendHelp={sendHelp} answer={answer} />);
 		} else {
 			if (nextActivity === 'new_mission') {
 				const currentTransitions = story.transitions[transition];
@@ -157,6 +165,7 @@ function Game(props) {
 			body: JSON.stringify({ help: latestAnswer })
 		});
 		if (result.ok) {
+			setErrorAnswer(<span className={props.style.paragrafoerrore}>Aiuto inviato al valutatore</span>);
 			setWaitingHelp(true);
 		}
 	};
@@ -172,15 +181,15 @@ function Game(props) {
 							fetchInformationsNextActivity(0, data.value, answer);
 						} else {
 							setErrorAnswer(
-								<InputGroup>
-									<InputGroup.Prepend className='mr-4'>
-										Risposta non corretta, riprovare. Motivo: {data.value}
-									</InputGroup.Prepend>
-									<Button onClick={e => sendHelp(e, data.answerPlayer)}>Richiedi aiuto</Button>
-								</InputGroup>
+								<ShowRequestHelp
+									style={props.style}
+									sendHelp={sendHelp}
+									answer={data.answerPlayer}
+									additionalText={data.value}
+								/>
 							);
 						}
-						setWaitingOpen(false);
+						setWaitingOpen(undefined);
 					}
 				});
 			}
@@ -194,8 +203,7 @@ function Game(props) {
 			if (result.ok) {
 				result.json().then(data => {
 					if (Object.keys(data).length) {
-						console.log(data.chat.length - chat.length);
-						setNewMessage(data.chat.length - chat.length);
+						setNewMessage(data.chat.length - chat.length + newMessage);
 						setChat(data.chat);
 					}
 				});
@@ -210,12 +218,7 @@ function Game(props) {
 			if (result.ok) {
 				result.text().then(data => {
 					if (data.trim()) {
-						setErrorAnswer(
-							<>
-								{errorAnswer}
-								<Row>Aiuto arrivato: {data}</Row>
-							</>
-						);
+						setErrorAnswer(<span className={props.style.paragrafoerrore}>Aiuto arrivato: {data}</span>);
 
 						setWaitingHelp(false);
 					}
@@ -245,12 +248,17 @@ function Game(props) {
 		isLoaded.error ? (
 			<h6>Errore nel caricamento</h6>
 		) : informations.player.status.activity === 'end_game' ? (
-			<EndGame finalMessages={informations.story.finalMessages} playerScore={informations.player.status.score} />
+			<EndGame
+				finalMessages={informations.story.finalMessages}
+				style={props.style}
+				playerScore={informations.player.status.score}
+			/>
 		) : (
 			<Story
 				player={informations.player}
 				story={informations.story}
 				errorAnswer={errorAnswer}
+				setErrorAnswer={setErrorAnswer}
 				waitingOpen={waitingOpen}
 				handleNextActivity={handleNextActivity}
 				handleSendMessage={handleSendMessage}

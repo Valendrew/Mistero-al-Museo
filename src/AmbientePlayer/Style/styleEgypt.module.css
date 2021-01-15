@@ -1,10 +1,12 @@
 .sfondo {
 	composes: sfondo from './style.module.css';
+
 	background-image: url('./pictures/EgyptBackground.jpg');
 }
 
 .backMedia {
 	composes: backMedia from './style.module.css';
+
 	background-image: url('./pictures/EgyptBackground2.jpg');
 }
 
@@ -12,35 +14,42 @@
 	composes: immagine from './style.module.css';
 }
 
-.bottone {
-	composes: bottone from './style.module.css';
-	background-color: rgb(107, 87, 0);
-}
-
-.bottonealt {
-	composes: bottone from './style.module.css';
-	background-color: rgb(190, 168, 170);
-	color: black;
-}
-
 .container {
 	composes: container from './style.module.css';
+}
+
+.bottone {
+	composes: bottone from './style.module.css';
+
+	background-color: rgb(107, 87, 0);
 }
 
 .paragrafo {
 	composes: paragrafo from './style.module.css';
 }
 
+.bottonealt {
+	composes: bottonealt from './style.module.css';
+
+	background-color: rgb(190, 168, 170);
+}
+
 .paragrafoalt {
 	composes: paragrafoalt from './style.module.css';
 }
 
+.paragrafoerrore {
+	composes: paragrafoerrore from './style.module.css';
+}
+
 .rispostaMultipla {
 	composes: rispostaMultipla from './style.module.css';
+
 	background-color: rgb(107, 87, 0);
 }
 
 .rispostaAperta {
 	composes: rispostaAperta from './style.module.css';
+
 	background-color: blanchedalmond;
 }

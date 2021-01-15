@@ -86,7 +86,7 @@ function PlayerHome(props) {
 		isLoaded.error ? (
 			<h1>Errore nel caricamento, riprovare</h1>
 		) : (
-			<Container fluid className={`p-4 ${props.style.sfondo}`}>
+			<Container fluid className={props.style.sfondo}>
 				<header>
 					<Row>
 						<Col className={props.style.container}>

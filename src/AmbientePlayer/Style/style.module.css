@@ -1,67 +1,98 @@
 .sfondo {
 	text-align: center;
-	background-size: cover;
-	height: 100vh;
 	color: white;
-	font-size: 200%;
+
+	background-size: cover;
+
+	height: 100vh;
+	overflow-y: auto;
 }
 
 .backMedia {
 	background-color: rgb(97, 97, 97, 0.5);
 	background-size: cover;
-	align-items: center;
+
 	display: flex;
-	padding: 30px;
-	margin: 0 20% 0 20%;
+	align-items: center;
+
 	border-radius: 15px;
+	margin: 1.5rem 5rem;
+	padding: 30px;
 }
 
 .immagine {
-	padding: 0;
-	margin: auto;
-	border: 0;
-	max-height: 400px;
-	width: auto;
-	border-radius: 15px;
 	box-shadow: 0 0 8px 8px slategrey;
-}
 
-.bottone {
-	font-size: 120%;
-	font-weight: bold;
+	border-radius: 15px;
+	margin: auto;
+
+	max-height: 30rem;
+	max-width: 35rem;
+	width: auto;
+	height: auto;
 }
 
 .container {
-	background-color: rgb(94, 94, 94);
-	border-radius: 15px;
-	margin: 0px 15% 10px 15%;
-	padding: 5px;
+	background-color: rgb(84, 84, 84);
+
+	border-radius: 1rem;
+	margin: 1rem 5rem 0rem;
+	padding: 1rem;
+}
+
+.bottone {
+	font-weight: bold;
+	font-size: 1.6rem;
+
+	border-radius: 1rem;
+	margin: 1rem auto auto;
 }
 
 .paragrafo {
 	color: white;
+	font-size: 1.7rem;
+}
+
+.bottonealt {
+	color: black;
+
+	font-weight: bold;
+	font-size: 1.5rem;
+
+	border-radius: 1rem;
 }
 
 .paragrafoalt {
 	color: black;
-	font-size: 200%;
+	font-size: 1.6rem;
+}
+
+.paragrafoerrore {
+	font-size: 1.5rem;
+	color: rgb(255, 175, 228);
+
+	margin: 1rem auto auto;
+	display: block;
 }
 
 .rispostaMultipla {
-	font-weight: bold;
 	background-color: rgb(173, 0, 0);
+
+	font-weight: bold;
+	font-size: 1.7rem;
 	color: white;
-	display: block;
-	border-radius: 20px;
-	padding: 10px 10px 10px 10px;
-	margin: 80px 33% 90px 33%;
-	transform: scale(2.5);
+
+	border-radius: 2rem;
+	margin: 0.5rem 10rem;
+	padding: 0.5rem;
 }
 
 .rispostaAperta {
-	margin-top: 30px;
-	margin-bottom: 20px;
-	height: 200px;
-	font-size: 250%;
-	text-align: center;
+	font-size: 2rem;
+
+	width: 45rem;
+
+	border-radius: 2rem;
+	padding: 0.5rem;
+	margin: 0.5rem auto;
 }

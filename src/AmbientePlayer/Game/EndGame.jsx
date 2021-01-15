@@ -26,9 +26,12 @@ function getMessage(finalMessages, playerScore) {
 
 function EndGame(props) {
 	return (
-		<Container>
-			<h2>Hai terminato la storia con {props.playerScore} punti</h2>
-			{getMessage(props.finalMessages, props.playerScore)}
+		<Container fluid className={props.style.sfondo}>
+			<main className={props.style.container}>
+				<h1>Hai terminato la storia con {props.playerScore} punti</h1>
+				<h2>{getMessage(props.finalMessages, props.playerScore)}</h2>
+				<h3>Chiudi la finestra per uscire dalla partita</h3>
+			</main>
 		</Container>
 	);
 }

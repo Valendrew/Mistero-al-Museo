@@ -1,36 +1,55 @@
 .sfondo {
-    composes: sfondo from "./style.module.css";
-    background-image: url("./pictures/PrehistoryBackground.jpg");
+	composes: sfondo from './style.module.css';
+
+	background-image: url('./pictures/PrehistoryBackground.jpg');
 }
 
 .backMedia {
-    composes: backMedia from "./style.module.css";
-    background-image: url("./pictures/PrehistoryBackground2.jpg");
+	composes: backMedia from './style.module.css';
+
+	background-image: url('./pictures/PrehistoryBackground2.jpg');
 }
 
 .immagine {
-    composes: immagine from "./style.module.css";
-}
-
-.bottone {
-    composes: bottone from "./style.module.css";
-    background-color: rgb(141, 11, 11);
+	composes: immagine from './style.module.css';
 }
 
 .container {
-    composes: container from "./style.module.css";
+	composes: container from './style.module.css';
+}
+
+.bottone {
+	composes: bottone from './style.module.css';
+
+	background-color: rgb(141, 11, 11);
 }
 
 .paragrafo {
-    composes: paragrafo from "./style.module.css";
+	composes: paragrafo from './style.module.css';
+}
+
+.bottonealt {
+    composes: bottonealt from './style.module.css';
+    
+    background-color: rgb(226, 102, 102);
+}
+
+.paragrafoalt {
+	composes: paragrafoalt from './style.module.css';
+}
+
+.paragrafoerrore {
+	composes: paragrafoerrore from './style.module.css';
 }
 
 .rispostaMultipla {
-    composes: rispostaMultipla from "./style.module.css";
-    background-color: rgb(141, 11, 11);
+    composes: rispostaMultipla from './style.module.css';
+    
+	background-color: rgb(141, 11, 11);
 }
 
 .rispostaAperta {
-    composes: rispostaAperta from "./style.module.css";
-    background-color: rgb(168, 168, 168);
+    composes: rispostaAperta from './style.module.css';
+    
+	background-color: rgb(168, 168, 168);
 }

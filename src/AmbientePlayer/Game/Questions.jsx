@@ -1,52 +1,83 @@
 import React from 'react';
 
-import Container from 'react-bootstrap/Container';
+import { Col, Row, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
 function OpenQuestion(props) {
 	return (
-		<Form.Control
-			name='open_question'
-			value={props.inputsQuestion[0].value}
-			onChange={e => props.onChangeAnswer(0, e.target.value)}
-			className={props.style.rispostaAperta}
-		/>
+		<Form.Group>
+			<Form.Label id='answer_value' className={props.style.container}>
+				<span className={props.style.paragrafo}>Risposta alla domanda</span>
+			</Form.Label>
+			<Form.Control
+				name='open_question'
+				as='textarea'
+				rows={4}
+				value={props.inputsQuestion[0].value}
+				onChange={e => props.onChangeAnswer(0, e.target.value)}
+				className={props.style.rispostaAperta}
+				aria-labelledby='answer_value'
+				required
+				aria-required
+			/>
+		</Form.Group>
 	);
 }
 
 function MultipleQuestion(props) {
 	return (
-		<div class='multipleQuestion'>
-			<Form>
-				{props.question.answers.map((value, key) => {
-					return (
-						<div className={props.style.rispostaMultipla}>
-							<Form.Check
-								key={key}
-								defaultChecked={props.inputsQuestion[key].value}
-								name='radio_question'
-								onChange={e => props.onChangeAnswer(key, e.target.checked)}
-								type={props.question.type}
-								label={value.value}
-							/>
-						</div>
-					);
-				})}
-			</Form>
-		</div>
+		<Form.Group role='radiogroup' aria-label='Risposta alla domanda'>
+			{props.question.answers.map((value, key) => (
+				<Form.Check
+					className={props.style.rispostaMultipla}
+					key={key}
+					id={`radio_${key}`}
+					name='radio_question'
+					type={props.question.type}
+					label={value.value}
+					onChange={e => props.onChangeAnswer(key, e.target.checked)}
+					checked={props.inputsQuestion[key].value}
+					required
+					aria-checked={props.inputsQuestion[key].value}
+					aria-required
+				/>
+			))}
+		</Form.Group>
 	);
 }
 function Questions(props) {
 	return (
-		<Container fluid>
-			<p className={props.style.paragrafo}>{props.question.value}</p>
+		<div role='group' aria-labelledby='legend_question'>
+			<Form>
+				<Form.Group as={Row}>
+					<Form.Label id='legend_question' as='legend' className={props.style.container} column>
+						<span className={props.style.paragrafo}>{props.question.value}</span>
+						{props.errorAnswer}
+					</Form.Label>
+				</Form.Group>
 
-			{props.question.type === 'open' ? (
-				<OpenQuestion {...props} />
-			) : props.question.type === 'widget' ? null : (
-				<MultipleQuestion {...props} />
-			)}
-		</Container>
+				<Row>
+					<Col>
+						{props.question.type === 'open' ? (
+							<OpenQuestion {...props} />
+						) : props.question.type === 'widget' ? null : (
+							<MultipleQuestion {...props} />
+						)}
+					</Col>
+				</Row>
+
+				{props.waitingOpen}
+				<Button
+					name='nextActivity'
+					type='submit'
+					variant='dark'
+					onClick={e => props.fetchAnswers(e)}
+					className={props.style.bottone}
+					disabled={props.waitingOpen ? true : false}>
+					Prosegui all'attività successiva
+				</Button>
+			</Form>
+		</div>
 	);
 }
 
