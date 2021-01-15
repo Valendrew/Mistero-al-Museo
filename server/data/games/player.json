@@ -3,131 +3,59 @@ undefined
 =======
 {
     "9c2a067e-a56d-4b98-8bb5-44238723dbb5": {
-        "2a6f6632-4beb-492a-b166-7f1b2f0e3262": {
+        "2a6d9efd-b132-4f8d-b712-388c20e67e8e": {
             "status": {
-                "activity": "start",
+                "activity": "0",
+                "dateActivity": "2021-01-14T18:25:17.164Z",
                 "score": 0,
-                "dateActivity": "2021-01-14T16:14:42.812Z"
+                "interval": 395785
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2021-01-14T16:14:42.812Z"
+                "dateStart": "2021-01-14T18:23:44.211Z"
             },
-            "name": "player0"
+            "name": "player0",
+            "chat": [
+                "v:ciao",
+                "v:come va???",
+                "v:noooo",
+                "p:welaaa",
+                "p:weeeee",
+                "p:come va frateee",
+                "p:tutto benee?",
+                "v:ciao"
+            ]
         },
-        "9c0f557d-e55e-418b-8cf6-9883e4c26359": {
+        "39d56f2f-0e56-4f14-9129-5d79bda7111b": {
             "status": {
-                "activity": "start",
+                "activity": "0",
+                "dateActivity": "2021-01-14T18:31:03.909Z",
                 "score": 0,
-                "dateActivity": "2021-01-14T16:14:47.691Z"
+                "interval": 137786
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2021-01-14T16:14:47.691Z"
+                "dateStart": "2021-01-14T18:31:02.441Z"
             },
             "name": "player1"
         },
-        "53aeb988-52ff-4faa-b6fa-83f10fd1747e": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-14T16:14:48.901Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-14T16:14:48.901Z"
-            },
-            "name": "player2"
-        },
-        "ebdcc630-faf3-45ee-947b-8ea77b99ec02": {
+        "498ac5e7-f380-4b27-8ba3-8a5ada3da693": {
             "status": {
                 "activity": "0",
-                "dateActivity": "2021-01-14T16:15:02.777Z",
+                "dateActivity": "2021-01-14T18:32:11.996Z",
                 "score": 0,
-                "interval": 165065
+                "interval": 67649
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2021-01-14T16:14:49.851Z"
+                "dateStart": "2021-01-14T18:32:11.352Z"
             },
-            "name": "player3"
-        },
-        "ad326deb-db19-4c86-8bea-6feb22c37173": {
-            "status": {
-                "activity": "0",
-                "dateActivity": "2021-01-14T16:18:37.425Z",
-                "score": 0,
-                "interval": 223792
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-14T16:18:35.940Z"
-            },
-            "name": "player4"
-        },
-        "0191ca4f-191a-4683-bc7a-f9ec6b718a92": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-14T16:22:31.602Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-14T16:22:31.602Z"
-            },
-            "name": "player5"
-        },
-        "e903252f-36ec-40de-aa2e-c8e439789832": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-14T16:22:49.463Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-14T16:22:49.463Z"
-            },
-            "name": "player6"
-        },
-        "8f3760af-19b2-44f8-8fa9-02ac11d29aa7": {
-            "status": {
-                "activity": "1",
-                "dateActivity": "2021-01-14T16:40:37.160Z",
-                "score": 0,
-                "interval": 290055
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-14T16:23:09.264Z"
-            },
-            "name": "player7",
+            "name": "player2",
             "chat": [
-                "v:ciao",
-                "v:ehi",
-                "v:whey",
-                "v:ehyyy",
-                "v:sciao",
-                "v:ehi tu"
-            ]
-        },
-        "787dff9c-2c9e-48d7-9119-00c571f9017e": {
-            "status": {
-                "activity": "0",
-                "dateActivity": "2021-01-14T16:45:49.788Z",
-                "score": 0,
-                "interval": 264315
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-14T16:45:40.582Z"
-            },
-            "name": "player8",
-            "chat": [
-                "v:eho",
-                "v:ehii",
-                "v:ciao",
-                "v:whey",
-                "v:ciao"
+                "p:ciao",
+                "p:welaaaaa",
+                "v:todo bien",
+                "v:tteee?"
             ]
         }
     }
