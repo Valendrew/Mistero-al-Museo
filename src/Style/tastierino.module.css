@@ -1,0 +1,40 @@
+.main {
+	background-color: rgb(92, 92, 92);
+
+	max-height: 45rem;
+	max-width: 35rem;
+	width: auto;
+	height: auto;
+
+	margin: 1rem auto;
+	/* padding: 2rem; */
+	border-radius: 39px;
+}
+
+.container {
+    padding: 1.5rem;
+	background-color: rgb(92, 92, 92);
+}
+
+.containeralt {
+	text-align: center;
+}
+
+.containeralt > svg {
+	margin: 0 1.5rem;
+}
+
+.tastierino {
+	letter-spacing: 4.2rem;
+	font-size: 8rem;
+	border: 0;
+
+	color: limegreen;
+	background-color: transparent;
+}
+
+.tastierino[readonly] {
+	color: limegreen;
+	box-shadow: none;
+	background-color: transparent;
+}

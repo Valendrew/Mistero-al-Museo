@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Row, Col } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
-/* import style from '../Style/tastierino.module.css'; */
+import style from '../Style/tastierino.module.css';
 
 function aumentaValore(index, valoreAttuale, setValue, onChangeAnswer) {
 	let oldVal = valoreAttuale;
@@ -41,6 +41,7 @@ function UpArrow(props) {
 		</svg>
 	);
 }
+
 function DownArrow(props) {
 	return (
 		<svg
@@ -60,47 +61,28 @@ function WidgetNumerico(props) {
 	const [value, setValue] = useState('0000');
 
 	return (
-		<div className='bg-secondary' style={{ width: '600px', borderRadius: '39px' }}>
-			<Row>
-				<Col>
-					<UpArrow index={0} valoreAttuale={value} setValue={setValue} {...props} />
-				</Col>
-				<Col>
-					<UpArrow index={1} valoreAttuale={value} setValue={setValue} {...props} />
-				</Col>
-				<Col>
-					<UpArrow index={2} valoreAttuale={value} setValue={setValue} {...props} />
-				</Col>
-				<Col>
-					<UpArrow index={3} valoreAttuale={value} setValue={setValue} {...props} />
-				</Col>
-			</Row>
-			<Row>
-				<Col xs={12}>
-					<Form.Control
-						name='open_question'
-						readOnly
-						defaultValue='0000'
-						value={value}
-						className='mt-3 mb-3 bg-secondary'
-						style={{ letterSpacing: '96px', fontSize: '110px', border: '0px', color: 'limegreen' }}
-					/>
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<DownArrow index={0} valoreAttuale={value} setValue={setValue} {...props} />
-				</Col>
-				<Col>
-					<DownArrow index={1} valoreAttuale={value} setValue={setValue} {...props} />
-				</Col>
-				<Col>
-					<DownArrow index={2} valoreAttuale={value} setValue={setValue} {...props} />
-				</Col>
-				<Col>
-					<DownArrow index={3} valoreAttuale={value} setValue={setValue} {...props} />
-				</Col>
-			</Row>
+		<div className={style.main}>
+			<div className={style.containeralt}>
+				<UpArrow index={0} valoreAttuale={value} setValue={setValue} {...props} />
+				<UpArrow index={1} valoreAttuale={value} setValue={setValue} {...props} />
+				<UpArrow index={2} valoreAttuale={value} setValue={setValue} {...props} />
+				<UpArrow index={3} valoreAttuale={value} setValue={setValue} {...props} />
+			</div>
+			<div className={style.container}>
+				<Form.Control
+					name='open_question'
+					readOnly
+					className={style.tastierino}
+					defaultValue='0000'
+					value={value}
+				/>
+			</div>
+			<div className={style.containeralt}>
+				<DownArrow index={0} valoreAttuale={value} setValue={setValue} {...props} />
+				<DownArrow index={1} valoreAttuale={value} setValue={setValue} {...props} />
+				<DownArrow index={2} valoreAttuale={value} setValue={setValue} {...props} />
+				<DownArrow index={3} valoreAttuale={value} setValue={setValue} {...props} />
+			</div>
 		</div>
 	);
 }

@@ -7,7 +7,6 @@ import styleBase from '../../Style/style.module.css';
 import styleEgypt from '../../Style/styleEgypt.module.css';
 import stylePrehistory from '../../Style/stylePrehistory.module.css';
 import styleMuseum from '../../Style/styleMuseum.module.css';
-import WidgetPapiro from '../../Widgets/WidgetPapiro';
 
 function PagePreview({ style }) {
 	return (
@@ -75,9 +74,6 @@ function PagePreview({ style }) {
 			<Row className={style.rispostaMultipla}>
 				<Form.Check type='radio' label='Risposta C' name='example_radio' />
 			</Row>
-
-			{/* WIDGET */}
-			<WidgetPapiro />
 
 			<Button variant='dark' className={style.bottone}>
 				Prosegui attività

@@ -8,7 +8,7 @@ export default function Widget(props) {
 	const [value, setValue] = useState('classico');
 	return (
 		<Row className='my-4'>
-			<Col xs={6} md={4} lg={3}>
+			<Col xs={4}>
 				<Form.Control
 					name={props.widgetId}
 					as='select'
@@ -21,14 +21,14 @@ export default function Widget(props) {
 					<option value='numerico'>Numerico</option>
 				</Form.Control>
 			</Col>
-			<Col xs={4} sm={3} md={2}>
+			<Col xs={8} style={{ maxHeight: '25vh', overflowY: 'scroll' }}>
 				{value === 'classico' ? (
-					<Form.Control placeholder='Ciao a tutti!'></Form.Control>
+					<Form.Control placeholder='Esempio di testo'></Form.Control>
 				) : value === 'papiro' ? (
 					<WidgetPapiro />
-				) : (
+				) : value === 'numerico' ? (
 					<WidgetNumerico />
-				)}
+				) : null}
 			</Col>
 		</Row>
 	);

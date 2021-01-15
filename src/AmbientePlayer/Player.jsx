@@ -6,6 +6,9 @@ import { Container, Row, Col } from 'react-bootstrap';
 import MainPage from './MainPage';
 import Game from './Game/Game';
 
+import WidgetPapiro from '../Widgets/WidgetPapiro';
+import WidgetNumerico from '../Widgets/WidgetNumerico';
+
 import styleGeneric from '../Style/style.module.css';
 import styleEgypt from '../Style/styleEgypt.module.css';
 import stylePrehistory from '../Style/stylePrehistory.module.css';
@@ -108,6 +111,8 @@ function PlayerHome(props) {
 					style={props.style}
 					startGame={startGame}
 				/>
+				<WidgetPapiro />
+				<WidgetNumerico />
 			</Container>
 		)
 	) : null;
