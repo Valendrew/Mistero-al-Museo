@@ -7,6 +7,7 @@ import styleBase from '../../AmbientePlayer/Style/style.module.css';
 import styleEgypt from '../../AmbientePlayer/Style/styleEgypt.module.css';
 import stylePrehistory from '../../AmbientePlayer/Style/stylePrehistory.module.css';
 import styleMuseum from '../../AmbientePlayer/Style/styleMuseum.module.css';
+import WidgetPapiro from '../activities/Widgets/WidgetPapiro';
 
 function PagePreview({ style }) {
 	return (
@@ -74,6 +75,7 @@ function PagePreview({ style }) {
 			<Row className={style.rispostaMultipla}>
 				<Form.Check type='radio' label='Risposta C' name='example_radio' />
 			</Row>
+			<WidgetPapiro />
 			<Button variant='dark' className={style.bottone}>
 				Prosegui attività
 			</Button>
