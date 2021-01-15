@@ -1,28 +1,34 @@
 import React, { useState } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
-
-function aumentaValore(index, valoreAttuale, setValue) {
+import './../Style/Text.css';
+function aumentaValore(index, valoreAttuale, setValue, onChangeAnswer) {
 	let oldVal = valoreAttuale;
 	let valToMod = parseInt(valoreAttuale[index]);
 	if (valToMod === 9) valToMod = 0;
 	else valToMod++;
 	oldVal = oldVal.substr(0, index) + valToMod.toString() + oldVal.substring(index + 1);
 	setValue(oldVal);
+	if (onChangeAnswer) {
+		onChangeAnswer(0, oldVal);
+	}
 }
 
-function decrementaValore(index, valoreAttuale, setValue) {
+function decrementaValore(index, valoreAttuale, setValue, onChangeAnswer) {
 	let oldVal = valoreAttuale;
 	let valToMod = parseInt(valoreAttuale[index]);
 	if (valToMod === 0) valToMod = 9;
 	else valToMod--;
 	oldVal = oldVal.substr(0, index) + valToMod.toString() + oldVal.substring(index + 1);
 	setValue(oldVal);
+	if (onChangeAnswer) {
+		onChangeAnswer(0, oldVal);
+	}
 }
 
 function UpArrow(props) {
 	return (
 		<svg
-			onClick={() => aumentaValore(props.index, props.valoreAttuale, props.setValue)}
+			onClick={() => aumentaValore(props.index, props.valoreAttuale, props.setValue, props.onChangeAnswer)}
 			width='90'
 			height='90'
 			class='bi bi-arrow-up-circle-fill'
@@ -34,7 +40,7 @@ function UpArrow(props) {
 function DownArrow(props) {
 	return (
 		<svg
-			onClick={() => decrementaValore(props.index, props.valoreAttuale, props.setValue)}
+			onClick={() => decrementaValore(props.index, props.valoreAttuale, props.setValue, props.onChangeAnswer)}
 			width='90'
 			height='90'
 			class='bi bi-arrow-down-circle-fill'
@@ -44,28 +50,29 @@ function DownArrow(props) {
 	);
 }
 
-function InputNumerico(props) {
+function WidgetNumerico(props) {
 	const [value, setValue] = useState('0000');
 
 	return (
 		<div className='bg-secondary' style={{ width: '600px', borderRadius: '39px' }}>
 			<Row>
 				<Col>
-					<UpArrow index={0} valoreAttuale={value} setValue={setValue} />
+					<UpArrow index={0} valoreAttuale={value} setValue={setValue} {...props} />
 				</Col>
 				<Col>
-					<UpArrow index={1} valoreAttuale={value} setValue={setValue} />
+					<UpArrow index={1} valoreAttuale={value} setValue={setValue} {...props} />
 				</Col>
 				<Col>
-					<UpArrow index={2} valoreAttuale={value} setValue={setValue} />
+					<UpArrow index={2} valoreAttuale={value} setValue={setValue} {...props} />
 				</Col>
 				<Col>
-					<UpArrow index={3} valoreAttuale={value} setValue={setValue} />
+					<UpArrow index={3} valoreAttuale={value} setValue={setValue} {...props} />
 				</Col>
 			</Row>
 			<Row>
 				<Col xs={12}>
 					<Form.Control
+						name='open_question'
 						readOnly
 						defaultValue='0000'
 						value={value}
@@ -76,20 +83,20 @@ function InputNumerico(props) {
 			</Row>
 			<Row>
 				<Col>
-					<DownArrow index={0} valoreAttuale={value} setValue={setValue} />
+					<DownArrow index={0} valoreAttuale={value} setValue={setValue} {...props} />
 				</Col>
 				<Col>
-					<DownArrow index={1} valoreAttuale={value} setValue={setValue} />
+					<DownArrow index={1} valoreAttuale={value} setValue={setValue} {...props} />
 				</Col>
 				<Col>
-					<DownArrow index={2} valoreAttuale={value} setValue={setValue} />
+					<DownArrow index={2} valoreAttuale={value} setValue={setValue} {...props} />
 				</Col>
 				<Col>
-					<DownArrow index={3} valoreAttuale={value} setValue={setValue} />
+					<DownArrow index={3} valoreAttuale={value} setValue={setValue} {...props} />
 				</Col>
 			</Row>
 		</div>
 	);
 }
 
-export default InputNumerico;
+export default WidgetNumerico;

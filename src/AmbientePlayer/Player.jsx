@@ -10,9 +10,10 @@ import Game from './Game/Game';
 import styleGeneric from './Style/style.module.css';
 import styleEgypt from './Style/styleEgypt.module.css';
 import stylePrehistory from './Style/stylePrehistory.module.css';
+import styleMuseum from './Style/styleMuseum.module.css';
 import { Col } from 'react-bootstrap';
 
-const themeConverter = { egypt: styleEgypt, generico: styleGeneric, prehistory: stylePrehistory };
+const themeConverter = { egypt: styleEgypt, generico: styleGeneric, prehistory: stylePrehistory, museum: styleMuseum };
 
 function Player() {
 	const [style, setStyle] = useState();
@@ -100,6 +101,7 @@ function PlayerHome(props) {
 					description={story.info.description}
 					style={props.style}
 					startGame={startGame}
+					accessibilita={story.accessibility.value}
 				/>
 			</Container>
 		)

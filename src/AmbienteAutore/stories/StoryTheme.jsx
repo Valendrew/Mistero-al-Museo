@@ -1,63 +1,28 @@
-import React from 'react';
-import { Card, Col, Form, ListGroup, Row, Tab } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, Col, Form, ListGroup, Row, Tab, Button, Image, Container } from 'react-bootstrap';
 
-import './Text.css';
-import Papiro from './Papyrus-psd26583.png';
-function ThemePreviewNature() {
-	return (
-		<>
-			<Card>
-				<Card.Header>Input di tipo testo</Card.Header>
-				<Card.Body>
-					<Form.Control
-						style={{
-							border: '0',
-							color: 'white',
-							backgroundImage: 'url(http://14textures.com/wp-content/uploads/2015/07/pebble-surface-2.jpg)',
-							backgroundSize: 'cover'
-						}}
-					/>
-				</Card.Body>
-			</Card>
 
-			<Card className='mt-4'>
-				<Card.Header>Input di tipo radio</Card.Header>
-				<Card.Body>
-					<Form.Check
-						type='radio'
-						style={{
-							backgroundImage: 'url(https://bgfons.com/uploads/leaves/leaves_texture4972.jpg)',
-							backgroundSize: 'cover'
-						}}>
-						<Form.Check.Input type='radio' />
-						<Form.Check.Label className='text-white'>Vaffanculo ammat</Form.Check.Label>
-					</Form.Check>
-				</Card.Body>
-			</Card>
-		</>
-	);
-}
 
-function ThemePreview() {
+import Smarthphone from './smartphone.png';
+import Placeholder from './placehold.jpg';
+import styleEgypt from '../../AmbientePlayer/Style/styleEgypt.module.css';
+import stylePrehistory from '../../AmbientePlayer/Style/stylePrehistory.module.css';
+import styleBase from '../../AmbientePlayer/Style/style.module.css';
+import styleMuseum from '../../AmbientePlayer/Style/styleMuseum.module.css';
+import { propTypes } from 'react-bootstrap/esm/Image';
+
+
+
+function StoryTheme(props) {
 	const style = {
-		width: '370px',
-		backgroundImage: `url(${Papiro})`,
-		backgroundRepeat: 'no-repeat',
-		backgroundSize: '100% 100%',
-		padding: '12%',
-		height: '550px'
+		width: '360px',
+		height: '640px',
+		overflowY: 'scroll',
+		border: 'black solid 2px',
+		position: 'relative',
+		zndex: '20'
 	};
-
-	return (
-		<div xs={6} style={style}>
-			<Col>
-				<Form.Control className='papiro' as='textarea' spellcheck='false' maxLength='230' id='widget' rows={14}/>
-			</Col>
-		</div>
-	);
-}
-
-function StoryTheme() {
+	const [storystyle, setStoryStyle] = useState(styleBase);
 	return (
 		<Row>
 			<Col xs={12}>
@@ -69,22 +34,90 @@ function StoryTheme() {
 							<Row>
 								<Col sm={4}>
 									<ListGroup>
-										<ListGroup.Item action eventKey='link1'>
-											Natura
+										<ListGroup.Item
+											action
+											eventKey='link1'
+											onClick={() => {
+												setStoryStyle(styleBase);
+												props.setTema("generico");
+											}}>
+											Classico
 										</ListGroup.Item>
-										<ListGroup.Item action eventKey='link2'>
-											Link 2
+										<ListGroup.Item
+											action
+											eventKey='link2'
+											onClick={() => {
+												setStoryStyle(styleEgypt);
+												props.setTema("egypt");
+											}}>
+											Egitto
+										</ListGroup.Item>
+										<ListGroup.Item
+											action
+											eventKey='link3'
+											onClick={() => {
+												setStoryStyle(stylePrehistory);
+												props.setTema("prehistory");
+											}}>
+											Preistoria
+										</ListGroup.Item>
+										<ListGroup.Item
+											action
+											eventKey='link43'
+											onClick={() => {
+												setStoryStyle(styleMuseum);
+												props.setTema("museum");
+											}}>
+											Museo
 										</ListGroup.Item>
 									</ListGroup>
 								</Col>
 								<Col sm={8}>
 									<Tab.Content>
-										<Tab.Pane eventKey='link1'>
-											<ThemePreviewNature />
-										</Tab.Pane>
-										<Tab.Pane eventKey='link2'>
-											<ThemePreview />
-										</Tab.Pane>
+										<Container className={storystyle.sfondo} style={style} fluid>
+											<Button className={storystyle.bottone} style={{ width: '90px' }}>
+												Chat
+											</Button>
+											<Row>
+												<Col className={storystyle.container}>
+													<p className={storystyle.paragrafo}>
+														<h5>Al momento ti trovi nell'attività *</h5>
+														<h6>Il punteggio attuale è **</h6>
+													</p>
+												</Col>
+											</Row>
+											<hr />
+											<Row>
+												<Col className={storystyle.backMedia}>
+													<Image width='150px' src={Placeholder} thumbnail fluid />
+												</Col>
+											</Row>
+											<hr />
+											<Row>
+												<Col className={storystyle.container}>
+													<p className={storystyle.paragrafo}>Questa è la parte scritta della narrazione</p>
+												</Col>
+											</Row>
+											<hr />
+											<Row>
+												<Col className={storystyle.container}>
+													<p className={storystyle.paragrafo}>Questa è la parte domanda</p>
+												</Col>
+											</Row>
+											<hr />
+											<Row className={storystyle.rispostaMultipla}>
+												<Form.Check type='radio' label='Risposta A' name='example_radio' defaultChecked={true} />
+											</Row>
+											<Row className={storystyle.rispostaMultipla}>
+												<Form.Check type='radio' label='Risposta B' name='example_radio' />
+											</Row>
+											<Row className={storystyle.rispostaMultipla}>
+												<Form.Check type='radio' label='Risposta C' name='example_radio' />
+											</Row>
+											<Button className={storystyle.bottone} style={{ width: '130px' }}>
+												Prosegui attività
+											</Button>
+										</Container>
 									</Tab.Content>
 								</Col>
 							</Row>

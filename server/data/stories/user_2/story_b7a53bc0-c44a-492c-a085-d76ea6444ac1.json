@@ -1,0 +1,79 @@
+{
+    "info": {
+        "name": "Gian-Abdrea",
+        "description": "desc",
+        "id": "b7a53bc0-c44a-492c-a085-d76ea6444ac1"
+    },
+    "activities": {
+        "0": {
+            "name": "attivita 1",
+            "storyline": [
+                [
+                    "text",
+                    "lol"
+                ]
+            ],
+            "questions": []
+        },
+        "1": {
+            "name": "popp",
+            "storyline": [
+                [
+                    "text",
+                    "edooo"
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "cao?",
+                    "tips": [],
+                    "minScore": "-50",
+                    "maxScore": "50",
+                    "widgetId": "classico"
+                }
+            ]
+        },
+        "2": {
+            "name": "!!!",
+            "storyline": [],
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "come va?",
+                    "tips": [],
+                    "minScore": "-50",
+                    "maxScore": "50",
+                    "widgetId": "papiro"
+                }
+            ]
+        },
+        "3": {
+            "name": "===",
+            "storyline": [],
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "dvdvdvd",
+                    "tips": [],
+                    "minScore": "-50",
+                    "maxScore": "50",
+                    "widgetId": "numerico"
+                }
+            ]
+        },
+        "4": {
+            "name": "deffeff",
+            "storyline": [],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "xcxcxcxc",
+                    "tips": [],
+                    "dinamicRating": true,
+                    "answers": []
+                }
+            ]
+        }
+    }
+}

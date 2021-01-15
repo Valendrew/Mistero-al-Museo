@@ -1,0 +1,36 @@
+.sfondo {
+    composes: sfondo from "./style.module.css";
+    background-image: url("./pictures/MuseumBackground.jpg");
+}
+
+.backMedia {
+    composes: backMedia from "./style.module.css";
+    background-image: url("./pictures/MuseumBackground2.jpg");
+}
+
+.immagine {
+    composes: immagine from "./style.module.css";
+}
+
+.bottone {
+    composes: bottone from "./style.module.css";
+    background-color:rgb(15, 141, 11);
+}
+
+.container {
+    composes: container from "./style.module.css";
+}
+
+.paragrafo {
+    composes: paragrafo from "./style.module.css";
+}
+
+.rispostaMultipla {
+    composes: rispostaMultipla from "./style.module.css";
+    background-color: rgb(15, 141, 11);
+}
+
+.rispostaAperta {
+    composes: rispostaAperta from "./style.module.css";
+    background-color: rgb(201, 255, 184);
+}

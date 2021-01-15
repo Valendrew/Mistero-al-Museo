@@ -56,7 +56,6 @@ function Valutatore() {
 	};
 
 	const fetchAnswerCorrection = async (idStory, idPlayer, correct, value, answerPlayer) => {
-
 		const result = await fetch(`/games/${idStory}/players/${idPlayer}/question`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
@@ -155,7 +154,9 @@ function Valutatore() {
 						/>
 					</Col>
 					{showRanking ? (
-						<Ranking players={players} storySelected={storySelected} />
+						<Col xs={8} style={{ height: '100vh', overflowY: 'scroll' }}>
+							<Ranking players={players} storySelected={storySelected} />
+						</Col>
 					) : playerSelected ? (
 						<Col xs={8}>
 							<PlayerInfo

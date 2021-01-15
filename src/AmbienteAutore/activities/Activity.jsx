@@ -15,8 +15,7 @@ const storylineInputs = [
 ];
 const questionsInputs = [
 	{ id: 'open', value: 'Risposta aperta' },
-	{ id: 'radio', value: 'Risposta multipla' },
-	{ id: 'widget', value: 'Risposta con widget' }
+	{ id: 'radio', value: 'Risposta multipla' }
 ];
 
 async function processStoryline(storyline, inputs) {
@@ -73,9 +72,7 @@ function processQuestions(questions, inputs) {
 			tips: Object.entries(val.tips).map(([key, val]) => inputs[val].value)
 		};
 		if (inputs[key].type === 'open') {
-			question = { ...question, minScore: inputs[val.minScore].value, maxScore: inputs[val.maxScore].value };
-		} else if (inputs[key].type === 'widget') {
-			return null;
+			question = { ...question, minScore: inputs[val.minScore].value, maxScore: inputs[val.maxScore].value, widgetId: inputs[val.widgetId].value };
 		} else {
 			question = {
 				...question,
@@ -183,10 +180,12 @@ function addInputsToActivity(type, category, categoryLength) {
 			/* Input relativi al punteggio minimo e massimo */
 			const minID = nanoid();
 			const maxID = nanoid();
+			const widgetId = nanoid();
 			newInputs = {
 				...newInputs,
 				[minID]: { type: 'number', value: '-50' },
-				[maxID]: { type: 'number', value: '50' }
+				[maxID]: { type: 'number', value: '50' },
+				[widgetId]: {value: 'classico'}
 			};
 			child = {
 				[elementID]: {
@@ -194,11 +193,10 @@ function addInputsToActivity(type, category, categoryLength) {
 					minScore: minID,
 					maxScore: maxID,
 					tipsRange: tipsRangeID,
-					tips: {}
+					tips: {},
+					widgetId: widgetId
 				}
 			};
-		} else if (type === 'widget') {
-			//
 		} else if (type === 'radio') {
 			/* Se l'input è un radio verrà creato un input aggiuntivo
 			per poter aumentare o diminuire il numero di risposte da associare
@@ -423,6 +421,10 @@ function Activity() {
 					...inputs,
 					[question.minScore]: { ...inputs[question.minScore], value: val.minScore },
 					[question.maxScore]: { ...inputs[question.maxScore], value: val.maxScore }
+				};
+				inputs = {
+					...inputs,
+					[question.widgetId]: { ...inputs[question.widgetId], value: val.widgetId }
 				};
 			} else if (val.type === 'radio') {
 				//debugger;
