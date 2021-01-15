@@ -12,9 +12,9 @@
 @media screen and (min-width: 1100px){
     textarea.papiro{
         width: 240px;
-        font-size: 24px;
-        margin-left: -30px;
-
+        font-size: 40px;
+        margin-top: -120px;
+        margin-left: -100px;
     }
 }
 textarea.papiro {

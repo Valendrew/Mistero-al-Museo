@@ -4,7 +4,7 @@ import MissionsTransitions from '../missions/MissionsTransitions';
 import StoryTheme from './StoryTheme';
 import FinalMessages from './FinalMessages';
 import Accessibilita from './Accessibilita';
-import { Button, Tabs, Tab, Container, Overlay, Tooltip } from 'react-bootstrap';
+import { Button, Tabs, Tab, Container} from 'react-bootstrap';
 
 function StoryConclusion(props) {
 	let history = useHistory();

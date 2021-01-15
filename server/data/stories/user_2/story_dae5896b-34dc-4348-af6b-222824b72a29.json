@@ -59,7 +59,8 @@
                     "value": "open",
                     "tips": [],
                     "minScore": "-50",
-                    "maxScore": "50"
+                    "maxScore": "50",
+                    "widgetId": "classico"
                 }
             ]
         },
@@ -92,7 +93,8 @@
                     "value": "rgrgrgrg",
                     "tips": [],
                     "minScore": "-50",
-                    "maxScore": "50"
+                    "maxScore": "50",
+                    "widgetId": "classico"
                 }
             ]
         },

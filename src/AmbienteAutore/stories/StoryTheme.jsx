@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Card, Col, Form, ListGroup, Row, Tab, Button, Image, Container } from 'react-bootstrap';
 
-import './Text.css';
-import Papiro from './Papyrus-psd26583.png';
+
+
 import Smarthphone from './smartphone.png';
 import Placeholder from './placehold.jpg';
 import styleEgypt from '../../AmbientePlayer/Style/styleEgypt.module.css';
@@ -11,24 +11,7 @@ import styleBase from '../../AmbientePlayer/Style/style.module.css';
 import styleMuseum from '../../AmbientePlayer/Style/styleMuseum.module.css';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
-/*function ThemePreview() {
-	const style = {
-		width: '370px',
-		backgroundImage: `url(${Papiro})`,
-		backgroundRepeat: 'no-repeat',
-		backgroundSize: '100% 100%',
-		padding: '12%',
-		height: '550px'
-	};
 
-	return (
-		<div xs={6} style={style}>
-			<Col>
-				<Form.Control className='papiro' as='textarea' spellcheck='false' maxLength='230' id='widget' rows={14} />
-			</Col>
-		</div>
-	);
-}*/
 
 function StoryTheme(props) {
 	const style = {

@@ -8,7 +8,6 @@ import Chat from './Chat';
 import { useState } from 'react';
 import { Container, Spinner, Row, Col } from 'react-bootstrap';
 
-import style from '../Style/styleEgypt.module.css';
 
 function Story(props) {
 	const [currentStory, setCurrentStory] = useState();
@@ -80,7 +79,7 @@ function Story(props) {
 	};
 
 	return isLoaded.loaded ? (
-		<Container fluid className={style.sfondo}>
+		<Container fluid className={props.style.sfondo}>
 			<section>
 				<Row>
 					<Col>
@@ -90,7 +89,7 @@ function Story(props) {
 								setShowChat({ msg: props.newMessage, state: true });
 								props.setNewMessage(0);
 							}}
-							className={style.bottone}>
+							className={props.style.bottone}>
 							Apri Chat
 							{props.newMessage > 0 ? (
 								<Spinner animation='grow' variant='secondary' role='status'>
@@ -102,7 +101,7 @@ function Story(props) {
 				</Row>
 
 				<Chat
-					style={style}
+					style={props.style}
 					show={showChat}
 					onHide={() => setShowChat({ msg: 0, state: false })}
 					/* chat={props.player.status.chat} */
@@ -111,7 +110,7 @@ function Story(props) {
 				/>
 			</section>
 
-			<section className={style.container}>
+			<section className={props.style.container}>
 				<Row>
 					<Col>
 						<h1>Al momento ti trovi nell'attività {currentStory.activity}</h1>
@@ -126,7 +125,7 @@ function Story(props) {
 
 			<main>
 				{currentStory.storyline.map((value, key) => (
-					<Storyline key={key} storyline={value} style={style} />
+					<Storyline key={key} storyline={value} style={props.style} />
 				))}
 				<hr />
 				{currentStory.questions.length ? (
@@ -134,12 +133,12 @@ function Story(props) {
 						question={currentStory.questions[0]}
 						inputsQuestion={inputsQuestion}
 						onChangeAnswer={onChangeAnswer}
-						style={style}
+						style={props.style}
 					/>
 				) : null}
 				{props.errorAnswer || null}
 				{props.waitingOpen ? null : (
-					<Button name='nextActivity' variant='dark' onClick={e => fetchAnswers(e)} className={style.bottone}>
+					<Button name='nextActivity' variant='dark' onClick={e => fetchAnswers(e)} className={props.style.bottone}>
 						Prosegui attività
 					</Button>
 				)}

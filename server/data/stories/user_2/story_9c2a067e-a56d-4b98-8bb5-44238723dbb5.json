@@ -5,7 +5,7 @@
         "id": "9c2a067e-a56d-4b98-8bb5-44238723dbb5",
         "qr": "http://localhost:3000/player/9c2a067e-a56d-4b98-8bb5-44238723dbb5",
         "archived": false,
-        "theme": "prehistory"
+        "theme": "egypt"
     },
     "activities": {
         "0": {
@@ -243,7 +243,8 @@
                         "Solitamente la forma era correlata a qualcosa di sacro per gli egiziani"
                     ],
                     "minScore": "-20",
-                    "maxScore": "50"
+                    "maxScore": "50",
+                    "widgetId": "classico"
                 }
             ]
         },

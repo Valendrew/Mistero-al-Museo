@@ -25,7 +25,8 @@
                     "value": "quanto fa 2+2?",
                     "tips": [],
                     "minScore": "-50",
-                    "maxScore": "50"
+                    "maxScore": "50",
+                    "widgetId": "classico"
                 }
             ]
         },
@@ -106,7 +107,8 @@
                     "value": "Sei scemo?",
                     "tips": [],
                     "minScore": "-50",
-                    "maxScore": "50"
+                    "maxScore": "50",
+                    "widgetId": "classico"
                 }
             ]
         },
@@ -186,7 +188,8 @@
                         "Nce"
                     ],
                     "minScore": "0",
-                    "maxScore": "10"
+                    "maxScore": "10",
+                    "widgetId": "classico"
                 }
             ]
         },

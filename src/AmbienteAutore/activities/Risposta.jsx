@@ -7,6 +7,7 @@ import RemoveButton from './RemoveButton';
 import DropdownInputs from './DropdownInputs';
 import Tips from './Tips';
 import Rating from './Rating';
+import Widget from './Widget';
 
 import { Row, Col, Card, Tabs, Tab } from 'react-bootstrap';
 
@@ -79,6 +80,15 @@ export default function Risposta(props) {
 										inputs={props.inputs}
 										handleInput={props.handleInput}
 										dinamicRatingId={val.dinamicRating}
+									/>
+								</Tab>
+							) : props.inputs[key].type === 'open' ? (
+								<Tab eventKey='widget' title='Widget'>
+									<Widget
+										questionId={key}
+										inputs={props.inputs}
+										widgetId={val.widgetId}
+										handleInput={props.handleInput}
 									/>
 								</Tab>
 							) : null}

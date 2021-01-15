@@ -2,15 +2,21 @@ import React from 'react';
 
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import WidgetNumerico from '../../AmbienteAutore/activities/Widgets/WidgetNumerico';
+import WidgetPapiro from '../../AmbienteAutore/activities/Widgets/WidgetPapiro';
 
 function OpenQuestion(props) {
-	return (
+	return props.question.widgetId === 'classico' ? (
 		<Form.Control
 			name='open_question'
 			value={props.inputsQuestion[0].value}
 			onChange={e => props.onChangeAnswer(0, e.target.value)}
 			className={props.style.rispostaAperta}
 		/>
+	) : props.question.widgetId === 'papiro' ? (
+		<WidgetPapiro {...props} />
+	) : (
+		<WidgetNumerico {...props} />
 	);
 }
 
@@ -41,11 +47,7 @@ function Questions(props) {
 		<Container fluid>
 			<p className={props.style.paragrafo}>{props.question.value}</p>
 
-			{props.question.type === 'open' ? (
-				<OpenQuestion {...props} />
-			) : props.question.type === 'widget' ? null : (
-				<MultipleQuestion {...props} />
-			)}
+			{props.question.type === 'open' ? <OpenQuestion {...props} /> : <MultipleQuestion {...props} />}
 		</Container>
 	);
 }
