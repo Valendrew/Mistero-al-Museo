@@ -1,17 +1,15 @@
-import React from 'react';
-import { Card, Col, Form, ListGroup, Row, Tab, Button, Image } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, Col, Form, ListGroup, Row, Tab, Button, Image, Container } from 'react-bootstrap';
 
 import './Text.css';
 import Papiro from './Papyrus-psd26583.png';
 import Smarthphone from './smarthphone.png';
 import Placeholder from './placehold.jpg';
-import styleEgypt from '../../AmbientePlayer/Game/Style/styleEgypt.module.css';
+import styleEgypt from '../../AmbientePlayer/Style/styleEgypt.module.css';
+import stylePrehistory from '../../AmbientePlayer/Style/stylePrehistory.module.css';
+import styleBase from '../../AmbientePlayer/Style/style.module.css';
 
-function ThemePreviewEgypt() {
-	return <></>;
-}
-
-function ThemePreview() {
+/*function ThemePreview() {
 	const style = {
 		width: '370px',
 		backgroundImage: `url(${Papiro})`,
@@ -28,14 +26,16 @@ function ThemePreview() {
 			</Col>
 		</div>
 	);
-}
+}*/
 
 function StoryTheme() {
 	const style = {
 		width: '360px',
-		height: '640px'
+		height: '640px',
+		overflowY: 'scroll',
+		border: 'black solid 2px'
 	};
-	const storystyle = styleEgypt;
+	const [storystyle, setStoryStyle] = useState(styleBase);
 	return (
 		<Row>
 			<Col xs={12}>
@@ -47,36 +47,78 @@ function StoryTheme() {
 							<Row>
 								<Col sm={4}>
 									<ListGroup>
-										<ListGroup.Item action eventKey='link1'>
+									<ListGroup.Item
+											action
+											eventKey='link1'
+											onClick={() => {
+												setStoryStyle(styleBase);
+											}}>
+											Classico
+										</ListGroup.Item>
+										<ListGroup.Item
+											action
+											eventKey='link2'
+											onClick={() => {
+												setStoryStyle(styleEgypt);
+											}}>
 											Egitto
 										</ListGroup.Item>
-										<ListGroup.Item action eventKey='link2'>
-											Link 2
+										<ListGroup.Item
+											action
+											eventKey='link3'
+											onClick={() => {
+												setStoryStyle(stylePrehistory);
+											}}>
+											Preistoria
 										</ListGroup.Item>
 									</ListGroup>
 								</Col>
 								<Col sm={8}>
 									<Tab.Content>
-										<div className={storystyle.sfondo} style={style}>
-											<Button className={storystyle.bottone} style={{width:'100px'}}>Chat</Button>
-											<p className={storystyle.paragrafo}>
-												<h5>Al momento ti trovi nell'attività *</h5>
-												<h6>Il punteggio attuale è **</h6>
-											</p>
-											<hr /> 
-											<div className={storystyle.backMedia}>
-												<Image width='150px' src={Placeholder} thumbnail fluid />
+										<Container className={storystyle.sfondo} style={style} fluid>
+											<Button className={storystyle.bottone} style={{ width: '100px' }}>
+												Chat
+											</Button>
+											<Row>
+												<Col className={storystyle.container}>
+													<p className={storystyle.paragrafo}>
+														<h5>Al momento ti trovi nell'attività *</h5>
+														<h6>Il punteggio attuale è **</h6>
+													</p>
+												</Col>
+											</Row>
+											<hr />
+											<Row>
+												<Col className={storystyle.backMedia}>
+													<Image width='150px' src={Placeholder} thumbnail fluid />
+												</Col>
+											</Row>
+											<hr />
+											<Row>
+												<Col className={storystyle.container}>
+													<p className={storystyle.paragrafo}>Questa è la parte scritta della narrazione</p>
+												</Col>
+											</Row>
+											<hr />
+											<Row>
+												<Col className={storystyle.container}>
+													<p className={storystyle.paragrafo}>Questa è la parte domanda</p>
+												</Col>
+											</Row>
+											<hr />
+											<div className={storystyle.rispostaMultipla}>
+												<Form.Check type='radio' label='Risposta A' name='example_radio' defaultChecked={true} />
 											</div>
-											<hr /> 
-											<p className={storystyle.paragrafo}><h6>Questa è la parte scritta della narrazione</h6></p>
-											<hr /> 
-											<p className={storystyle.paragrafo}><h6>Questa è la parte domanda</h6></p>
-											<hr /> 
-										</div>
-										<Tab.Pane eventKey='link1'></Tab.Pane>
-										<Tab.Pane eventKey='link2'>
-											<ThemePreview />
-										</Tab.Pane>
+											<div className={storystyle.rispostaMultipla}>
+												<Form.Check type='radio' label='Risposta B' name='example_radio' />
+											</div>
+											<div className={storystyle.rispostaMultipla}>
+												<Form.Check type='radio' label='Risposta C' name='example_radio' />
+											</div>
+											<Button className={storystyle.bottone} style={{ width: '130px' }}>
+												Prosegui attività
+											</Button>
+										</Container>
 									</Tab.Content>
 								</Col>
 							</Row>
