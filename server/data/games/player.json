@@ -300,6 +300,18 @@
                 "dateStart": "2021-01-15T17:27:41.478Z"
             },
             "name": "player12"
+        },
+        "d7191cc5-2c2d-4fef-9c6c-eaf0472c908f": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-15T18:01:08.976Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-15T18:01:08.976Z"
+            },
+            "name": "player13"
         }
     }
 }

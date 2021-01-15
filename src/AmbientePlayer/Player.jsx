@@ -97,6 +97,9 @@ function PlayerHome(props) {
 					<Row>
 						<Col className={props.style.container}>
 							<h1>{`Benvenuto ${player.name} nella partita`}</h1>
+							{story.info.accessibility ? (
+								<h2>La storia che andrai a giocare sarà accessibile</h2>
+							) : null}
 						</Col>
 					</Row>
 				</header>
@@ -106,7 +109,6 @@ function PlayerHome(props) {
 					description={story.info.description}
 					style={props.style}
 					startGame={startGame}
-					accessibilita={story.info.accessibility}
 				/>
 			</Container>
 		)
