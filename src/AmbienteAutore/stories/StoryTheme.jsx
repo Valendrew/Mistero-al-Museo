@@ -83,7 +83,7 @@ function PagePreview({ style }) {
 
 function StoryTheme(props) {
 	return (
-		<Card>
+		<Card className='mt-4'>
 			<Card.Header>Scegli ambientazione del player</Card.Header>
 
 			<Card.Body>
