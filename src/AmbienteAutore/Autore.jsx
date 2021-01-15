@@ -28,7 +28,9 @@ function StoryCard(props) {
 				</Card.Body>
 				<Card.Footer>
 					{props.archived ? (
-						<Button variant="info" onClick={() => props.enableStory(props.id)}>Riattiva storia</Button>
+						<Button variant='info' onClick={() => props.enableStory(props.id)}>
+							Riattiva storia
+						</Button>
 					) : (
 						<Button onClick={() => props.onEditStory(props.id)}>Modifica storia</Button>
 					)}
@@ -38,12 +40,18 @@ function StoryCard(props) {
 	);
 }
 
-function AutoreHome(props) {
+function AutoreHome() {
 	const match = useRouteMatch('/autore');
-	
+	let history = useHistory();
+
+	const [stories, setStories] = useState({ error: null, isLoaded: false, items: [] });
+
+	const onEditStory = idStory => {
+		history.push(`${match.path}/story/overview`, { idStory: idStory });
+	};
 
 	useEffect(() => {
-		if (!props.stories.isLoaded) {
+		if (!stories.isLoaded) {
 			fetch(`/stories`, {
 				method: 'GET',
 				headers: { 'Content-Type': 'application/json' }
@@ -51,26 +59,26 @@ function AutoreHome(props) {
 				.then(res => res.json())
 				.then(
 					result => {
-						props.setStories({
+						setStories({
 							isLoaded: true,
 							items: result
 						});
 					},
 					error => {
-						props.setStories({
+						setStories({
 							isLoaded: true,
 							error
 						});
 					}
 				);
 		}
-	}, [props]);
+	}, [stories]);
 
 	const enableStory = id => {
 		fetch(`/stories/${id}/archived`, {
 			method: 'POST'
 		})
-			.then(res => props.setStories({ error: null, isLoaded: false, items: [] }))
+			.then(res => setStories({ error: null, isLoaded: false, items: [] }))
 			.catch(console.log);
 	};
 
@@ -89,11 +97,11 @@ function AutoreHome(props) {
 				</LinkContainer>
 			</Breadcrumb>
 			<Row className='row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4'>
-				{props.stories.isLoaded ? (
-					props.stories.error ? (
+				{stories.isLoaded ? (
+					stories.error ? (
 						<h5>Nessuna storia presente</h5>
 					) : (
-						props.stories.items.map(value => {
+						stories.items.map(value => {
 							return (
 								<StoryCard
 									key={value.info.id}
@@ -102,7 +110,7 @@ function AutoreHome(props) {
 									description={value.info.description}
 									archived={value.info.archived}
 									enableStory={enableStory}
-									{...props}
+									onEditStory={onEditStory}
 								/>
 							);
 						})
@@ -116,16 +124,11 @@ function AutoreHome(props) {
 }
 function Autore() {
 	const match = useRouteMatch('/autore');
-	let history = useHistory();
-	const [stories, setStories] = useState({ error: null, isLoaded: false, items: [] });
-	const onEditStory = idStory => {
-		history.push(`${match.path}/story/overview`, { idStory: idStory });
-	};
 
 	return (
 		<Switch>
 			<Route exact path='/autore'>
-				<AutoreHome onEditStory={onEditStory} setStories={setStories} stories={stories}/>
+				<AutoreHome />
 			</Route>
 			<Route exact path={`${match.path}/story`}>
 				<Container fluid>

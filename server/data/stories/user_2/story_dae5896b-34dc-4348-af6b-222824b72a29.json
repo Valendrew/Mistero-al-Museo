@@ -3,7 +3,8 @@
         "name": "storia test",
         "description": "Questa è una storia di test per federe se tutto va",
         "id": "dae5896b-34dc-4348-af6b-222824b72a29",
-        "qr": "http://localhost:3000/player/dae5896b-34dc-4348-af6b-222824b72a29"
+        "qr": "http://localhost:3000/player/dae5896b-34dc-4348-af6b-222824b72a29",
+        "archived": true
     },
     "activities": {
         "0": {

@@ -4,7 +4,8 @@
         "description": "dddd",
         "id": "04959cf4-2620-44a6-9b6a-e24292077a69",
         "theme": "generico",
-        "qr": "http://localhost:3000/player/04959cf4-2620-44a6-9b6a-e24292077a69"
+        "qr": "http://localhost:3000/player/04959cf4-2620-44a6-9b6a-e24292077a69",
+        "archived": true
     },
     "activities": {
         "0": {

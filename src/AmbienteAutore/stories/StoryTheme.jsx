@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
 import { Card, Col, Form, ListGroup, Row, Tab, Button, Image, Container } from 'react-bootstrap';
 
-
-
-import Smarthphone from './smartphone.png';
 import Placeholder from './placehold.jpg';
 import styleEgypt from '../../AmbientePlayer/Style/styleEgypt.module.css';
 import stylePrehistory from '../../AmbientePlayer/Style/stylePrehistory.module.css';
 import styleBase from '../../AmbientePlayer/Style/style.module.css';
 import styleMuseum from '../../AmbientePlayer/Style/styleMuseum.module.css';
-import { propTypes } from 'react-bootstrap/esm/Image';
-
-
 
 function StoryTheme(props) {
 	const style = {
@@ -39,7 +33,7 @@ function StoryTheme(props) {
 											eventKey='link1'
 											onClick={() => {
 												setStoryStyle(styleBase);
-												props.setTema("generico");
+												props.setTema('generico');
 											}}>
 											Classico
 										</ListGroup.Item>
@@ -48,7 +42,7 @@ function StoryTheme(props) {
 											eventKey='link2'
 											onClick={() => {
 												setStoryStyle(styleEgypt);
-												props.setTema("egypt");
+												props.setTema('egypt');
 											}}>
 											Egitto
 										</ListGroup.Item>
@@ -57,7 +51,7 @@ function StoryTheme(props) {
 											eventKey='link3'
 											onClick={() => {
 												setStoryStyle(stylePrehistory);
-												props.setTema("prehistory");
+												props.setTema('prehistory');
 											}}>
 											Preistoria
 										</ListGroup.Item>
@@ -66,7 +60,7 @@ function StoryTheme(props) {
 											eventKey='link43'
 											onClick={() => {
 												setStoryStyle(styleMuseum);
-												props.setTema("museum");
+												props.setTema('museum');
 											}}>
 											Museo
 										</ListGroup.Item>

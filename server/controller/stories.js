@@ -181,7 +181,8 @@ router.post(
 router.post(
 	'/:id/accessibility',
 	(req, res, next) => {
-		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'accessibility' };
+		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'info', value: 'accessibility' };
+		req.body = req.body.value;
 		next();
 	},
 	postHandler
@@ -190,7 +191,7 @@ router.post(
 router.post(
 	'/:id/theme',
 	(req, res, next) => {
-		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'info', value: 'theme'};
+		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'info', value: 'theme' };
 		next();
 	},
 	postHandler

@@ -2,7 +2,8 @@
     "info": {
         "name": "Gian-Abdrea",
         "description": "desc",
-        "id": "b7a53bc0-c44a-492c-a085-d76ea6444ac1"
+        "id": "b7a53bc0-c44a-492c-a085-d76ea6444ac1",
+        "archived": true
     },
     "activities": {
         "0": {

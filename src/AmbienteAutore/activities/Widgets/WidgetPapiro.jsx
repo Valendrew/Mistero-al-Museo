@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import React from 'react';
+import { Col, Form } from 'react-bootstrap';
 import Papiro from './../Style/Pictures/Papyrus-psd26583.png';
 import './../Style/Text.css';
 export default function WidgetPapiro(props) {
@@ -10,7 +10,7 @@ export default function WidgetPapiro(props) {
 		backgroundSize: '100% 100%',
 		padding: '12%',
 		height: '550px',
-		marginLeft:'calc(50% - 185px)'
+		marginLeft: 'calc(50% - 185px)'
 	};
 	return (
 		<div xs={6} style={style}>

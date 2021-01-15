@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Story from './Story';
 import useInterval from '../../useInterval';
-import { Button, InputGroup, Row, Spinner } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import EndGame from './EndGame';
 
 function ShowRequestHelp(props) {

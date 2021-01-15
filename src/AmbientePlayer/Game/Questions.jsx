@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Col, Row, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import WidgetNumerico from '../../AmbienteAutore/activities/Widgets/WidgetNumerico';
-import WidgetPapiro from '../../AmbienteAutore/activities/Widgets/WidgetPapiro';
+/* import WidgetNumerico from '../../AmbienteAutore/activities/Widgets/WidgetNumerico';
+import WidgetPapiro from '../../AmbienteAutore/activities/Widgets/WidgetPapiro'; */
 
 function OpenQuestion(props) {
 	return (

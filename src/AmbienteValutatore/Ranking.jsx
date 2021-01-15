@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Col } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 
 function RankingTable(props) {
