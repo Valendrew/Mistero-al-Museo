@@ -31,6 +31,13 @@
 	font-weight: bold;
 }
 
+@media screen and (min-width: 1100px){
+    .bottone {
+		font-size: 80%;
+		font-weight: bold;
+	}
+} 
+
 .container {
 	background-color: rgb(94, 94, 94);
 	border-radius: 15px;
@@ -65,3 +72,13 @@
 	font-size: 250%;
 	text-align: center;
 }
+
+@media screen and (min-width: 1100px){
+    .bottone {
+		font-size: 70%;
+		font-weight: bold;
+	}
+	.rispostaMultipla {
+		font-size: 20%;
+	}
+} 

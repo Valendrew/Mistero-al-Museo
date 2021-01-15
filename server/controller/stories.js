@@ -179,9 +179,18 @@ router.post(
 );
 
 router.post(
-	'/:id/accessibilita',
+	'/:id/accessibility',
 	(req, res, next) => {
 		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'accessibility' };
+		next();
+	},
+	postHandler
+);
+
+router.post(
+	'/:id/theme',
+	(req, res, next) => {
+		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'info', value: 'theme'};
 		next();
 	},
 	postHandler

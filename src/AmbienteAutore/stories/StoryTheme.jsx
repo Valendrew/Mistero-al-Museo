@@ -3,11 +3,12 @@ import { Card, Col, Form, ListGroup, Row, Tab, Button, Image, Container } from '
 
 import './Text.css';
 import Papiro from './Papyrus-psd26583.png';
-import Smarthphone from './smarthphone.png';
+import Smarthphone from './smartphone.png';
 import Placeholder from './placehold.jpg';
 import styleEgypt from '../../AmbientePlayer/Style/styleEgypt.module.css';
 import stylePrehistory from '../../AmbientePlayer/Style/stylePrehistory.module.css';
 import styleBase from '../../AmbientePlayer/Style/style.module.css';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 /*function ThemePreview() {
 	const style = {
@@ -28,12 +29,14 @@ import styleBase from '../../AmbientePlayer/Style/style.module.css';
 	);
 }*/
 
-function StoryTheme() {
+function StoryTheme(props) {
 	const style = {
 		width: '360px',
 		height: '640px',
 		overflowY: 'scroll',
-		border: 'black solid 2px'
+		border: 'black solid 2px',
+		position: 'relative',
+		zndex: '20'
 	};
 	const [storystyle, setStoryStyle] = useState(styleBase);
 	return (
@@ -47,11 +50,12 @@ function StoryTheme() {
 							<Row>
 								<Col sm={4}>
 									<ListGroup>
-									<ListGroup.Item
+										<ListGroup.Item
 											action
 											eventKey='link1'
 											onClick={() => {
 												setStoryStyle(styleBase);
+												props.setTema("generico");
 											}}>
 											Classico
 										</ListGroup.Item>
@@ -60,6 +64,7 @@ function StoryTheme() {
 											eventKey='link2'
 											onClick={() => {
 												setStoryStyle(styleEgypt);
+												props.setTema("egypt");
 											}}>
 											Egitto
 										</ListGroup.Item>
@@ -68,6 +73,7 @@ function StoryTheme() {
 											eventKey='link3'
 											onClick={() => {
 												setStoryStyle(stylePrehistory);
+												props.setTema("prehistory");
 											}}>
 											Preistoria
 										</ListGroup.Item>
@@ -76,7 +82,7 @@ function StoryTheme() {
 								<Col sm={8}>
 									<Tab.Content>
 										<Container className={storystyle.sfondo} style={style} fluid>
-											<Button className={storystyle.bottone} style={{ width: '100px' }}>
+											<Button className={storystyle.bottone} style={{ width: '90px' }}>
 												Chat
 											</Button>
 											<Row>
@@ -106,15 +112,15 @@ function StoryTheme() {
 												</Col>
 											</Row>
 											<hr />
-											<div className={storystyle.rispostaMultipla}>
+											<Row className={storystyle.rispostaMultipla}>
 												<Form.Check type='radio' label='Risposta A' name='example_radio' defaultChecked={true} />
-											</div>
-											<div className={storystyle.rispostaMultipla}>
+											</Row>
+											<Row className={storystyle.rispostaMultipla}>
 												<Form.Check type='radio' label='Risposta B' name='example_radio' />
-											</div>
-											<div className={storystyle.rispostaMultipla}>
+											</Row>
+											<Row className={storystyle.rispostaMultipla}>
 												<Form.Check type='radio' label='Risposta C' name='example_radio' />
-											</div>
+											</Row>
 											<Button className={storystyle.bottone} style={{ width: '130px' }}>
 												Prosegui attività
 											</Button>

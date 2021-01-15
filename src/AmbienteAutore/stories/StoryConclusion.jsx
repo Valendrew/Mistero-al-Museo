@@ -20,6 +20,8 @@ function StoryConclusion(props) {
 
 	const [transitions, setTransitions] = useState([[]]);
 
+	const [tema, setTema]=useState("generico");
+
 	const saveData = async (idStory, finalMessages, transitions) => {
 		const resultF = await fetch(`/stories/${idStory}/finalMessages`, {
 			method: 'POST',
@@ -33,13 +35,19 @@ function StoryConclusion(props) {
 			body: JSON.stringify(transitions)
 		});
 
-		const resultA = await fetch(`/stories/${idStory}/accessibilita`, {
+		const resultA = await fetch(`/stories/${idStory}/accessibility`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({value: accessibilita})
 		});
 
-		if (resultF.ok && resultT.ok && resultA.ok) {
+		const resultTheme = await fetch(`/stories/${idStory}/theme`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'text/plain' },
+			body: tema
+		});
+
+		if (resultF.ok && resultT.ok && resultA.ok && resultTheme.ok) {
 			history.push(`overview`, { idStory: idStory });
 		}
 	};
@@ -53,7 +61,7 @@ function StoryConclusion(props) {
 				</Tab>
 				<Tab eventKey='Temi' title='Temi'>
 					{/* Temi del player */}
-					<StoryTheme />
+					<StoryTheme setTema={setTema}/>
 				</Tab>
 				<Tab eventKey='Messaggio conclusivo' title='Messaggio conclusivo'>
 					{/* Fasce conclusive storia */}
