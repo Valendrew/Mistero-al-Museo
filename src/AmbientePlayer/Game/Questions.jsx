@@ -52,7 +52,7 @@ function Questions(props) {
 		<div role='group' aria-labelledby='legend_question'>
 			<Form>
 				<Form.Group as={Row}>
-					<Form.Label id='legend_question' as='legend' className={props.style.container} column>
+					<Form.Label id='legend_question' className={props.style.container} column>
 						<span className={props.style.paragrafo}>{props.question.value}</span>
 						{props.errorAnswer}
 					</Form.Label>
