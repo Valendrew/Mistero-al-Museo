@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route, useParams, useHistory } from 'react-router-dom';
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+import { Container, Row, Col } from 'react-bootstrap';
 
 import MainPage from './MainPage';
 import Game from './Game/Game';
 
-import styleGeneric from './Style/style.module.css';
-import styleEgypt from './Style/styleEgypt.module.css';
-import stylePrehistory from './Style/stylePrehistory.module.css';
-import styleMuseum from './Style/styleMuseum.module.css';
-import { Col } from 'react-bootstrap';
+import styleGeneric from '../Style/style.module.css';
+import styleEgypt from '../Style/styleEgypt.module.css';
+import stylePrehistory from '../Style/stylePrehistory.module.css';
+import styleMuseum from '../Style/styleMuseum.module.css';
 
 const themeConverter = {
 	egypt: styleEgypt,

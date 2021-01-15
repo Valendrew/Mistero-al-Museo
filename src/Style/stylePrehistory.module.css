@@ -1,13 +1,13 @@
 .sfondo {
 	composes: sfondo from './style.module.css';
 
-	background-image: url('./pictures/EgyptBackground.jpg');
+	background-image: url('../Pictures/PrehistoryBackground.jpg');
 }
 
 .backMedia {
 	composes: backMedia from './style.module.css';
 
-	background-image: url('./pictures/EgyptBackground2.jpg');
+	background-image: url('../Pictures/PrehistoryBackground2.jpg');
 }
 
 .immagine {
@@ -21,7 +21,7 @@
 .bottone {
 	composes: bottone from './style.module.css';
 
-	background-color: rgb(107, 87, 0);
+	background-color: rgb(141, 11, 11);
 }
 
 .paragrafo {
@@ -31,7 +31,7 @@
 .bottonealt {
 	composes: bottonealt from './style.module.css';
 
-	background-color: rgb(190, 168, 170);
+	background-color: rgb(226, 102, 102);
 }
 
 .paragrafoalt {
@@ -45,11 +45,11 @@
 .rispostaMultipla {
 	composes: rispostaMultipla from './style.module.css';
 
-	background-color: rgb(107, 87, 0);
+	background-color: rgb(141, 11, 11);
 }
 
 .rispostaAperta {
 	composes: rispostaAperta from './style.module.css';
 
-	background-color: blanchedalmond;
+	background-color: rgb(168, 168, 168);
 }

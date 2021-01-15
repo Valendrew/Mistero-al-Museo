@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
-import './../Style/Text.css';
+
+/* import style from '../Style/tastierino.module.css'; */
+
 function aumentaValore(index, valoreAttuale, setValue, onChangeAnswer) {
 	let oldVal = valoreAttuale;
 	let valToMod = parseInt(valoreAttuale[index]);
@@ -28,7 +30,9 @@ function decrementaValore(index, valoreAttuale, setValue, onChangeAnswer) {
 function UpArrow(props) {
 	return (
 		<svg
-			onClick={() => aumentaValore(props.index, props.valoreAttuale, props.setValue, props.onChangeAnswer)}
+			onClick={() =>
+				aumentaValore(props.index, props.valoreAttuale, props.setValue, props.onChangeAnswer)
+			}
 			width='90'
 			height='90'
 			class='bi bi-arrow-up-circle-fill'
@@ -40,7 +44,9 @@ function UpArrow(props) {
 function DownArrow(props) {
 	return (
 		<svg
-			onClick={() => decrementaValore(props.index, props.valoreAttuale, props.setValue, props.onChangeAnswer)}
+			onClick={() =>
+				decrementaValore(props.index, props.valoreAttuale, props.setValue, props.onChangeAnswer)
+			}
 			width='90'
 			height='90'
 			class='bi bi-arrow-down-circle-fill'

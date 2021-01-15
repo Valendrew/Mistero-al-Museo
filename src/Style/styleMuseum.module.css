@@ -1,11 +1,13 @@
 .sfondo {
     composes: sfondo from "./style.module.css";
-    background-image: url("./pictures/MuseumBackground.jpg");
+
+    background-image: url("../Pictures/MuseumBackground.jpg");
 }
 
 .backMedia {
     composes: backMedia from "./style.module.css";
-    background-image: url("./pictures/MuseumBackground2.jpg");
+    
+    background-image: url("../Pictures/MuseumBackground2.jpg");
 }
 
 .immagine {

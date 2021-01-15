@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
-import WidgetPapiro from './Widgets/WidgetPapiro';
-import WidgetNumerico from './Widgets/WidgetNumerico';
+
+import WidgetPapiro from '../../Widgets/WidgetPapiro';
+import WidgetNumerico from '../../Widgets/WidgetNumerico';
 
 export default function Widget(props) {
 	const [value, setValue] = useState('classico');

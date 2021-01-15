@@ -1,19 +1,11 @@
 import React from 'react';
 import { Col, Form } from 'react-bootstrap';
-import Papiro from './../Style/Pictures/Papyrus-psd26583.png';
-import './../Style/Text.css';
+
+import style from '../Style/papiro.module.css';
+
 export default function WidgetPapiro(props) {
-	const style = {
-		width: '370px',
-		backgroundImage: `url(${Papiro})`,
-		backgroundRepeat: 'no-repeat',
-		backgroundSize: '100% 100%',
-		padding: '12%',
-		height: '550px',
-		marginLeft: 'calc(50% - 185px)'
-	};
 	return (
-		<div xs={6} style={style}>
+		<div xs={6} style={style.ain}>
 			<Col>
 				{props.inputsQuestion ? (
 					<Form.Control
