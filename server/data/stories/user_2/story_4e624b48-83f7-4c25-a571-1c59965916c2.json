@@ -1,0 +1,246 @@
+{
+    "info": {
+        "name": "Furto al Museo Picasso",
+        "description": "Questa storia narra di un furto al Museo Picasso di Barcellona. Giocandoci potrete imparare nozioni di base sulla vita e su alcune opere di Pablo Picasso.",
+        "id": "4e624b48-83f7-4c25-a571-1c59965916c2",
+        "accessibility": false,
+        "theme": "museum",
+        "qr": "http://localhost:3000/player/4e624b48-83f7-4c25-a571-1c59965916c2"
+    },
+    "activities": {
+        "0": {
+            "name": "Signori, benvenuti!",
+            "storyline": [
+                [
+                    "img",
+                    "c65a699b-b414-47f9-ada4-1485546e0388",
+                    "jpeg",
+                    "Quadro \"Arlecchino\" di Picasso"
+                ],
+                [
+                    "text",
+                    "Signori, benvenuti! Forse vi starete chiedendo perché quest'oggi vi ho riuniti qua...\nIl vostro compito sarà quello di intrufolarvi nel Museo Picasso, a Barcellona, per rubare \"Arlecchino\", uno di quadri più famosi dell'artista. \nChi sono io? Io sono colui che da dietro le quinte vi guiderà in questa avventura, se avrete problemi non esitate a contattarmi, anche se siete un gruppo numeroso le difficoltà sono dietro l'angolo."
+                ]
+            ],
+            "questions": []
+        },
+        "1": {
+            "name": "Introduzione",
+            "storyline": [
+                [
+                    "img",
+                    "d6b9d0ac-25a4-480c-a743-bed98b91880e",
+                    "jpeg",
+                    "Foto del volto di Pablo Picasso."
+                ],
+                [
+                    "text",
+                    "Prima di iniziare, una breve introduzione all'artista, magari vi tornerà utile.\nPicasso nacque nel 1881 in Spagna, è stato un pittore e scultore innovativo dato che è stato il padre del cubismo. \nBene, ora potete procedere con la missione, buona fortuna!"
+                ]
+            ],
+            "questions": []
+        },
+        "2": {
+            "name": "All'ingresso del museo",
+            "storyline": [
+                [
+                    "text",
+                    "Bene, eccovi giunti davanti all'ingresso, essendo notte è tutto chiuso.\nPer aprire la porta inserite nel telefono che vi ho dato la soluzione a questo indovinello, l'ho avuto da un mio informatore interno, che purtroppo non ha saputo dirmi di più.\nappena avrò la vostra risposta proverò a sbloccarvi la porta da remoto."
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "L'indovinello è: \"Nascita e morte: mangia sul mago\"",
+                    "tips": [
+                        "Dalle informazioni in mio possesso il prprietario del museo è un grande appassionato di anagrammi, potrebbe essere la chiave di lettura?",
+                        "Nascita e morte, mhh... forse vogliono sapere dov'è nato e morto Picasso!",
+                        "Se non mi sbaglio ho letto in giro che è morto a Mougins, con le lettere restanti dovreste poter trovare un'altra città!"
+                    ],
+                    "minScore": "-20",
+                    "maxScore": "50",
+                    "widgetId": "classico"
+                }
+            ]
+        },
+        "3": {
+            "name": "Dentro al museo",
+            "storyline": [
+                [
+                    "img",
+                    "0259f420-7675-48f8-a7ec-ba0e4047c8ec",
+                    "jpeg",
+                    "Quadro \"Madre con bambino malato\".\nRappresenta una signora che tiene in braccio suo figlio."
+                ],
+                [
+                    "img",
+                    "9e86810f-ba2d-4b48-bb1f-e7e3bc4fcb57",
+                    "jpeg",
+                    "Quadro Margot. Rappresenta una donna vestita di rosso e con un cappello del solito colore."
+                ],
+                [
+                    "text",
+                    "Bravissimi! Come ho fatto a non pensarci prima...\nCome potete vedere siamo nella sala principale, qua potete ammirare alcune delle opere più importanti e famose di Picasso, come \"Madre con bambino malato\" e \"Margot\"."
+                ]
+            ],
+            "questions": []
+        },
+        "4": {
+            "name": "Un secondo ostacolo",
+            "storyline": [
+                [
+                    "text",
+                    "Dirigetevi lungo il corridoio centrale, dovreste arrivare davanti ad una porta blindata. Mi raccomando, rispondete bene al quesito che vi verrà posto! \nDovreste vedere un qualcosa per aprire la porta."
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "In che anno è nato Picasso?",
+                    "tips": [
+                        "Ve ne ho parlato prima mentre vi raccontavo della sua vita! Ora purtroppo ho un lapsus..."
+                    ],
+                    "minScore": "-50",
+                    "maxScore": "50",
+                    "widgetId": "numerico"
+                }
+            ]
+        },
+        "5": {
+            "name": "Oh no!",
+            "storyline": [
+                [
+                    "text",
+                    "Dannazione! A quanto pare il sistema di sicurazza è stato aggiornato!\nOra sono richieste ben due domande!\nForza, leggete la domanda e cercate di rispondere correttamente..."
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "In che anno è stato dipinto l'Arlecchino?",
+                    "tips": [],
+                    "minScore": "-50",
+                    "maxScore": "50",
+                    "widgetId": "numerico"
+                }
+            ]
+        },
+        "6": {
+            "name": "La stanza del tesoro",
+            "storyline": [
+                [
+                    "img",
+                    "c30dee4c-925b-4e75-b259-070952e9b5f2",
+                    "jpeg",
+                    "Quadro Arlecchino.\nRappresenta un ragazzo con il volto truccato di bianco e un vestito a quadri neri e blu."
+                ],
+                [
+                    "img",
+                    "eae676d9-ad25-479d-83f8-0b4d580cfbef",
+                    "png",
+                    "Quadro las Meninas.\nRappresenta una stanza con lo stile cubista."
+                ],
+                [
+                    "text",
+                    "Bravissimi! Per fortuna siamo riusciti ad entrare, questa è la sala più importante di tutto il museo, oltre che \"Arlecchino\" potete ammirare anche \"Las meninas\", personalmente una delle mie opere preferite."
+                ]
+            ],
+            "questions": []
+        },
+        "7": {
+            "name": "L'ultima sfida",
+            "storyline": [
+                [
+                    "text",
+                    "Ora ecco l'ultima sfida, forse la più difficile.\nSempre il mio informatore è riuscito a darmi un suggerimento per disattivare l'allarme collegato all' \"Arlecchino\", dovete risolverlo e io così riuscirò a far passare inosservato il vostro furto."
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "Il quesito è: \"I colori dei periodi picassiani: rubo sale\"",
+                    "tips": [
+                        "Forse come prima potrebbe trattarsi di un'anagramma, cosa ne dite?",
+                        "Dato che parliamo di un pittore il nome del periodo potrebbe essere ispirato al colore che più usava in quel periodo"
+                    ],
+                    "minScore": "-50",
+                    "maxScore": "50",
+                    "widgetId": "classico"
+                }
+            ]
+        },
+        "8": {
+            "name": "Completiamo l'opera",
+            "storyline": [
+                [
+                    "text",
+                    "Ottimo!\nSiamo riusciti in questa impresa, ora non vi resta che uscire con il bottin, ci vediamo tra due ore al quartier generale"
+                ]
+            ],
+            "questions": []
+        },
+        "9": {
+            "name": "Fine",
+            "storyline": [
+                [
+                    "text",
+                    "Complimenti!\nGrazie al vostro intuito e alla vostra conoscenza siamo riusciti nel colpo!"
+                ]
+            ],
+            "questions": []
+        }
+    },
+    "missions": {
+        "0": {
+            "0": [
+                "1"
+            ],
+            "1": [
+                "2"
+            ],
+            "2": [
+                "3"
+            ],
+            "3": [
+                "4"
+            ],
+            "4": [
+                "5"
+            ],
+            "5": [
+                "6"
+            ],
+            "6": [
+                "7"
+            ],
+            "7": [
+                "8"
+            ],
+            "8": [
+                "9"
+            ],
+            "9": [
+                "new_mission"
+            ],
+            "start": "0"
+        }
+    },
+    "finalMessages": {
+        "0": {
+            "score": "70",
+            "message": "Bravi, avete completato il furto, ma non ci hanno scoperti per miracolo!"
+        },
+        "1": {
+            "score": "160",
+            "message": "Bravissimi! Sicuramente mi farò risentire per furti futuri."
+        },
+        "2": {
+            "message": "Siete la migliore squadra che abbia mai avuto e a quanto pare puer degli intenditori d'arte!"
+        }
+    },
+    "transitions": [
+        [
+            "0"
+        ]
+    ]
+}

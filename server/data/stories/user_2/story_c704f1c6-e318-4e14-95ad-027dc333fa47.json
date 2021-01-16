@@ -1,0 +1,298 @@
+{
+    "info": {
+        "name": "Sfamiamo la tribù!",
+        "description": "Questa storia parla delle abitudini alimentari degli uomini erectus. Si può imparare nozioni base sull'alimentazione e sulle abitudini di questi primati. Il gioco è consigliato per bambini di età tra gli 8 e 11 anni ed è giocabile in solitaria o in piccoli gruppi.",
+        "id": "c704f1c6-e318-4e14-95ad-027dc333fa47",
+        "accessibility": true,
+        "theme": "prehistory"
+    },
+    "activities": {
+        "0": {
+            "name": "Introduzione",
+            "storyline": [
+                [
+                    "img",
+                    "13def06c-6f0e-40dc-809e-0f85abf73eeb",
+                    "jpeg",
+                    "Immagine raffigurante l'evoluzione dell'uomo. A sinistra abbiamo l'australopiteco che ha sembianze molto simili a quelle di una scimmia. Spostandoci verso destra troviamo, in ordine, l'homo abilis, l'homo erectus (con in mano una torcia infuocata e un'arma fatta con una pietra appuntita) e, in fine, l'uomo di neandertal, che risulta essere dei quattro, quello con le sembianze più umane."
+                ],
+                [
+                    "text",
+                    "Questa storia è ambientata 1.5 milioni di anni fa. Sei un home erectus, in quanto tale, la tua dieta è prevalentemente vegetariana.\nLa tua tribù ti chiede di andare a cercare del cibo insime ad altri due o tre amici. Decidi di accettare e vi incamminate."
+                ]
+            ],
+            "questions": []
+        },
+        "1": {
+            "name": "La dieta dell'homo erectus",
+            "storyline": [
+                [
+                    "img",
+                    "4026b1c9-9c64-4e74-9f74-087b991abce3",
+                    "jpeg",
+                    "Immagine raffigurante diversi tipi di legumi. Abbiamo fagioli (borlotti, cannellini, di spagna, neri, rossi e azuki verdi), ceci, e lenticchie (classiche, arancioni, nere e gialle)."
+                ],
+                [
+                    "img",
+                    "f674ca2a-f2d5-41ef-927d-25395705094f",
+                    "jpeg",
+                    "Immagine reffigurante diversi tipi di frutta secca. Da sinistra a destra abbiamo: \narachidi con guscio, mandorle, pistacchi, nocciole, anacardi e arachidi sgusciate."
+                ],
+                [
+                    "text",
+                    "La dieta dell'homo erectus era praticamente priva di legumi (fig. 1) e cereali, ma ricca di frutta, verdura, semi e frutta secca (fig. 2).\nQuesti alimenti venivano in parte raccolti e, per la prima volta, in parte coltivati."
+                ]
+            ],
+            "questions": []
+        },
+        "2": {
+            "name": "Pronti per la spedizione?",
+            "storyline": [
+                [
+                    "text",
+                    "Prima di partire, per essere sicuri di avere tutto il cibo che vogliono, gli altri membri della tribù ti chiedono di elencare almeno un legume, una frutta secca, un seme e un tubero."
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "Elenca almeno un elemento per ogni categoria richiesta:",
+                    "tips": [
+                        "Tra la folla senti che a qualcuno, come tubero, piacerebbe mangiare delle patate",
+                        "Tra la folla senti che a qualcuno, come legume, piacerebbe mangiare dei fagioli",
+                        "Tra la folla senti che a qualcuno, come frutta secca, piacerebbe mangiare delle nocciole",
+                        "Tra la folla senti che a qualcuno, come seme, piacerebbe mangiare dei semi di girasole"
+                    ],
+                    "minScore": "-20",
+                    "maxScore": "50",
+                    "widgetId": "classico"
+                }
+            ]
+        },
+        "3": {
+            "name": "L'importanza del cibo",
+            "storyline": [
+                [
+                    "text",
+                    "Bravissimi! Questi alimenti erano molto importanti per gli uomini primitivi dato che fornivano loro molte energie e tutti i nutrienti principali per riuscire a vivere in salute (proteine, grassi, carboidrati, vitamine e minerali)."
+                ]
+            ],
+            "questions": []
+        },
+        "4": {
+            "name": "Cosa fare?",
+            "storyline": [],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Siete finalmente pronti per partire, cosa fate?",
+                    "tips": [],
+                    "dinamicRating": false,
+                    "answers": [
+                        {
+                            "value": "Andiamo in giro a cercare il cibo",
+                            "correct": true,
+                            "transition": true,
+                            "score": "10"
+                        },
+                        {
+                            "value": "Andiamo a vedere cosa c'è nelle coltivazioni",
+                            "correct": true,
+                            "transition": false,
+                            "score": "10"
+                        }
+                    ]
+                }
+            ]
+        },
+        "5": {
+            "name": "Aiuto!",
+            "storyline": [
+                [
+                    "img",
+                    "243938ee-3634-403b-843d-6cea5fd48968",
+                    "jpeg",
+                    "Foto di un leone con la bocca aperta."
+                ],
+                [
+                    "text",
+                    "Dopo ore di ricerca cala la notte e decidete di accamparvi sotto ad un albero.\nDurante la notte senti un leone avvicinarsi, per fortuna l'homo erectus è stato il primo a scoprire come accendere il fuoco."
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Come scacci il leone?",
+                    "tips": [
+                        "Il leone è molto veloce!",
+                        "Urlare non farà altro che eccitare il leone!"
+                    ],
+                    "dinamicRating": false,
+                    "answers": [
+                        {
+                            "value": "Sfreghi due legni per accendere il fuoco",
+                            "correct": true,
+                            "transition": false,
+                            "score": "40"
+                        },
+                        {
+                            "value": "Urlo",
+                            "correct": false,
+                            "transition": false,
+                            "score": "-10"
+                        },
+                        {
+                            "value": "Provo a scappare",
+                            "correct": false,
+                            "transition": false,
+                            "score": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        "6": {
+            "name": "Il fuoco!",
+            "storyline": [
+                [
+                    "img",
+                    "2a497266-33a8-4498-aaff-257f090e3027",
+                    "png",
+                    "Immagine esplicativa di come accendere il fuoco con l'archetto di legno.\n1) Mettere come base un pezzo di legno tenero, costruire un archetto con una corda e un rametto flessibile, prendere un legno appuntito da frizionare con l'archetto sopra al pezzo di legno duro e usare un'ulteriore pezzo di legno duro come perno sopra al legnetto appuntito.\n2)Iniziare a sfregare, quando, grazie all'attrito, si sarà formata della segatura, raccoglierla e soffiarci delicatamente sopra."
+                ],
+                [
+                    "text",
+                    "Complimenti, riesci a scacciare il leone e a salvare i tuoi amici, tornate a casa e decidete di andare nelle coltivazioni per non tornare a mani vuote."
+                ]
+            ],
+            "questions": []
+        },
+        "7": {
+            "name": "Nelle coltivazioni",
+            "storyline": [
+                [
+                    "text",
+                    "Nella coltivazione riesci a trovare parte delle cose che ti servivano, ti resta solo da trovare dei tuberi."
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Dove li cerchi?",
+                    "tips": [
+                        "Gli amici ti suggeriscono che di norma è difficile vedere il tubero in se prima di averlo raccolto..."
+                    ],
+                    "dinamicRating": true,
+                    "answers": [
+                        {
+                            "value": "Sopra ad un albero",
+                            "correct": false,
+                            "transition": false,
+                            "score": "-5"
+                        },
+                        {
+                            "value": "Sotto terra",
+                            "correct": true,
+                            "transition": false,
+                            "score": "40"
+                        },
+                        {
+                            "value": "In un cespuglio",
+                            "correct": false,
+                            "transition": false,
+                            "score": "-5"
+                        }
+                    ]
+                }
+            ]
+        },
+        "8": {
+            "name": "Tuberi",
+            "storyline": [
+                [
+                    "img",
+                    "94286dbb-652e-44c7-bf5d-3206a4b3ac95",
+                    "jpeg",
+                    "Immagine raffigurante due diverse tipologie di tuberi."
+                ],
+                [
+                    "text",
+                    "I tuberi sono un alimento molto importante. Contengono una buona dose di carboidrati e sono poverissimi di grassi.\nPossono essere consumati sia cotti che crudi (punto a favore per l'uomo primitivo che aveva imparato ad utilizzare il fuoco) e sono ricchissimi di vitamine e sali minerali."
+                ]
+            ],
+            "questions": []
+        },
+        "9": {
+            "name": "Fine",
+            "storyline": [
+                [
+                    "text",
+                    "Bravissimi! Al vostro ritorno la tribù vi accoglie entusiasta per tutto il cibo che avete portato."
+                ]
+            ],
+            "questions": []
+        }
+    },
+    "missions": {
+        "0": {
+            "0": [
+                "1"
+            ],
+            "1": [
+                "2"
+            ],
+            "2": [
+                "3"
+            ],
+            "3": [
+                "4"
+            ],
+            "4": [
+                "5",
+                "new_mission"
+            ],
+            "5": [
+                "6",
+                "5",
+                "5"
+            ],
+            "6": [
+                "new_mission"
+            ],
+            "start": "0"
+        },
+        "1": {
+            "7": [
+                "7",
+                "8",
+                "7"
+            ],
+            "8": [
+                "9"
+            ],
+            "9": [
+                "new_mission"
+            ],
+            "start": "7"
+        }
+    },
+    "finalMessages": {
+        "0": {
+            "score": "40",
+            "message": "Siete riusciti a portare il cibo a casa, ma le difficoltà sono state innumerevoli..."
+        },
+        "1": {
+            "score": "110",
+            "message": "Complimenti! La tribù è abbstanza soddisfatta di ciò che avete portato!"
+        },
+        "2": {
+            "message": "Bravissimi! La tribù è contentissima di ciò che le avete portato! L'alimentazione dell'uomo preistorico per voi non ha segreti!"
+        }
+    },
+    "transitions": [
+        [
+            "0",
+            "1"
+        ]
+    ]
+}
