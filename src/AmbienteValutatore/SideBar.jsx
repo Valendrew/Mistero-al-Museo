@@ -9,7 +9,6 @@ import { Spinner } from 'react-bootstrap';
 import ExportData from './ExportData';
 import ShowRanking from './ShowRanking';
 
-
 function PlayerList(props) {
 	return (
 		<ListGroup variant='flush'>
@@ -23,11 +22,15 @@ function PlayerList(props) {
 							props.setRanking(false);
 						}}>
 						{value.name}
-						{value.answer ? <Spinner animation='grow' variant='warning' /> : null}
-						{value.status.interval > 1000 * 60 * 1.5 ? (
-							<Spinner animation='grow' variant='info' />
+						{value.answer ? (
+							<Spinner animation='grow' variant='warning' title='Risposta da valutare' />
 						) : null}
-						{value.help ? <Spinner animation='grow' variant='dark' /> : null}
+						{value.status.interval > 1000 * 60 * 1.5 ? (
+							<Spinner animation='grow' variant='info' title='Player da troppo tempo in attesa' />
+						) : null}
+						{value.help ? (
+							<Spinner animation='grow' variant='dark' title='Aiuto richiesto dal player' />
+						) : null}
 					</ListGroup.Item>
 				);
 			})}

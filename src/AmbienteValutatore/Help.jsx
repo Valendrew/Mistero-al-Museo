@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 
 function HelpBody(props) {
-	const [radioButtons, setRadioButtons] = useState(Array.from({ length: props.question.tips.length + 1 }, v => false));
+	const [radioButtons, setRadioButtons] = useState(
+		Array.from({ length: props.question.tips.length + 1 }, v => false)
+	);
 	const answerIndex = props.player.informations.help.index;
 
 	const handleRadioButtons = (index, value) => {
@@ -23,7 +25,12 @@ function HelpBody(props) {
 				tipValue = props.question.tips[indexOfTip];
 			}
 
-			props.sendHelpToPlayer(tipValue, props.player.story, props.player.id);
+			props.sendHelpToPlayer(
+				tipValue,
+				props.player.story,
+				props.player.id,
+				props.player.informations.help.activity
+			);
 		}
 	};
 
@@ -64,7 +71,10 @@ function HelpBody(props) {
 							value={props.inputs.manualHelp ? props.inputs.manualHelp.value : ''}
 							onChange={e => {
 								e.stopPropagation();
-								props.setInputs({ ...props.inputs, manualHelp: { value: e.target.value, error: false } });
+								props.setInputs({
+									...props.inputs,
+									manualHelp: { value: e.target.value, error: false }
+								});
 							}}
 						/>
 					</Form.Check.Label>

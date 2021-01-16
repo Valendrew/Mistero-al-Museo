@@ -20,9 +20,11 @@ function Chat(props) {
 		setMessage('');
 		props.updateStatus(props.player.story, props.player.id, { chat: data });
 	};
+	
 	const handleChangeInput = e => {
 		setMessage(e.target.value);
 	};
+
 	return (
 		<Card style={{ height: '100%' }}>
 			<Card.Header>Chat</Card.Header>

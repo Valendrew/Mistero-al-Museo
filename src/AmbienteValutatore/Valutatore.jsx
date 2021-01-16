@@ -35,19 +35,29 @@ function Valutatore() {
 
 		if (players[index].hasOwnProperty(idPlayer)) {
 			let newPlayers = [...players];
+
 			newPlayers[index] = {
 				...newPlayers[index],
 				[idPlayer]: { ...newPlayers[index][idPlayer], ...statusUpdated }
 			};
 
+			const currentPlayer = newPlayers[index][idPlayer];
+
+			if (
+				currentPlayer.hasOwnProperty('help') &&
+				currentPlayer.help &&
+				currentPlayer.help.activity !== currentPlayer.status.activity
+			) {
+				delete newPlayers[index][idPlayer].help;
+			}
+
 			if (playerSelected && playerSelected.id === idPlayer) {
 				if (statusUpdated.hasOwnProperty('name')) {
 					setInputs({ ...inputs, name: { value: statusUpdated.name, error: false } });
 				}
-
 				setPlayerSelected({
 					...playerSelected,
-					informations: { ...playerSelected.informations, ...statusUpdated }
+					informations: newPlayers[index][idPlayer]
 				});
 			}
 
@@ -59,7 +69,10 @@ function Valutatore() {
 		const result = await fetch(`/games/${idStory}/players/${idPlayer}/question`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ question: { value: value, correct: correct, answerPlayer: answerPlayer }, answer: null })
+			body: JSON.stringify({
+				question: { value: value, correct: correct, answerPlayer: answerPlayer },
+				answer: null
+			})
 		});
 		if (result.ok) {
 			updateStatus(idStory, idPlayer, { answer: null });
@@ -67,13 +80,11 @@ function Valutatore() {
 		}
 	};
 
-	const sendHelpToPlayer = async (tip, idStory, idPlayer) => {
-		console.log(tip);
-
+	const sendHelpToPlayer = async (tip, idStory, idPlayer, activity) => {
 		await fetch(`/games/${idStory}/players/${idPlayer}/help`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ help: tip })
+			body: JSON.stringify({ help: { tip: tip, activity: activity } })
 		});
 		updateStatus(idStory, idPlayer, { help: null });
 	};
@@ -89,7 +100,7 @@ function Valutatore() {
 				});
 			}
 		},
-		isLoaded.loaded ? 5000 : null
+		isLoaded.loaded ? 10000 : null
 	);
 
 	useEffect(() => {
@@ -135,7 +146,7 @@ function Valutatore() {
 				});
 			}
 		},
-		isLoaded.loaded ? 5000 : null
+		isLoaded.loaded ? 10000 : null
 	);
 
 	return isLoaded.loaded ? (

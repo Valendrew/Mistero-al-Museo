@@ -54,25 +54,25 @@ const updateStatusPlayer = async (req, res, next) => {
 	const storyID = req.params.id;
 	const playerStatus = req.body;
 
-	let data;
+	let data = {};
 	try {
 		data = await fileOperations.read('player.json', app.get('games'));
-
-		if (data.hasOwnProperty(storyID)) {
-			if (playerStatus.hasOwnProperty('name')) {
-				playerStatus.name = 'player' + Object.keys(data[storyID]).length;
-			}
-
-			data[storyID][playerID] = { ...data[storyID][playerID], ...playerStatus };
-		} else {
-			if (playerStatus.hasOwnProperty('name')) {
-				playerStatus.name = 'player0';
-			}
-
-			data[storyID] = { [playerID]: playerStatus };
-		}
 	} catch (e) {
-		next(e);
+		data = {};
+	}
+
+	if (data.hasOwnProperty(storyID)) {
+		if (playerStatus.hasOwnProperty('name')) {
+			playerStatus.name = 'player' + Object.keys(data[storyID]).length;
+		}
+
+		data[storyID][playerID] = { ...data[storyID][playerID], ...playerStatus };
+	} else {
+		if (playerStatus.hasOwnProperty('name')) {
+			playerStatus.name = 'player0';
+		}
+
+		data[storyID] = { [playerID]: playerStatus };
 	}
 
 	fileOperations
@@ -203,11 +203,13 @@ router.put(
 	'/:id/players/answer',
 	(req, res, next) => {
 		res.locals.playerID = req.cookies.playerID;
+
 		informationsPending[req.cookies.playerID] = {
 			...informationsPending[req.cookies.playerID],
 			story: req.params.id,
 			answer: req.body.answer
 		};
+		
 		next();
 	},
 	updateStatusPlayer

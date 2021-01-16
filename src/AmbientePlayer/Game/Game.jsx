@@ -9,8 +9,11 @@ import EndGame from './EndGame';
 function ShowRequestHelp(props) {
 	return (
 		<>
-			<span className={props.style.paragrafoerrore}>Risposta non corretta: {props.additionalText || 'riprovare'}</span>
-			<Button variant='dark' className={props.style.bottone} onClick={e => props.sendHelp(e, props.answer)}>
+			<span className={props.style.paragrafoerrore}>Risposta non corretta: riprovare</span>
+			<Button
+				variant='dark'
+				className={props.style.bottone}
+				onClick={e => props.sendHelp(e, props.answer)}>
 				Richiedi aiuto al valutatore
 			</Button>
 		</>
@@ -60,7 +63,9 @@ function Game(props) {
 
 			setWaitingOpen(
 				<Spinner animation='border' variant='info' role='status'>
-					<span className='sr-only'>In attesa della valutazione della risposta da parte del valutatore</span>
+					<span className='sr-only'>
+						In attesa della valutazione della risposta da parte del valutatore
+					</span>
 				</Spinner>
 			);
 		} else if (answer.type === 'radio') {
@@ -93,7 +98,11 @@ function Game(props) {
 
 		/* Ottengo la missione corrente e l'attività dopo
 		in base alla risposta che è stata data  */
-		const currentMission = getCurrentMission(activity, story.missions, story.transitions[transition]);
+		const currentMission = getCurrentMission(
+			activity,
+			story.missions,
+			story.transitions[transition]
+		);
 		let nextActivity = story.missions[currentMission][activity][answerIndex];
 
 		if (nextActivity === activity) {
@@ -162,10 +171,14 @@ function Game(props) {
 		const result = await fetch(`/games/${informations.game}/players/help`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ help: latestAnswer })
+			body: JSON.stringify({
+				help: { ...latestAnswer, activity: informations.player.status.activity }
+			})
 		});
 		if (result.ok) {
-			setErrorAnswer(<span className={props.style.paragrafoerrore}>Aiuto inviato al valutatore</span>);
+			setErrorAnswer(
+				<span className={props.style.paragrafoerrore}>Aiuto inviato al valutatore</span>
+			);
 			setWaitingHelp(true);
 		}
 	};
@@ -181,12 +194,9 @@ function Game(props) {
 							fetchInformationsNextActivity(0, data.value, answer);
 						} else {
 							setErrorAnswer(
-								<ShowRequestHelp
-									style={props.style}
-									sendHelp={sendHelp}
-									answer={data.answerPlayer}
-									additionalText={data.value}
-								/>
+								<span className={props.style.paragrafoerrore}>
+									Risposta non corretta: {data.value}
+								</span>
 							);
 						}
 						setWaitingOpen(undefined);
@@ -217,8 +227,10 @@ function Game(props) {
 			const result = await fetch(`/games/${informations.game}/players/help`);
 			if (result.ok) {
 				result.text().then(data => {
-					if (data.trim()) {
-						setErrorAnswer(<span className={props.style.paragrafoerrore}>Aiuto arrivato: {data}</span>);
+					if (data.trim() && data.activity === informations.player.status.activity) {
+						setErrorAnswer(
+							<span className={props.style.paragrafoerrore}>Aiuto arrivato: {data.tip}</span>
+						);
 
 						setWaitingHelp(false);
 					}
@@ -236,7 +248,10 @@ function Game(props) {
 				body: JSON.stringify({
 					status: {
 						...informations.player.status,
-						interval: new Date() - Date.parse('1970-01-01T01:00:00') - new Date(informations.player.status.dateActivity)
+						interval:
+							new Date() -
+							Date.parse('1970-01-01T01:00:00') -
+							new Date(informations.player.status.dateActivity)
 					}
 				})
 			});
