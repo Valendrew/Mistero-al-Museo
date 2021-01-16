@@ -50,7 +50,7 @@ function PagePreview({ style }) {
 						src={Placeholder}
 						thumbnail
 						fluid
-						className={style.immagine}
+						className={style.mediaContent}
 					/>
 				</Col>
 			</Row>
