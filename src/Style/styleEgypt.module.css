@@ -21,7 +21,7 @@
 .bottone {
 	composes: bottone from './style.module.css';
 
-	background-color: rgb(107, 87, 0);
+	background-color:#8C7500;
 }
 
 .paragrafo {
@@ -45,7 +45,7 @@
 .rispostaMultipla {
 	composes: rispostaMultipla from './style.module.css';
 
-	background-color: rgb(107, 87, 0);
+	background-color: #8C7500;
 }
 
 .rispostaAperta {
