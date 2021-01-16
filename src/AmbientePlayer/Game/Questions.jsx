@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Col, Row, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-/* import WidgetNumerico from '../../AmbienteAutore/activities/Widgets/WidgetNumerico';
-import WidgetPapiro from '../../AmbienteAutore/activities/Widgets/WidgetPapiro'; */
+import WidgetNumerico from './../../Widgets/WidgetNumerico';
+import WidgetPapiro from './../../Widgets/WidgetPapiro';
 
 function OpenQuestion(props) {
 	return (
@@ -11,17 +11,23 @@ function OpenQuestion(props) {
 			<Form.Label id='answer_value' className={props.style.container}>
 				<span className={props.style.paragrafo}>Risposta alla domanda</span>
 			</Form.Label>
-			<Form.Control
-				name='open_question'
-				as='textarea'
-				rows={4}
-				value={props.inputsQuestion[0].value}
-				onChange={e => props.onChangeAnswer(0, e.target.value)}
-				className={props.style.rispostaAperta}
-				aria-labelledby='answer_value'
-				required
-				aria-required
-			/>
+			{props.question.widgetId === 'papiro' ? (
+				<WidgetPapiro {...props} />
+			) : props.question.widgetId === 'numerico' ? (
+				<WidgetNumerico {...props} />
+			) : (
+				<Form.Control
+					name='open_question'
+					as='textarea'
+					rows={4}
+					value={props.inputsQuestion[0].value}
+					onChange={e => props.onChangeAnswer(0, e.target.value)}
+					className={props.style.rispostaAperta}
+					aria-labelledby='answer_value'
+					required
+					aria-required
+				/>
+			)}
 		</Form.Group>
 	);
 }

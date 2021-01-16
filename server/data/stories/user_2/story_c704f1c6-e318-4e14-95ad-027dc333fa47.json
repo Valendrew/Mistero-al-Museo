@@ -4,7 +4,8 @@
         "description": "Questa storia parla delle abitudini alimentari degli uomini erectus. Si può imparare nozioni base sull'alimentazione e sulle abitudini di questi primati. Il gioco è consigliato per bambini di età tra gli 8 e 11 anni ed è giocabile in solitaria o in piccoli gruppi.",
         "id": "c704f1c6-e318-4e14-95ad-027dc333fa47",
         "accessibility": true,
-        "theme": "prehistory"
+        "theme": "prehistory",
+        "qr": "http://localhost:3000/player/c704f1c6-e318-4e14-95ad-027dc333fa47"
     },
     "activities": {
         "0": {
