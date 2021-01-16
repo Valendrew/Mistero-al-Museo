@@ -1,12 +1,10 @@
 .sfondo {
     composes: sfondo from "./style.module.css";
-
     background-image: url("../Pictures/MuseumBackground.jpg");
 }
 
 .backMedia {
     composes: backMedia from "./style.module.css";
-    
     background-image: url("../Pictures/MuseumBackground2.jpg");
 }
 
@@ -16,7 +14,7 @@
 
 .bottone {
     composes: bottone from "./style.module.css";
-    background-color:#2e7d32;
+    background-color: #2e7d32;
 }
 
 .container {
@@ -25,6 +23,18 @@
 
 .paragrafo {
     composes: paragrafo from "./style.module.css";
+}
+
+.bottonealt {
+    composes: bottonealt from './style.module.css';
+}
+
+.paragrafoalt {
+    composes: paragrafoalt from './style.module.css';
+}
+
+.paragrafoerrore {
+    composes: paragrafoerrore from './style.module.css';
 }
 
 .rispostaMultipla {
