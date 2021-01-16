@@ -42,12 +42,12 @@ function Media(props) {
 					src={mediaURL}
 					thumbnail
 					fluid
-					className={props.style.immagine}
+					className={props.style.mediaContent}
 				/>
 			</Col>
 		) : (
 			<Col className={props.style.backMedia}>
-				<video width='320' height='240' controls>
+				<video width='320' height='240' controls className={props.style.mediaContent}>
 					<source src={mediaURL}></source>
 				</video>
 			</Col>

@@ -10,8 +10,8 @@
 	background-image: url('../Pictures/EgyptBackground2.jpg');
 }
 
-.immagine {
-	composes: immagine from './style.module.css';
+.mediaContent {
+	composes: mediaContent from './style.module.css';
 }
 
 .container {
