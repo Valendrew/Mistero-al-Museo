@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Modal, Col } from 'react-bootstrap';
 
 import { jsPDF } from 'jspdf';
 import { nanoid } from 'nanoid';
@@ -17,7 +17,13 @@ export default function ExportData(props) {
 		if (player !== 'classifica') {
 			header = ['Numero attività', 'Domanda', 'Risposta', 'Punteggio ottenuto'];
 
-			let headerConfig = header.map(key => ({ name: key, prompt: key, width: 50, align: 'center', padding: 0 }));
+			let headerConfig = header.map(key => ({
+				name: key,
+				prompt: key,
+				width: 50,
+				align: 'center',
+				padding: 0
+			}));
 			let tableRows = [];
 			const result = await fetch(`/games/${player}/${props.storyID}/playerAnswers`);
 			if (result.ok) {
@@ -36,7 +42,13 @@ export default function ExportData(props) {
 			}
 		} else {
 			header = ['Nome', 'Punteggio'];
-			let headerConfig = header.map(key => ({ name: key, prompt: key, width: 50, align: 'center', padding: 0 }));
+			let headerConfig = header.map(key => ({
+				name: key,
+				prompt: key,
+				width: 50,
+				align: 'center',
+				padding: 0
+			}));
 
 			//Ordino i giocatori di questa storia in ordine decrescente in base al punteggio
 			console.log(props.players);
@@ -64,7 +76,7 @@ export default function ExportData(props) {
 		setPlayer(playerID);
 	};
 	return (
-		<>
+		<Col>
 			<Button onClick={() => handleShow()}>Export data</Button>
 			<Modal show={show} onHide={handleClose} backdrop='static' keyboard={false}>
 				<Modal.Header closeButton>
@@ -104,6 +116,6 @@ export default function ExportData(props) {
 					</Modal.Footer>
 				</Form>
 			</Modal>
-		</>
+		</Col>
 	);
 }

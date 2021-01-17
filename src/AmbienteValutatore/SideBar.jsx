@@ -13,6 +13,43 @@ function PlayerList(props) {
 	return (
 		<ListGroup variant='flush'>
 			{Object.entries(props.players).map(([key, value]) => {
+				let spinners = [];
+
+				if (value.answer) {
+					spinners.push(
+						<Spinner
+							key='spinner_1'
+							className='mx-2'
+							animation='grow'
+							variant='warning'
+							title='Risposta da valutare'
+						/>
+					);
+				}
+				if (value.status.interval > 1000 * 60 * 5) {
+					spinners.push(
+						<Spinner
+							key='spinner_2'
+							className='mx-2'
+							animation='grow'
+							variant='info'
+							title='Player da troppo tempo in attesa'
+						/>
+					);
+				}
+
+				if (value.help) {
+					spinners.push(
+						<Spinner
+							key='spinner_3'
+							className='mx-2'
+							animation='grow'
+							variant='dark'
+							title='Aiuto richiesto dal player'
+						/>
+					);
+				}
+
 				return (
 					<ListGroup.Item
 						key={key}
@@ -22,15 +59,7 @@ function PlayerList(props) {
 							props.setRanking(false);
 						}}>
 						{value.name}
-						{value.answer ? (
-							<Spinner animation='grow' variant='warning' title='Risposta da valutare' />
-						) : null}
-						{value.status.interval > 1000 * 60 * 1.5 ? (
-							<Spinner animation='grow' variant='info' title='Player da troppo tempo in attesa' />
-						) : null}
-						{value.help ? (
-							<Spinner animation='grow' variant='dark' title='Aiuto richiesto dal player' />
-						) : null}
+						{spinners.map(spin => spin)}
 					</ListGroup.Item>
 				);
 			})}
@@ -39,7 +68,7 @@ function PlayerList(props) {
 }
 function ListStories(props) {
 	return (
-		<Accordion>
+		<Accordion defaultActiveKey={props.id} className='mt-4'>
 			<Card>
 				<Accordion.Toggle as={Card.Header} variant='light' eventKey={props.id}>
 					{props.name}
@@ -47,13 +76,16 @@ function ListStories(props) {
 
 				<Accordion.Collapse eventKey={props.id}>
 					<Card.Body>
-						<ExportData players={props.players} storyID={props.id} />
-						<ShowRanking
-							setRanking={props.setRanking}
-							setStorySelected={props.setStorySelected}
-							stories={props.stories}
-							storyID={props.id}
-						/>
+						<Row>
+							<ExportData players={props.players} storyID={props.id} />
+							<ShowRanking
+								setRanking={props.setRanking}
+								setStorySelected={props.setStorySelected}
+								stories={props.stories}
+								storyID={props.id}
+							/>
+						</Row>
+
 						<PlayerList {...props} />
 					</Card.Body>
 				</Accordion.Collapse>
