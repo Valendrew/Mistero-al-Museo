@@ -112,7 +112,6 @@ function StoryQRCode(props) {
 						<>
 							<Card.Body>
 								<QRCode value={props.value} />
-								<a href={props.value}>Vai alla storia</a>
 							</Card.Body>
 							<Card.Footer>
 								<Button variant='primary' onClick={props.removeQRCode}>

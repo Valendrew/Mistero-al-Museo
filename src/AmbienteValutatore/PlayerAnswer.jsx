@@ -1,11 +1,20 @@
 import React from 'react';
 
-import { Button, InputGroup } from 'react-bootstrap';
+import { Button, InputGroup, ListGroup } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 
 function FormAnswerPlayer({ answer }) {
-	return <Form.Control as='textarea' cols={8} rows={2} placeholder={answer} style={{ resize: 'none' }} readOnly />;
+	return (
+		<Form.Control
+			as='textarea'
+			cols={8}
+			rows={2}
+			placeholder={answer}
+			style={{ resize: 'none' }}
+			readOnly
+		/>
+	);
 }
 
 function OpenQuestion(props) {
@@ -24,12 +33,12 @@ function OpenQuestion(props) {
 						props.player.informations.answer.value
 					);
 				}}>
-				<h5>In caso di risposta corretta: </h5>
+				<p style={{ fontSize: ' 1.5rem' }}>In caso di risposta corretta: </p>
 				<InputGroup>
 					<InputGroup.Prepend>
-						<Form.Label>
+						<InputGroup.Text>
 							Assegna un valore da {props.question.minScore} a {props.question.maxScore}
-						</Form.Label>
+						</InputGroup.Text>
 					</InputGroup.Prepend>
 					<Form.Control
 						type='number'
@@ -38,7 +47,10 @@ function OpenQuestion(props) {
 						min={props.question.minScore}
 						max={props.question.maxScore}
 						onChange={e =>
-							props.setInputs({ ...props.inputs, [e.target.name]: { value: e.target.value, error: false } })
+							props.setInputs({
+								...props.inputs,
+								[e.target.name]: { value: e.target.value, error: false }
+							})
 						}
 					/>
 					<InputGroup.Append>
@@ -58,22 +70,43 @@ function OpenQuestion(props) {
 						props.player.informations.answer.value
 					);
 				}}>
-				<h5>In caso di risposta non corretta: </h5>
-				<InputGroup>
+				<p style={{ fontSize: ' 1.5rem' }}>In caso di risposta non corretta: </p>
+				<InputGroup className='mb-2'>
 					<InputGroup.Prepend>
-						<Form.Label>Inserisci messaggio per il player</Form.Label>
+						<InputGroup.Text>Inserisci messaggio per il player</InputGroup.Text>
 					</InputGroup.Prepend>
 					<Form.Control
 						name='tipAnswer'
 						value={props.inputs.tipAnswer ? props.inputs.tipAnswer.value : ''}
 						onChange={e =>
-							props.setInputs({ ...props.inputs, [e.target.name]: { value: e.target.value, error: false } })
+							props.setInputs({
+								...props.inputs,
+								[e.target.name]: { value: e.target.value, error: false }
+							})
 						}
 					/>
 					<InputGroup.Append>
 						<Button type='submit'>Invia</Button>
 					</InputGroup.Append>
 				</InputGroup>
+				{props.question.tips.length ? (
+					<>
+						Aiuti disponibili, clicca per selezionarli!{' '}
+						<ListGroup variant="flush">
+							{props.question.tips.map((val, k) => (
+								<ListGroup.Item key={k}>
+									<Button
+										variant='light'
+										onClick={() =>
+											props.setInputs({ ...props.inputs, tipAnswer: { value: val, error: false } })
+										}>
+										{val}
+									</Button>
+								</ListGroup.Item>
+							))}
+						</ListGroup>
+					</>
+				) : null}
 			</Form>
 		</>
 	);
@@ -95,7 +128,8 @@ function PlayerAnswer(props) {
 		<Card style={{ height: '100%' }}>
 			<Card.Header>Risposta del Giocatore</Card.Header>
 			<Card.Body>
-				{props.player.informations.answer && Number.isInteger(parseInt(props.player.informations.status.activity)) ? (
+				{props.player.informations.answer &&
+				Number.isInteger(parseInt(props.player.informations.status.activity)) ? (
 					<>
 						<FormAnswerPlayer answer={props.player.informations.answer.value} />
 						<FormAnswerCorrect {...props} />
