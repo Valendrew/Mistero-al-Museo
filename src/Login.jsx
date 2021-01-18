@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import sha256 from "crypto-js/sha256";
-import { Container, Form, Button, Alert } from "react-bootstrap";
+import { Container, Form, Button, Alert, Breadcrumb } from "react-bootstrap";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 function Login() {
 	const [accedi, setAccedi] = useState(true);
 	const [errore, setErrore] = useState();
@@ -88,13 +90,24 @@ function Login() {
 			});
 		}
 	};
+	const NavbarLogin = () =>{
+		return(
+		<Breadcrumb>
+			<LinkContainer to="/">
+				<Breadcrumb.Item>Home</Breadcrumb.Item>
+			</LinkContainer>
+			<Breadcrumb.Item active="false">Login</Breadcrumb.Item>
+		</Breadcrumb>
+		);
+	}
 
 	return (
 		<Container>
+			<NavbarLogin/>
 			{accesso ? (
-				<Alert variant="success">Accesso eseguito! Adesso puoi utilizzare l'ambiente autore e valutatore, oppure accedi nuovamente per cambiare account</Alert>
+				<Alert variant="success">Accesso eseguito! Adesso puoi utilizzare l'ambiente <Link to= "/autore">autore</Link> e <Link to= "/valutatore">valutatore</Link>, oppure accedere nuovamente per cambiare account.</Alert>
 			) : (
-				<Alert variant="warning">Devi accedere per usufruire dell'ambiente autore e valutatore.</Alert>
+				<Alert variant="warning">Devi accedere per poter usufruire dell'ambiente autore e valutatore!</Alert>
 			)}
 			<Form onSubmit={(e) => handleSubmit(e)}>
 				<Form.Group>
