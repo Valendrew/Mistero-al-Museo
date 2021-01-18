@@ -268,11 +268,8 @@ function MissionsTransitions(props) {
 		});
 
 		props.setStory({
-			loaded: true,
-			items: {
-				...props.story,
-				missions: { ...props.story.missions, [newMissionsIndex]: newMissions }
-			}
+			...props.story,
+			missions: { ...props.story.missions, [newMissionsIndex]: newMissions }
 		});
 		setMissionsWithActs({ ...missionsWithActs, [newMissionsIndex]: newMissionsWithActs });
 		setMissions([...missions, newMissionsIndex.toString()]);
