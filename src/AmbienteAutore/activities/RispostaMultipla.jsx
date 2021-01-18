@@ -45,7 +45,7 @@ export default function RispostaMultipla(props) {
 						<Col>
 							<Form.Check
 								name={val[1]}
-								value={props.inputs[val[1]].value}
+								checked={props.inputs[val[1]].value}
 								defaultChecked={props.inputs[val[1]].value}
 								type='checkbox'
 								onChange={e => props.handleInput(e.target.checked, e.target.name, null, null, true)}
@@ -54,10 +54,11 @@ export default function RispostaMultipla(props) {
 						<Col>
 							<Form.Check
 								name={val[2]}
-								value={props.inputs[val[2]].value}
-								defaultChecked={props.inputs[val[2]].value}
+								checked={props.inputs[val[1]].value ? false : props.inputs[val[2]].value}
+								defaultChecked={props.inputs[val[1]].value ? false : props.inputs[val[2]].value}
 								type='checkbox'
 								onChange={e => props.handleInput(e.target.checked, e.target.name, null, null, true)}
+								disabled={props.inputs[val[1]].value}
 							/>
 						</Col>
 						<Col>
