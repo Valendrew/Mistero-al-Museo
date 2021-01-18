@@ -26,7 +26,7 @@
                     "img",
                     "eb917858-7100-4657-b467-4d95658f5299",
                     "jpeg",
-                    "Geroglifici egiziani che compongono il nome del faraone"
+                    "Geroglifici egizi che compongono il nome del faraone"
                 ],
                 [
                     "img",
@@ -201,7 +201,7 @@
             "questions": [
                 {
                     "type": "radio",
-                    "value": "\"Pronuncia il nome dell'oggetto che Anumi utilizzava per pesare il cuore del defunto\"",
+                    "value": "\"Pronuncia il nome dell'oggetto che Anubi utilizzava per pesare il cuore del defunto\"",
                     "tips": [
                         "Decidi di soffermarti un attimo a guardare meglio l'immagine"
                     ],
@@ -243,7 +243,7 @@
                     "value": "Sopra al sarcofago leggi: \"Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?\"",
                     "tips": [
                         "Nella tua mente affiora la lettera c...",
-                        "Solitamente la forma era correlata a qualcosa di sacro per gli egiziani"
+                        "Solitamente la forma era correlata a qualcosa di sacro per gli egizi"
                     ],
                     "minScore": "-20",
                     "maxScore": "50",

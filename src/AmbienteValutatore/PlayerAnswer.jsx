@@ -21,7 +21,7 @@ function OpenQuestion(props) {
 	return (
 		<>
 			<p>{props.question.value}</p>
-
+			<hr />
 			<Form
 				onSubmit={e => {
 					e.preventDefault();
@@ -41,6 +41,7 @@ function OpenQuestion(props) {
 						</InputGroup.Text>
 					</InputGroup.Prepend>
 					<Form.Control
+						required
 						type='number'
 						name='score'
 						value={props.inputs.score ? props.inputs.score.value : props.question.minScore}
@@ -54,11 +55,11 @@ function OpenQuestion(props) {
 						}
 					/>
 					<InputGroup.Append>
-						<Button type='submit'>Invia</Button>
+						<Button type='submit' variant="success">Invia</Button>
 					</InputGroup.Append>
 				</InputGroup>
 			</Form>
-
+			<hr />
 			<Form
 				onSubmit={e => {
 					e.preventDefault();
@@ -86,7 +87,7 @@ function OpenQuestion(props) {
 						}
 					/>
 					<InputGroup.Append>
-						<Button type='submit'>Invia</Button>
+						<Button type='submit' variant="danger">Invia</Button>
 					</InputGroup.Append>
 				</InputGroup>
 				{props.question.tips.length ? (
@@ -135,8 +136,8 @@ function PlayerAnswer(props) {
 						<FormAnswerCorrect {...props} />
 					</>
 				) : (
-					'Nessuna risposta data'
-				)}
+						'Nessuna risposta data'
+					)}
 			</Card.Body>
 		</Card>
 	);
