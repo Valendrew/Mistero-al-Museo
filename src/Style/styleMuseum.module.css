@@ -1,48 +1,55 @@
 .sfondo {
-    composes: sfondo from "./style.module.css";
-    background-image: url("../Pictures/MuseumBackground.jpg");
+	composes: sfondo from './style.module.css';
+
+	background-image: url('../Pictures/MuseumBackground.jpg');
 }
 
 .backMedia {
-    composes: backMedia from "./style.module.css";
-    background-image: url("../Pictures/MuseumBackground2.jpg");
+	composes: backMedia from './style.module.css';
+
+	background-image: url('../Pictures/MuseumBackground2.jpg');
 }
 
 .mediaContent {
-    composes: mediaContent from "./style.module.css";
-}
-
-.bottone {
-    composes: bottone from "./style.module.css";
-    background-color: #2e7d32;
+	composes: mediaContent from './style.module.css';
 }
 
 .container {
-    composes: container from "./style.module.css";
+	composes: container from './style.module.css';
+}
+
+.bottone {
+	composes: bottone from './style.module.css';
+
+	background-color: #2e7d32;
 }
 
 .paragrafo {
-    composes: paragrafo from "./style.module.css";
+	composes: paragrafo from './style.module.css';
 }
 
 .bottonealt {
-    composes: bottonealt from './style.module.css';
+	composes: bottonealt from './style.module.css';
+
+	background-color: #6aac6d;
 }
 
 .paragrafoalt {
-    composes: paragrafoalt from './style.module.css';
+	composes: paragrafoalt from './style.module.css';
 }
 
 .paragrafoerrore {
-    composes: paragrafoerrore from './style.module.css';
+	composes: paragrafoerrore from './style.module.css';
 }
 
 .rispostaMultipla {
-    composes: rispostaMultipla from "./style.module.css";
-    background-color: #2e7d32;
+    composes: rispostaMultipla from './style.module.css';
+    
+	background-color: #2e7d32;
 }
 
 .rispostaAperta {
-    composes: rispostaAperta from "./style.module.css";
-    background-color: rgb(201, 255, 184);
+    composes: rispostaAperta from './style.module.css';
+    
+	background-color: rgb(201, 255, 184);
 }

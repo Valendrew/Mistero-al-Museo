@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import {  InputGroup } from 'react-bootstrap';
+import { InputGroup } from 'react-bootstrap';
 
 function StoryPropertyCard(props) {
 	return (
@@ -37,8 +37,8 @@ function StoryIndex() {
 			name: inputs.name,
 			description: inputs.description
 		};
-		if (inputs.name.replace(' ', '') === '' || inputs.description.replace(' ', '') === '') {
-			setErrorInputs(<p className='text-danger'>Compila tutti gli input</p>);
+		if (!inputs.name.trim() || !inputs.description.trim()) {
+			setErrorInputs(<p className='text-danger'>Compila tutti i campi</p>);
 		} else {
 			fetch(`/stories`, {
 				method: 'POST',

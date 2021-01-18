@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 
 function InputMessage(props) {
 	return (
-		<Col xs={4}>
+		<Col xs={12}>
 			<InputGroup>
 				<InputGroup.Prepend>
 					<InputGroup.Text>Messaggio:</InputGroup.Text>
 				</InputGroup.Prepend>
 
 				<Form.Control
-					value={props.inputs[`message_${props.id}`] || ''}
+					value={props.finalMessages[props.id]['message']}
 					onChange={e => props.setScore(e, props.id, 'message')}
 				/>
 			</InputGroup>
@@ -19,11 +19,8 @@ function InputMessage(props) {
 }
 
 function FinalMessages(props) {
-	const [inputs, setInputs] = useState({ score_0: 0, score_1: 1 });
-
 	const setScore = (e, index, key) => {
 		let newFinalMsgs = { ...props.finalMessages };
-		let newInputs = {};
 
 		const addToFinalMsgs = (i, value) => {
 			if (newFinalMsgs.hasOwnProperty(i)) {
@@ -33,22 +30,24 @@ function FinalMessages(props) {
 			}
 		};
 
-		if (index === 0 && key === 'score' && parseInt(e.target.value) >= parseInt(inputs['score_1'])) {
+		if (
+			index === 0 &&
+			key === 'score' &&
+			parseInt(e.target.value) >= parseInt(props.finalMessages['1']['score'])
+		) {
 			const nextValue = (parseInt(e.target.value) + 1).toString();
 
-			newInputs = { [`${key}_1`]: nextValue };
 			addToFinalMsgs(1, nextValue);
 		}
-		if (index === 1 && key === 'score' && parseInt(e.target.value) <= parseInt(inputs['score_0'])) {
+		if (
+			index === 1 &&
+			key === 'score' &&
+			parseInt(e.target.value) <= parseInt(props.finalMessages['0']['score'])
+		) {
 			const prevValue = (parseInt(e.target.value) - 1).toString();
 
-			newInputs = { [`${key}_0`]: prevValue };
-			addToFinalMsgs(1, prevValue);
+			addToFinalMsgs(0, prevValue);
 		}
-
-		newInputs = { ...newInputs, [`${key}_${index}`]: e.target.value };
-		setInputs({ ...inputs, ...newInputs });
-
 		addToFinalMsgs(index, e.target.value);
 		props.setFinalMessages(newFinalMsgs);
 	};
@@ -58,63 +57,71 @@ function FinalMessages(props) {
 			<Row className='my-4'>
 				<InputGroup>
 					<InputGroup.Prepend>
-						<Form.Label style={{ display: 'flex', alignItems: 'center' }}>Se il giocatore ha ottenuto un punteggio inferiore a </Form.Label>
+						<Form.Label style={{ display: 'flex', alignItems: 'center' }}>
+							Se il giocatore ha ottenuto un punteggio inferiore a{' '}
+						</Form.Label>
 					</InputGroup.Prepend>
 					<Col xs={1}>
 						<Form.Control
 							type='number'
-							defaultValue={0}
 							min={0}
-							value={inputs['score_0'] || 0}
+							value={props.finalMessages['0']['score']}
 							onChange={e => setScore(e, 0, 'score')}
 						/>
 					</Col>
 					<InputGroup.Append>
-						<Form.Label style={{ display: 'flex', alignItems: 'center' }}> punti (giocatore non bravo)</Form.Label>
+						<Form.Label style={{ display: 'flex', alignItems: 'center' }}>
+							{' '}
+							punti (giocatore non bravo)
+						</Form.Label>
 					</InputGroup.Append>
 				</InputGroup>
 			</Row>
 
 			<Row className='mb-4'>
-				<InputMessage inputs={inputs} setScore={setScore} id={0} />
+				<InputMessage finalMessages={props.finalMessages} setScore={setScore} id={0} />
 			</Row>
 
 			<Row className='mb-4'>
 				<InputGroup>
 					<InputGroup.Prepend>
 						<Form.Label style={{ display: 'flex', alignItems: 'center' }}>
-							Se il giocatore ha ottenuto un punteggio compreso tra {inputs['score_0'] || 0} e
+							Se il giocatore ha ottenuto un punteggio compreso tra{' '}
+							{props.finalMessages['0']['score']} e
 						</Form.Label>
 					</InputGroup.Prepend>
 
 					<Col xs={1}>
 						<Form.Control
 							type='number'
-							defaultValue={1}
 							min={1}
-							value={inputs['score_1'] || 1}
+							value={props.finalMessages['1']['score']}
 							onChange={e => setScore(e, 1, 'score')}
 						/>
 					</Col>
 
 					<InputGroup.Append>
-						<Form.Label style={{ display: 'flex', alignItems: 'center' }}> punti (giocatore bravo)</Form.Label>
+						<Form.Label style={{ display: 'flex', alignItems: 'center' }}>
+							{' '}
+							punti (giocatore bravo)
+						</Form.Label>
 					</InputGroup.Append>
 				</InputGroup>
 			</Row>
 
 			<Row className='mb-4'>
-				<InputMessage inputs={inputs} setScore={setScore} id={1} />
+				<InputMessage finalMessages={props.finalMessages} setScore={setScore} id={1} />
 			</Row>
 
 			<Row className='mb-4'>
 				<Form.Label style={{ display: 'flex', alignItems: 'center' }}>
-					Se il giocatore ha ottenuto un punteggio superiore a {inputs['score_1'] || 1} (ha giocato benissimo)
+					Se il giocatore ha ottenuto un punteggio superiore a {props.finalMessages['1']['score']}{' '}
+					(ha giocato benissimo)
 				</Form.Label>
 			</Row>
 
 			<Row>
-				<InputMessage inputs={inputs} setScore={setScore} id={2} />
+				<InputMessage finalMessages={props.finalMessages} setScore={setScore} id={2} />
 			</Row>
 		</>
 	);

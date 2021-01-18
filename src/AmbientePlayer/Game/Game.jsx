@@ -226,8 +226,8 @@ function Game(props) {
 		async () => {
 			const result = await fetch(`/games/${informations.game}/players/help`);
 			if (result.ok) {
-				result.text().then(data => {
-					if (data.trim() && data.activity === informations.player.status.activity) {
+				result.json().then(data => {
+					if (data.activity && data.tip && data.activity === informations.player.status.activity) {
 						setErrorAnswer(
 							<span className={props.style.paragrafoerrore}>Aiuto arrivato: {data.tip}</span>
 						);

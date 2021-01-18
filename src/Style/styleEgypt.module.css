@@ -1,10 +1,12 @@
 .sfondo {
 	composes: sfondo from './style.module.css';
+
 	background-image: url('../Pictures/EgyptBackground.jpg');
 }
 
 .backMedia {
 	composes: backMedia from './style.module.css';
+
 	background-image: url('../Pictures/EgyptBackground2.jpg');
 }
 
@@ -18,6 +20,7 @@
 
 .bottone {
 	composes: bottone from './style.module.css';
+
 	background-color: #8C7500;
 }
 
@@ -27,6 +30,7 @@
 
 .bottonealt {
 	composes: bottonealt from './style.module.css';
+
 	background-color: rgb(190, 168, 170);
 }
 
@@ -40,10 +44,12 @@
 
 .rispostaMultipla {
 	composes: rispostaMultipla from './style.module.css';
+	
 	background-color: #8C7500;
 }
 
 .rispostaAperta {
 	composes: rispostaAperta from './style.module.css';
+
 	background-color: blanchedalmond;
 }

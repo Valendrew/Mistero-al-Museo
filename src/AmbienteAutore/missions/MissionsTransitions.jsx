@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Nav, Tab, Modal, Tabs, InputGroup, Card, ButtonGroup } from 'react-bootstrap';
+import { Nav, Tab, Modal, Tabs, InputGroup, Card, ButtonGroup, Button } from 'react-bootstrap';
 
 import ActivityCard from './ActivityCard';
 
@@ -14,14 +12,16 @@ function SelectMission(props) {
 	return (
 		<Form onSubmit={e => props.handleSubmit(e, props.index)}>
 			<InputGroup>
-				<Form.Control as='select' name='mission' value={props.input} onChange={e => props.handleSelect(e)}>
-					{props.missions.map((value, key) => {
-						return (
-							<option key={key} value={value}>
-								Missione {value}
-							</option>
-						);
-					})}
+				<Form.Control
+					as='select'
+					name='mission_select'
+					value={props.input}
+					onChange={e => props.handleSelect(e)}>
+					{props.missions.map((value, key) => (
+						<option key={key} value={value}>
+							Missione {value}
+						</option>
+					))}
 				</Form.Control>
 				<InputGroup.Append>
 					<Button variant='success' type='submit'>
@@ -37,27 +37,29 @@ function TransitionsListGroup(props) {
 	return (
 		<Col className='mb-2'>
 			<Card>
-				<Card.Header>Transizione {props.index}</Card.Header>
+				<Card.Header>
+					Transizione {props.index}
+					<Button
+						className='ml-4'
+						variant='danger'
+						onClick={() => props.removeTransition(props.index)}>
+						&times;
+					</Button>
+				</Card.Header>
 				<Card.Body>
 					{props.index === props.maxTransitions && props.missions.length ? (
 						<Row className='mb-4'>
 							<Col xs={12}>
-								<SelectMission
-									index={props.index}
-									input={props.input}
-									missions={props.missions}
-									handleSelect={props.handleSelect}
-									handleSubmit={props.handleSubmit}
-								/>
+								<SelectMission {...props} />
 							</Col>
 						</Row>
 					) : null}
 
 					<Row className='row-cols-2 row-cols-sm-3 row-cols-xl-4'>
-						{props.transition.map((val, i) => {
+						{props.transition.map((_mission, i) => {
 							return (
-								<Col key={val} className='text-nowrap'>
-									Missione {val} {i < props.transition.length - 1 ? '→' : null}
+								<Col key={_mission} className='text-nowrap'>
+									Missione {_mission} {i < props.transition.length - 1 ? '→' : null}
 								</Col>
 							);
 						})}
@@ -66,14 +68,6 @@ function TransitionsListGroup(props) {
 			</Card>
 		</Col>
 	);
-}
-
-function addToObjectNested(data, parentKey, key, value) {
-	if (data.hasOwnProperty(parentKey)) {
-		data[parentKey][key] = value;
-	} else {
-		data[parentKey] = { [key]: value };
-	}
 }
 
 function ActivityCards(props) {
@@ -102,83 +96,125 @@ function ActivityCards(props) {
 }
 
 function MissionsTransitions(props) {
-	let history = useHistory();
-	const idStory = history.location.state.idStory;
-
-	const [story, setStory] = useState({ error: null, isLoaded: false, items: {} });
+	/* Oggetto per indicare se la pagina può essere caricata */
+	const [loaded, setLoaded] = useState({ isLoaded: false, error: '' });
+	/* Missioni selezionabili dalla select */
 	const [missions, setMissions] = useState([]);
-
+	/* Valore della select per selezionare la missione */
 	const [input, setInput] = useState();
-
-	const [missionsWithActs, setMissionsWithActs] = useState({});
-	const [importedStories, setImportedStories] = useState({});
+	/* Booleano per attivare il dialog per importare altre missioni */
 	const [showImport, setShowImport] = useState(false);
-	const [numberActivities, setNumberActivities] = useState(0);
+	/* Numero delle attività nella storia */
+	const [numberActivities, setNumberActivities] = useState();
+	/* Le attività delle missioni della storia */
+	const [missionsWithActs, setMissionsWithActs] = useState();
+	/* Le storie dell'utente da poter importare*/
+	const [importedStories, setImportedStories] = useState();
 
+	/* useEffect iniziale */
 	useEffect(() => {
+		/* Per caricare i dati al caricamento della pagina */
 		const fetchData = async () => {
-			const result = await fetch(`/stories/${idStory}/missions`, {
-				method: 'GET'
+			/* Impostato il numero delle attività nella storia */
+			setNumberActivities(Object.keys(props.story.activities).length);
+
+			let newMissionsWithActs = {};
+
+			/* Funzione per aggiungere ad un oggetto un valore */
+			const addToObjectNested = (parentKey, key, value) => {
+				if (newMissionsWithActs.hasOwnProperty(parentKey)) {
+					newMissionsWithActs[parentKey][key] = value;
+				} else {
+					newMissionsWithActs[parentKey] = { [key]: value };
+				}
+			};
+
+			/* Per ogni missione della storia vengono controllate tutte le 
+			attività che la compongono, in modo tale da aggiungerle a missionsWithActs,
+			per poter così visualizzare il loro riepilogo */
+			Object.entries(props.story.missions).forEach(([key, value]) => {
+				Object.entries(value).forEach(([i, act]) => {
+					if (i === 'start') addToObjectNested(key, act, props.story.activities[act]);
+					else {
+						act.forEach(val => {
+							if (val !== 'new_mission') addToObjectNested(key, val, props.story.activities[val]);
+						});
+					}
+				});
 			});
-			if (!result.ok) setStory({ isLoaded: true, error: result.statusText });
+			setMissionsWithActs(newMissionsWithActs);
+
+			/* Impostato il vettore contenente le missioni selezionabili dalla select */
+			setMissions(
+				Object.keys(props.story.missions).filter(_missionToFilter => {
+					/* Controllate tutte le transizioni della storia per verificare
+					se la missione ricercata ne fa parte */
+					for (let _transition of props.transitions) {
+						for (let _mission of _transition) {
+							if (parseInt(_mission) === parseInt(_missionToFilter)) return false;
+						}
+					}
+					return true;
+				})
+			);
+
+			/* Richieste tutte le storie dell'utente, che vengono aggiunte per essere importate */
+			const result = await fetch(`/stories/`);
+			if (!result.ok) setLoaded({ isLoaded: true, error: result.statusText });
 			else {
 				const data = await result.json();
+				setImportedStories(data.filter(value => value.missions && value.info.id !== props.idStory));
 
-				const resultAct = await fetch(`/stories/${idStory}/activities`);
-				const activities = await resultAct.json();
-
-				setNumberActivities(Object.keys(activities).length);
-
-				let missionsWithAct = {};
-				Object.entries(data).forEach(([key, value]) => {
-					Object.entries(value).forEach(([i, act]) => {
-						if (i === 'start') {
-							addToObjectNested(missionsWithAct, key, act, activities[act]);
-						} else {
-							act.forEach(val => {
-								if (val !== 'new_mission') addToObjectNested(missionsWithAct, key, val, activities[val]);
-							});
-						}
-					});
-				});
-				setMissionsWithActs(missionsWithAct);
-
-				const resultImp = await fetch(`/stories/`);
-				const dataImp = await resultImp.json();
-				setImportedStories(dataImp.filter(value => value.missions && value.info.id !== idStory));
-
-				setStory({ isLoaded: true, items: data });
-				setMissions(Object.keys(data));
+				setLoaded({ isLoaded: true });
 			}
 		};
-		fetchData();
-	}, [idStory]);
 
+		if (!loaded.isLoaded) fetchData();
+	}, [loaded, props]);
+
+	/* useEffect per aggiornare il valore della select */
 	useEffect(() => {
+		/* Per aggiornare la select delle missioni disponibili per essere selezionate */
 		setInput(missions.length ? missions[0] : '');
 	}, [missions]);
 
+	/* Submit della form per selezionare la missione della transizione */
 	const handleSubmit = (e, index) => {
 		e.preventDefault();
+
 		let newTransitions = [...props.transitions];
-		let newTransition = [...newTransitions[index], input];
-		newTransitions[index] = newTransition;
+		newTransitions[index].push(input);
+		/* let newTransition = [...newTransitions[index], input];
+		newTransitions[index] = newTransition; */
 		props.setTransitions(newTransitions);
-		setMissions(missions.filter(val => input !== val));
+		setMissions(missions.filter(val => parseInt(input) !== parseInt(val)));
 	};
 
+	/* Per gestire l'evento onChange della select */
 	const handleSelect = e => {
 		setInput(e.target.value);
 	};
 
 	const resetMissions = e => {
 		e.preventDefault();
-		setMissions(Object.keys(story.items));
+
+		setMissions(Object.keys(props.story.missions));
 		props.setTransitions(props.transitions.concat([[]]));
 	};
 
-	const handleCloseModal = () => {
-		setShowImport(false);
+	/* Per gestire la rimozione di una transizione */
+	const removeTransition = index => {
+		if (props.transitions.length === 1) {
+			props.setTransitions([[]]);
+
+			setMissions(Object.keys(props.story.missions));
+		} else {
+			let newTransitions = [...props.transitions];
+			newTransitions.splice(index, 1);
+
+			setMissions([]);
+			props.setTransitions(newTransitions);
+		}
 	};
 
 	const handleImport = async (idImportedStory, numberMission) => {
@@ -217,21 +253,27 @@ function MissionsTransitions(props) {
 		for (const [key, value] of Object.entries(numberConverter)) {
 			newMissionsWithActs[value] = importedStories[idImportedStory].activities[key];
 
-			await fetch(`/stories/${idStory}/activities/${value}`, {
+			await fetch(`/stories/${props.idStory}/activities/${value}`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(importedStories[idImportedStory].activities[key])
 			});
 		}
 
-		const newMissionsIndex = Object.keys(story.items).length;
-		await fetch(`/stories/${idStory}/missions`, {
+		const newMissionsIndex = Object.keys(props.story.missions).length;
+		await fetch(`/stories/${props.idStory}/missions`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ ...story.items, [newMissionsIndex]: newMissions })
+			body: JSON.stringify({ ...props.story.missions, [newMissionsIndex]: newMissions })
 		});
 
-		setStory({ ...story, items: { ...story.items, [newMissionsIndex]: newMissions } });
+		props.setStory({
+			loaded: true,
+			items: {
+				...props.story,
+				missions: { ...props.story.missions, [newMissionsIndex]: newMissions }
+			}
+		});
 		setMissionsWithActs({ ...missionsWithActs, [newMissionsIndex]: newMissionsWithActs });
 		setMissions([...missions, newMissionsIndex.toString()]);
 
@@ -240,31 +282,32 @@ function MissionsTransitions(props) {
 		setShowImport(false);
 	};
 
-	return story.isLoaded ? (
-		story.error ? (
-			<h5>Errore nel caricamento, riprovare</h5>
+	return loaded.isLoaded ? (
+		loaded.error ? (
+			<h1>Errore nel caricamento: {loaded.error} </h1>
 		) : (
 			<>
 				<Row className='my-4'>
 					<Col xs={12}>
 						<Card>
-							<Card.Header>Scegli l'ordine in cui le missioni compariranno nella storia</Card.Header>
+							<Card.Header>
+								Scegli l'ordine in cui le missioni compariranno nella storia
+							</Card.Header>
 							<Card.Body>
 								<Row className='row-cols-1 row-cols-lg-2'>
-									{props.transitions.map((value, key) => {
-										return (
-											<TransitionsListGroup
-												transition={value}
-												key={key}
-												index={key}
-												input={input}
-												missions={missions}
-												handleSelect={handleSelect}
-												handleSubmit={handleSubmit}
-												maxTransitions={props.transitions.length - 1}
-											/>
-										);
-									})}
+									{props.transitions.map((value, key) => (
+										<TransitionsListGroup
+											key={key}
+											transition={value}
+											index={key}
+											input={input}
+											missions={missions}
+											handleSelect={handleSelect}
+											handleSubmit={handleSubmit}
+											removeTransition={removeTransition}
+											maxTransitions={props.transitions.length - 1}
+										/>
+									))}
 								</Row>
 							</Card.Body>
 						</Card>
@@ -302,7 +345,7 @@ function MissionsTransitions(props) {
 								{Object.entries(missionsWithActs).map(([key, value]) => {
 									return (
 										<Tab.Pane key={key} eventKey={key}>
-											<ActivityCards activities={value}/>
+											<ActivityCards activities={value} />
 										</Tab.Pane>
 									);
 								})}
@@ -311,7 +354,7 @@ function MissionsTransitions(props) {
 					</Row>
 				</Tab.Container>
 
-				<Modal dialogClassName='modal-lg' show={showImport} onHide={handleCloseModal}>
+				<Modal dialogClassName='modal-lg' show={showImport} onHide={() => setShowImport(false)}>
 					<Modal.Header closeButton>
 						<Modal.Title>Importa attività</Modal.Title>
 					</Modal.Header>
@@ -323,7 +366,9 @@ function MissionsTransitions(props) {
 										{Object.entries(value.missions).map(([numberMis, value]) => {
 											return (
 												<ListGroup.Item key={numberMis}>
-													<Button onClick={() => handleImport(key, numberMis)}>Missione {numberMis}</Button>
+													<Button onClick={() => handleImport(key, numberMis)}>
+														Missione {numberMis}
+													</Button>
 												</ListGroup.Item>
 											);
 										})}
@@ -336,7 +381,7 @@ function MissionsTransitions(props) {
 			</>
 		)
 	) : (
-		<h5>Loading</h5>
+		<h1>Loading...</h1>
 	);
 }
 export default MissionsTransitions;
