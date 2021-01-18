@@ -7,6 +7,7 @@ import SideBar from './SideBar';
 import PlayerInfo from './PlayerInfo';
 import useInterval from '../useInterval';
 import Ranking from './Ranking';
+import NavbarValutatore from './NavbarValutore'
 import { Container } from 'react-bootstrap';
 
 function Valutatore() {
@@ -154,6 +155,7 @@ function Valutatore() {
 			<h6>Errore caricamento</h6>
 		) : (
 			<Container fluid>
+				<NavbarValutatore/>
 				<Row>
 					<Col xs={4} style={{ height: '100vh', overflowY: 'scroll' }}>
 						<SideBar
