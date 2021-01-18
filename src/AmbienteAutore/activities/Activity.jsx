@@ -72,7 +72,12 @@ function processQuestions(questions, inputs) {
 			tips: Object.entries(val.tips).map(([key, val]) => inputs[val].value)
 		};
 		if (inputs[key].type === 'open') {
-			question = { ...question, minScore: inputs[val.minScore].value, maxScore: inputs[val.maxScore].value, widgetId: inputs[val.widgetId].value };
+			question = {
+				...question,
+				minScore: inputs[val.minScore].value,
+				maxScore: inputs[val.maxScore].value,
+				widgetId: inputs[val.widgetId].value
+			};
 		} else {
 			question = {
 				...question,
@@ -115,7 +120,10 @@ function fetchValidInputs(inputs, activity) {
 				return false;
 			}
 		}
-		if (!inputs[key].value.trim() || Object.values(val.tips).filter(value => !inputs[value].value.trim()).length) {
+		if (
+			!inputs[key].value.trim() ||
+			Object.values(val.tips).filter(value => !inputs[value].value.trim()).length
+		) {
 			return false;
 		}
 	}
@@ -185,7 +193,7 @@ function addInputsToActivity(type, category, categoryLength) {
 				...newInputs,
 				[minID]: { type: 'number', value: '-50' },
 				[maxID]: { type: 'number', value: '50' },
-				[widgetId]: {value: 'classico'}
+				[widgetId]: { value: 'classico' }
 			};
 			child = {
 				[elementID]: {
@@ -346,44 +354,51 @@ function Activity() {
 			const storyline = await processStoryline(activity.storyline, inputs);
 			const questions = processQuestions(activity.questions, inputs);
 
-			const data = {
-				name: inputs.activityName.value,
-				storyline: storyline,
-				questions: questions
-			};
-
-			await fetch(`/stories/${historyState.idStory}/activities/${historyState.idActivity}`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(data)
-			});
-
-			if (buttonPressed === 'saveActivity') {
-				history.replace('/autore/story/overview', { idStory: historyState.idStory });
+			if (questions.lenght && questions[0].type !== 'open' && questions[0].answers.length === 0) {
+				setInvalidInputs(
+					<p className='text-danger'>I campi non sono stati completati, ricontrolla!</p>
+				);
 			} else {
-				if (buttonPressed === 'nextActivity') {
-					const nextActivity = parseInt(historyState.idActivity) + 1;
-					history.push('activity', {
-						idStory: historyState.idStory,
-						idActivity: nextActivity
-					});
+				const data = {
+					name: inputs.activityName.value,
+					storyline: storyline,
+					questions: questions
+				};
+
+				await fetch(`/stories/${historyState.idStory}/activities/${historyState.idActivity}`, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(data)
+				});
+
+				if (buttonPressed === 'saveActivity') {
+					history.replace('/autore/story/overview', { idStory: historyState.idStory });
 				} else {
-					await fetch(`/stories/${historyState.idStory}/missions`, { method: 'DELETE' });
+					if (buttonPressed === 'nextActivity') {
+						const nextActivity = parseInt(historyState.idActivity) + 1;
+						history.push('activity', {
+							idStory: historyState.idStory,
+							idActivity: nextActivity
+						});
+					} else {
+						await fetch(`/stories/${historyState.idStory}/missions`, { method: 'DELETE' });
 
-					await fetch(`/stories/${historyState.idStory}/transitions`, { method: 'DELETE' });
+						await fetch(`/stories/${historyState.idStory}/transitions`, { method: 'DELETE' });
 
-					if (buttonPressed === 'newMissions') {
-						history.replace('missions', { idStory: historyState.idStory });
-					} else if (buttonPressed === 'saveTemp') {
-						/* Se salvataggio temporaneo, allora viene reinderizzato a home */
-						history.replace('/autore/story/overview', { idStory: historyState.idStory });
+						if (buttonPressed === 'newMissions') {
+							history.replace('missions', { idStory: historyState.idStory });
+						} else if (buttonPressed === 'saveTemp') {
+							/* Se salvataggio temporaneo, allora viene reinderizzato a home */
+							history.replace('/autore/story/overview', { idStory: historyState.idStory });
+						}
 					}
 				}
+				setIsLoaded({ loaded: false, error: null });
 			}
-
-			setIsLoaded({ loaded: false, error: null });
 		} else {
-			setInvalidInputs(<p className='text-danger'>I campi non sono stati completati, ricontrolla!</p>);
+			setInvalidInputs(
+				<p className='text-danger'>I campi non sono stati completati, ricontrolla!</p>
+			);
 		}
 	};
 
@@ -392,7 +407,11 @@ function Activity() {
 		let newActivity = { questions: {}, storyline: {} };
 
 		for (let val of data.storyline) {
-			let { inputs, activity } = addInputsToActivity(val[0], 'storyline', Object.keys(newActivity.storyline).length);
+			let { inputs, activity } = addInputsToActivity(
+				val[0],
+				'storyline',
+				Object.keys(newActivity.storyline).length
+			);
 			const mainElementID = Object.keys(activity)[0];
 
 			if (val[0] === 'img') {
@@ -400,7 +419,10 @@ function Activity() {
 				inputs = { ...inputs, [altID]: { ...inputs[altID], value: val[3] } };
 			}
 			if (val[0] === 'img' || val[0] === 'video') {
-				inputs = { ...inputs, [mainElementID]: { ...inputs[mainElementID], value: `${val[1]}.${val[2]}` } };
+				inputs = {
+					...inputs,
+					[mainElementID]: { ...inputs[mainElementID], value: `${val[1]}.${val[2]}` }
+				};
 			} else if (val[0] === 'text') {
 				inputs = { ...inputs, [mainElementID]: { ...inputs[mainElementID], value: val[1] } };
 			}
@@ -410,7 +432,11 @@ function Activity() {
 		}
 
 		for (let val of data.questions) {
-			let { inputs, activity } = addInputsToActivity(val.type, 'questions', Object.keys(newActivity.questions).length);
+			let { inputs, activity } = addInputsToActivity(
+				val.type,
+				'questions',
+				Object.keys(newActivity.questions).length
+			);
 			const mainElementID = Object.keys(activity)[0];
 			let question = activity[mainElementID];
 
@@ -579,28 +605,25 @@ function Activity() {
 												</Button>
 											</>
 										)}
+										{!editedPrevQuestion && historyState.action ? (
+											<Button
+												className='mt-2 mr-2'
+												type='submit'
+												name='saveActivity'
+												variant='success'
+												onClick={e => gestisciDati(e, e.target.name)}>
+												Salva l'attività modificata
+											</Button>
+										) : null}
 										{historyState.idActivity >= 9 || historyState.action ? (
-											<>
-												{!editedPrevQuestion ? (
-													<Button
-														className='mt-2 mr-2'
-														type='submit'
-														name='saveActivity'
-														variant='success'
-														onClick={e => gestisciDati(e, e.target.name)}>
-														Salva l'attività modificata
-													</Button>
-												) : null}
-
-												<Button
-													className='mt-2 mr-2'
-													type='submit'
-													name='newMissions'
-													variant='success'
-													onClick={e => gestisciDati(e, e.target.name)}>
-													Crea {historyState.action ? 'nuovamente' : null} le missioni
-												</Button>
-											</>
+											<Button
+												className='mt-2 mr-2'
+												type='submit'
+												name='newMissions'
+												variant='success'
+												onClick={e => gestisciDati(e, e.target.name)}>
+												Crea {historyState.action ? 'nuovamente' : null} le missioni
+											</Button>
 										) : null}
 									</ButtonGroup>
 								</Row>

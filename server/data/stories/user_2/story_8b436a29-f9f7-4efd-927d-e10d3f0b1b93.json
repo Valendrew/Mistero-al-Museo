@@ -1,0 +1,284 @@
+{
+    "info": {
+        "name": "Storia di test - testata",
+        "description": "Descrizione di test - testata",
+        "id": "8b436a29-f9f7-4efd-927d-e10d3f0b1b93",
+        "accessibility": false,
+        "theme": "generico",
+        "qr": "http://localhost:3000/player/8b436a29-f9f7-4efd-927d-e10d3f0b1b93"
+    },
+    "activities": {
+        "0": {
+            "name": "Test 0",
+            "storyline": [
+                [
+                    "text",
+                    "Test test"
+                ]
+            ],
+            "questions": []
+        },
+        "1": {
+            "name": "Test 1",
+            "storyline": [],
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "Domanda test 1",
+                    "tips": [
+                        "suggerimento 1"
+                    ],
+                    "minScore": "-50",
+                    "maxScore": "50",
+                    "widgetId": "classico"
+                }
+            ]
+        },
+        "2": {
+            "name": "Test 2",
+            "storyline": [
+                [
+                    "text",
+                    "Test 2"
+                ]
+            ],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Domanda test 2",
+                    "tips": [
+                        "Suggerimento 1"
+                    ],
+                    "dinamicRating": false,
+                    "answers": [
+                        {
+                            "value": "We 1",
+                            "correct": true,
+                            "transition": false,
+                            "score": "0"
+                        },
+                        {
+                            "value": "We 2",
+                            "correct": true,
+                            "transition": false,
+                            "score": "0"
+                        },
+                        {
+                            "value": "We 3",
+                            "correct": true,
+                            "transition": false,
+                            "score": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        "3": {
+            "name": "Test 3",
+            "storyline": [
+                [
+                    "img",
+                    "af43805b-9319-449e-aec6-5bf9cb1951f0",
+                    "png",
+                    "Descrizione 1"
+                ]
+            ],
+            "questions": []
+        },
+        "4": {
+            "name": "Test 4",
+            "storyline": [
+                [
+                    "text",
+                    "Test 4"
+                ]
+            ],
+            "questions": []
+        },
+        "5": {
+            "name": "Test 5",
+            "storyline": [],
+            "questions": [
+                {
+                    "type": "open",
+                    "value": "Domanda 5",
+                    "tips": [],
+                    "minScore": "-50",
+                    "maxScore": "50",
+                    "widgetId": "classico"
+                }
+            ]
+        },
+        "6": {
+            "name": "Test 6",
+            "storyline": [
+                [
+                    "text",
+                    "Test 6"
+                ]
+            ],
+            "questions": []
+        },
+        "7": {
+            "name": "Test 7",
+            "storyline": [],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "Domanda 7",
+                    "tips": [],
+                    "dinamicRating": false,
+                    "answers": [
+                        {
+                            "value": "Risposta 1",
+                            "correct": true,
+                            "transition": true,
+                            "score": "0"
+                        },
+                        {
+                            "value": "Risposta 2",
+                            "correct": false,
+                            "transition": false,
+                            "score": "0"
+                        },
+                        {
+                            "value": "Risposta 3",
+                            "correct": true,
+                            "transition": true,
+                            "score": "0"
+                        },
+                        {
+                            "value": "Risposta 4",
+                            "correct": false,
+                            "transition": true,
+                            "score": "0"
+                        },
+                        {
+                            "value": "Risposta 5",
+                            "correct": true,
+                            "transition": true,
+                            "score": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        "8": {
+            "name": "Test 8",
+            "storyline": [
+                [
+                    "text",
+                    "Test 8"
+                ]
+            ],
+            "questions": []
+        },
+        "9": {
+            "name": "Test 10",
+            "storyline": [
+                [
+                    "text",
+                    "Test 10"
+                ]
+            ],
+            "questions": []
+        },
+        "10": {
+            "name": "Fine",
+            "storyline": [
+                [
+                    "text",
+                    "Complimenti!\nGrazie al vostro intuito e alla vostra conoscenza siamo riusciti nel colpo!"
+                ]
+            ],
+            "questions": []
+        },
+        "11": {
+            "name": "Fine!",
+            "storyline": [
+                [
+                    "text",
+                    "Complimenti! Sei riuscito a scappare con il bottino!\nSei il ladro più astuto dell'antico egitto!"
+                ]
+            ],
+            "questions": []
+        }
+    },
+    "missions": {
+        "0": {
+            "0": [
+                "1"
+            ],
+            "1": [
+                "2"
+            ],
+            "2": [
+                "new_mission",
+                "new_mission",
+                "new_mission"
+            ],
+            "start": "0"
+        },
+        "1": {
+            "3": [
+                "4"
+            ],
+            "4": [
+                "5"
+            ],
+            "5": [
+                "6"
+            ],
+            "6": [
+                "new_mission"
+            ],
+            "start": "3"
+        },
+        "2": {
+            "7": [
+                "new_mission",
+                "7",
+                "new_mission",
+                "8",
+                "new_mission"
+            ],
+            "8": [
+                "new_mission"
+            ],
+            "start": "7"
+        },
+        "3": {
+            "9": [
+                "10"
+            ],
+            "10": [
+                "11"
+            ],
+            "11": [
+                "new_mission"
+            ],
+            "start": "9"
+        }
+    },
+    "finalMessages": {
+        "0": {
+            "score": 0,
+            "message": "bravino"
+        },
+        "1": {
+            "score": 1,
+            "message": "bravissimo"
+        },
+        "2": {
+            "message": "bravissimoo"
+        }
+    },
+    "transitions": [
+        [
+            "0",
+            "1",
+            "2",
+            "3"
+        ]
+    ]
+}

@@ -24,7 +24,7 @@ function Accessibilita(props) {
 			<Col>
 				<Form.Check
 					type='checkbox'
-					value={props.accessibilita}
+					checked={props.accessibilita}
 					onChange={() => {
 						props.setAccessibilita(!props.accessibilita);
 					}}

@@ -54,12 +54,16 @@ function ActivityList(props) {
 }
 
 function QuestionList(props) {
+	const transQuestionType = { open: 'aperta', radio: 'multipla' };
 	return (
 		<ListGroup variant='flush'>
 			<ListGroup.Item>
-				Domanda di tipologia <span style={{ textDecoration: 'underline' }}>{props.question.type}</span>:{' '}
-				{props.question.value}
+				Tipologia{' '}
+				<span style={{ textDecoration: 'underline' }}>
+					{transQuestionType[props.question.type]}
+				</span>
 			</ListGroup.Item>
+			<ListGroup.Item>{props.question.value}</ListGroup.Item>
 		</ListGroup>
 	);
 }

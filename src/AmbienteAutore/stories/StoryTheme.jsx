@@ -88,7 +88,7 @@ function StoryTheme(props) {
 			<Card.Header>Scegli ambientazione del player</Card.Header>
 
 			<Card.Body>
-				<Tab.Container defaultActiveKey='generico'>
+				<Tab.Container defaultActiveKey={props.tema}>
 					<Row>
 						<Col xs={2}>
 							<Nav variant='pills' className='flex-column'>

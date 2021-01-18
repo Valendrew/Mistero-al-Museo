@@ -29,10 +29,14 @@ const createEdges = (missions, transitions) => {
 				v.forEach(act => {
 					if (act === 'new_mission') {
 						const misTr = transitions.indexOf(key);
-						if (misTr + 1 < transitions.length) newEdge = { from: `a_${k}`, to: `m_${transitions[misTr + 1]}` };
+						if (misTr + 1 < transitions.length)
+							newEdge = { from: `a_${k}`, to: `m_${transitions[misTr + 1]}` };
 					} else newEdge = { from: `a_${k}`, to: `a_${act}` };
 
-					if (newEdge !== null && !edges.some(value => value.from === newEdge.from && value.to === newEdge.to)) {
+					if (
+						newEdge !== null &&
+						!edges.some(value => value.from === newEdge.from && value.to === newEdge.to)
+					) {
 						edges.push(newEdge);
 					}
 					newEdge = null;
@@ -187,7 +191,7 @@ function StoryOverview() {
 					name: data.info.name || '',
 					description: data.info.description || ''
 				});
-				if (data.activities && data.missions && data.transitions) {
+				if (data.activities && data.missions) {
 					setStoryCompleted(true);
 				}
 			}
@@ -223,9 +227,11 @@ function StoryOverview() {
 	};
 
 	const handleEditStory = e => {
-		if (e.target.name === 'missions') history.push('missions', { idStory: idStory, action: 'edit' });
+		if (e.target.name === 'missions')
+			history.push('missions', { idStory: idStory, action: 'edit' });
 		else if (e.target.name === 'activities') history.push('activities', { idStory: idStory });
-		else if (e.target.name === 'transitions') history.push('conclusion', { idStory: idStory, action: 'edit' });
+		else if (e.target.name === 'transitions')
+			history.push('conclusion', { idStory: idStory, action: 'edit' });
 	};
 
 	const handleRetrieveStory = e => {
@@ -274,9 +280,13 @@ function StoryOverview() {
 					onChange={(value, name) => setInputs({ ...inputs, [name]: value })}
 				/>
 
-				{storyCompleted && Object.keys(story.items.activities).length >= 10 ? (
+				{story.items.transitions && Object.keys(story.items.activities).length >= 10 ? (
 					<>
-						<StoryQRCode value={story.items.info.qr} removeQRCode={removeQRCode} generateQRCode={generateQRCode} />
+						<StoryQRCode
+							value={story.items.info.qr}
+							removeQRCode={removeQRCode}
+							generateQRCode={generateQRCode}
+						/>
 						{story.items.transitions.map((value, key) => (
 							<StoryGraph key={key} index={key} story={story.items} transitions={value} />
 						))}
