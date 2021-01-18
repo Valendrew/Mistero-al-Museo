@@ -12,7 +12,7 @@ export default function Rating(props) {
 					<Form.Check
 						name={props.dinamicRatingId}
 						type='checkBox'
-						value={props.inputs[props.dinamicRatingId].value}
+						checked={props.inputs[props.dinamicRatingId].value}
 						defaultChecked={props.inputs[props.dinamicRatingId].value}
 						onChange={e => props.handleInput(e.target.checked, e.target.name, props.questionId, 'tips')}
 					/>
