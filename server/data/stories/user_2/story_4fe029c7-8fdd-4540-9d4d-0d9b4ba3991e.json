@@ -1,0 +1,49 @@
+{
+    "info": {
+        "name": "a",
+        "description": "aa",
+        "id": "4fe029c7-8fdd-4540-9d4d-0d9b4ba3991e"
+    },
+    "activities": {
+        "0": {
+            "name": "test 1",
+            "storyline": [],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "aa",
+                    "tips": [],
+                    "dinamicRating": false,
+                    "answers": [
+                        {
+                            "value": "aaa",
+                            "correct": false,
+                            "transition": false,
+                            "score": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        "1": {
+            "name": "test",
+            "storyline": [],
+            "questions": [
+                {
+                    "type": "radio",
+                    "value": "test",
+                    "tips": [],
+                    "dinamicRating": false,
+                    "answers": [
+                        {
+                            "value": "test",
+                            "correct": true,
+                            "transition": false,
+                            "score": "0"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -354,7 +354,12 @@ function Activity() {
 			const storyline = await processStoryline(activity.storyline, inputs);
 			const questions = processQuestions(activity.questions, inputs);
 
-			if (questions.length && questions[0].type !== 'open' && questions[0].answers.length === 0) {
+			if (
+				questions.length &&
+				questions[0].type === 'radio' &&
+				(questions[0].answers.length === 0 ||
+					questions[0].answers.findIndex(_el => _el.correct) === -1)
+			) {
 				setInvalidInputs(
 					<p className='text-danger'>I campi non sono stati completati, ricontrolla!</p>
 				);
