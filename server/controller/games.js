@@ -62,13 +62,13 @@ const updateStatusPlayer = async (req, res, next) => {
 	}
 
 	if (data.hasOwnProperty(storyID)) {
-		if (playerStatus.hasOwnProperty('name')) {
+		if (playerStatus.hasOwnProperty('name') && playerStatus.name === false) {
 			playerStatus.name = 'player' + Object.keys(data[storyID]).length;
 		}
 
 		data[storyID][playerID] = { ...data[storyID][playerID], ...playerStatus };
 	} else {
-		if (playerStatus.hasOwnProperty('name')) {
+		if (playerStatus.hasOwnProperty('name') && playerStatus.name === false) {
 			playerStatus.name = 'player0';
 		}
 
@@ -133,7 +133,7 @@ router.post(
 						transition: startTransition,
 						dateStart: date
 					},
-					name: 'player'
+					name: false
 				};
 
 				/* Generato ID del player che verrà inserito all'interno

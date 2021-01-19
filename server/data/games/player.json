@@ -1,56 +1,28 @@
 {
-    "4e624b48-83f7-4c25-a571-1c59965916c2": {
-        "a41c63e9-9942-4d83-afde-b45b3c86b905": {
+    "9c2a067e-a56d-4b98-8bb5-44238723dbb5": {
+        "c39cbe91-5fb0-485b-aa87-a6de98c84125": {
             "status": {
                 "activity": "start",
                 "score": 0,
-                "dateActivity": "2021-01-18T15:49:56.981Z"
+                "dateActivity": "2021-01-19T14:19:34.035Z"
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2021-01-18T15:49:56.981Z"
+                "dateStart": "2021-01-19T14:19:34.035Z"
             },
-            "name": "player0"
-        }
-    },
-    "9c2a067e-a56d-4b98-8bb5-44238723dbb5": {
-        "c9a5beb5-a008-4b33-b580-26620a2c91d8": {
+            "name": "wei"
+        },
+        "e93462eb-175e-4f51-8239-924747b817df": {
             "status": {
-                "activity": "7",
-                "dateActivity": "2021-01-18T15:52:12.217Z",
-                "score": 98
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-19T14:22:59.174Z"
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2021-01-18T15:51:55.395Z"
+                "dateStart": "2021-01-19T14:22:59.174Z"
             },
-            "name": "player0",
-            "givenAnswer": {
-                "0": {
-                    "value": "Tutankhamon",
-                    "score": "46",
-                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
-                    "activity": "1"
-                },
-                "1": {
-                    "value": "Porta con Anubi",
-                    "score": "10",
-                    "question": "Quale porta apri?",
-                    "activity": "4"
-                },
-                "2": {
-                    "value": "Una piuma",
-                    "score": "42",
-                    "question": "\"Pronuncia il nome dell'oggetto che Anumi utilizzava per pesare il cuore del defunto\"",
-                    "activity": "6"
-                }
-            },
-            "answer": null,
-            "question": {
-                "value": "Nella tua mente affiora la lettera c...",
-                "correct": false,
-                "answerPlayer": ""
-            }
+            "name": "sciao"
         }
     }
 }
