@@ -37,6 +37,8 @@ function Game(props) {
 	const [givenAnswers, setGivenAnswers] = useState();
 	const [newMessage, setNewMessage] = useState(false);
 
+	const [style, setStyle] = useState();
+
 	useEffect(() => {
 		if (!isLoaded.loaded) {
 			if (history.location.state) {
@@ -44,6 +46,10 @@ function Game(props) {
 				setErrorAnswer(null);
 				setWaitingOpen(undefined);
 				setIsLoaded({ loaded: true });
+				
+				if (history.location.state.hasOwnProperty('style')) {
+					setStyle(history.location.state.style);
+				}
 			} else {
 				setIsLoaded({ loaded: true, error: 'error' });
 			}
@@ -106,7 +112,7 @@ function Game(props) {
 		let nextActivity = story.missions[currentMission][activity][answerIndex];
 
 		if (nextActivity === activity) {
-			setErrorAnswer(<ShowRequestHelp style={props.style} sendHelp={sendHelp} answer={answer} />);
+			setErrorAnswer(<ShowRequestHelp style={style} sendHelp={sendHelp} answer={answer} />);
 		} else {
 			if (nextActivity === 'new_mission') {
 				const currentTransitions = story.transitions[transition];
@@ -176,9 +182,7 @@ function Game(props) {
 			})
 		});
 		if (result.ok) {
-			setErrorAnswer(
-				<span className={props.style.paragrafoerrore}>Aiuto inviato al valutatore</span>
-			);
+			setErrorAnswer(<span className={style.paragrafoerrore}>Aiuto inviato al valutatore</span>);
 			setWaitingHelp(true);
 		}
 	};
@@ -194,9 +198,7 @@ function Game(props) {
 							fetchInformationsNextActivity(0, data.value, answer);
 						} else {
 							setErrorAnswer(
-								<span className={props.style.paragrafoerrore}>
-									Risposta non corretta: {data.value}
-								</span>
+								<span className={style.paragrafoerrore}>Risposta non corretta: {data.value}</span>
 							);
 						}
 						setWaitingOpen(undefined);
@@ -229,7 +231,7 @@ function Game(props) {
 				result.json().then(data => {
 					if (data.activity && data.tip && data.activity === informations.player.status.activity) {
 						setErrorAnswer(
-							<span className={props.style.paragrafoerrore}>Aiuto arrivato: {data.tip}</span>
+							<span className={style.paragrafoerrore}>Aiuto arrivato: {data.tip}</span>
 						);
 
 						setWaitingHelp(false);
@@ -265,7 +267,7 @@ function Game(props) {
 		) : informations.player.status.activity === 'end_game' ? (
 			<EndGame
 				finalMessages={informations.story.finalMessages}
-				style={props.style}
+				style={style}
 				playerScore={informations.player.status.score}
 			/>
 		) : (
@@ -280,7 +282,7 @@ function Game(props) {
 				chat={chat}
 				newMessage={newMessage}
 				setNewMessage={setNewMessage}
-				style={props.style}
+				style={style}
 			/>
 		)
 	) : (

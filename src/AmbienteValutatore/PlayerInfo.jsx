@@ -10,7 +10,7 @@ import Help from './Help';
 
 function PlayerInfo(props) {
 	return (
-		<>
+		<div style={{ height: '100vh', overflowY: 'scroll' }}>
 			<Row className='p-4' style={{ height: '50vh' }}>
 				<Col xs={6}>
 					<Status {...props} />
@@ -28,7 +28,7 @@ function PlayerInfo(props) {
 					<PlayerAnswer {...props} />
 				</Col>
 			</Row>
-		</>
+		</div>
 	);
 }
 export default PlayerInfo;

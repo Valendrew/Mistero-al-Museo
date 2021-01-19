@@ -23,6 +23,92 @@
                 "dateStart": "2021-01-19T14:22:59.174Z"
             },
             "name": "sciao"
+        },
+        "0ff7031c-3eb0-4fa6-accd-78916b5f53ab": {
+            "status": {
+                "activity": "start",
+                "score": 0,
+                "dateActivity": "2021-01-19T15:24:07.930Z"
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-19T15:24:07.930Z"
+            },
+            "name": "player2"
+        },
+        "dd9210bb-9e66-4ce7-ab5c-3936aac41cbe": {
+            "status": {
+                "activity": "0",
+                "dateActivity": "2021-01-19T15:24:11.611Z",
+                "score": 0
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-19T15:24:10.601Z"
+            },
+            "name": "player3"
+        },
+        "98eaae79-b22e-42d8-bdb7-aea3a6866101": {
+            "status": {
+                "activity": "0",
+                "dateActivity": "2021-01-19T15:27:39.228Z",
+                "score": 0
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-19T15:27:38.221Z"
+            },
+            "name": "player4"
+        },
+        "f6526329-809c-4014-b87f-0a260c917d0b": {
+            "status": {
+                "activity": "1",
+                "dateActivity": "2021-01-19T15:30:41.541Z",
+                "score": 0
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-19T15:30:35.680Z"
+            },
+            "name": "player5"
+        },
+        "c659ddec-31ad-4713-aa17-1d35dc028160": {
+            "status": {
+                "activity": "7",
+                "dateActivity": "2021-01-19T15:32:18.721Z",
+                "score": 103
+            },
+            "info": {
+                "transition": 0,
+                "dateStart": "2021-01-19T15:32:07.523Z"
+            },
+            "name": "player6",
+            "givenAnswer": {
+                "0": {
+                    "value": "Tutankhamon",
+                    "score": "45",
+                    "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
+                    "activity": "1"
+                },
+                "1": {
+                    "value": "Porta con Anubi",
+                    "score": "10",
+                    "question": "Quale porta apri?",
+                    "activity": "4"
+                },
+                "2": {
+                    "value": "Una piuma",
+                    "score": "48",
+                    "question": "\"Pronuncia il nome dell'oggetto che Anubi utilizzava per pesare il cuore del defunto\"",
+                    "activity": "6"
+                }
+            },
+            "answer": {
+                "type": "open",
+                "value": "we",
+                "index": 0
+            },
+            "question": null
         }
     }
 }

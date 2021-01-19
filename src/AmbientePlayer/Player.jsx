@@ -19,27 +19,27 @@ const themeConverter = {
 };
 
 function Player() {
-	const [style, setStyle] = useState();
-
 	return (
 		<Switch>
 			<Route path='/player/game'>
-				<Game style={style} />
+				<Game />
 			</Route>
 			<Route path='/player/:id'>
-				<PlayerHome style={style} setStyle={setStyle} />
+				<PlayerHome />
 			</Route>
 		</Switch>
 	);
 }
 
-function PlayerHome(props) {
+function PlayerHome() {
 	const { id } = useParams(); // id per identificare la storia
 	const history = useHistory();
 	const [story, setStory] = useState();
 	const [player, setPlayer] = useState();
 	const [fetchIsLoaded, setFetchIsLoaded] = useState({ loaded: false, error: null });
 	const [isLoaded, setIsLoaded] = useState({ loaded: false, error: null });
+
+	const [style, setStyle] = useState();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -53,14 +53,14 @@ function PlayerHome(props) {
 
 				setFetchIsLoaded({ loaded: true });
 
-				props.setStyle(themeConverter[data.story.info.theme]);
+				setStyle(themeConverter[data.story.info.theme]);
 				setStory({ ...data.story });
 				setPlayer({ ...data.player });
 				setIsLoaded({ loaded: true });
 			}
 		};
 		if (!fetchIsLoaded.loaded) fetchData();
-	}, [id, fetchIsLoaded, props]);
+	}, [id, fetchIsLoaded]);
 
 	const startGame = async () => {
 		/* Aggiorno lo stato sia nel server e sia localmente per
@@ -82,7 +82,8 @@ function PlayerHome(props) {
 		history.replace('/player/game', {
 			player: { ...player, ...newStatus },
 			story: story,
-			game: id
+			game: id,
+			style: style
 		});
 	};
 
@@ -90,10 +91,10 @@ function PlayerHome(props) {
 		isLoaded.error ? (
 			<h1>Errore nel caricamento, riprovare</h1>
 		) : (
-			<Container fluid className={props.style.sfondo}>
+			<Container fluid className={style.sfondo}>
 				<header>
 					<Row>
-						<Col className={props.style.container}>
+						<Col className={style.container}>
 							<h1>{`Benvenuto ${player.name} nella partita`}</h1>
 							{story.info.accessibility ? (
 								<h2>La storia che andrai a giocare sarà accessibile</h2>
@@ -105,7 +106,7 @@ function PlayerHome(props) {
 				<MainPage
 					name={story.info.name}
 					description={story.info.description}
-					style={props.style}
+					style={style}
 					startGame={startGame}
 				/>
 			</Container>

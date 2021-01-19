@@ -55,7 +55,9 @@ function OpenQuestion(props) {
 						}
 					/>
 					<InputGroup.Append>
-						<Button type='submit' variant="success">Invia</Button>
+						<Button type='submit' variant='success'>
+							Invia
+						</Button>
 					</InputGroup.Append>
 				</InputGroup>
 			</Form>
@@ -87,13 +89,15 @@ function OpenQuestion(props) {
 						}
 					/>
 					<InputGroup.Append>
-						<Button type='submit' variant="danger">Invia</Button>
+						<Button type='submit' variant='danger'>
+							Invia
+						</Button>
 					</InputGroup.Append>
 				</InputGroup>
 				{props.question.tips.length ? (
 					<>
 						Aiuti disponibili, clicca per selezionarli!{' '}
-						<ListGroup variant="flush">
+						<ListGroup variant='flush'>
 							{props.question.tips.map((val, k) => (
 								<ListGroup.Item key={k}>
 									<Button
@@ -136,8 +140,8 @@ function PlayerAnswer(props) {
 						<FormAnswerCorrect {...props} />
 					</>
 				) : (
-						'Nessuna risposta data'
-					)}
+					'Nessuna risposta data'
+				)}
 			</Card.Body>
 		</Card>
 	);
