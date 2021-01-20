@@ -3,29 +3,28 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 
 function RankingTable(props) {
-	console.log(props.players);
 	const playerSorted = Object.entries(props.players[props.storySelected]).sort(
 		([key, val], [key_2, val_2]) => val_2.status.score - val.status.score
 	);
 	return props.players
 		? playerSorted.map(([key, val], index) => {
 				return index === 0 ? (
-					<tr style={{ backgroundColor: 'goldenrod' }}>
+					<tr key={key} style={{ backgroundColor: 'goldenrod' }}>
 						<td>{val.name}</td>
 						<td>{val.status.score}</td>
 					</tr>
 				) : index === 1 ? (
-					<tr style={{ backgroundColor: 'silver' }}>
+					<tr key={key} style={{ backgroundColor: 'silver' }}>
 						<td>{val.name}</td>
 						<td>{val.status.score}</td>
 					</tr>
 				) : index === 2 ? (
-					<tr style={{ backgroundColor: 'rgb(205,127,50)' }}>
+					<tr key={key} style={{ backgroundColor: 'rgb(205,127,50)' }}>
 						<td>{val.name}</td>
 						<td>{val.status.score}</td>
 					</tr>
 				) : (
-					<tr style={{ backgroundColor: 'trasparent' }}>
+					<tr key={key} style={{ backgroundColor: 'trasparent' }}>
 						<td>{val.name}</td>
 						<td>{val.status.score}</td>
 					</tr>
@@ -36,7 +35,7 @@ function RankingTable(props) {
 
 function Ranking(props) {
 	return (
-		<Table bordered className="my-4">
+		<Table bordered className='mb-4'>
 			<thead>
 				<tr>
 					<th>Nome</th>

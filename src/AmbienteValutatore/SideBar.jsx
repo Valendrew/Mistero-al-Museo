@@ -68,7 +68,7 @@ function PlayerList(props) {
 }
 function ListStories(props) {
 	return (
-		<Accordion defaultActiveKey={props.id} className='mt-4'>
+		<Accordion defaultActiveKey={props.id}>
 			<Card>
 				<Accordion.Toggle as={Card.Header} variant='light' eventKey={props.id}>
 					{props.name}

@@ -3,6 +3,7 @@ const path = require('path');
 const uuidv4 = require('uuid').v4;
 const uuidValidate = require('uuid').validate;
 const fileOperations = require('./methods');
+const withAuth = require('./withAuth');
 
 const app = express();
 app.set('games', path.join(__dirname, '..', 'data', 'games'));
@@ -159,28 +160,63 @@ router.post(
 
 let informationsPending = {};
 
-router.get('/informations', (req, res, next) => {
-	res.send(informationsPending);
-	informationsPending = {};
+router.get('/informations', withAuth, (req, res) => {
+	res.send(informationsPending[req.username] || {});
+	informationsPending[req.username] = {};
 });
+
+async function addToInformationsPending(req, res, next) {
+	const story = req.params.id;
+	const playerID = res.locals.playerID;
+	const infoToAdd = res.locals.info;
+
+	/* Leggo per sapere id utente storia*/
+	let storiesFile;
+	try {
+		storiesFile = await fileOperations.read('stories.json', app.get('stories'));
+	} catch (e) {
+		next(e);
+	}
+	const { user } = storiesFile[story];
+
+	if (user) {
+		if (informationsPending.hasOwnProperty(user)) {
+			informationsPending[user][playerID] = {
+				...informationsPending[user][playerID],
+				...infoToAdd,
+				story: story
+			};
+		} else {
+			informationsPending[user] = { [playerID]: { ...infoToAdd, story: story } };
+		}
+		/* console.log(JSON.stringify(informationsPending)); */
+
+		/* Aggiornamento su file e/o invio response */
+		if (infoToAdd.hasOwnProperty('status') && infoToAdd.status.hasOwnProperty('interval')) {
+			res.send('status updated');
+		} else if (infoToAdd.hasOwnProperty('help')) {
+			res.send('help updated');
+		} else {
+			updateStatusPlayer(req, res, next);
+		}
+	} else {
+		try {
+			throw new Error('user not valid');
+		} catch (e) {
+			next(e);
+		}
+	}
+}
 
 /* Richiesta per aggiornare lo stato del player */
 router.put(
 	'/:id/players/status',
 	(req, res, next) => {
 		res.locals.playerID = req.cookies.playerID;
-
-		informationsPending[req.cookies.playerID] = {
-			...informationsPending[req.cookies.playerID],
-			story: req.params.id,
-			status: req.body.status
-		};
-
-		if (req.body.status.hasOwnProperty('interval')) {
-			res.send('status updated');
-		} else next();
+		res.locals.info = { status: req.body.status };
+		next();
 	},
-	updateStatusPlayer
+	addToInformationsPending
 );
 
 /* Richiesta per aggiornare le risposte del player */
@@ -203,30 +239,22 @@ router.put(
 	'/:id/players/answer',
 	(req, res, next) => {
 		res.locals.playerID = req.cookies.playerID;
-
-		informationsPending[req.cookies.playerID] = {
-			...informationsPending[req.cookies.playerID],
-			story: req.params.id,
-			answer: req.body.answer
-		};
-		
+		res.locals.info = { answer: req.body.answer };
 		next();
 	},
-	updateStatusPlayer
+	addToInformationsPending
 );
 
 /* Richiesta per richiedere aiuto per la domanda */
-router.put('/:id/players/help', (req, res) => {
-	res.locals.playerID = req.cookies.playerID;
-
-	informationsPending[req.cookies.playerID] = {
-		...informationsPending[req.cookies.playerID],
-		story: req.params.id,
-		help: req.body.help
-	};
-
-	res.send('help request');
-});
+router.put(
+	'/:id/players/help',
+	(req, res, next) => {
+		res.locals.playerID = req.cookies.playerID;
+		res.locals.info = { help: req.body.help };
+		next();
+	},
+	addToInformationsPending
+);
 
 /* Richieste per inviare la correzione alla domanda aperta */
 let questionsPending = {};
@@ -247,11 +275,10 @@ router.put(
 );
 
 /* Richieste per inviare aiuto al player */
-/* Richieste per inviare la correzione alla domanda aperta */
 let helpPending = {};
 
 router.get('/:id/players/help', (req, res) => {
-	res.send(helpPending[req.cookies.playerID] || '');
+	res.send(helpPending[req.cookies.playerID] || {});
 
 	delete helpPending[req.cookies.playerID];
 });

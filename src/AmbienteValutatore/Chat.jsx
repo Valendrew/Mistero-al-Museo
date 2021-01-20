@@ -37,7 +37,7 @@ function Chat(props) {
 						</Button>
 					</InputGroup.Append>
 				</InputGroup>
-				<ListGroup className='mt-4' variant='flush' style={{ height: '300px', overflowY: 'scroll' }}>
+				<ListGroup className='mt-4' variant='flush' style={{ height: '25vh', overflowY: 'scroll' }}>
 					{props.player.informations.chat
 						? props.player.informations.chat.map((value, key) => {
 								const mit = value.substr(0, 1);

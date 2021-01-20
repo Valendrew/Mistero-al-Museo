@@ -1,92 +1,28 @@
 {
     "9c2a067e-a56d-4b98-8bb5-44238723dbb5": {
-        "c39cbe91-5fb0-485b-aa87-a6de98c84125": {
+        "bf04bd64-953c-4991-9957-ad515e6fc2b0": {
             "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-19T14:19:34.035Z"
+                "activity": "8",
+                "dateActivity": "2021-01-20T09:47:48.335Z",
+                "score": -469
             },
             "info": {
                 "transition": 0,
-                "dateStart": "2021-01-19T14:19:34.035Z"
+                "dateStart": "2021-01-20T09:20:55.612Z"
             },
-            "name": "wei"
-        },
-        "e93462eb-175e-4f51-8239-924747b817df": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-19T14:22:59.174Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-19T14:22:59.174Z"
-            },
-            "name": "sciao"
-        },
-        "0ff7031c-3eb0-4fa6-accd-78916b5f53ab": {
-            "status": {
-                "activity": "start",
-                "score": 0,
-                "dateActivity": "2021-01-19T15:24:07.930Z"
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-19T15:24:07.930Z"
-            },
-            "name": "player2"
-        },
-        "dd9210bb-9e66-4ce7-ab5c-3936aac41cbe": {
-            "status": {
-                "activity": "0",
-                "dateActivity": "2021-01-19T15:24:11.611Z",
-                "score": 0
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-19T15:24:10.601Z"
-            },
-            "name": "player3"
-        },
-        "98eaae79-b22e-42d8-bdb7-aea3a6866101": {
-            "status": {
-                "activity": "0",
-                "dateActivity": "2021-01-19T15:27:39.228Z",
-                "score": 0
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-19T15:27:38.221Z"
-            },
-            "name": "player4"
-        },
-        "f6526329-809c-4014-b87f-0a260c917d0b": {
-            "status": {
-                "activity": "1",
-                "dateActivity": "2021-01-19T15:30:41.541Z",
-                "score": 0
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-19T15:30:35.680Z"
-            },
-            "name": "player5"
-        },
-        "c659ddec-31ad-4713-aa17-1d35dc028160": {
-            "status": {
-                "activity": "7",
-                "dateActivity": "2021-01-19T15:32:18.721Z",
-                "score": 103
-            },
-            "info": {
-                "transition": 0,
-                "dateStart": "2021-01-19T15:32:07.523Z"
-            },
-            "name": "player6",
+            "name": "player0",
+            "chat": [
+                "p:wei",
+                "v:ehi",
+                "p:come va te?",
+                "v:bene grazie",
+                "v:wee",
+                "v:ehii"
+            ],
             "givenAnswer": {
                 "0": {
                     "value": "Tutankhamon",
-                    "score": "45",
+                    "score": "-538",
                     "question": "Per fortuna, alzando lo sguardo, noti dei geroglifi che indicano il nome del faraone appena morto. Rispondi quindi che sei lì per vedere la salma di...",
                     "activity": "1"
                 },
@@ -98,17 +34,23 @@
                 },
                 "2": {
                     "value": "Una piuma",
-                    "score": "48",
+                    "score": "9",
                     "question": "\"Pronuncia il nome dell'oggetto che Anubi utilizzava per pesare il cuore del defunto\"",
                     "activity": "6"
+                },
+                "3": {
+                    "value": "wow",
+                    "score": "50",
+                    "question": "Sopra al sarcofago leggi: \"Come si chiamano i vasi dove vengono conservati gli organi dei faraoni defunti? Che sembianze hanno?\"",
+                    "activity": "7"
                 }
             },
-            "answer": {
-                "type": "open",
-                "value": "we",
-                "index": 0
-            },
-            "question": null
+            "answer": null,
+            "question": {
+                "value": "50",
+                "correct": true,
+                "answerPlayer": "wow"
+            }
         }
     }
 }

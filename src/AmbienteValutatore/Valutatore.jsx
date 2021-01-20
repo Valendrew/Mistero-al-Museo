@@ -7,7 +7,7 @@ import SideBar from './SideBar';
 import PlayerInfo from './PlayerInfo';
 import useInterval from '../useInterval';
 import Ranking from './Ranking';
-import NavbarValutatore from './NavbarValutore'
+import NavbarValutatore from './NavbarValutore';
 import { Container } from 'react-bootstrap';
 
 function Valutatore() {
@@ -155,9 +155,9 @@ function Valutatore() {
 			<h6>Errore caricamento</h6>
 		) : (
 			<Container fluid>
-				<NavbarValutatore/>
+				<NavbarValutatore />
 				<Row>
-					<Col xs={4} style={{ height: '100vh', overflowY: 'scroll' }}>
+					<Col xs={4} style={{ height: 'calc(100vh - 7vh)', overflowY: 'scroll' }}>
 						<SideBar
 							stories={stories}
 							players={players}
@@ -167,11 +167,13 @@ function Valutatore() {
 						/>
 					</Col>
 					{showRanking ? (
-						<Col xs={8} style={{ height: '100vh', overflowY: 'scroll' }}>
+						<Col xs={8} style={{ height: '100%', overflowY: 'scroll' }}>
 							<Ranking players={players} storySelected={storySelected} />
 						</Col>
 					) : playerSelected ? (
-						<Col xs={8}>
+						<Col
+							xs={8}
+							style={{ height: 'calc(100vh - 7vh)', overflowY: 'scroll' }}>
 							<PlayerInfo
 								player={playerSelected}
 								story={stories.find(element => element.info.id === playerSelected.story)}

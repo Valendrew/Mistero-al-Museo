@@ -10,8 +10,8 @@ import Help from './Help';
 
 function PlayerInfo(props) {
 	return (
-		<div style={{ height: '100vh', overflowY: 'scroll' }}>
-			<Row className='p-4' style={{ height: '50vh' }}>
+		<>
+			<Row style={{ height: '50%', paddingBottom: '1vh' }}>
 				<Col xs={6}>
 					<Status {...props} />
 				</Col>
@@ -19,7 +19,7 @@ function PlayerInfo(props) {
 					<Chat {...props} />
 				</Col>
 			</Row>
-			<Row className='p-4' style={{ height: '50vh' }}>
+			<Row style={{ height: '50%' }}>
 				<Col xs={6}>
 					<Help {...props} />
 				</Col>
@@ -28,7 +28,7 @@ function PlayerInfo(props) {
 					<PlayerAnswer {...props} />
 				</Col>
 			</Row>
-		</div>
+		</>
 	);
 }
 export default PlayerInfo;
