@@ -34,7 +34,7 @@ function Valutatore() {
 		/* Ricerco l'indice della storia richiesta */
 		const index = stories.findIndex(element => element.info.id === idStory);
 
-		if (players[index].hasOwnProperty(idPlayer)) {
+		if (index !== -1 && players[index].hasOwnProperty(idPlayer)) {
 			let newPlayers = [...players];
 
 			newPlayers[index] = {

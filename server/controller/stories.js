@@ -12,7 +12,9 @@ router.use(express.text());
 router.use(withAuth);
 
 router.use((req, res, next) => {
-	console.log(`Request ${req.method} at /stories${req.path} on Time: ${new Date(Date.now()).toUTCString()}`);
+	console.log(
+		`Request ${req.method} at /stories${req.path} on Time: ${new Date(Date.now()).toUTCString()}`
+	);
 	next();
 });
 
@@ -61,7 +63,12 @@ router.get(
 router.get(
 	'/:id/activities/:name',
 	(req, res, next) => {
-		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'activities', value: req.params.name };
+		res.locals = {
+			dirPath: app.get('stories'),
+			id: req.params.id,
+			type: 'activities',
+			value: req.params.name
+		};
 		next();
 	},
 	getHandler
@@ -145,7 +152,12 @@ router.post('/:id', async (req, res, next) => {
 router.post(
 	'/:id/activities/:name',
 	(req, res, next) => {
-		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'activities', value: req.params.name };
+		res.locals = {
+			dirPath: app.get('stories'),
+			id: req.params.id,
+			type: 'activities',
+			value: req.params.name
+		};
 		next();
 	},
 	postHandler
@@ -181,7 +193,12 @@ router.post(
 router.post(
 	'/:id/accessibility',
 	(req, res, next) => {
-		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'info', value: 'accessibility' };
+		res.locals = {
+			dirPath: app.get('stories'),
+			id: req.params.id,
+			type: 'info',
+			value: 'accessibility'
+		};
 		req.body = req.body.value;
 		next();
 	},
@@ -214,7 +231,7 @@ router.post(
 		} catch (e) {
 			next(e);
 		}
-		req.body = `http://localhost:3000/player/${storyCode}`;
+		req.body = `http://site192010.tw.cs.unibo.it/player/${storyCode}`;
 		res.locals = { dirPath: app.get('stories'), id: storyCode, type: 'info', value: 'qr' };
 		next();
 	},
@@ -224,7 +241,12 @@ router.post(
 router.post(
 	'/:id/archived',
 	(req, res, next) => {
-		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'info', value: 'archived' };
+		res.locals = {
+			dirPath: app.get('stories'),
+			id: req.params.id,
+			type: 'info',
+			value: 'archived'
+		};
 		req.body = false;
 		next();
 	},
@@ -243,7 +265,12 @@ router.put(
 router.put(
 	'/:id/description',
 	(req, res, next) => {
-		res.locals = { dirPath: app.get('stories'), id: req.params.id, type: 'info', value: 'description' };
+		res.locals = {
+			dirPath: app.get('stories'),
+			id: req.params.id,
+			type: 'info',
+			value: 'description'
+		};
 		next();
 	},
 	postHandler

@@ -302,9 +302,9 @@ router.put(
 
 /*Richieste per la chat*/
 let chatPendingValutatore = {};
-router.get('/chatValutatore', (req, res) => {
-	res.send(chatPendingValutatore);
-	chatPendingValutatore = {};
+router.get('/chatValutatore', withAuth, (req, res) => {
+	res.send(chatPendingValutatore[req.username] || {});
+	delete chatPendingValutatore[req.username];
 });
 
 let chatPendingPlayer = {};
@@ -315,10 +315,41 @@ router.get('/chatPlayer', (req, res) => {
 
 router.put(
 	'/:id/message',
-	(req, res, next) => {
-		res.locals.playerID = req.cookies.playerID;
-		chatPendingValutatore[req.cookies.playerID] = { story: req.params.id, chat: req.body.chat };
-		next();
+	async (req, res, next) => {
+		const story = req.params.id;
+		const player = req.cookies.playerID;
+		/* Leggo per sapere id utente storia*/
+		let storiesFile;
+		try {
+			storiesFile = await fileOperations.read('stories.json', app.get('stories'));
+		} catch (e) {
+			res.status(501).send('cannot update');
+		}
+
+		const { user } = storiesFile[story];
+		const objToAdd = {
+			story: story,
+			chat: req.body.chat
+		};
+
+		if (user) {
+			if (chatPendingPlayer.hasOwnProperty(user)) {
+				chatPendingValutatore[user][player] = {
+					story: story,
+					chat: req.body.chat
+				};
+			} else {
+				chatPendingValutatore[user] = {
+					[player]: {
+						story: story,
+						chat: req.body.chat
+					}
+				};
+			}
+			next();
+		} else {
+			res.status(501).send('cannot update');
+		}
 	},
 	updateStatusPlayer
 );

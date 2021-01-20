@@ -1,11 +1,11 @@
 {
     "info": {
-        "name": "Furto al Museo Picasso",
+        "name": "Furto al Museo Picasso - ALT",
         "description": "Questa storia narra di un furto al Museo Picasso di Barcellona. Giocandoci potrete imparare nozioni di base sulla vita e su alcune opere di Pablo Picasso.",
-        "id": "4e624b48-83f7-4c25-a571-1c59965916c2",
+        "id": "760e685b-0928-4c41-9327-6cec1dae1c44",
         "accessibility": false,
         "theme": "museum",
-        "qr": "http://site192010.tw.cs.unibo.it/player/4e624b48-83f7-4c25-a571-1c59965916c2"
+        "qr": "http://site192010.tw.cs.unibo.it/player/760e685b-0928-4c41-9327-6cec1dae1c44"
     },
     "activities": {
         "0": {
