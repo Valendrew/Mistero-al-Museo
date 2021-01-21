@@ -94,7 +94,7 @@ function Story(props) {
 			<header className={props.style.container}>
 				<Row>
 					<Col>
-						<h1>Al momento ti trovi nell'attività {currentStory.activity}</h1>
+						<h1>Al momento ti trovi nell'attività: {props.story.activities[currentStory.activity].name}</h1>
 					</Col>
 				</Row>
 				<Row>

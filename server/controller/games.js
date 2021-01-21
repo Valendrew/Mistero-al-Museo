@@ -327,13 +327,9 @@ router.put(
 		}
 
 		const { user } = storiesFile[story];
-		const objToAdd = {
-			story: story,
-			chat: req.body.chat
-		};
 
 		if (user) {
-			if (chatPendingPlayer.hasOwnProperty(user)) {
+			if (chatPendingValutatore.hasOwnProperty(user)) {
 				chatPendingValutatore[user][player] = {
 					story: story,
 					chat: req.body.chat
@@ -346,6 +342,7 @@ router.put(
 					}
 				};
 			}
+			res.locals.playerID = req.params.name;
 			next();
 		} else {
 			res.status(501).send('cannot update');
